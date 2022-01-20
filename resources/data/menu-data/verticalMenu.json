@@ -31,10 +31,10 @@
                     "slug": "admin.tenants"
                 },
                 {
-                    "url": "/admin/crew",
-                    "name": "Crew",
+                    "url": "/admin/crews",
+                    "name": "Crews",
                     "icon": "users",
-                    "slug": "admin.crew"
+                    "slug": "admin.crews"
                 },
                 {
                     "url": "/admin/v_types",
