@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Owners')
+@section('title', 'Crews')
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -22,23 +22,24 @@
 @endsection
 @section('content')
     <!-- users list start -->
-    <section class="owners-list">
+    <section class="crews-list">
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
                 <h4 class="card-title">Search & Filter</h4>
             </div>
             <div class="card-datatable table-responsive pt-0">
-                <table class="owners-list-table table">
+                <table class="crews-list-table table">
                     <thead class="table-light">
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Full legal name</th>
-                        <th>Vessels count</th>
-                        <th>Contact name</th>
+                        <th>Full name</th>
                         <th>Phone</th>
                         <th>Email</th>
+                        <th>Country</th>
+                        <th>City</th>
+                        <th>Job title</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -46,14 +47,14 @@
                 </table>
             </div>
             <!-- Modal to add new user starts-->
-            <div class="modal modal-slide-in new-owner-modal fade" id="modals-slide-in">
+            <div class="modal modal-slide-in new-crew-modal fade" id="modals-slide-in">
                 <div class="modal-dialog">
-                    <form class="add-new-owner modal-content pt-0">
+                    <form class="add-new-crew modal-content pt-0">
                         <input type="hidden" value="1" id="form_status">
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add owner</h5>
+                            <h5 class="modal-title" id="modal-label">Add crew</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
@@ -65,34 +66,25 @@
                                     <option value="2">Individual</option>
                                 </select>
                             </div>
-                            <div id="company-container" style="display: none">
-                                <div class="mb-1">
-                                    <label class="form-label" for="name">Full name</label>
-                                    <input type="text" class="form-control dt-full-name" id="name"
-                                           placeholder="Full name" name="name"/>
-                                </div>
-                                <div class="mb-1">
-                                    <label class="form-label" for="commercial">Commercial #</label>
-                                    <input type="text" class="form-control dt-full-name" id="commercial"
-                                           placeholder="Commercial #" name="commercial"/>
-                                </div>
-                                <div class=mb-1>
-                                    <label for="file" class="form-label">License file</label>
-                                    <div class="dropzone" id="license">
-                                        <div class="dz-message">Drop files here or click to upload.</div>
-                                    </div>
-                                </div>
-                                <div class=mb-1>
-                                    <label for="file" class="form-label">Company file</label>
-                                    <div class="dropzone" id="company">
-                                        <div class="dz-message">Drop files here or click to upload.</div>
-                                    </div>
-                                </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="first_name">First name</label>
+                                <input type="text" class="form-control dt-full-name" id="first_name"
+                                       placeholder="First name" name="first_name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="contact">Contact name</label>
-                                <input type="text" class="form-control dt-full-name" id="contact"
-                                       placeholder="Contact name" name="contact"/>
+                                <label class="form-label" for="last_name">Last name</label>
+                                <input type="text" class="form-control dt-full-name" id="last_name"
+                                       placeholder="Last name" name="last_name"/>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="job">Job title</label>
+                                <input type="text" class="form-control dt-full-name" id="job"
+                                       placeholder="Job title" name="job"/>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="birth">DOB</label>
+                                <input type="date" class="form-control dt-full-name" id="birth"
+                                       placeholder="DOB" name="birth"/>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="email">Email</label>
@@ -104,17 +96,6 @@
                                 <input type="tel" class="form-control dt-full-name" id="phone"
                                        placeholder="Phone" name="phone"/>
                             </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="zip">Zip code</label>
-                                <input type="text" class="form-control dt-full-name" id="zip"
-                                       placeholder="Zip code" name="zip"/>
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="password">Password</label>
-                                <input type="password" class="form-control dt-full-name" id="password"
-                                       placeholder="Password" name="password"/>
-                            </div>
-
                             <div class="mb-1">
                                 <label class="form-label" for="country">Country</label>
                                 <select type="text" class="form-control dt-full-name select2" id="country"
@@ -134,18 +115,13 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="address_1">Address 1</label>
-                                <input type="text" class="form-control dt-full-name" id="address_1"
-                                       placeholder="Address 1" name="address_1"/>
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="address_2">Address 2</label>
-                                <input type="text" class="form-control dt-full-name" id="address_2"
-                                       placeholder="Address 2" name="address_2"/>
+                                <label class="form-label" for="address">Address</label>
+                                <input type="text" class="form-control dt-full-name" id="address"
+                                       placeholder="Address" name="address"/>
                             </div>
                             <div class=mb-1>
-                                <label for="file" class="form-label">Legal file (ID, Passport)</label>
-                                <div class="dropzone" id="legal">
+                                <label for="file" class="form-label">File</label>
+                                <div class="dropzone" id="file">
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -188,7 +164,7 @@
 
 @section('page-script')
     {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/owners-list.js')) }}"></script>
+    <script src="{{ asset(mix('js/scripts/pages/crews-list.js')) }}"></script>
     <script>
         $('#country').on("change.select2", function () {
             var $element = $(this);

@@ -1,22 +1,16 @@
-/*=========================================================================================
-    File Name: app-user-list.js
-    Description: User List page
-    --------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
+Dropzone.autoDiscover = false;
 
-==========================================================================================*/
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.subscriptions-list-table'),
-        newSidebar = $('.new-subscription-modal'),
-        newForm = $('.add-new-subscription'),
+    var dtTable = $('.offices-list-table'),
+        newSidebar = $('.new-office-modal'),
+        newForm = $('.add-new-office'),
         statusObj = {
-            1: {title: 'فعال', class: 'badge-light-success status-switcher'},
-            0: {title: 'معطل', class: 'badge-light-secondary status-switcher'}
+            1: {title: 'Active', class: 'badge-light-success status-switcher'},
+            0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
         }
+
 
     var assetPath = '../../../app-assets/';
 
@@ -24,19 +18,18 @@ $(function () {
         assetPath = $('body').attr('data-asset-path')
     }
     if (dtTable.length) {
-        dtTable.DataTable({
-            ajax: assetPath + 'api/admin/subscriptions/list',
+        dtTable.dataTable({
+            ajax: assetPath + 'api/admin/offices/list',
             columns: [
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'user.name'},
-                {data: 'package.name'},
-                {data: 'number'},
-                {data: 'amount'},
-                {data: 'active'},
-                {data: 'end_at'},
-                {data: 'created_at'},
+                {data: 'full_name'},
+                {data: 'city.name'},
+                {data: 'contact_name'},
+                {data: 'phone'},
+                {data: 'email'},
+                {data: 'status'},
                 {data: ''}
             ],
             columnDefs: [
@@ -51,9 +44,9 @@ $(function () {
                     }
                 },
                 {
-                    targets: 6,
+                    targets: 7,
                     render: function (data, type, full, meta) {
-                        var $status = full['active']
+                        var $status = full['status']
                         return (
                             '<span class="badge rounded-pill btn ' +
                             statusObj[$status].class +
@@ -64,15 +57,15 @@ $(function () {
                     }
                 },
                 {
-                    targets: [7, 8],
+                    targets: 2,
                     render: function (data, type, full, meta) {
-                        return data ? moment(data).format('DD-MM-YYYY') : '-'
+                        return data ? data : '-';
                     }
                 },
                 {
                     // Actions
                     targets: -1,
-                    title: 'الخيارات',
+                    title: 'Actions',
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return (
@@ -81,9 +74,12 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
+                            feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
+                            'Edit</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
-                            'حذف</a></div>' +
+                            'Delete</a></div>' +
                             '</div>' +
                             '</div>'
                         )
@@ -101,26 +97,26 @@ $(function () {
                 '<"col-sm-12 col-md-6"p>' +
                 '>',
             language: {
-                sLengthMenu: 'عرض _MENU_',
-                search: 'البحث',
-                searchPlaceholder: 'البحث..'
+                sLengthMenu: 'Showing _MENU_',
+                search: 'Search',
+                searchPlaceholder: 'Search..'
             },
             // Buttons with Dropdown
             buttons: [
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'تصدير',
+                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
                     buttons: [
                         {
                             extend: 'print',
-                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'طباعة',
+                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         },
                         {
                             extend: 'csv',
-                            text: feather.icons['file-text'].toSvg({class: 'font-small-4 me-50'}) + 'Csv',
+                            text: feather.icons['file-text'].toSvg({class: 'font-small-4 me-50'}) + 'CSV',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         },
@@ -132,13 +128,13 @@ $(function () {
                         },
                         {
                             extend: 'pdf',
-                            text: feather.icons['clipboard'].toSvg({class: 'font-small-4 me-50'}) + 'Pdf',
+                            text: feather.icons['clipboard'].toSvg({class: 'font-small-4 me-50'}) + 'PDF',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         },
                         {
                             extend: 'copy',
-                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'نسخ',
+                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         }
@@ -152,8 +148,8 @@ $(function () {
                     }
                 },
                 {
-                    text: 'إضافة جديد',
-                    className: 'add-subscription btn btn-primary',
+                    text: 'Add new',
+                    className: 'add-office btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in'
@@ -169,7 +165,7 @@ $(function () {
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function (row) {
                             var data = row.data()
-                            return 'تفاصيل ' + data['name']
+                            return 'Details of  ' + data['name']
                         }
                     }),
                     type: 'column',
@@ -194,48 +190,119 @@ $(function () {
                         return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
                     }
                 }
-            },
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/ar.json'
-            },
+            }
         })
     }
 
     if (newForm.length) {
+        let data = new FormData();
+
+        $(document).on('change', '#type', function () {
+            var element = $(this);
+            if (parseInt(element.val()) === 1) {
+                $('#company-container').show();
+            } else {
+                $('#company-container').hide();
+            }
+        });
+
+        var phone = document.getElementById('phone');
+
+        window.intlTelInput(phone, {
+            customContainer: "w-100",
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.min.js"
+        });
+
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'name': {
-                    required: true
-                },
-                'package': {
-                    required: true
-                },
                 'type': {
                     required: true
                 },
-                'number': {
+                'full_name': {
                     required: true
                 },
-                'amount': {
+                'commercial_number': {
+                    required: true
+                },
+                'contact': {
+                    required: true
+                },
+                'legal': {
+                    required: true
+                },
+                'email': {
+                    required: true
+                },
+                'phone': {
                     required: true
                 },
             }
         })
 
+        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+
+        $('#legal').dropzone({
+            url: assetPath + 'api/admin/offices/' + type,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            autoQueue: false,
+            init: function () {
+                this.on("addedfile", function (file) {
+                    data.append("legal", file);
+                });
+                this.on("removedfile", function () {
+                    data.delete('legal');
+                });
+            }
+        });
+
+        $('#company').dropzone({
+            url: assetPath + 'api/admin/offices/' + type,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            autoQueue: false,
+            init: function () {
+                this.on("addedfile", function (file) {
+                    data.append("company", file);
+                });
+                this.on("removedfile", function () {
+                    data.delete('company');
+                });
+            }
+        });
+
+        $('#license').dropzone({
+            url: assetPath + 'api/admin/offices/' + type,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            autoQueue: false,
+            init: function () {
+                this.on("addedfile", function (file) {
+                    data.append("license", file);
+                });
+                this.on("removedfile", function () {
+                    data.delete('license');
+                });
+            }
+        });
+
+        $('#country,#city').select2();
+
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
+            var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
             e.preventDefault()
             if (isValid) {
-                let data = new FormData();
-                data.append('name', $('#name').val());
-                data.append('package', $('#package').val());
-                data.append('type', $('#type').val());
-                data.append('number', $('#number').val());
-                data.append('amount', $('#amount').val());
+                if (type === 'update') {
+                    data.append('object_id', $('#object_id').val());
+                }
+                newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+                    data.append($(this).attr('name'), $(this).val());
+                });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/subscriptions/add',
+                    url: assetPath + 'api/admin/offices/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -260,7 +327,24 @@ $(function () {
         var element = $(this);
         $.ajax({
             type: 'DELETE',
-            url: assetPath + 'api/admin/subscriptions/' + element.data('id'),
+            url: assetPath + 'api/admin/offices/' + element.data('id'),
+            dataType: 'json',
+            success: function (response) {
+                if (parseInt(response.code) === 1) {
+                    dtTable.DataTable().ajax.reload();
+                    toastr['success'](response.message);
+                } else {
+                    toastr['error'](response.message);
+                }
+            }
+        })
+    })
+
+    $(document).on('click', '.status-switcher', function () {
+        let element = $(this);
+        $.ajax({
+            type: 'PUT',
+            url: assetPath + 'api/admin/offices/status/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -273,21 +357,32 @@ $(function () {
         })
     });
 
+    $(document).on('click', '.item-update', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        $('#modals-slide-in').modal('show')
+        $('#form_status').val(2);
+        $('#name').val(data.full_name);
+        $('#contact').val(data.contact_name);
+        $('#commercial').val(data.commercial_number);
+        $('#email').val(data.email);
+        $('#phone').val(data.phone);
+        $('#city_id').val(data.city.id);
+        $('#country').val(data.city.country.id);
+        $('#country').trigger('change.select2');
+        $('#address_1').val(data.address_1);
+        $('#address_2').val(data.address_2);
+        $('#zip').val(data.zip_code);
+        $('#type').val(data.type);
+        $('#object_id').val(data.id);
+    });
 
-    $(document).on('click', '.status-switcher', function () {
-        let element = $(this);
-        $.ajax({
-            type: 'PUT',
-            url: assetPath + 'api/admin/subscriptions/status/' + element.data('id'),
-            dataType: 'json',
-            success: function (response) {
-                if (parseInt(response.code) === 1) {
-                    dtTable.DataTable().ajax.reload();
-                    toastr['success'](response.message);
-                } else {
-                    toastr['error'](response.message);
-                }
-            }
+    $(document).on('click', '.add-office', function () {
+        $('#form_status').val(1);
+        $('#image_container').attr('src', '');
+        $('#object_id').val('');
+        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+            $(this).val('');
         })
     });
 })

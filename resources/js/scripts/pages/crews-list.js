@@ -1,22 +1,16 @@
-/*=========================================================================================
-    File Name: app-provider-list.js
-    Description: User List page
-    --------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/provider/pixinvent
+Dropzone.autoDiscover = false;
 
-==========================================================================================*/
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.providers-list-table'),
-        newSidebar = $('.new-provider-modal'),
-        newForm = $('.add-new-provider'),
+    var dtTable = $('.crews-list-table'),
+        newSidebar = $('.new-crew-modal'),
+        newForm = $('.add-new-crew'),
         statusObj = {
-            1: {title: 'فعال', class: 'badge-light-success status-switcher'},
-            0: {title: 'معطل', class: 'badge-light-secondary status-switcher'}
+            1: {title: 'Active', class: 'badge-light-success status-switcher'},
+            0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
         }
+
 
     var assetPath = '../../../app-assets/';
 
@@ -24,21 +18,19 @@ $(function () {
         assetPath = $('body').attr('data-asset-path')
     }
     if (dtTable.length) {
-        dtTable.DataTable({
-            ajax: assetPath + 'api/admin/providers/list',
+        dtTable.dataTable({
+            ajax: assetPath + 'api/admin/crews/list',
             columns: [
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'name'},
+                {data: 'first_name'},
                 {data: 'phone'},
-                {data: 'address'},
+                {data: 'email'},
+                {data: 'city.country.name'},
                 {data: 'city.name'},
-                {data: 'specification.name'},
-                {data: 'active'},
-                {data: 'created_at'},
-                {data: 'updated_at'},
-                {data: 'deleted_at'},
+                {data: 'job_title'},
+                {data: 'status'},
                 {data: ''}
             ],
             columnDefs: [
@@ -53,19 +45,9 @@ $(function () {
                     }
                 },
                 {
-                    targets: 5,
+                    targets: 8,
                     render: function (data, type, full, meta) {
-                        var region = full['city']['name'];
-                        var city = full['city']['region']['name'];
-                        return (
-                            region + ' - ' + city
-                        )
-                    }
-                },
-                {
-                    targets: 7,
-                    render: function (data, type, full, meta) {
-                        var $status = full['active']
+                        var $status = full['status']
                         return (
                             '<span class="badge rounded-pill btn ' +
                             statusObj[$status].class +
@@ -76,15 +58,15 @@ $(function () {
                     }
                 },
                 {
-                    targets: 8,
+                    targets: 2,
                     render: function (data, type, full, meta) {
-                        return data ? moment(data).format('DD-MM-YYYY') : '-'
+                        return full['first_name'] + ' ' + full['last_name'];
                     }
                 },
                 {
                     // Actions
                     targets: -1,
-                    title: 'الخيارات',
+                    title: 'Actions',
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return (
@@ -93,12 +75,12 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="/admin/provider/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
-                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
-                            'استعراض</a>' +
+                            '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
+                            feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
+                            'Edit</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
-                            'حذف</a></div>' +
+                            'Delete</a></div>' +
                             '</div>' +
                             '</div>'
                         )
@@ -116,26 +98,26 @@ $(function () {
                 '<"col-sm-12 col-md-6"p>' +
                 '>',
             language: {
-                sLengthMenu: 'عرض _MENU_',
-                search: 'البحث',
-                searchPlaceholder: 'البحث..'
+                sLengthMenu: 'Showing _MENU_',
+                search: 'Search',
+                searchPlaceholder: 'Search..'
             },
             // Buttons with Dropdown
             buttons: [
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'تصدير',
+                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
                     buttons: [
                         {
                             extend: 'print',
-                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'طباعة',
+                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         },
                         {
                             extend: 'csv',
-                            text: feather.icons['file-text'].toSvg({class: 'font-small-4 me-50'}) + 'Csv',
+                            text: feather.icons['file-text'].toSvg({class: 'font-small-4 me-50'}) + 'CSV',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         },
@@ -147,13 +129,13 @@ $(function () {
                         },
                         {
                             extend: 'pdf',
-                            text: feather.icons['clipboard'].toSvg({class: 'font-small-4 me-50'}) + 'Pdf',
+                            text: feather.icons['clipboard'].toSvg({class: 'font-small-4 me-50'}) + 'PDF',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         },
                         {
                             extend: 'copy',
-                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'نسخ',
+                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         }
@@ -164,11 +146,11 @@ $(function () {
                         setTimeout(function () {
                             $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
                         }, 50)
-                    },
+                    }
                 },
                 {
-                    text: 'إضافة جديد',
-                    className: 'add-provider btn btn-primary',
+                    text: 'Add new',
+                    className: 'add-crew btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in'
@@ -184,7 +166,7 @@ $(function () {
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function (row) {
                             var data = row.data()
-                            return 'تفاصيل ' + data['name']
+                            return 'Details of  ' + data['name']
                         }
                     }),
                     type: 'column',
@@ -209,56 +191,110 @@ $(function () {
                         return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
                     }
                 }
-            },
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/ar.json'
-            },
+            }
         })
     }
 
     if (newForm.length) {
+        let data = new FormData();
+
+        var phone = document.getElementById('phone');
+
+        window.intlTelInput(phone, {
+            customContainer: "w-100",
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.min.js"
+        });
+
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'name': {
+                'first_name': {
                     required: true
                 },
-                'description': {
+                'last_name': {
+                    required: true
+                },
+                'birth': {
+                    required: true
+                },
+                'file': {
+                    required: true
+                },
+                'email': {
                     required: true
                 },
                 'phone': {
                     required: true
                 },
-                'address': {
+                'job': {
                     required: true
                 },
-                'specification': {
-                    required: true
-                },
-                'city': {
-                    required: true
-                },
-                'image': {
-                    required: true
-                }
             }
         })
 
+        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+
+        $('#legal').dropzone({
+            url: assetPath + 'api/admin/crews/' + type,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            autoQueue: false,
+            init: function () {
+                this.on("addedfile", function (file) {
+                    data.append("legal", file);
+                });
+                this.on("removedfile", function () {
+                    data.delete('legal');
+                });
+            }
+        });
+
+        $('#company').dropzone({
+            url: assetPath + 'api/admin/crews/' + type,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            autoQueue: false,
+            init: function () {
+                this.on("addedfile", function (file) {
+                    data.append("company", file);
+                });
+                this.on("removedfile", function () {
+                    data.delete('company');
+                });
+            }
+        });
+
+        $('#license').dropzone({
+            url: assetPath + 'api/admin/crews/' + type,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            autoQueue: false,
+            init: function () {
+                this.on("addedfile", function (file) {
+                    data.append("license", file);
+                });
+                this.on("removedfile", function () {
+                    data.delete('license');
+                });
+            }
+        });
+
+        $('#country,#city').select2();
+
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
+            var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
             e.preventDefault()
             if (isValid) {
-                let data = new FormData();
-                data.append('name', $('#name').val());
-                data.append('description', $('#description').val());
-                data.append('city', $('#city').val());
-                data.append('phone', $('#phone').val());
-                data.append('address', $('#address').val());
-                data.append('specification', $('#specification').val());
-                data.append('image', $('input[type=file]')[0].files[0]);
+                if (type === 'update') {
+                    data.append('object_id', $('#object_id').val());
+                }
+                newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+                    data.append($(this).attr('name'), $(this).val());
+                });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/providers/add',
+                    url: assetPath + 'api/admin/crews/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -278,11 +314,12 @@ $(function () {
         })
     }
 
+
     $(document).on('click', '.item-delete', function () {
         var element = $(this);
         $.ajax({
             type: 'DELETE',
-            url: assetPath + 'api/admin/providers/' + element.data('id'),
+            url: assetPath + 'api/admin/crews/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -299,7 +336,7 @@ $(function () {
         let element = $(this);
         $.ajax({
             type: 'PUT',
-            url: assetPath + 'api/admin/providers/status/' + element.data('id'),
+            url: assetPath + 'api/admin/crews/status/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -309,6 +346,34 @@ $(function () {
                     toastr['error'](response.message);
                 }
             }
+        })
+    });
+
+    $(document).on('click', '.item-update', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        $('#modals-slide-in').modal('show')
+        $('#form_status').val(2);
+        $('#first_name').val(data.first_name);
+        $('#last_name').val(data.last_name);
+        $('#job').val(data.job_title);
+        $('#birth').val(data.dob);
+        $('#email').val(data.email);
+        $('#phone').val(data.phone);
+        $('#city_id').val(data.city.id);
+        $('#country').val(data.city.country.id);
+        $('#country').trigger('change.select2');
+        $('#address').val(data.address);
+        $('#type').val(data.type);
+        $('#object_id').val(data.id);
+    });
+
+    $(document).on('click', '.add-crew', function () {
+        $('#form_status').val(1);
+        $('#image_container').attr('src', '');
+        $('#object_id').val('');
+        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+            $(this).val('');
         })
     });
 })

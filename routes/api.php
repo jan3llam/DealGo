@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\CitiesController as CitiesAPI;
 use App\Http\Controllers\CountriesController as CountriesAPI;
+use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
+use App\Http\Controllers\TenantsController as TenantsAPI;
 use App\Http\Controllers\UsersController as UsersAPI;
 use Illuminate\Support\Facades\Route;
 
@@ -105,6 +107,30 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('/status/{id}', [AdminsAPI::class, 'status']);
         Route::put('/update/{id}', [AdminsAPI::class, 'update']);
         Route::delete('/{id}', [AdminsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'owners'], function () {
+        Route::get('/list', [OwnersAPI::class, 'list_api']);
+        Route::post('/add', [OwnersAPI::class, 'add']);
+        Route::post('/update/{id}', [OwnersAPI::class, 'update']);
+        Route::put('/status/{id}', [OwnersAPI::class, 'status']);
+        Route::delete('/{id}', [OwnersAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'tenants'], function () {
+        Route::get('/list', [TenantsAPI::class, 'list_api']);
+        Route::post('/add', [TenantsAPI::class, 'add']);
+        Route::post('/update/{id}', [TenantsAPI::class, 'update']);
+        Route::put('/status/{id}', [TenantsAPI::class, 'status']);
+        Route::delete('/{id}', [TenantsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'offices'], function () {
+        Route::get('/list', [OfficesAPI::class, 'list_api']);
+        Route::post('/add', [OfficesAPI::class, 'add']);
+        Route::post('/update/{id}', [OfficesAPI::class, 'update']);
+        Route::put('/status/{id}', [OfficesAPI::class, 'status']);
+        Route::delete('/{id}', [OfficesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'owners'], function () {

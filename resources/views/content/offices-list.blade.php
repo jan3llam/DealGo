@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Owners')
+@section('title', 'Offices')
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -22,20 +22,20 @@
 @endsection
 @section('content')
     <!-- users list start -->
-    <section class="owners-list">
+    <section class="offices-list">
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
                 <h4 class="card-title">Search & Filter</h4>
             </div>
             <div class="card-datatable table-responsive pt-0">
-                <table class="owners-list-table table">
+                <table class="offices-list-table table">
                     <thead class="table-light">
                     <tr>
                         <th></th>
                         <th>#</th>
                         <th>Full legal name</th>
-                        <th>Vessels count</th>
+                        <th>City</th>
                         <th>Contact name</th>
                         <th>Phone</th>
                         <th>Email</th>
@@ -46,14 +46,14 @@
                 </table>
             </div>
             <!-- Modal to add new user starts-->
-            <div class="modal modal-slide-in new-owner-modal fade" id="modals-slide-in">
+            <div class="modal modal-slide-in new-office-modal fade" id="modals-slide-in">
                 <div class="modal-dialog">
-                    <form class="add-new-owner modal-content pt-0">
+                    <form class="add-new-office modal-content pt-0">
                         <input type="hidden" value="1" id="form_status">
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add owner</h5>
+                            <h5 class="modal-title" id="modal-label">Add office</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
@@ -188,7 +188,7 @@
 
 @section('page-script')
     {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/owners-list.js')) }}"></script>
+    <script src="{{ asset(mix('js/scripts/pages/offices-list.js')) }}"></script>
     <script>
         $('#country').on("change.select2", function () {
             var $element = $(this);

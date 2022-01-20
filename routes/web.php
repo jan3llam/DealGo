@@ -6,8 +6,10 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\OwnersController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\TenantsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +41,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('notification', [NotificationsController::class, 'send']);
         Route::get('admins', [AdminsController::class, 'list'])->name('admins');
         Route::get('owners', [OwnersController::class, 'list'])->name('owners');
+        Route::get('tenants', [TenantsController::class, 'list'])->name('tenants');
+        Route::get('offices', [OfficesController::class, 'list'])->name('offices');
         Route::get('users', [UsersController::class, 'list'])->name('users');
         Route::get('user/{id}', [UsersController::class, 'view'])->name('user');
         Route::post('user/update', [UsersController::class, 'update'])->name('user.update');
