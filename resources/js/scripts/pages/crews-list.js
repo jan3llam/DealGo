@@ -18,8 +18,9 @@ $(function () {
         assetPath = $('body').attr('data-asset-path')
     }
     if (dtTable.length) {
+        var vessel_id = $('#vessel_id').val();
         dtTable.dataTable({
-            ajax: assetPath + 'api/admin/crews/list',
+            ajax: assetPath + 'api/admin/crews/list/' + vessel_id,
             columns: [
                 // columns according to JSON
                 {data: ''},
@@ -191,6 +192,31 @@ $(function () {
                         return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
                     }
                 }
+            },
+            initComplete: function () {
+                $(document).find('[data-bs-toggle="tooltip"]').tooltip();
+                // Adding role filter once table initialized
+                this.api()
+                    .columns(7)
+                    .every(function () {
+                        var column = this;
+                        var select = $(
+                            '<select id="UserRole" class="form-select ms-50 text-capitalize"><option value=""> Select Status </option></select>'
+                        )
+                            .appendTo('.invoice_status')
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function (d, j) {
+                                select.append('<option value="' + d + '" class="text-capitalize">' + d + '</option>');
+                            });
+                    });
             }
         })
     }
@@ -279,7 +305,7 @@ $(function () {
             }
         });
 
-        $('#country,#city').select2();
+        $('#country,#city,#vessel').select2();
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()

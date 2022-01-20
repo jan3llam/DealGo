@@ -16,6 +16,16 @@ class Vessel extends Model
         return $this->belongsTo(Owner::class);
     }
 
+    public function type()
+    {
+        return $this->belongsTo(vType::class, 'type_id');
+    }
+
+    public function crew()
+    {
+        return $this->hasMany(Crew::class);
+    }
+
 //    public function type()
 //    {
 //        return $this->belongsTo(User::class);

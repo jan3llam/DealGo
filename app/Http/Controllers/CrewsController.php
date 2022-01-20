@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Models\Crew;
+use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -11,14 +12,25 @@ use Validator;
 
 class CrewsController extends Controller
 {
-    public function list()
+    public function list($id = null)
     {
         $breadcrumbs = [
             ['link' => "admin/home", 'name' => "Home"], ['name' => "Vessels crew"]
         ];
 
         $countries = Country::all();
-        return view('content.crews-list', ['breadcrumbs' => $breadcrumbs, 'countries' => $countries]);
+        $vessels = Vessel::all();
+        $vessel = null;
+        if ($id) {
+            $vessel = Vessel::find($id);
+        }
+
+        return view('content.crews-list', [
+            'breadcrumbs' => $breadcrumbs,
+            'countries' => $countries,
+            'vessel' => $vessel,
+            'vessels' => $vessels
+        ]);
     }
 
     public function list_api()
@@ -31,7 +43,7 @@ class CrewsController extends Controller
         $fileName = null;
         $params = $request->all();
         $validator = Validator::make($params, [
-
+            'vessel' => 'required|numeric',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'job' => 'required|string',
@@ -57,6 +69,7 @@ class CrewsController extends Controller
 
         $item->file = $fileName;
 
+        $item->vessel_id = $params['vessel'];
         $item->email = $params['email'];
         $item->phone = $params['phone'];
         $item->first_name = $params['first_name'];
@@ -93,6 +106,7 @@ class CrewsController extends Controller
 
         $params = $request->all();
         $validator = Validator::make($params, [
+            'vessel' => 'required|numeric',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'job' => 'required|string',
@@ -118,6 +132,7 @@ class CrewsController extends Controller
 
         $item->file = $fileName;
 
+        $item->vessel_id = $params['vessel'];
         $item->email = $params['email'];
         $item->phone = $params['phone'];
         $item->first_name = $params['first_name'];

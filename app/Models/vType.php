@@ -6,18 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Crew extends Model
+class vType extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'vessels_types';
 
-    public function city()
+    public function vessels()
     {
-        return $this->belongsTo(City::class);
-    }
-
-    public function vessel()
-    {
-        return $this->belongsTo(Vessel::class);
+        return $this->hasMany(Vessel::class, 'type_id');
     }
 }

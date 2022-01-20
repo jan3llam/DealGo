@@ -9,4 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Office extends Model
 {
     use HasFactory, SoftDeletes;
+
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }

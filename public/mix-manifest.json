@@ -105,6 +105,7 @@
     "/js/scripts/maps/map-leaflet.js": "/js/scripts/maps/map-leaflet.js",
     "/js/scripts/pages/admins-list.js": "/js/scripts/pages/admins-list.js",
     "/js/scripts/pages/auth-login.js": "/js/scripts/pages/auth-login.js",
+    "/js/scripts/pages/crews-list.js": "/js/scripts/pages/crews-list.js",
     "/js/scripts/pages/modal-edit-user.js": "/js/scripts/pages/modal-edit-user.js",
     "/js/scripts/pages/offices-list.js": "/js/scripts/pages/offices-list.js",
     "/js/scripts/pages/owners-list.js": "/js/scripts/pages/owners-list.js",

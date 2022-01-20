@@ -2,10 +2,7 @@
 
 return [
     "Home" => "Home",
-    "Map management" => "Map management",
-    "Countries" => "Countries",
     "States" => "States",
-    "Cities" => "Cities",
     "Vessels" => "Vessels",
     "Goods types" => "Goods types",
     "Vessels types" => "Vessels types",

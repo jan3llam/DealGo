@@ -23,6 +23,7 @@
 @section('content')
     <!-- users list start -->
     <section class="crews-list">
+        <input type="hidden" id="vessel_id" value="{{$vessel ? $vessel->id : null}}">
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
@@ -58,12 +59,13 @@
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="type">Type</label>
-                                <select type="text" class="form-control dt-full-name" id="type"
-                                        name="type">
+                                <label class="form-label" for="vessel">Vessel</label>
+                                <select type="text" class="form-control dt-full-name select2" id="vessel"
+                                        name="vessel">
                                     <option value="" disabled selected>Kindly choose</option>
-                                    <option value="1">Company</option>
-                                    <option value="2">Individual</option>
+                                    @foreach($vessels as $vessel)
+                                        <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
