@@ -1,0 +1,66 @@
+{
+    "menu": [
+        {
+            "url": "/admin/home",
+            "name": "Home",
+            "icon": "home",
+            "slug": "admin.home"
+        },
+        {
+            "url": "/admin/vessels",
+            "name": "Vessels",
+            "icon": "anchor",
+            "slug": "admin.vessels",
+            "submenu": [
+                {
+                    "url": "/admin/vessels",
+                    "name": "Vessels",
+                    "icon": "anchor",
+                    "slug": "admin.vessels"
+                },
+                {
+                    "url": "/admin/owners",
+                    "name": "Owners",
+                    "icon": "user-check",
+                    "slug": "admin.owners"
+                },
+                {
+                    "url": "/admin/tenants",
+                    "name": "Tenants",
+                    "icon": "user-plus",
+                    "slug": "admin.tenants"
+                },
+                {
+                    "url": "/admin/crews",
+                    "name": "Crews",
+                    "icon": "users",
+                    "slug": "admin.crews"
+                },
+                {
+                    "url": "/admin/vtypes",
+                    "name": "Vessels types",
+                    "icon": "tool",
+                    "slug": "admin.vtypes"
+                },
+                {
+                    "url": "/admin/g_types",
+                    "name": "Goods types",
+                    "icon": "package",
+                    "slug": "admin.g_types"
+                },
+                {
+                    "url": "/admin/maintenance",
+                    "name": "Maintenance",
+                    "icon": "file-text",
+                    "slug": "admin.maintenance"
+                }
+            ]
+        },
+        {
+            "url": "/admin/offices",
+            "name": "Offices",
+            "icon": "briefcase",
+            "slug": "admin.offices"
+        }
+    ]
+}
