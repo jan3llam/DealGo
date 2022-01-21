@@ -148,6 +148,15 @@
                                 <div class="dropzone" id="legal">
                                 </div>
                             </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="gtype">Goods types</label>
+                                <select type="text" class="form-control dt-full-name select2" id="gtype"
+                                        name="gtype">
+                                    @foreach($types as $type)
+                                        <option value="{{$type->id}}">{{$type->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 Submit
                             </button>

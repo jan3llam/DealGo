@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\gType;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -18,12 +19,13 @@ class TenantsController extends Controller
         ];
 
         $countries = Country::all();
-        return view('content.tenants-list', ['breadcrumbs' => $breadcrumbs, 'countries' => $countries]);
+        $types = gType::all();
+        return view('content.tenants-list', ['breadcrumbs' => $breadcrumbs, 'countries' => $countries, 'types' => $types]);
     }
 
     public function list_api()
     {
-        return response()->success(Tenant::withTrashed()->with('city.country')->get());
+        return response()->success(Tenant::withTrashed()->with(['city.country', 'goods_types'])->get());
     }
 
     public function add(Request $request)
@@ -44,6 +46,7 @@ class TenantsController extends Controller
             'password' => 'required',
             'email' => 'required',
             'phone' => 'required',
+            'gtype' => 'required',
             'legal' => 'required|file',
         ]);
 
@@ -110,6 +113,11 @@ class TenantsController extends Controller
 
         $item->save();
 
+        $gtypes = explode(',', $request->input('gtype', null));
+        foreach ($gtypes as $type) {
+            $item->goods_types()->attach($type);
+        }
+
         return response()->success();
     }
 
@@ -134,6 +142,7 @@ class TenantsController extends Controller
             'password' => 'required',
             'email' => 'required',
             'phone' => 'required',
+            'gtype' => 'required',
             'legal' => 'required|file',
         ]);
 
@@ -193,6 +202,11 @@ class TenantsController extends Controller
                 Storage::disk('public_images')->putFileAs('', $file, $fileName);
                 $filesArr[] = $fileName;
             }
+        }
+
+        $gtypes = explode(',', $request->input('gtype', null));
+        foreach ($gtypes as $type) {
+            $item->goods_types()->attach($type);
         }
 
         $item->files = json_encode($filesArr);

@@ -3,13 +3,9 @@ Dropzone.autoDiscover = false;
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.tenants-list-table'),
-        newSidebar = $('.new-tenant-modal'),
-        newForm = $('.add-new-tenant'),
-        statusObj = {
-            1: {title: 'Active', class: 'badge-light-success status-switcher'},
-            0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
-        }
+    var dtTable = $('.maintenances-list-table'),
+        newSidebar = $('.new-maintenance-modal'),
+        newForm = $('.add-new-maintenance');
 
 
     var assetPath = '../../../app-assets/';
@@ -18,18 +14,17 @@ $(function () {
         assetPath = $('body').attr('data-asset-path')
     }
     if (dtTable.length) {
+        var vessel_id = $('#vessel_id').val();
         dtTable.dataTable({
-            ajax: assetPath + 'api/admin/tenants/list',
+            ajax: assetPath + 'api/admin/maintenances/list/' + vessel_id,
             columns: [
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'full_name'},
-                {data: 'city.name'},
-                {data: 'contact_name'},
-                {data: 'phone'},
-                {data: 'email'},
-                {data: 'status'},
+                {data: 'name'},
+                {data: 'start_at'},
+                {data: 'end_at'},
+                {data: 'description'},
                 {data: ''}
             ],
             columnDefs: [
@@ -41,25 +36,6 @@ $(function () {
                     targets: 0,
                     render: function (data, type, full, meta) {
                         return ''
-                    }
-                },
-                {
-                    targets: 7,
-                    render: function (data, type, full, meta) {
-                        var $status = full['status']
-                        return (
-                            '<span class="badge rounded-pill btn ' +
-                            statusObj[$status].class +
-                            '" text-capitalized data-id="' + full['id'] + '">' +
-                            statusObj[$status].title +
-                            '</span>'
-                        )
-                    }
-                },
-                {
-                    targets: 2,
-                    render: function (data, type, full, meta) {
-                        return data ? data : '-';
                     }
                 },
                 {
@@ -149,7 +125,7 @@ $(function () {
                 },
                 {
                     text: 'Add new',
-                    className: 'add-tenant btn btn-primary',
+                    className: 'add-maintenance btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in'
@@ -190,6 +166,31 @@ $(function () {
                         return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
                     }
                 }
+            },
+            initComplete: function () {
+                $(document).find('[data-bs-toggle="tooltip"]').tooltip();
+                // Adding role filter once table initialized
+                this.api()
+                    .columns(7)
+                    .every(function () {
+                        var column = this;
+                        var select = $(
+                            '<select id="UserRole" class="form-select ms-50 text-capitalize"><option value=""> Select Status </option></select>'
+                        )
+                            .appendTo('.invoice_status')
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function (d, j) {
+                                select.append('<option value="' + d + '" class="text-capitalize">' + d + '</option>');
+                            });
+                    });
             }
         })
     }
@@ -197,44 +198,19 @@ $(function () {
     if (newForm.length) {
         let data = new FormData();
 
-        $(document).on('change', '#type', function () {
-            var element = $(this);
-            if (parseInt(element.val()) === 1) {
-                $('#company-container').show();
-            } else {
-                $('#company-container').hide();
-            }
-        });
-
-        var phone = document.getElementById('phone');
-
-        window.intlTelInput(phone, {
-            customContainer: "w-100",
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.min.js"
-        });
-
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'type': {
+                'name': {
                     required: true
                 },
-                'full_name': {
+                'start_at': {
                     required: true
                 },
-                'commercial_number': {
+                'end_at': {
                     required: true
                 },
-                'contact': {
-                    required: true
-                },
-                'legal': {
-                    required: true
-                },
-                'email': {
-                    required: true
-                },
-                'phone': {
+                'description': {
                     required: true
                 },
             }
@@ -242,53 +218,16 @@ $(function () {
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
-        $('#legal').dropzone({
-            url: assetPath + 'api/admin/tenants/' + type,
+        $('#files').dropzone({
+            url: assetPath + 'api/admin/maintenances/' + type,
             autoProcessQueue: false,
-            addRemoveLinks: true,
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("legal", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('legal');
+                    data.append("files[]", file);
                 });
             }
         });
-
-        $('#company').dropzone({
-            url: assetPath + 'api/admin/tenants/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("company", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('company');
-                });
-            }
-        });
-
-        $('#license').dropzone({
-            url: assetPath + 'api/admin/tenants/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("license", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('license');
-                });
-            }
-        });
-
-        $('#country,#city').select2();
-        $('#gtype').select2({multiple: true});
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
@@ -303,7 +242,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/tenants/' + type,
+                    url: assetPath + 'api/admin/maintenances/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -328,7 +267,7 @@ $(function () {
         var element = $(this);
         $.ajax({
             type: 'DELETE',
-            url: assetPath + 'api/admin/tenants/' + element.data('id'),
+            url: assetPath + 'api/admin/maintenances/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -341,52 +280,23 @@ $(function () {
         })
     })
 
-    $(document).on('click', '.status-switcher', function () {
-        let element = $(this);
-        $.ajax({
-            type: 'PUT',
-            url: assetPath + 'api/admin/tenants/status/' + element.data('id'),
-            dataType: 'json',
-            success: function (response) {
-                if (parseInt(response.code) === 1) {
-                    dtTable.DataTable().ajax.reload();
-                    toastr['success'](response.message);
-                } else {
-                    toastr['error'](response.message);
-                }
-            }
-        })
-    });
-
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#name').val(data.full_name);
-        $('#contact').val(data.contact_name);
-        $('#commercial').val(data.commercial_number);
-        $('#email').val(data.email);
-        $('#phone').val(data.phone);
-        $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id).trigger('change.select2');
-        var goods_types = [];
-        data.goods_types.forEach(item => {
-            goods_types.push(item.id);
-        });
-        $('#vtype').val(goods_types).trigger('change.select2');
-        $('#address_1').val(data.address_1);
-        $('#address_2').val(data.address_2);
-        $('#zip').val(data.zip_code);
-        $('#type').val(data.type);
+        $('#name').val(data.name);
+        $('#start').val(data.start_at);
+        $('#end').val(data.end_at);
+        $('#description').val(data.description);
         $('#object_id').val(data.id);
     });
 
-    $(document).on('click', '.add-tenant', function () {
+    $(document).on('click', '.add-maintenance', function () {
         $('#form_status').val(1);
         $('#image_container').attr('src', '');
         $('#object_id').val('');
-        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+        newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         })
     });

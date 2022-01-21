@@ -15,4 +15,9 @@ class Tenant extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function goods_types()
+    {
+        return $this->belongsToMany(gType::class, 'tenants_goods_types', 'tenant_id', 'good_id');
+    }
 }

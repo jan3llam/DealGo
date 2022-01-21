@@ -8,7 +8,7 @@ return [
     "Vessels types" => "Vessels types",
     "Crews" => "Crews",
     "Offices" => "Offices",
-    "Maintenance" => "Maintenance",
+    "Maintenances" => "Maintenances",
     "Tenants" => "Tenants",
     "Owners" => "Owners",
     "Settings" => "Settings",

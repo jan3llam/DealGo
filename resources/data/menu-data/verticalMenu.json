@@ -49,10 +49,10 @@
                     "slug": "admin.g_types"
                 },
                 {
-                    "url": "/admin/maintenance",
-                    "name": "Maintenance",
+                    "url": "/admin/maintenances",
+                    "name": "Maintenances",
                     "icon": "file-text",
-                    "slug": "admin.maintenance"
+                    "slug": "admin.maintenances"
                 }
             ]
         },

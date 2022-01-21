@@ -7,6 +7,7 @@ use App\Http\Controllers\CrewsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoodsTypesController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\MaintenancesController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\OwnersController;
@@ -54,6 +55,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('vtypes', [VesselsTypesController::class, 'list'])->name('vtypes');
         Route::get('gtypes', [GoodsTypesController::class, 'list'])->name('gtypes');
         Route::get('crews/{id?}', [CrewsController::class, 'list'])->name('crews');
+        Route::get('maintenances/{id?}', [MaintenancesController::class, 'list'])->name('maintenances');
         Route::get('users', [UsersController::class, 'list'])->name('users');
         Route::get('user/{id}', [UsersController::class, 'view'])->name('user');
         Route::post('user/update', [UsersController::class, 'update'])->name('user.update');

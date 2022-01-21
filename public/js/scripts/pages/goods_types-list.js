@@ -261,7 +261,6 @@ $(function () {
         data.vessels_types.forEach(item => {
             vessels_types.push(item.id);
         });
-        console.log(vessels_types);
         $('#parent').val(data.parent_id).trigger('change.select2');
         $('#vtype').val(vessels_types).trigger('change.select2');
         $('#object_id').val(data.id);
