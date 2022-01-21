@@ -12,6 +12,8 @@ use App\Http\Controllers\OwnersController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TenantsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\VesselsController;
+use App\Http\Controllers\VesselsTypesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -44,6 +46,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('owners', [OwnersController::class, 'list'])->name('owners');
         Route::get('tenants', [TenantsController::class, 'list'])->name('tenants');
         Route::get('offices', [OfficesController::class, 'list'])->name('offices');
+        Route::get('vessels', [VesselsController::class, 'list'])->name('vessels');
+        Route::get('vtypes', [VesselsTypesController::class, 'list'])->name('vtypes');
         Route::get('crews/{id?}', [CrewsController::class, 'list'])->name('crews');
         Route::get('users', [UsersController::class, 'list'])->name('users');
         Route::get('user/{id}', [UsersController::class, 'view'])->name('user');

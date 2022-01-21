@@ -12,6 +12,11 @@ class vType extends Model
 
     protected $table = 'vessels_types';
 
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
     public function vessels()
     {
         return $this->hasMany(Vessel::class, 'type_id');

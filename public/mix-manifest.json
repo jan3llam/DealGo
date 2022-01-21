@@ -112,6 +112,8 @@
     "/js/scripts/pages/settings-view.js": "/js/scripts/pages/settings-view.js",
     "/js/scripts/pages/tenants-list.js": "/js/scripts/pages/tenants-list.js",
     "/js/scripts/pages/users-list.js": "/js/scripts/pages/users-list.js",
+    "/js/scripts/pages/vessels_types-list.js": "/js/scripts/pages/vessels_types-list.js",
+    "/js/scripts/pages/vessels-list.js": "/js/scripts/pages/vessels-list.js",
     "/js/scripts/pagination/components-pagination.js": "/js/scripts/pagination/components-pagination.js",
     "/js/scripts/tables/table-datatables-advanced.js": "/js/scripts/tables/table-datatables-advanced.js",
     "/js/scripts/tables/table-datatables-basic.js": "/js/scripts/tables/table-datatables-basic.js",

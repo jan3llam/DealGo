@@ -37,10 +37,10 @@
                     "slug": "admin.crews"
                 },
                 {
-                    "url": "/admin/v_types",
+                    "url": "/admin/vtypes",
                     "name": "Vessels types",
                     "icon": "tool",
-                    "slug": "admin.v_types"
+                    "slug": "admin.vtypes"
                 },
                 {
                     "url": "/admin/g_types",

@@ -8,6 +8,8 @@ use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
 use App\Http\Controllers\UsersController as UsersAPI;
+use App\Http\Controllers\VesselsController as VesselsAPI;
+use App\Http\Controllers\VesselsTypesController as VesselsTypesAPI;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -142,12 +144,27 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('/{id}', [OwnersAPI::class, 'delete']);
     });
 
+    Route::group(['prefix' => 'vessels-types'], function () {
+        Route::get('/list', [VesselsTypesAPI::class, 'list_api']);
+        Route::post('/add', [VesselsTypesAPI::class, 'add']);
+        Route::post('/update/{id}', [VesselsTypesAPI::class, 'update']);
+        Route::delete('/{id}', [VesselsTypesAPI::class, 'delete']);
+    });
+
     Route::group(['prefix' => 'crews'], function () {
-        Route::get('/list', [CrewsAPI::class, 'list_api']);
+        Route::get('/list/{id?}', [CrewsAPI::class, 'list_api']);
         Route::post('/add', [CrewsAPI::class, 'add']);
         Route::post('/update/{id}', [CrewsAPI::class, 'update']);
         Route::put('/status/{id}', [CrewsAPI::class, 'status']);
         Route::delete('/{id}', [CrewsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'vessels'], function () {
+        Route::get('/list', [VesselsAPI::class, 'list_api']);
+        Route::post('/add', [VesselsAPI::class, 'add']);
+        Route::post('/update/{id}', [VesselsAPI::class, 'update']);
+        Route::put('/status/{id}', [VesselsAPI::class, 'status']);
+        Route::delete('/{id}', [VesselsAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'users'], function () {
