@@ -43,7 +43,7 @@
                     "slug": "admin.vtypes"
                 },
                 {
-                    "url": "/admin/g_types",
+                    "url": "/admin/gtypes",
                     "name": "Goods types",
                     "icon": "package",
                     "slug": "admin.g_types"

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\CitiesController as CitiesAPI;
 use App\Http\Controllers\CountriesController as CountriesAPI;
 use App\Http\Controllers\CrewsController as CrewsAPI;
+use App\Http\Controllers\GoodsTypesController as GoodsTypesAPI;
 use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
@@ -149,6 +150,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [VesselsTypesAPI::class, 'add']);
         Route::post('/update/{id}', [VesselsTypesAPI::class, 'update']);
         Route::delete('/{id}', [VesselsTypesAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'goods-types'], function () {
+        Route::get('/list', [GoodsTypesAPI::class, 'list_api']);
+        Route::post('/add', [GoodsTypesAPI::class, 'add']);
+        Route::post('/update/{id}', [GoodsTypesAPI::class, 'update']);
+        Route::delete('/{id}', [GoodsTypesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'crews'], function () {
