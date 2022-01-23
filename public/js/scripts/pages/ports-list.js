@@ -3,9 +3,9 @@ Dropzone.autoDiscover = false;
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.requests-list-table'),
-        newSidebar = $('.new-request-modal'),
-        newForm = $('.add-new-request'),
+    var dtTable = $('.ports-list-table'),
+        newSidebar = $('.new-port-modal'),
+        newForm = $('.add-new-port'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
             0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
@@ -19,18 +19,15 @@ $(function () {
     }
     if (dtTable.length) {
         dtTable.dataTable({
-            ajax: assetPath + 'api/admin/requests/list',
+            ajax: assetPath + 'api/admin/ports/list',
             columns: [
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
                 {data: 'name'},
-                {data: 'tenant.contact_name'},
-                {data: 'port_from.name'},
-                {data: 'port_to.name'},
-                {data: 'owner'},
-                {data: 'vessel'},
-                {data: 'date_to'},
+                {data: 'city.country.name'},
+                {data: 'city.name'},
+                {data: 'status'},
                 {data: ''}
             ],
             columnDefs: [
@@ -45,9 +42,16 @@ $(function () {
                     }
                 },
                 {
-                    targets: [6, 7],
+                    targets: 5,
                     render: function (data, type, full, meta) {
-                        return data ? data.name : '-';
+                        var $status = full['status']
+                        return (
+                            '<span class="badge rounded-pill btn ' +
+                            statusObj[$status].class +
+                            '" text-capitalized data-id="' + full['id'] + '">' +
+                            statusObj[$status].title +
+                            '</span>'
+                        )
                     }
                 },
                 {
@@ -62,6 +66,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
+                            feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
+                            'Edit</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             'Delete</a></div>' +
@@ -134,7 +141,7 @@ $(function () {
                 },
                 {
                     text: 'Add new',
-                    className: 'add-request btn btn-primary',
+                    className: 'add-port btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in'
@@ -182,71 +189,13 @@ $(function () {
     if (newForm.length) {
         let data = new FormData();
 
-        $('#goods_container').repeater({
-            initEmpty: true,
-            show: function () {
-                $(this).slideDown(function () {
-                    $(this).find('.goods-select2').select2();
-                });
-                // Feather Icons
-                if (feather) {
-                    feather.replace({width: 14, height: 14});
-                }
-            }
-        });
-
-        $('#routes_container').repeater({
-            initEmpty: true,
-            show: function () {
-                $(this).slideDown(function () {
-                    $(this).find('.routes-select2').select2();
-                });
-                // Feather Icons
-                if (feather) {
-                    feather.replace({width: 14, height: 14});
-                }
-            }
-        });
-
-        $(document).on('change', '#contract', function () {
-            var element = $(this);
-            if (parseInt(element.val()) === 1 || parseInt(element.val()) === 3) {
-                $('#owners_container').show();
-            } else {
-                $('#owners_container').hide();
-            }
-
-            if (parseInt(element.val()) === 1) {
-                $('#routes_container').hide();
-            } else {
-                $('#routes_container').show();
-            }
-
-        });
-
-
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'type': {
+                'name': {
                     required: true
                 },
-                'full_name': {
-                    required: true
-                },
-                'commercial_number': {
-                    required: true
-                },
-                'contact': {
-                    required: true
-                },
-                'legal': {
-                    required: true
-                },
-                'email': {
-                    required: true
-                },
-                'phone': {
+                'city': {
                     required: true
                 },
             }
@@ -254,22 +203,7 @@ $(function () {
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
-        $('#files').dropzone({
-            url: assetPath + 'api/admin/requests/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("files", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('files');
-                });
-            }
-        });
-
-        $('#tenant,#port_from,#port_to,#contract,#owner').select2();
+        $('#country,#city').select2();
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
@@ -284,7 +218,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/requests/' + type,
+                    url: assetPath + 'api/admin/ports/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -309,7 +243,7 @@ $(function () {
         var element = $(this);
         $.ajax({
             type: 'DELETE',
-            url: assetPath + 'api/admin/requests/' + element.data('id'),
+            url: assetPath + 'api/admin/ports/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -326,7 +260,7 @@ $(function () {
         let element = $(this);
         $.ajax({
             type: 'PUT',
-            url: assetPath + 'api/admin/requests/status/' + element.data('id'),
+            url: assetPath + 'api/admin/ports/status/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -344,24 +278,15 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#name').val(data.full_name);
-        $('#contact').val(data.contact_name);
-        $('#commercial').val(data.commercial_number);
-        $('#email').val(data.email);
-        $('#phone').val(data.phone);
+        $('#name').val(data.name);
         $('#city_id').val(data.city.id);
         $('#country').val(data.city.country.id);
         $('#country').trigger('change.select2');
-        $('#address_1').val(data.address_1);
-        $('#address_2').val(data.address_2);
-        $('#zip').val(data.zip_code);
-        $('#type').val(data.type);
         $('#object_id').val(data.id);
     });
 
-    $(document).on('click', '.add-request', function () {
+    $(document).on('click', '.add-port', function () {
         $('#form_status').val(1);
-        $('#image_container').attr('src', '');
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');

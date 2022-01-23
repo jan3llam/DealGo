@@ -24,12 +24,13 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'full_name'},
-                {data: 'vessels_count'},
-                {data: 'contact_name'},
-                {data: 'phone'},
-                {data: 'email'},
-                {data: 'status'},
+                {data: 'name'},
+                {data: 'tenant.contact_name'},
+                {data: 'port_from.name'},
+                {data: 'port_to.name'},
+                {data: 'owner'},
+                {data: 'vessel'},
+                {data: 'date_to'},
                 {data: ''}
             ],
             columnDefs: [
@@ -44,22 +45,9 @@ $(function () {
                     }
                 },
                 {
-                    targets: 7,
+                    targets: [6, 7],
                     render: function (data, type, full, meta) {
-                        var $status = full['status']
-                        return (
-                            '<span class="badge rounded-pill btn ' +
-                            statusObj[$status].class +
-                            '" text-capitalized data-id="' + full['id'] + '">' +
-                            statusObj[$status].title +
-                            '</span>'
-                        )
-                    }
-                },
-                {
-                    targets: 2,
-                    render: function (data, type, full, meta) {
-                        return data ? data : '-';
+                        return data ? data.name : '-';
                     }
                 },
                 {
@@ -74,9 +62,6 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
-                            feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Edit</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             'Delete</a></div>' +
@@ -197,21 +182,48 @@ $(function () {
     if (newForm.length) {
         let data = new FormData();
 
-        $(document).on('change', '#type', function () {
-            var element = $(this);
-            if (parseInt(element.val()) === 1) {
-                $('#company-container').show();
-            } else {
-                $('#company-container').hide();
+        $('#goods_container').repeater({
+            initEmpty: true,
+            show: function () {
+                $(this).slideDown(function () {
+                    $(this).find('.goods-select2').select2();
+                });
+                // Feather Icons
+                if (feather) {
+                    feather.replace({width: 14, height: 14});
+                }
             }
         });
 
-        var phone = document.getElementById('phone');
-
-        window.intlTelInput(phone, {
-            customContainer: "w-100",
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.min.js"
+        $('#routes_container').repeater({
+            initEmpty: true,
+            show: function () {
+                $(this).slideDown(function () {
+                    $(this).find('.routes-select2').select2();
+                });
+                // Feather Icons
+                if (feather) {
+                    feather.replace({width: 14, height: 14});
+                }
+            }
         });
+
+        $(document).on('change', '#contract', function () {
+            var element = $(this);
+            if (parseInt(element.val()) === 1 || parseInt(element.val()) === 3) {
+                $('#owners_container').show();
+            } else {
+                $('#owners_container').hide();
+            }
+
+            if (parseInt(element.val()) === 1) {
+                $('#routes_container').hide();
+            } else {
+                $('#routes_container').show();
+            }
+
+        });
+
 
         newForm.validate({
             errorClass: 'error',
@@ -242,52 +254,22 @@ $(function () {
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
-        $('#legal').dropzone({
+        $('#files').dropzone({
             url: assetPath + 'api/admin/requests/' + type,
             autoProcessQueue: false,
             addRemoveLinks: true,
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("legal", file);
+                    data.append("files", file);
                 });
                 this.on("removedfile", function () {
-                    data.delete('legal');
+                    data.delete('files');
                 });
             }
         });
 
-        $('#company').dropzone({
-            url: assetPath + 'api/admin/requests/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("company", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('company');
-                });
-            }
-        });
-
-        $('#license').dropzone({
-            url: assetPath + 'api/admin/requests/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("license", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('license');
-                });
-            }
-        });
-
-        $('#country,#city').select2();
+        $('#tenant,#port_from,#port_to,#contract,#owner').select2();
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()

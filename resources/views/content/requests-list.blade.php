@@ -18,6 +18,12 @@
     {{-- Page Css files --}}
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
+    <style>
+        #routes_container .select2-container--default {
+            flex: 1 1 auto;
+            width: auto !important;
+        }
+    </style>
 @endsection
 @section('content')
     <!-- users list start -->
@@ -33,12 +39,13 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Full legal name</th>
-                        <th>Vessels count</th>
-                        <th>Contact name</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Status</th>
+                        <th>Title</th>
+                        <th>Tenant</th>
+                        <th>From Port</th>
+                        <th>To Port</th>
+                        <th>Owner</th>
+                        <th>Vessel</th>
+                        <th>Arrive @</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -61,89 +68,134 @@
                                        placeholder="Title" name="name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="country">Country</label>
-                                <select type="text" class="form-control dt-full-name select2" id="country"
-                                        name="country">
+                                <label class="form-label" for="tenant">Tenant</label>
+                                <select class="form-control dt-full-name select2" id="tenant"
+                                        name="tenant">
                                     <option value="" disabled selected>Kindly choose</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{$country->id}}">{{$country->name}}</option>
+                                    @foreach($tenants as $tenant)
+                                        <option value="{{$tenant->id}}">{{$tenant->contact_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="commercial">Commercial #</label>
-                                <input type="text" class="form-control dt-full-name" id="commercial"
-                                       placeholder="Commercial #" name="commercial"/>
-                            </div>
-                            <div class=mb-1>
-                                <label for="file" class="form-label">License file</label>
-                                <div class="dropzone" id="license">
-                                    <div class="dz-message">Drop files here or click to upload.</div>
-                                </div>
-                            </div>
-                            <div class=mb-1>
-                                <label for="file" class="form-label">Company file</label>
-                                <div class="dropzone" id="company">
-                                    <div class="dz-message">Drop files here or click to upload.</div>
-                                </div>
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="contact">Contact name</label>
-                                <input type="text" class="form-control dt-full-name" id="contact"
-                                       placeholder="Contact name" name="contact"/>
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="email">Email</label>
-                                <input type="email" class="form-control dt-full-name" id="email"
-                                       placeholder="Email" name="email"/>
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="phone">Phone</label>
-                                <input type="tel" class="form-control dt-full-name" id="phone"
-                                       placeholder="Phone" name="phone"/>
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="zip">Zip code</label>
-                                <input type="text" class="form-control dt-full-name" id="zip"
-                                       placeholder="Zip code" name="zip"/>
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="password">Password</label>
-                                <input type="password" class="form-control dt-full-name" id="password"
-                                       placeholder="Password" name="password"/>
-                            </div>
-
-                            <div class="mb-1">
-                                <label class="form-label" for="country">Country</label>
-                                <select type="text" class="form-control dt-full-name select2" id="country"
-                                        name="country">
+                                <label class="form-label" for="port_from">Origin of shipment</label>
+                                <select class="form-control dt-full-name select2" id="port_from"
+                                        name="port_from">
                                     <option value="" disabled selected>Kindly choose</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{$country->id}}">{{$country->name}}</option>
+                                    @foreach($ports as $port)
+                                        <option value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <input type="hidden" value="" id="city_id">
-                                <label class="form-label" for="city">Cities</label>
-                                <select type="text" class="form-control dt-full-name select2" id="city"
-                                        name="city">
+                                <label class="form-label" for="port_to">Destination of shipment</label>
+                                <select class="form-control dt-full-name select2" id="port_to"
+                                        name="port_to">
                                     <option value="" disabled selected>Kindly choose</option>
+                                    @foreach($ports as $port)
+                                        <option value="{{$port->id}}">{{$port->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="address_1">Address 1</label>
-                                <input type="text" class="form-control dt-full-name" id="address_1"
-                                       placeholder="Address 1" name="address_1"/>
+                                <label class="form-label" for="contract">Contract type</label>
+                                <select class="form-control dt-full-name select2" id="contract" name="contract">
+                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="1">Voyage</option>
+                                    <option value="2">Time</option>
+                                    <option value="3">Bareboat</option>
+                                    <option value="4">COA</option>
+                                </select>
+                            </div>
+                            <div id="routes_container" style="display: none">
+                                <div data-repeater-list="routes">
+                                    <label class="form-label" for="route">Routes</label>
+                                    <div data-repeater-item>
+                                        <div class="mb-1">
+                                            <div class="input-group">
+                                                <select class="form-control dt-full-name routes-select2"
+                                                        name="route">
+                                                    <option value="" disabled selected>Kindly choose</option>
+                                                    @foreach($ports as $port)
+                                                        <option value="{{$port->id}}">{{$port->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-icon btn-danger" type="button"
+                                                            data-repeater-delete>
+                                                        <i data-feather="trash" class="me-25"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-icon btn-success" type="button" data-repeater-create>
+                                    <i data-feather="plus" class="me-25"></i>
+                                    <span>Add New</span>
+                                </button>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="address_2">Address 2</label>
-                                <input type="text" class="form-control dt-full-name" id="address_2"
-                                       placeholder="Address 2" name="address_2"/>
+                                <label class="form-label" for="date_from">From date</label>
+                                <input type="date" class="form-control dt-full-name" id="date_from"
+                                       placeholder="From date" name="date_from"/>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="date_to">To date</label>
+                                <input type="date" class="form-control dt-full-name" id="date_to"
+                                       placeholder="To date" name="date_to"/>
+                            </div>
+                            <div id="goods_container">
+                                <div data-repeater-list="goods">
+                                    <div data-repeater-item>
+                                        <div class="mb-1">
+                                            <label class="form-label" for="gtype">Goods type</label>
+                                            <select type="text" class="form-control dt-full-name goods-select2"
+                                                    name="gtype">
+                                                @foreach($types as $type)
+                                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-1">
+                                            <label class="form-label" for="weight">Gross weight, kg</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control dt-full-name"
+                                                       placeholder="Gross weight, kg" name="weight"/>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-icon btn-danger" type="button"
+                                                            data-repeater-delete>
+                                                        <i data-feather="trash" class="me-25"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-icon btn-success" type="button" data-repeater-create>
+                                    <i data-feather="plus" class="me-25"></i>
+                                    <span>Add New</span>
+                                </button>
+                            </div>
+                            <div id="owners_container" style="display: none">
+                                <div class="mb-1">
+                                    <label class="form-label" for="owner">Ship owner</label>
+                                    <select type="text" class="form-control dt-full-name select2" id="owner"
+                                            name="owner">
+                                        @foreach($owners as $owner)
+                                            <option value="{{$owner->id}}">{{$owner->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="description">Description</label>
+                                <textarea class="form-control dt-full-name" id="description"
+                                          placeholder="Description" name="description"></textarea>
                             </div>
                             <div class=mb-1>
-                                <label for="file" class="form-label">Legal file (ID, Passport)</label>
-                                <div class="dropzone" id="legal">
+                                <label for="files" class="form-label">Files</label>
+                                <div class="dropzone" id="files">
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -181,6 +233,7 @@
     <script src="{{ asset(mix('vendors/js/extensions/moment.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/forms/repeater/jquery.repeater.min.js')) }}"></script>
 @endsection
 
 @section('page-script')
