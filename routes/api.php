@@ -8,6 +8,8 @@ use App\Http\Controllers\GoodsTypesController as GoodsTypesAPI;
 use App\Http\Controllers\MaintenancesController as MaintenancesAPI;
 use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
+use App\Http\Controllers\PortsController as PortsAPI;
+use App\Http\Controllers\RequestsController as RequestsAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
 use App\Http\Controllers\UsersController as UsersAPI;
 use App\Http\Controllers\VesselsController as VesselsAPI;
@@ -146,6 +148,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('/{id}', [OwnersAPI::class, 'delete']);
     });
 
+    Route::group(['prefix' => 'ports'], function () {
+        Route::get('/list', [PortsAPI::class, 'list_api']);
+        Route::post('/add', [PortsAPI::class, 'add']);
+        Route::post('/update/{id}', [PortsAPI::class, 'update']);
+        Route::put('/status/{id}', [PortsAPI::class, 'status']);
+        Route::delete('/{id}', [PortsAPI::class, 'delete']);
+    });
+
     Route::group(['prefix' => 'vessels-types'], function () {
         Route::get('/list', [VesselsTypesAPI::class, 'list_api']);
         Route::post('/add', [VesselsTypesAPI::class, 'add']);
@@ -182,6 +192,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update/{id}', [VesselsAPI::class, 'update']);
         Route::put('/status/{id}', [VesselsAPI::class, 'status']);
         Route::delete('/{id}', [VesselsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'requests'], function () {
+        Route::get('/list', [RequestsAPI::class, 'list_api']);
+        Route::post('/add', [RequestsAPI::class, 'add']);
+        Route::post('/update/{id}', [RequestsAPI::class, 'update']);
+        Route::put('/status/{id}', [RequestsAPI::class, 'status']);
+        Route::delete('/{id}', [RequestsAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'users'], function () {

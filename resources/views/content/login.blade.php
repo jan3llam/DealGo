@@ -20,7 +20,7 @@
             <div class="card mb-0">
                 <div class="card-body">
                     <a href="#" class="brand-logo">
-                        <img src="{{asset('images/logo/logo.svg')}}" alt="logo">
+                        <img src="{{asset('images/logo/logo.png')}}" alt="logo">
                         <h2 class="brand-text text-primary ms-1"></h2>
                     </a>
 

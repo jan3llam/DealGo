@@ -3,9 +3,9 @@ Dropzone.autoDiscover = false;
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.requests-list-table'),
-        newSidebar = $('.new-request-modal'),
-        newForm = $('.add-new-request'),
+    var dtTable = $('.ports-list-table'),
+        newSidebar = $('.new-port-modal'),
+        newForm = $('.add-new-port'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
             0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
@@ -19,16 +19,14 @@ $(function () {
     }
     if (dtTable.length) {
         dtTable.dataTable({
-            ajax: assetPath + 'api/admin/requests/list',
+            ajax: assetPath + 'api/admin/ports/list',
             columns: [
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'full_name'},
-                {data: 'vessels_count'},
-                {data: 'contact_name'},
-                {data: 'phone'},
-                {data: 'email'},
+                {data: 'name'},
+                {data: 'city.country.name'},
+                {data: 'city.name'},
                 {data: 'status'},
                 {data: ''}
             ],
@@ -44,7 +42,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 7,
+                    targets: 5,
                     render: function (data, type, full, meta) {
                         var $status = full['status']
                         return (
@@ -54,12 +52,6 @@ $(function () {
                             statusObj[$status].title +
                             '</span>'
                         )
-                    }
-                },
-                {
-                    targets: 2,
-                    render: function (data, type, full, meta) {
-                        return data ? data : '-';
                     }
                 },
                 {
@@ -149,7 +141,7 @@ $(function () {
                 },
                 {
                     text: 'Add new',
-                    className: 'add-request btn btn-primary',
+                    className: 'add-port btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in'
@@ -197,95 +189,19 @@ $(function () {
     if (newForm.length) {
         let data = new FormData();
 
-        $(document).on('change', '#type', function () {
-            var element = $(this);
-            if (parseInt(element.val()) === 1) {
-                $('#company-container').show();
-            } else {
-                $('#company-container').hide();
-            }
-        });
-
-        var phone = document.getElementById('phone');
-
-        window.intlTelInput(phone, {
-            customContainer: "w-100",
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.min.js"
-        });
-
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'type': {
+                'name': {
                     required: true
                 },
-                'full_name': {
-                    required: true
-                },
-                'commercial_number': {
-                    required: true
-                },
-                'contact': {
-                    required: true
-                },
-                'legal': {
-                    required: true
-                },
-                'email': {
-                    required: true
-                },
-                'phone': {
+                'city': {
                     required: true
                 },
             }
         })
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-
-        $('#legal').dropzone({
-            url: assetPath + 'api/admin/requests/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("legal", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('legal');
-                });
-            }
-        });
-
-        $('#company').dropzone({
-            url: assetPath + 'api/admin/requests/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("company", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('company');
-                });
-            }
-        });
-
-        $('#license').dropzone({
-            url: assetPath + 'api/admin/requests/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("license", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('license');
-                });
-            }
-        });
 
         $('#country,#city').select2();
 
@@ -302,7 +218,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/requests/' + type,
+                    url: assetPath + 'api/admin/ports/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -327,7 +243,7 @@ $(function () {
         var element = $(this);
         $.ajax({
             type: 'DELETE',
-            url: assetPath + 'api/admin/requests/' + element.data('id'),
+            url: assetPath + 'api/admin/ports/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -344,7 +260,7 @@ $(function () {
         let element = $(this);
         $.ajax({
             type: 'PUT',
-            url: assetPath + 'api/admin/requests/status/' + element.data('id'),
+            url: assetPath + 'api/admin/ports/status/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -362,24 +278,15 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#name').val(data.full_name);
-        $('#contact').val(data.contact_name);
-        $('#commercial').val(data.commercial_number);
-        $('#email').val(data.email);
-        $('#phone').val(data.phone);
+        $('#name').val(data.name);
         $('#city_id').val(data.city.id);
         $('#country').val(data.city.country.id);
         $('#country').trigger('change.select2');
-        $('#address_1').val(data.address_1);
-        $('#address_2').val(data.address_2);
-        $('#zip').val(data.zip_code);
-        $('#type').val(data.type);
         $('#object_id').val(data.id);
     });
 
-    $(document).on('click', '.add-request', function () {
+    $(document).on('click', '.add-port', function () {
         $('#form_status').val(1);
-        $('#image_container').attr('src', '');
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');

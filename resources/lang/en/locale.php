@@ -8,6 +8,8 @@ return [
     "Vessels types" => "Vessels types",
     "Crews" => "Crews",
     "Offices" => "Offices",
+    "Ports" => "Ports",
+    "Requests" => "Requests",
     "Maintenances" => "Maintenances",
     "Tenants" => "Tenants",
     "Owners" => "Owners",

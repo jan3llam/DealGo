@@ -61,6 +61,18 @@
             "name": "Offices",
             "icon": "briefcase",
             "slug": "admin.offices"
+        },
+        {
+            "url": "/admin/ports",
+            "name": "Ports",
+            "icon": "flag",
+            "slug": "admin.ports"
+        },
+        {
+            "url": "/admin/requests",
+            "name": "Requests",
+            "icon": "file-text",
+            "slug": "admin.requests"
         }
     ]
 }

@@ -11,6 +11,8 @@ use App\Http\Controllers\MaintenancesController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\OwnersController;
+use App\Http\Controllers\PortsController;
+use App\Http\Controllers\RequestsController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TenantsController;
 use App\Http\Controllers\UsersController;
@@ -51,6 +53,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('owners', [OwnersController::class, 'list'])->name('owners');
         Route::get('tenants', [TenantsController::class, 'list'])->name('tenants');
         Route::get('offices', [OfficesController::class, 'list'])->name('offices');
+        Route::get('requests', [RequestsController::class, 'list'])->name('requests');
+        Route::get('ports', [PortsController::class, 'list'])->name('ports');
         Route::get('vessels', [VesselsController::class, 'list'])->name('vessels');
         Route::get('vtypes', [VesselsTypesController::class, 'list'])->name('vtypes');
         Route::get('gtypes', [GoodsTypesController::class, 'list'])->name('gtypes');
