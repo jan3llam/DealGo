@@ -42,7 +42,6 @@ class RequestsController extends Controller
 
     public function add(Request $request)
     {
-        $fileName = null;
         $params = $request->all();
         $validator = Validator::make($params, [
             'contract' => 'required|string',

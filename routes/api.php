@@ -112,14 +112,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/list', [AdminsAPI::class, 'list_api']);
         Route::post('/add', [AdminsAPI::class, 'add']);
         Route::put('/status/{id}', [AdminsAPI::class, 'status']);
-        Route::put('/update/{id}', [AdminsAPI::class, 'update']);
+        Route::post('/update', [AdminsAPI::class, 'update']);
         Route::delete('/{id}', [AdminsAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'owners'], function () {
         Route::get('/list', [OwnersAPI::class, 'list_api']);
         Route::post('/add', [OwnersAPI::class, 'add']);
-        Route::post('/update/{id}', [OwnersAPI::class, 'update']);
+        Route::post('/update', [OwnersAPI::class, 'update']);
         Route::put('/status/{id}', [OwnersAPI::class, 'status']);
         Route::delete('/{id}', [OwnersAPI::class, 'delete']);
     });
@@ -127,7 +127,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'tenants'], function () {
         Route::get('/list', [TenantsAPI::class, 'list_api']);
         Route::post('/add', [TenantsAPI::class, 'add']);
-        Route::post('/update/{id}', [TenantsAPI::class, 'update']);
+        Route::post('/update', [TenantsAPI::class, 'update']);
         Route::put('/status/{id}', [TenantsAPI::class, 'status']);
         Route::delete('/{id}', [TenantsAPI::class, 'delete']);
     });
@@ -135,7 +135,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'offices'], function () {
         Route::get('/list', [OfficesAPI::class, 'list_api']);
         Route::post('/add', [OfficesAPI::class, 'add']);
-        Route::post('/update/{id}', [OfficesAPI::class, 'update']);
+        Route::post('/update', [OfficesAPI::class, 'update']);
         Route::put('/status/{id}', [OfficesAPI::class, 'status']);
         Route::delete('/{id}', [OfficesAPI::class, 'delete']);
     });
@@ -143,7 +143,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'owners'], function () {
         Route::get('/list', [OwnersAPI::class, 'list_api']);
         Route::post('/add', [OwnersAPI::class, 'add']);
-        Route::post('/update/{id}', [OwnersAPI::class, 'update']);
+        Route::post('/update', [OwnersAPI::class, 'update']);
         Route::put('/status/{id}', [OwnersAPI::class, 'status']);
         Route::delete('/{id}', [OwnersAPI::class, 'delete']);
     });
@@ -151,7 +151,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'ports'], function () {
         Route::get('/list', [PortsAPI::class, 'list_api']);
         Route::post('/add', [PortsAPI::class, 'add']);
-        Route::post('/update/{id}', [PortsAPI::class, 'update']);
+        Route::post('/update', [PortsAPI::class, 'update']);
         Route::put('/status/{id}', [PortsAPI::class, 'status']);
         Route::delete('/{id}', [PortsAPI::class, 'delete']);
     });
@@ -159,21 +159,21 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'vessels-types'], function () {
         Route::get('/list', [VesselsTypesAPI::class, 'list_api']);
         Route::post('/add', [VesselsTypesAPI::class, 'add']);
-        Route::post('/update/{id}', [VesselsTypesAPI::class, 'update']);
+        Route::post('/update', [VesselsTypesAPI::class, 'update']);
         Route::delete('/{id}', [VesselsTypesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'goods-types'], function () {
         Route::get('/list', [GoodsTypesAPI::class, 'list_api']);
         Route::post('/add', [GoodsTypesAPI::class, 'add']);
-        Route::post('/update/{id}', [GoodsTypesAPI::class, 'update']);
+        Route::post('/update', [GoodsTypesAPI::class, 'update']);
         Route::delete('/{id}', [GoodsTypesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'crews'], function () {
         Route::get('/list/{id?}', [CrewsAPI::class, 'list_api']);
         Route::post('/add', [CrewsAPI::class, 'add']);
-        Route::post('/update/{id}', [CrewsAPI::class, 'update']);
+        Route::post('/update', [CrewsAPI::class, 'update']);
         Route::put('/status/{id}', [CrewsAPI::class, 'status']);
         Route::delete('/{id}', [CrewsAPI::class, 'delete']);
     });
@@ -181,7 +181,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'maintenances'], function () {
         Route::get('/list/{id?}', [MaintenancesAPI::class, 'list_api']);
         Route::post('/add', [MaintenancesAPI::class, 'add']);
-        Route::post('/update/{id}', [MaintenancesAPI::class, 'update']);
+        Route::post('/update', [MaintenancesAPI::class, 'update']);
         Route::put('/status/{id}', [MaintenancesAPI::class, 'status']);
         Route::delete('/{id}', [MaintenancesAPI::class, 'delete']);
     });
@@ -189,7 +189,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'vessels'], function () {
         Route::get('/list', [VesselsAPI::class, 'list_api']);
         Route::post('/add', [VesselsAPI::class, 'add']);
-        Route::post('/update/{id}', [VesselsAPI::class, 'update']);
+        Route::post('/update', [VesselsAPI::class, 'update']);
         Route::put('/status/{id}', [VesselsAPI::class, 'status']);
         Route::delete('/{id}', [VesselsAPI::class, 'delete']);
     });
@@ -197,7 +197,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'requests'], function () {
         Route::get('/list', [RequestsAPI::class, 'list_api']);
         Route::post('/add', [RequestsAPI::class, 'add']);
-        Route::post('/update/{id}', [RequestsAPI::class, 'update']);
+        Route::post('/update', [RequestsAPI::class, 'update']);
         Route::put('/status/{id}', [RequestsAPI::class, 'status']);
         Route::delete('/{id}', [RequestsAPI::class, 'delete']);
     });
@@ -205,7 +205,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'users'], function () {
         Route::get('/list', [UsersAPI::class, 'list_api']);
         Route::put('/status/{id}', [UsersAPI::class, 'status']);
-        Route::put('/update/{id}', [UsersAPI::class, 'update']);
+        Route::put('/update', [UsersAPI::class, 'update']);
         Route::delete('/{id}', [UsersAPI::class, 'delete']);
     });
 });
