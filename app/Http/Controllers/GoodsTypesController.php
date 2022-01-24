@@ -63,7 +63,7 @@ class GoodsTypesController extends Controller
         $validator = Validator::make($params, [
             'name' => 'required|string',
             'parent' => 'nullable',
-            'vtype' => 'required|array',
+            'vtype' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -78,6 +78,18 @@ class GoodsTypesController extends Controller
         $item->parent_id = $parent;
 
         $item->save();
+
+        $item->vessels_types()->detach();
+        $vtypes = $request->input('vtype', null);
+        if (is_array($vtypes)) {
+            $vtypes = explode(',', $request->input('vtype', null));
+            foreach ($vtypes as $type) {
+                $item->vessels_types()->attach($type);
+            }
+        } else {
+            $item->vessels_types()->attach($vtypes);
+        }
+
 
         return response()->success();
     }
