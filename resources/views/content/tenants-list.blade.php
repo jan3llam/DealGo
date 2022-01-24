@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Tenants')
+@section('title', 'Charters')
 
 @section('vendor-style')
     {{-- Page Css files --}}

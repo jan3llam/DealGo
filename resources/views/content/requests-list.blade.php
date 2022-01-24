@@ -68,7 +68,7 @@
                                        placeholder="Title" name="name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="tenant">Tenant</label>
+                                <label class="form-label" for="tenant">Charter</label>
                                 <select class="form-control dt-full-name select2" id="tenant"
                                         name="tenant">
                                     <option value="" disabled selected>Kindly choose</option>
