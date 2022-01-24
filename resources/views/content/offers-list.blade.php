@@ -227,7 +227,7 @@
     @if($request)
         <script>
             $(document).ready(function () {
-                $('button.add-offer').click()
+                $('.new-offer-modal').modal('show')
             });
         </script>
     @endif
