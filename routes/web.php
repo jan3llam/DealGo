@@ -9,6 +9,7 @@ use App\Http\Controllers\GoodsTypesController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\MaintenancesController;
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\OffersController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\OwnersController;
 use App\Http\Controllers\PortsController;
@@ -55,6 +56,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('offices', [OfficesController::class, 'list'])->name('offices');
         Route::get('requests', [RequestsController::class, 'list'])->name('requests');
         Route::get('ports', [PortsController::class, 'list'])->name('ports');
+        Route::get('offers/{id?}', [OffersController::class, 'list'])->name('offers');
         Route::get('vessels', [VesselsController::class, 'list'])->name('vessels');
         Route::get('vtypes', [VesselsTypesController::class, 'list'])->name('vtypes');
         Route::get('gtypes', [GoodsTypesController::class, 'list'])->name('gtypes');

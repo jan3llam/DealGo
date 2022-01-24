@@ -6,6 +6,7 @@ use App\Http\Controllers\CountriesController as CountriesAPI;
 use App\Http\Controllers\CrewsController as CrewsAPI;
 use App\Http\Controllers\GoodsTypesController as GoodsTypesAPI;
 use App\Http\Controllers\MaintenancesController as MaintenancesAPI;
+use App\Http\Controllers\OffersController as OffersAPI;
 use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
 use App\Http\Controllers\PortsController as PortsAPI;
@@ -200,6 +201,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update', [RequestsAPI::class, 'update']);
         Route::put('/status/{id}', [RequestsAPI::class, 'status']);
         Route::delete('/{id}', [RequestsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'offers'], function () {
+        Route::get('/list', [OffersAPI::class, 'list_api']);
+        Route::post('/add', [OffersAPI::class, 'add']);
+        Route::post('/update', [OffersAPI::class, 'update']);
+        Route::put('/status/{id}', [OffersAPI::class, 'status']);
+        Route::delete('/{id}', [OffersAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'users'], function () {

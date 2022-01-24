@@ -25,12 +25,10 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'name'},
-                {data: 'tenant.contact_name'},
-                {data: 'port_from.name'},
-                {data: 'port_to.name'},
-                {data: 'owner'},
-                {data: 'vessel'},
-                {data: 'date_to'},
+                {data: 'total'},
+                {data: 'start_at'},
+                {data: 'id'},
+                {data: 'status'},
                 {data: ''}
             ],
             columnDefs: [
@@ -62,6 +60,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="/admin/offers/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
+                            feather.icons['thumbs-up'].toSvg({class: 'font-small-4 me-50'}) +
+                            'Add offer</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             'Delete</a></div>' +

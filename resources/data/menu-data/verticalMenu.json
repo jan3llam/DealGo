@@ -43,12 +43,6 @@
                     "slug": "admin.vtypes"
                 },
                 {
-                    "url": "/admin/gtypes",
-                    "name": "Goods types",
-                    "icon": "package",
-                    "slug": "admin.g_types"
-                },
-                {
                     "url": "/admin/maintenances",
                     "name": "Maintenances",
                     "icon": "file-text",
@@ -63,16 +57,42 @@
             "slug": "admin.offices"
         },
         {
+            "url": "/admin/requests",
+            "name": "Requests",
+            "icon": "file-text",
+            "slug": "admin.requests",
+            "submenu": [
+                {
+                    "url": "/admin/shipments",
+                    "name": "Shipments",
+                    "icon": "truck",
+                    "slug": "admin.shipments"
+                },
+                {
+                    "url": "/admin/requests",
+                    "name": "Requests",
+                    "icon": "file-text",
+                    "slug": "admin.requests"
+                },
+                {
+                    "url": "/admin/offers",
+                    "name": "Offers",
+                    "icon": "thumbs-up",
+                    "slug": "admin.offers"
+                },
+                {
+                    "url": "/admin/gtypes",
+                    "name": "Goods types",
+                    "icon": "package",
+                    "slug": "admin.gtypes"
+                }
+            ]
+        },
+        {
             "url": "/admin/ports",
             "name": "Ports",
             "icon": "flag",
             "slug": "admin.ports"
-        },
-        {
-            "url": "/admin/requests",
-            "name": "Requests",
-            "icon": "file-text",
-            "slug": "admin.requests"
         }
     ]
 }

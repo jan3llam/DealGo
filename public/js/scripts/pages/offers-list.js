@@ -3,9 +3,9 @@ Dropzone.autoDiscover = false;
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.requests-list-table'),
-        newSidebar = $('.new-request-modal'),
-        newForm = $('.add-new-request'),
+    var dtTable = $('.offers-list-table'),
+        newSidebar = $('.new-offer-modal'),
+        newForm = $('.add-new-offer'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
             0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
@@ -19,16 +19,18 @@ $(function () {
     }
     if (dtTable.length) {
         dtTable.dataTable({
-            ajax: assetPath + 'api/admin/requests/list',
+            ajax: assetPath + 'api/admin/offers/list',
             columns: [
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'name'},
-                {data: 'total'},
-                {data: 'start_at'},
-                {data: 'id'},
-                {data: 'status'},
+                {data: 'owner'},
+                {data: 'tenant.contact_name'},
+                {data: 'port_from.name'},
+                {data: 'port_to.name'},
+                {data: 'owner'},
+                {data: 'vessel'},
+                {data: 'date_to'},
                 {data: ''}
             ],
             columnDefs: [
@@ -60,9 +62,6 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="/admin/offers/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
-                            feather.icons['thumbs-up'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Add offer</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             'Delete</a></div>' +
@@ -135,7 +134,7 @@ $(function () {
                 },
                 {
                     text: 'Add new',
-                    className: 'add-request btn btn-primary',
+                    className: 'add-offer btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in'
@@ -183,12 +182,10 @@ $(function () {
     if (newForm.length) {
         let data = new FormData();
 
-        $('#goods_container').repeater({
+        $('#payments_container').repeater({
             initEmpty: true,
             show: function () {
-                $(this).slideDown(function () {
-                    $(this).find('.goods-select2').select2();
-                });
+                $(this).slideDown();
                 // Feather Icons
                 if (feather) {
                     feather.replace({width: 14, height: 14});
@@ -208,23 +205,6 @@ $(function () {
                 }
             }
         });
-
-        $(document).on('change', '#contract', function () {
-            var element = $(this);
-            if (parseInt(element.val()) === 1 || parseInt(element.val()) === 3) {
-                $('#owners_container').show();
-            } else {
-                $('#owners_container').hide();
-            }
-
-            if (parseInt(element.val()) === 1) {
-                $('#routes_container').hide();
-            } else {
-                $('#routes_container').show();
-            }
-
-        });
-
 
         newForm.validate({
             errorClass: 'error',
@@ -256,7 +236,7 @@ $(function () {
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
         $('#files').dropzone({
-            url: assetPath + 'api/admin/requests/' + type,
+            url: assetPath + 'api/admin/offers/' + type,
             autoProcessQueue: false,
             addRemoveLinks: true,
             autoQueue: false,
@@ -270,7 +250,7 @@ $(function () {
             }
         });
 
-        $('#tenant,#port_from,#port_to,#contract,#owner').select2();
+        $('.vessels-select2,#owner').select2();
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
@@ -285,7 +265,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/requests/' + type,
+                    url: assetPath + 'api/admin/offers/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -310,7 +290,7 @@ $(function () {
         var element = $(this);
         $.ajax({
             type: 'DELETE',
-            url: assetPath + 'api/admin/requests/' + element.data('id'),
+            url: assetPath + 'api/admin/offers/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -327,7 +307,7 @@ $(function () {
         let element = $(this);
         $.ajax({
             type: 'PUT',
-            url: assetPath + 'api/admin/requests/status/' + element.data('id'),
+            url: assetPath + 'api/admin/offers/status/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -360,7 +340,7 @@ $(function () {
         $('#object_id').val(data.id);
     });
 
-    $(document).on('click', '.add-request', function () {
+    $(document).on('click', '.add-offer', function () {
         $('#form_status').val(1);
         $('#image_container').attr('src', '');
         $('#object_id').val('');
