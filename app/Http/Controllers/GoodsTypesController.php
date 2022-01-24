@@ -81,7 +81,7 @@ class GoodsTypesController extends Controller
 
         $item->vessels_types()->detach();
         $vtypes = $request->input('vtype', null);
-        if (is_array($vtypes)) {
+        if (!is_integer($vtypes)) {
             $vtypes = explode(',', $request->input('vtype', null));
             foreach ($vtypes as $type) {
                 $item->vessels_types()->attach($type);
