@@ -24,13 +24,10 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'owner'},
-                {data: 'tenant.contact_name'},
-                {data: 'port_from.name'},
-                {data: 'port_to.name'},
-                {data: 'owner'},
-                {data: 'vessel'},
-                {data: 'date_to'},
+                {data: 'owner.name'},
+                {data: 'total'},
+                {data: 'start_at'},
+                {data: 'status'},
                 {data: ''}
             ],
             columnDefs: [
