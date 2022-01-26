@@ -19,55 +19,12 @@
             <div class="col-xl-4 col-lg-6 col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            {{--                            <span>Total {{$role->admins->count()}} admins</span>--}}
-                            <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                                <li data-bs-toggle="tooltip"
-                                    data-popup="tooltip-custom"
-                                    data-bs-placement="top"
-                                    title="Vinnie Mostowy"
-                                    class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{asset('images/avatars/2.png')}}" alt="Avatar"/>
-                                </li>
-                                <li
-                                    data-bs-toggle="tooltip"
-                                    data-popup="tooltip-custom"
-                                    data-bs-placement="top"
-                                    title="Allen Rieske"
-                                    class="avatar avatar-sm pull-up"
-                                >
-                                    <img class="rounded-circle" src="{{asset('images/avatars/12.png')}}" alt="Avatar"/>
-                                </li>
-                                <li
-                                    data-bs-toggle="tooltip"
-                                    data-popup="tooltip-custom"
-                                    data-bs-placement="top"
-                                    title="Julee Rossignol"
-                                    class="avatar avatar-sm pull-up"
-                                >
-                                    <img class="rounded-circle" src="{{asset('images/avatars/6.png')}}" alt="Avatar"/>
-                                </li>
-                                <li
-                                    data-bs-toggle="tooltip"
-                                    data-popup="tooltip-custom"
-                                    data-bs-placement="top"
-                                    title="Kaith D'souza"
-                                    class="avatar avatar-sm pull-up"
-                                >
-                                    <img class="rounded-circle" src="{{asset('images/avatars/11.png')}}" alt="Avatar"/>
-                                </li>
-                            </ul>
-                        </div>
                         <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                             <div class="role-heading">
                                 <h4 class="fw-bolder">{{$role->name}}</h4>
-                                <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal"
-                                   data-bs-target="#addRoleModal">
-                                    <small class="fw-bolder">Edit Role</small>
-                                </a>
                             </div>
-                            <a href="javascript:void(0);" class="text-body">
-                                <i data-feather="copy" class="font-medium-5"></i>
+                            <a href="javascript:void(0);" class="text-body item-delete" data-id="{{$role->id}}">
+                                <i data-feather="trash" class="font-medium-5"></i>
                             </a>
                         </div>
                     </div>

@@ -7,7 +7,10 @@
     if (addRoleForm.length) {
         addRoleForm.validate({
             rules: {
-                modalRoleName: {
+                name: {
+                    required: true
+                },
+                description: {
                     required: true
                 }
             }
