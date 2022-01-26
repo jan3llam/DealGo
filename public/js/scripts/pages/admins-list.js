@@ -31,7 +31,7 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'dealgo_id'},
-                {data: 'contact_name'},
+                {data: 'name'},
                 {data: 'phone'},
                 {data: 'email'},
                 {data: 'role.name'},
