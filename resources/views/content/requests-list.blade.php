@@ -44,7 +44,6 @@
                         <th>From Port</th>
                         <th>To Port</th>
                         <th>Owner</th>
-                        <th>Vessel</th>
                         <th>Arrive @</th>
                         <th>Actions</th>
                     </tr>

@@ -25,10 +25,11 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'name'},
-                {data: 'tenant.name'},
+                {data: 'tenant'},
                 {data: 'port_from.name'},
                 {data: 'port_to.name'},
-                {data: 'owner.name'},
+                {data: 'owner'},
+                {data: 'vessel'},
                 {data: 'date_from'},
                 {data: ''}
             ],
@@ -44,7 +45,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: [6, 3],
+                    targets: [6, 3, 7],
                     render: function (data, type, full, meta) {
                         return data ? data.name : '-';
                     }
