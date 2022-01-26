@@ -33,7 +33,7 @@ class OwnersController extends Controller
         $validator = Validator::make($params, [
             'name' => 'required_if:type,1',
             'commercial' => 'required_if:type,1',
-            'company' => 'required_if:type,1|string',
+            'company' => 'required_if:type,1|file',
             'license' => 'required_if:type,1|file',
             'type' => 'required|numeric',
             'contact' => 'required|string',
