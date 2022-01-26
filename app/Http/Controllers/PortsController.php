@@ -63,7 +63,7 @@ class PortsController extends Controller
             return response()->error('missingParameters');
         }
 
-        $item = Port::find($id);
+        $item = Port::withTrashed()->where('id', $id)->first();
 
         $item->name = $params['name'];
         $item->city_id = $params['city'];
@@ -76,7 +76,7 @@ class PortsController extends Controller
     public function delete($id)
     {
 
-        $item = Port::find($id);
+        $item = Port::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;

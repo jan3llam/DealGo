@@ -22,7 +22,7 @@ class CrewsController extends Controller
         $vessels = Vessel::all();
         $vessel = null;
         if ($id) {
-            $vessel = Vessel::find($id);
+            $vessel = Vessel::withTrashed()->where('id', $id)->first();
         }
 
         return view('content.crews-list', [
@@ -128,7 +128,7 @@ class CrewsController extends Controller
             Storage::disk('public_images')->putFileAs('', $request->file('file'), $fileName);
         }
 
-        $item = Crew::find($id);
+        $item = Crew::withTrashed()->where('id', $id)->first();
 
         $item->file = $fileName;
 
@@ -164,7 +164,7 @@ class CrewsController extends Controller
     public function delete($id)
     {
 
-        $item = Crew::find($id);
+        $item = Crew::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;

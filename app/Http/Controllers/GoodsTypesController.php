@@ -70,7 +70,7 @@ class GoodsTypesController extends Controller
             return response()->error('missingParameters');
         }
 
-        $item = gType::find($id);
+        $item = gType::withTrashed()->where('id', $id)->first();
 
         $parent = $request->input('parent', null);
         $parent = $parent === 'null' ? null : $parent;
@@ -97,7 +97,7 @@ class GoodsTypesController extends Controller
     public function delete($id)
     {
 
-        $item = gType::find($id);
+        $item = gType::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->delete();

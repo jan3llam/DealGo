@@ -156,7 +156,7 @@ class TenantsController extends Controller
             Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
         }
 
-        $item = Tenant::find($id);
+        $item = Tenant::withTrashed()->where('id', $id)->first();
 
         $item->legal_file = $fileName;
 
@@ -220,7 +220,7 @@ class TenantsController extends Controller
     public function delete($id)
     {
 
-        $item = Tenant::find($id);
+        $item = Tenant::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;

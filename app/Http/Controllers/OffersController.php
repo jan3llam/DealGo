@@ -22,7 +22,7 @@ class OffersController extends Controller
         ];
 
         $requests = ShipmentRequest::all();
-        $request = ShipmentRequest::find($id);
+        $request = ShipmentRequest::withTrashed()->where('id', $id)->first();
         $owners = Owner::all();
         $ports = Port::all();
         $vessels = Vessel::all();
@@ -147,7 +147,7 @@ class OffersController extends Controller
             Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
         }
 
-        $item = Offer::find($id);
+        $item = Offer::withTrashed()->where('id', $id)->first();
 
         $item->legal_file = $fileName;
 
@@ -206,7 +206,7 @@ class OffersController extends Controller
     public function delete($id)
     {
 
-        $item = Offer::find($id);
+        $item = Offer::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;

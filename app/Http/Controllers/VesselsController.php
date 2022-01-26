@@ -113,7 +113,7 @@ class VesselsController extends Controller
             $fileName = Str::random(18) . '.' . $extension;
             Storage::disk('public_images')->putFileAs('', $request->file('image'), $fileName);
         }
-        $item = Vessel::find($id);
+        $item = Vessel::withTrashed()->where('id', $id)->first();
 
         $item->image = $fileName;
 
@@ -136,7 +136,7 @@ class VesselsController extends Controller
     public function delete($id)
     {
 
-        $item = Vessel::find($id);
+        $item = Vessel::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;

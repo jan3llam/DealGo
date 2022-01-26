@@ -93,7 +93,7 @@ class AdminsController extends Controller
             return response()->error('missingParameters');
         }
 
-        $item = Admin::find($id);
+        $item = Admin::withTrashed()->where('id', $id)->first();
         if ($item) {
             $item->name = $params['name'];
             $item->email = $params['email'];
@@ -121,7 +121,7 @@ class AdminsController extends Controller
     public function delete($id)
     {
 
-        $item = Admin::find($id);
+        $item = Admin::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;

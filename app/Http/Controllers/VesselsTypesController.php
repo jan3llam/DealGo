@@ -89,7 +89,7 @@ class VesselsTypesController extends Controller
             return response()->error('missingParameters');
         }
 
-        $item = vType::find($id);
+        $item = vType::withTrashed()->where('id', $id)->first();
 
         $item->name = $params['name'];
         $item->parent_id = $request->input('parent', null);
@@ -108,7 +108,7 @@ class VesselsTypesController extends Controller
     public function delete($id)
     {
 
-        $item = vType::find($id);
+        $item = vType::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->delete();

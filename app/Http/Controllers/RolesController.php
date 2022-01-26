@@ -84,7 +84,7 @@ class RolesController extends Controller
     public function delete($id)
     {
 
-        $item = Role::find($id);
+        $item = Role::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;

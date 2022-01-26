@@ -66,7 +66,7 @@ class UsersController extends Controller
     public function delete($id)
     {
 
-        $item = User::find($id);
+        $item = User::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->delete();
@@ -79,7 +79,7 @@ class UsersController extends Controller
     public function status($id)
     {
 
-        $item = User::find($id);
+        $item = User::withTrashed()->where('id', $id)->first();
         if ($item) {
             $item->active = $item->active == 1 ? 0 : 1;
         }

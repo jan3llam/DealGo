@@ -140,7 +140,7 @@ class RequestsController extends Controller
             Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
         }
 
-        $item = ShippingRequest::find($id);
+        $item = ShippingRequest::withTrashed()->where('id', $id)->first();
 
         $item->legal_file = $fileName;
 
@@ -199,7 +199,7 @@ class RequestsController extends Controller
     public function delete($id)
     {
 
-        $item = ShippingRequest::find($id);
+        $item = ShippingRequest::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;

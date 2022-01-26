@@ -21,7 +21,7 @@ class MaintenancesController extends Controller
         $vessels = Vessel::all();
         $vessel = null;
         if ($id) {
-            $vessel = Vessel::find($id);
+            $vessel = Vessel::withTrashed()->where('id', $id)->first();
         }
 
         return view('content.maintenances-list', [
@@ -94,7 +94,7 @@ class MaintenancesController extends Controller
             return response()->error('missingParameters');
         }
 
-        $item = Maintenance::find($id);
+        $item = Maintenance::withTrashed()->where('id', $id)->first();
 
         $item->vessel_id = $params['vessel'];
         $item->name = $params['name'];
@@ -123,7 +123,7 @@ class MaintenancesController extends Controller
     public function delete($id)
     {
 
-        $item = Maintenance::find($id);
+        $item = Maintenance::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->delete();

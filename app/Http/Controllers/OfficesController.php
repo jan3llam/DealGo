@@ -147,7 +147,7 @@ class OfficesController extends Controller
             Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
         }
 
-        $item = Office::find($id);
+        $item = Office::withTrashed()->where('id', $id)->first();
 
         $item->legal_file = $fileName;
 
@@ -206,7 +206,7 @@ class OfficesController extends Controller
     public function delete($id)
     {
 
-        $item = Office::find($id);
+        $item = Office::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;

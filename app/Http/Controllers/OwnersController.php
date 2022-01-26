@@ -147,7 +147,7 @@ class OwnersController extends Controller
             Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
         }
 
-        $item = Owner::find($id);
+        $item = Owner::withTrashed()->where('id', $id)->first();
 
         $item->legal_file = $fileName;
 
@@ -206,7 +206,7 @@ class OwnersController extends Controller
     public function delete($id)
     {
 
-        $item = Owner::find($id);
+        $item = Owner::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;
