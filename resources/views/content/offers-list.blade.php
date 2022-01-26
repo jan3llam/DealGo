@@ -18,6 +18,12 @@
     {{-- Page Css files --}}
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
+    <style>
+        #routes_container .select2-container--default {
+            flex: 1 1 auto;
+            width: auto !important;
+        }
+    </style>
 @endsection
 @section('content')
     <!-- users list start -->
