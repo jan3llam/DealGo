@@ -28,12 +28,12 @@ class Offer extends Model
 
     public function vessels()
     {
-        return $this->belongsToMany(Vessel::class, 'offers_requests_goods_types', 'offer_id', 'vessel_id');
+        return $this->belongsToMany(Vessel::class, 'offers_requests_goods_types_vessels', 'offer_id', 'vessel_id');
     }
 
     public function request_goods_types()
     {
-        return $this->belongsToMany(RequestsGoodsType::class, 'offers_requests_goods_types', 'offer_id', 'request_good_id');
+        return $this->belongsToMany(RequestsGoodsType::class, 'offers_requests_goods_types_vessels', 'offer_id', 'request_good_id');
     }
 
 }
