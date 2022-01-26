@@ -14,8 +14,8 @@ $(function () {
         newSidebar = $('.new-admin-modal'),
         newForm = $('.add-new-admin'),
         statusObj = {
-            1: {title: 'فعال', class: 'badge-light-success status-switcher'},
-            0: {title: 'معطل', class: 'badge-light-secondary status-switcher'}
+            1: {title: 'Active', class: 'badge-light-success status-switcher'},
+            0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
         };
 
     var assetPath = '../../../app-assets/';
@@ -30,13 +30,12 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'name'},
+                {data: 'dealgo_id'},
+                {data: 'contact_name'},
+                {data: 'phone'},
                 {data: 'email'},
-                {data: 'active'},
-                {data: 'type'},
-                {data: 'created_at'},
-                {data: 'updated_at'},
-                {data: 'deleted_at'},
+                {data: 'role.name'},
+                {data: 'status'},
                 {data: ''}
             ],
             columnDefs: [
@@ -54,7 +53,7 @@ $(function () {
                 {
                     targets: 4,
                     render: function (data, type, full, meta) {
-                        var $status = full['active']
+                        var $status = full['status']
                         return (
                             '<span class="badge rounded-pill btn ' +
                             statusObj[$status].class +
@@ -65,21 +64,9 @@ $(function () {
                     }
                 },
                 {
-                    targets: 5,
-                    render: function (data, type, full, meta) {
-                        return parseInt(data) === 1 ? 'مدير عام' : 'مدير عادي'
-                    }
-                },
-                {
-                    targets: [6, 7, 8],
-                    render: function (data, type, full, meta) {
-                        return data ? moment(data).format('DD-MM-YYYY') : '-'
-                    }
-                },
-                {
                     // Actions
                     targets: -1,
-                    title: 'الخيارات',
+                    title: 'Actions',
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return (
@@ -88,6 +75,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
+                            feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
+                            'Edit</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             'Delete</a></div>' +
@@ -108,20 +98,25 @@ $(function () {
                 '<"col-sm-12 col-md-6"p>' +
                 '>',
             language: {
-                sLengthMenu: 'عرض _MENU_',
-                search: 'البحث',
-                searchPlaceholder: 'البحث..'
+                sLengthMenu: 'Showing _MENU_',
+                search: 'Search',
+                searchPlaceholder: 'Search..'
+            },
+            createdRow: function (row, data, index) {
+                if (data.deleted_at) {
+                    $(row).addClass('table-secondary');
+                }
             },
             // Buttons with Dropdown
             buttons: [
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'تصدير',
+                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
                     buttons: [
                         {
                             extend: 'print',
-                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'طباعة',
+                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         },
@@ -145,7 +140,7 @@ $(function () {
                         },
                         {
                             extend: 'copy',
-                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'نسخ',
+                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         }
@@ -159,7 +154,7 @@ $(function () {
                     }
                 },
                 {
-                    text: 'إضافة جديد',
+                    text: 'Add new',
                     className: 'add-admin btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
@@ -176,7 +171,7 @@ $(function () {
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function (row) {
                             var data = row.data()
-                            return 'تفاصيل ' + data['name']
+                            return 'Details of ' + data['name']
                         }
                     }),
                     type: 'column',
@@ -202,43 +197,85 @@ $(function () {
                     }
                 }
             },
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/ar.json'
-            },
         })
     }
 
     if (newForm.length) {
+        let dataFiles = new FormData();
+
+        var phone = document.getElementById('phone');
+
+        window.intlTelInput(phone, {
+            customContainer: "w-100",
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/utils.min.js"
+        });
+
         newForm.validate({
             errorClass: 'error',
             rules: {
                 'name': {
                     required: true
                 },
+                'dealgo_id': {
+                    required: true
+                },
                 'email': {
+                    required: true
+                },
+                'phone': {
                     required: true
                 },
                 'password': {
                     required: true
                 },
-                'type': {
+                'city': {
                     required: true
-                }
+                },
+                'address': {
+                    required: true
+                },
             }
         })
 
+        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+
+        $('#files').dropzone({
+            url: assetPath + 'api/admin/admins/' + type,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            autoQueue: false,
+            init: function () {
+                this.on("addedfile", function (file) {
+                    dataFiles.append("files", file);
+                });
+                this.on("removedfile", function () {
+                    dataFiles.delete('files');
+                });
+            }
+        });
+
+        $('#country,#city').select2();
+
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
+            var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+            var data = new FormData();
+
+            for (var i = 0; i < dataFiles.serializeArray().length; i++) {
+                data.append(dataFiles[i].name, dataFiles[i].value);
+            }
+
             e.preventDefault()
             if (isValid) {
-                let data = new FormData();
-                data.append('name', $('#name').val());
-                data.append('email', $('#email').val());
-                data.append('password', $('#password').val());
-                data.append('type', $('#type').val());
+                if (type === 'update') {
+                    data.append('object_id', $('#object_id').val());
+                }
+                newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+                    data.append($(this).attr('name'), $(this).val());
+                });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/admins/add',
+                    url: assetPath + 'api/admin/admins/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -290,6 +327,30 @@ $(function () {
                     toastr['error'](response.message);
                 }
             }
+        })
+    });
+
+    $(document).on('click', '.item-update', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        $('#modals-slide-in').modal('show')
+        $('#form_status').val(2);
+        $('#name').val(data.contact_name);
+        $('#dealgo_id').val(data.dealgo_id);
+        $('#email').val(data.email);
+        $('#city_id').val(data.city.id);
+        $('#country').val(data.city.country.id);
+        $('#country').trigger('change.select2');
+        $('#address').val(data.address);
+        $('#object_id').val(data.id);
+    });
+
+    $(document).on('click', '.add-admin', function () {
+        $('#form_status').val(1);
+        $('#image_container').attr('src', '');
+        $('#object_id').val('');
+        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+            $(this).val('');
         })
     });
 })

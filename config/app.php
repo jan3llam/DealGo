@@ -178,7 +178,7 @@ return [
         App\Providers\MenuServiceProvider::class,
         //Application Based
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-
+        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*

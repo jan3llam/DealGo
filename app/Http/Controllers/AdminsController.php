@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Mail\PasswordEmail;
 use App\Models\Admin;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 use Validator;
 
 class AdminsController extends Controller
@@ -13,10 +15,17 @@ class AdminsController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "home", 'name' => "الرئيسية"], ['name' => "المدراء"]
+            ['link' => "home", 'name' => "Home"], ['name' => "Administrators"]
         ];
 
-        return view('content.admins-list', ['breadcrumbs' => $breadcrumbs]);
+        $countries = Country::all();
+        $roles = Role::all();
+
+        return view('content.admins-list', [
+            'breadcrumbs' => $breadcrumbs,
+            'countries' => $countries,
+            'roles' => $roles
+        ]);
     }
 
     public function list_api()
@@ -30,7 +39,11 @@ class AdminsController extends Controller
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => 'required|string',
-            'email' => 'required',
+            'dealgo_id' => 'required|string',
+            'phone' => 'required|string',
+            'address' => 'required|string',
+            'email' => 'required|email',
+            'city' => 'required|numeric',
             'password' => 'required',
         ]);
 
@@ -41,22 +54,38 @@ class AdminsController extends Controller
         $item = new Admin;
         $item->name = $params['name'];
         $item->email = $params['email'];
+        $item->dealgo_id = $params['dealgo_id'];
+        $item->phone = $params['phone'];
+        $item->address = $params['address'];
+        $item->city_id = $params['city'];
         $item->password = bcrypt($params['password']);
-        $item->active = 1;
+        $item->status = 1;
 
         Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
 
         $item->save();
 
+        $role = $request->input('role', null);
+
+        if ($role) {
+            $item->assignRole($role);
+        }
+
         return response()->success();
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request)
     {
+        $id = $request->object_id;
+
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => 'required|string',
-            'email' => 'required',
+            'dealgo_id' => 'required|string',
+            'phone' => 'required|string',
+            'address' => 'required|string',
+            'email' => 'required|email',
+            'city' => 'required|numeric',
             'password' => 'required',
         ]);
 
@@ -68,15 +97,26 @@ class AdminsController extends Controller
         if ($item) {
             $item->name = $params['name'];
             $item->email = $params['email'];
-            $item->password = $params['password'];
+            $item->dealgo_id = $params['dealgo_id'];
+            $item->phone = $params['phone'];
+            $item->address = $params['address'];
+            $item->city_id = $params['city'];
+            $item->password = bcrypt($params['password']);
 
             Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
 
             $item->save();
+
+            $role = $request->input('role', null);
+
+            if ($role) {
+                $item->syncRoles([$role]);
+            }
         }
 
         return response()->success();
     }
+
 
     public function delete($id)
     {
@@ -84,21 +124,26 @@ class AdminsController extends Controller
         $item = Admin::find($id);
 
         if ($item) {
-            $item->delete();
+            $item->status = 0;
             $item->save();
+            $item->delete();
         }
 
         return response()->success();
     }
 
+
     public function status($id)
     {
-
-        $item = Admin::find($id);
+        $item = Admin::withTrashed()->where('id', $id)->first();
         if ($item) {
-            $item->active = $item->active == 1 ? 0 : 1;
+
+            if ($item->status === 0 && $item->deleted_at !== null) {
+                $item->restore();
+            }
+            $item->status = $item->status == 1 ? 0 : 1;
+            $item->save();
         }
-        $item->save();
 
         return response()->success();
     }

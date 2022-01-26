@@ -126,25 +126,7 @@ class MaintenancesController extends Controller
         $item = Maintenance::find($id);
 
         if ($item) {
-            $item->status = 0;
-            $item->save();
             $item->delete();
-        }
-
-        return response()->success();
-    }
-
-
-    public function status($id)
-    {
-        $item = Maintenance::withTrashed()->where('id', $id)->first();
-        if ($item) {
-
-            if ($item->status === 0 && $item->deleted_at !== null) {
-                $item->restore();
-            }
-            $item->status = $item->status == 1 ? 0 : 1;
-            $item->save();
         }
 
         return response()->success();

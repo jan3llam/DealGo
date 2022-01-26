@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable implements CanResetPassword
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasRoles;
 
     protected $guard = 'admin';
 
@@ -18,9 +18,9 @@ class Admin extends Authenticatable implements CanResetPassword
         'password',
     ];
 
-    public function tickets()
+    public function role()
     {
-        return $this->hasMany(Ticket::class, 'admin_id', 'id');
+        return $this->belongsTo(Role::class);
     }
 
 }

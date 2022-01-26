@@ -11,6 +11,8 @@ return [
     "Ports" => "Ports",
     "Requests" => "Requests",
     "Maintenances" => "Maintenances",
+    "Roles" => "Roles",
+    "Administrators" => "Administrators",
     "Tenants" => "Charters",
     "Offers" => "Offers",
     "Shipments" => "Shipments",

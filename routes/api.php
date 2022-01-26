@@ -11,6 +11,7 @@ use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
 use App\Http\Controllers\PortsController as PortsAPI;
 use App\Http\Controllers\RequestsController as RequestsAPI;
+use App\Http\Controllers\RolesController as RolesAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
 use App\Http\Controllers\UsersController as UsersAPI;
 use App\Http\Controllers\VesselsController as VesselsAPI;
@@ -201,6 +202,22 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update', [RequestsAPI::class, 'update']);
         Route::put('/status/{id}', [RequestsAPI::class, 'status']);
         Route::delete('/{id}', [RequestsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'admins'], function () {
+        Route::get('/list', [AdminsAPI::class, 'list_api']);
+        Route::post('/add', [AdminsAPI::class, 'add']);
+        Route::post('/update', [AdminsAPI::class, 'update']);
+        Route::put('/status/{id}', [AdminsAPI::class, 'status']);
+        Route::delete('/{id}', [AdminsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'roles'], function () {
+        Route::get('/list', [RolesAPI::class, 'list_api']);
+        Route::post('/add', [RolesAPI::class, 'add'])->name('admin.roles.add');
+        Route::post('/update', [RolesAPI::class, 'update']);
+        Route::put('/status/{id}', [RolesAPI::class, 'status']);
+        Route::delete('/{id}', [RolesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'offers'], function () {
