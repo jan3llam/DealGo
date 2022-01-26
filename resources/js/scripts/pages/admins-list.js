@@ -199,7 +199,7 @@ $(function () {
     }
 
     if (newForm.length) {
-        let dataFiles = new FormData();
+        let data = new FormData();
 
         var phone = document.getElementById('phone');
 
@@ -244,10 +244,10 @@ $(function () {
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    dataFiles.append("files", file);
+                    data.append("files", file);
                 });
                 this.on("removedfile", function () {
-                    dataFiles.delete('files');
+                    data.delete('files');
                 });
             }
         });
@@ -258,11 +258,11 @@ $(function () {
             e.preventDefault();
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-            var data = new FormData();
-
-            for (var i = 0; i < dataFiles.serializeArray().length; i++) {
-                data.append(dataFiles[i].name, dataFiles[i].value);
-            }
+            // var data = new FormData();
+            //
+            // for (var i = 0; i < dataFiles.serializeArray().length; i++) {
+            //     data.append(dataFiles[i].name, dataFiles[i].value);
+            // }
 
             if (isValid) {
                 if (type === 'update') {

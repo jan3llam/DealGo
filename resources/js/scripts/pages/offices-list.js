@@ -200,7 +200,7 @@ $(function () {
     }
 
     if (newForm.length) {
-        let dataFiles = new FormData();
+        let data = new FormData();
 
         $(document).on('change', '#type', function () {
             var element = $(this);
@@ -254,10 +254,10 @@ $(function () {
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    dataFiles.append("legal", file);
+                    data.append("legal", file);
                 });
                 this.on("removedfile", function () {
-                    dataFiles.delete('legal');
+                    data.delete('legal');
                 });
             }
         });
@@ -269,10 +269,10 @@ $(function () {
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    dataFiles.append("company", file);
+                    data.append("company", file);
                 });
                 this.on("removedfile", function () {
-                    dataFiles.delete('company');
+                    data.delete('company');
                 });
             }
         });
@@ -284,10 +284,10 @@ $(function () {
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    dataFiles.append("license", file);
+                    data.append("license", file);
                 });
                 this.on("removedfile", function () {
-                    dataFiles.delete('license');
+                    data.delete('license');
                 });
             }
         });
@@ -299,11 +299,11 @@ $(function () {
 
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-            var data = new FormData();
-
-            for (var i = 0; i < dataFiles.serializeArray().length; i++) {
-                data.append(dataFiles[i].name, dataFiles[i].value);
-            }
+            // var data = new FormData();
+            //
+            // for (var i = 0; i < dataFiles.serializeArray().length; i++) {
+            //     data.append(dataFiles[i].name, dataFiles[i].value);
+            // }
 
             if (isValid) {
                 if (type === 'update') {

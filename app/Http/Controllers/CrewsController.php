@@ -73,7 +73,7 @@ class CrewsController extends Controller
         $item->email = $params['email'];
         $item->phone = $params['phone'];
         $item->first_name = $params['first_name'];
-        $item->last_name = bcrypt($params['last_name']);
+        $item->last_name = $params['last_name'];
         $item->city_id = $params['city'];
         $item->job_title = $params['job'];
         $item->dob = $params['birth'];
@@ -136,7 +136,7 @@ class CrewsController extends Controller
         $item->email = $params['email'];
         $item->phone = $params['phone'];
         $item->first_name = $params['first_name'];
-        $item->last_name = bcrypt($params['last_name']);
+        $item->last_name = $params['last_name'];
         $item->city_id = $params['city'];
         $item->job_title = $params['job'];
         $item->dob = $params['birth'];
