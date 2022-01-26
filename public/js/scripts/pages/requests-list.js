@@ -26,8 +26,8 @@ $(function () {
                 {data: 'id'},
                 {data: 'name'},
                 {data: 'tenant.name'},
-                {data: 'from_port.name'},
-                {data: 'to_port.name'},
+                {data: 'port_from.name'},
+                {data: 'port_to.name'},
                 {data: 'owner.name'},
                 {data: 'date_from'},
                 {data: ''}
