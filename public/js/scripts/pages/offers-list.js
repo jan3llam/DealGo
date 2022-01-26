@@ -42,12 +42,6 @@ $(function () {
                     }
                 },
                 {
-                    targets: [6, 7],
-                    render: function (data, type, full, meta) {
-                        return data ? data.name : '-';
-                    }
-                },
-                {
                     // Actions
                     targets: -1,
                     title: 'Actions',
@@ -211,25 +205,19 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'type': {
+                'owner': {
                     required: true
                 },
-                'full_name': {
+                'date': {
                     required: true
                 },
-                'commercial_number': {
+                'down_value': {
                     required: true
                 },
-                'contact': {
+                'down_description': {
                     required: true
                 },
-                'legal': {
-                    required: true
-                },
-                'email': {
-                    required: true
-                },
-                'phone': {
+                'description': {
                     required: true
                 },
             }
