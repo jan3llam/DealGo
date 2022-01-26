@@ -88,20 +88,15 @@ class VesselsController extends Controller
 
         $params = $request->all();
         $validator = Validator::make($params, [
-            'name' => 'required_if:type,1',
-            'commercial' => 'required_if:type,1',
-            'company' => 'required_if:type,1|string',
-            'license' => 'required_if:type,1|file',
+            'name' => 'required|string',
             'type' => 'required|numeric',
-            'contact' => 'required|string',
-            'zip' => 'required|string',
-            'address_1' => 'required|string',
-            'address_2' => 'nullable|string',
-            'city' => 'required|numeric',
-            'password' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'legal' => 'required|file',
+            'owner' => 'required|numeric',
+            'country' => 'required|numeric',
+            'imo' => 'required|string',
+            'mmsi' => 'required|string',
+            'capacity' => 'required',
+            'build' => 'required',
+            'image' => 'required|file',
         ]);
 
         if ($validator->fails()) {
