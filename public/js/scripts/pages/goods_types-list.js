@@ -89,11 +89,6 @@ $(function () {
                 search: 'Search',
                 searchPlaceholder: 'Search..'
             },
-            createdRow: function (row, data, index) {
-                if (data.deleted_at) {
-                    $(row).addClass('table-secondary');
-                }
-            },
             // Buttons with Dropdown
             buttons: [
                 {

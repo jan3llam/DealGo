@@ -201,7 +201,7 @@ $(function () {
     }
 
     if (newForm.length) {
-        let data = new FormData();
+        let dataFiles = new FormData();
 
         newForm.validate({
             errorClass: 'error',
@@ -229,7 +229,7 @@ $(function () {
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("files[]", file);
+                    dataFiles.append("files[]", file);
                 });
             }
         });
@@ -237,6 +237,12 @@ $(function () {
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+            var data = new FormData();
+
+            for (var i = 0; i < dataFiles.serializeArray().length; i++) {
+                data.append(dataFiles[i].name, dataFiles[i].value);
+            }
+
             e.preventDefault()
             if (isValid) {
                 if (type === 'update') {

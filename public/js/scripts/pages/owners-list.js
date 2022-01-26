@@ -101,6 +101,11 @@ $(function () {
                 search: 'Search',
                 searchPlaceholder: 'Search..'
             },
+            createdRow: function (row, data, index) {
+                if (data.deleted_at) {
+                    $(row).addClass('table-secondary');
+                }
+            },
             // Buttons with Dropdown
             buttons: [
                 {
@@ -195,7 +200,7 @@ $(function () {
     }
 
     if (newForm.length) {
-        let data = new FormData();
+        let dataFiles = new FormData();
 
         $(document).on('change', '#type', function () {
             var element = $(this);
@@ -249,10 +254,10 @@ $(function () {
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("legal", file);
+                    dataFiles.append("legal", file);
                 });
                 this.on("removedfile", function () {
-                    data.delete('legal');
+                    dataFiles.delete('legal');
                 });
             }
         });
@@ -264,10 +269,10 @@ $(function () {
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("company", file);
+                    dataFiles.append("company", file);
                 });
                 this.on("removedfile", function () {
-                    data.delete('company');
+                    dataFiles.delete('company');
                 });
             }
         });
@@ -279,10 +284,10 @@ $(function () {
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("license", file);
+                    dataFiles.append("license", file);
                 });
                 this.on("removedfile", function () {
-                    data.delete('license');
+                    dataFiles.delete('license');
                 });
             }
         });
@@ -292,7 +297,13 @@ $(function () {
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-            e.preventDefault()
+            var data = new FormData();
+
+            for (var i = 0; i < dataFiles.serializeArray().length; i++) {
+                data.append(dataFiles[i].name, dataFiles[i].value);
+            }
+
+            e.preventDefault();
             if (isValid) {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());

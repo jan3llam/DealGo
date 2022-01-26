@@ -227,7 +227,7 @@ $(function () {
     }
 
     if (newForm.length) {
-        let data = new FormData();
+        let dataFiles = new FormData();
 
         var phone = document.getElementById('phone');
 
@@ -265,47 +265,17 @@ $(function () {
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
-        $('#legal').dropzone({
+        $('#file').dropzone({
             url: assetPath + 'api/admin/crews/' + type,
             autoProcessQueue: false,
             addRemoveLinks: true,
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("legal", file);
+                    dataFiles.append("file", file);
                 });
                 this.on("removedfile", function () {
-                    data.delete('legal');
-                });
-            }
-        });
-
-        $('#company').dropzone({
-            url: assetPath + 'api/admin/crews/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("company", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('company');
-                });
-            }
-        });
-
-        $('#license').dropzone({
-            url: assetPath + 'api/admin/crews/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("license", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('license');
+                    dataFiles.delete('file');
                 });
             }
         });
@@ -315,6 +285,12 @@ $(function () {
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+            var data = new FormData();
+
+            for (var i = 0; i < dataFiles.serializeArray().length; i++) {
+                data.append(dataFiles[i].name, dataFiles[i].value);
+            }
+
             e.preventDefault()
             if (isValid) {
                 if (type === 'update') {

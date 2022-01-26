@@ -199,7 +199,7 @@ $(function () {
     }
 
     if (newForm.length) {
-        let data = new FormData();
+        let dataFiles = new FormData();
 
         $(document).on('change', '#type', function () {
             var element = $(this);
@@ -252,10 +252,10 @@ $(function () {
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("image", file);
+                    dataFiles.append("image", file);
                 });
                 this.on("removedfile", function () {
-                    data.delete('image');
+                    dataFiles.delete('image');
                 });
             }
         });
@@ -265,6 +265,12 @@ $(function () {
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+            var data = new FormData();
+
+            for (var i = 0; i < dataFiles.serializeArray().length; i++) {
+                data.append(dataFiles[i].name, dataFiles[i].value);
+            }
+
             e.preventDefault()
             if (isValid) {
                 if (type === 'update') {
