@@ -8,8 +8,11 @@
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('vendors/css/file-uploaders/dropzone.min.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-file-uploader.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
-@endsection
+    <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/css/intlTelInput.css">
 
 @section('page-style')
     {{-- Page Css files --}}
@@ -45,6 +48,8 @@
             <div class="modal modal-slide-in new-admin-modal fade" id="modals-slide-in">
                 <div class="modal-dialog">
                     <form class="add-new-admin modal-content pt-0">
+                        <input type="hidden" value="1" id="form_status">
+                        <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
                             <h5 class="modal-title" id="modal-label">Add administrator</h5>
@@ -135,11 +140,48 @@
     <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/file-uploaders/dropzone.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/moment.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/intlTelInput.min.js"></script>
 @endsection
 
 @section('page-script')
     {{-- Page js files --}}
     <script src="{{ asset(mix('js/scripts/pages/admins-list.js')) }}"></script>
+    <script>
+        $('#country').on("change.select2", function () {
+            var $element = $(this);
+            var target = $element.parents('form').find('select#city');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/api/admin/cities/list/' + $element.find("option:selected").val(),
+                type: 'GET',
+                cache: false,
+                contentType: 'application/json',
+                dataType: "json",
+                success: function (result) {
+                    var dbSelect = target;
+                    dbSelect.empty();
+                    for (var i = 0; i < result.data.length; i++) {
+                        dbSelect.append($('<option/>', {
+                            value: result.data[i].id,
+                            text: result.data[i].name
+                        }));
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+
+            if ($('#city_id').val()) {
+                target.val($('#city_id').val());
+                target.trigger('change');
+            }
+        });
+    </script>
 @endsection

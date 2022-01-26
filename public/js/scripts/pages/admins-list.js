@@ -1,12 +1,5 @@
-/*=========================================================================================
-    File Name: app-user-list.js
-    Description: User List page
-    --------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
+Dropzone.autoDiscover = false;
 
-==========================================================================================*/
 $(function () {
     ;('use strict')
 
@@ -34,7 +27,7 @@ $(function () {
                 {data: 'name'},
                 {data: 'phone'},
                 {data: 'email'},
-                {data: 'role.name'},
+                {data: 'role'},
                 {data: 'status'},
                 {data: ''}
             ],
@@ -49,9 +42,14 @@ $(function () {
                         return ''
                     }
                 },
-
                 {
-                    targets: 4,
+                    targets: 6,
+                    render: function (data, type, full, meta) {
+                        return data ? data.name : '-';
+                    }
+                },
+                {
+                    targets: 7,
                     render: function (data, type, full, meta) {
                         var $status = full['status']
                         return (
@@ -240,7 +238,7 @@ $(function () {
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
         $('#files').dropzone({
-            url: assetPath + 'api/admin/admins/' + type,
+            url: assetPath + 'api/admin/owners/' + type,
             autoProcessQueue: false,
             addRemoveLinks: true,
             autoQueue: false,
@@ -257,6 +255,7 @@ $(function () {
         $('#country,#city').select2();
 
         newForm.on('submit', function (e) {
+            e.preventDefault();
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
             var data = new FormData();
@@ -265,7 +264,6 @@ $(function () {
                 data.append(dataFiles[i].name, dataFiles[i].value);
             }
 
-            e.preventDefault()
             if (isValid) {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());
@@ -275,7 +273,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/admins/' + type,
+                    url: assetPath + 'api/admin/owners/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,

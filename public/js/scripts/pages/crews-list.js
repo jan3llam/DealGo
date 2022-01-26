@@ -283,6 +283,7 @@ $(function () {
         $('#country,#city,#vessel').select2();
 
         newForm.on('submit', function (e) {
+            e.preventDefault();
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
             var data = new FormData();
@@ -291,7 +292,6 @@ $(function () {
                 data.append(dataFiles[i].name, dataFiles[i].value);
             }
 
-            e.preventDefault()
             if (isValid) {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());
