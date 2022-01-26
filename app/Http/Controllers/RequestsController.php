@@ -37,7 +37,19 @@ class RequestsController extends Controller
 
     public function list_api()
     {
-        return response()->success(ShippingRequest::withTrashed()->with(['tenant', 'port_from', 'port_to', 'owner'])->get());
+        return response()->success(ShippingRequest::withTrashed()->with([
+            'tenant' => function ($q) {
+                $q->withTrashed();
+            },
+            'port_from' => function ($q) {
+                $q->withTrashed();
+            },
+            'port_to' => function ($q) {
+                $q->withTrashed();
+            },
+            'owner' => function ($q) {
+                $q->withTrashed();
+            }])->get());
     }
 
     public function add(Request $request)
