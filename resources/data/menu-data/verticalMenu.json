@@ -77,17 +77,11 @@
             ]
         },
         {
-            "url": "/admin/requests",
-            "name": "Requests",
+            "url": "/admin/shipments",
+            "name": "Shipments",
             "icon": "file-text",
-            "slug": "admin.requests",
+            "slug": "admin.shipments",
             "submenu": [
-                {
-                    "url": "/admin/shipments",
-                    "name": "Shipments",
-                    "icon": "truck",
-                    "slug": "admin.shipments"
-                },
                 {
                     "url": "/admin/requests",
                     "name": "Requests",

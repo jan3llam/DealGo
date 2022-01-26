@@ -25,10 +25,11 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'name'},
-                {data: 'total'},
-                {data: 'start_at'},
-                {data: 'id'},
-                {data: 'status'},
+                {data: 'tenant.name'},
+                {data: 'from_port.name'},
+                {data: 'to_port.name'},
+                {data: 'owner.name'},
+                {data: 'date_from'},
                 {data: ''}
             ],
             columnDefs: [
@@ -43,7 +44,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: [6, 7],
+                    targets: [6, 3],
                     render: function (data, type, full, meta) {
                         return data ? data.name : '-';
                     }
