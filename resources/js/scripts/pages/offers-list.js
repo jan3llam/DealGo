@@ -225,17 +225,17 @@ $(function () {
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
-        $('#files').dropzone({
+        $('#file').dropzone({
             url: assetPath + 'api/admin/offers/' + type,
             autoProcessQueue: false,
             addRemoveLinks: true,
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("files", file);
+                    data.append("file", file);
                 });
                 this.on("removedfile", function () {
-                    data.delete('files');
+                    data.delete('file');
                 });
             }
         });
