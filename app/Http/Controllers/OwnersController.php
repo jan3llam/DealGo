@@ -138,7 +138,7 @@ class OwnersController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->error('missingParameters');
+            return response()->error('missingParameters', $validator->failed());
         }
 
         if ($request->hasFile('legal')) {
