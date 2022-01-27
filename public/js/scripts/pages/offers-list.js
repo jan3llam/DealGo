@@ -26,7 +26,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'owner'},
                 {data: 'payments'},
-                {data: 'start_at'},
+                {data: 'date'},
                 {data: 'status'},
                 {data: ''}
             ],
