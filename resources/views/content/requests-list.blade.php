@@ -173,8 +173,7 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-icon btn-success" type="button" data-repeater-create>
-                                    <i data-feather="plus" class="me-25"></i>
-                                    <span>Add New</span>
+                                    <i data-feather="plus" class="me-25"></i><span>Add New</span>
                                 </button>
                             </div>
                             <div id="owners_container" style="display: none">
