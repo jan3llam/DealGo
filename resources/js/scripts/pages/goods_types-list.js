@@ -197,7 +197,7 @@ $(function () {
             }
         })
 
-        $('#parent').select2();
+        $('#parent').select2({dropdownParent: newSidebar});
         $('#vtype').select2({multiple: true});
 
         newForm.on('submit', function (e) {

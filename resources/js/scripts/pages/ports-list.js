@@ -208,7 +208,7 @@ $(function () {
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
-        $('#country,#city').select2();
+        $('#country,#city').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()

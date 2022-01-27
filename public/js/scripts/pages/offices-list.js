@@ -239,6 +239,15 @@ $(function () {
                 'email': {
                     required: true
                 },
+                'zip': {
+                    required: true
+                },
+                'city': {
+                    required: true
+                },
+                'address_1': {
+                    required: true
+                },
                 'phone': {
                     required: true
                 },
@@ -292,7 +301,7 @@ $(function () {
             }
         });
 
-        $('#country,#city').select2();
+        $('#country,#city').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             e.preventDefault();

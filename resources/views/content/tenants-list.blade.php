@@ -151,7 +151,7 @@
                             <div class="mb-1">
                                 <label class="form-label" for="gtype">Goods types</label>
                                 <select type="text" class="form-control dt-full-name select2" id="gtype"
-                                        name="gtype">
+                                        name="gtype" multiple="multiple">
                                     @foreach($types as $type)
                                         <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach

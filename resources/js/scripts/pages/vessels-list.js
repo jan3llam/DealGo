@@ -260,7 +260,7 @@ $(function () {
             }
         });
 
-        $('#country,#type,#owner').select2();
+        $('#country,#type,#owner').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             e.preventDefault();

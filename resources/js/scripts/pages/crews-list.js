@@ -280,7 +280,7 @@ $(function () {
             }
         });
 
-        $('#country,#city,#vessel').select2();
+        $('#country,#city,#vessel').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             e.preventDefault();

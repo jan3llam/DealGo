@@ -217,7 +217,7 @@ $(function () {
             }
         })
 
-        $('#parent').select2();
+        $('#parent').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()

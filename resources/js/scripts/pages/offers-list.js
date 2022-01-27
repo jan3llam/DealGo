@@ -193,7 +193,7 @@ $(function () {
             initEmpty: true,
             show: function () {
                 $(this).slideDown(function () {
-                    $(this).find('.routes-select2').select2();
+                    $(this).find('.routes-select2').select2({dropdownParent: newSidebar});
                 });
                 // Feather Icons
                 if (feather) {
@@ -240,7 +240,7 @@ $(function () {
             }
         });
 
-        $('.vessels-select2,#owner').select2();
+        $('.vessels-select2,#owner').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()

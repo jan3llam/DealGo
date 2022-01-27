@@ -239,7 +239,19 @@ $(function () {
                 'email': {
                     required: true
                 },
+                'zip': {
+                    required: true
+                },
+                'city': {
+                    required: true
+                },
+                'address_1': {
+                    required: true
+                },
                 'phone': {
+                    required: true
+                },
+                'gtype': {
                     required: true
                 },
             }
@@ -292,8 +304,14 @@ $(function () {
             }
         });
 
-        $('#country,#city').select2();
-        $('#gtype').select2({multiple: true});
+        $('#country,#city').select2({
+            dropdownParent: newSidebar
+        });
+        $('#gtype').select2({
+            multiple: true,
+            placeholder: "-- Select --",
+            dropdownParent: newSidebar
+        }).val(null).trigger('change.select2')
 
         newForm.on('submit', function (e) {
             e.preventDefault();

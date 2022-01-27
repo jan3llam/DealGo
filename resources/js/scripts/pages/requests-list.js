@@ -194,7 +194,7 @@ $(function () {
             initEmpty: true,
             show: function () {
                 $(this).slideDown(function () {
-                    $(this).find('.goods-select2').select2();
+                    $(this).find('.goods-select2').select2({dropdownParent: newSidebar});
                 });
                 // Feather Icons
                 if (feather) {
@@ -207,7 +207,7 @@ $(function () {
             initEmpty: true,
             show: function () {
                 $(this).slideDown(function () {
-                    $(this).find('.routes-select2').select2();
+                    $(this).find('.routes-select2').select2({dropdownParent: newSidebar});
                 });
                 // Feather Icons
                 if (feather) {
@@ -277,7 +277,7 @@ $(function () {
             }
         });
 
-        $('#tenant,#port_from,#port_to,#contract,#owner').select2();
+        $('#tenant,#port_from,#port_to,#contract,#owner').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()

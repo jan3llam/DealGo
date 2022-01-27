@@ -301,7 +301,9 @@ $(function () {
             }
         });
 
-        $('#country,#city').select2();
+        $('#country,#city').select2({
+            dropdownParent: newSidebar
+        });
 
         newForm.on('submit', function (e) {
             e.preventDefault();

@@ -255,7 +255,7 @@ $(function () {
             }
         });
 
-        $('#country,#city,#role').select2();
+        $('#country,#city,#role').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             e.preventDefault();
