@@ -7,6 +7,8 @@ use App\Models\Admin;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Validator;
 
@@ -30,7 +32,7 @@ class AdminsController extends Controller
 
     public function list_api()
     {
-        return response()->success(Admin::all());
+        return response()->success(Admin::with(['roles', 'city.country'])->get());
     }
 
 
@@ -61,7 +63,19 @@ class AdminsController extends Controller
         $item->password = bcrypt($params['password']);
         $item->status = 1;
 
-        Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
+//        Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
+        $files = $request->file('files', []);
+        $filesArr = [];
+        if ($files) {
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+                $fileName = Str::random(18) . '.' . $extension;
+                Storage::disk('public_images')->putFileAs('', $file, $fileName);
+                $filesArr[] = $fileName;
+            }
+        }
+
+        $item->files = json_encode($filesArr);
 
         $item->save();
 
@@ -104,6 +118,19 @@ class AdminsController extends Controller
             $item->password = bcrypt($params['password']);
 
             Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
+
+            $files = $request->file('files', []);
+            $filesArr = [];
+            if ($files) {
+                foreach ($files as $file) {
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = Str::random(18) . '.' . $extension;
+                    Storage::disk('public_images')->putFileAs('', $file, $fileName);
+                    $filesArr[] = $fileName;
+                }
+            }
+
+            $item->files = json_encode($filesArr);
 
             $item->save();
 

@@ -56,6 +56,16 @@
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
+                                <label class="form-label" for="role">Role</label>
+                                <select type="text" class="form-control dt-full-name select2" id="role"
+                                        name="role">
+                                    <option value="" disabled selected>Kindly choose</option>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-1">
                                 <label class="form-label" for="name">Contact name</label>
                                 <input type="text" class="form-control dt-full-name" id="name"
                                        placeholder="Contact name" name="name"/>

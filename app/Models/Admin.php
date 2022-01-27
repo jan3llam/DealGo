@@ -13,7 +13,8 @@ class Admin extends Authenticatable implements CanResetPassword
 {
     use HasFactory, SoftDeletes, HasRoles;
 
-    protected $guard = 'admin';
+    protected $guard = 'admins';
+    protected $guard_name = 'admins';
 
     protected $hidden = [
         'password',
@@ -22,6 +23,11 @@ class Admin extends Authenticatable implements CanResetPassword
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 
 }

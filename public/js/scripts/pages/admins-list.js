@@ -17,7 +17,7 @@ $(function () {
         assetPath = $('body').attr('data-asset-path')
     }
     if (dtTable.length) {
-        dtTable.DataTable({
+        dtTable.dataTable({
             ajax: assetPath + 'api/admin/admins/list',
             columns: [
                 // columns according to JSON
@@ -27,7 +27,7 @@ $(function () {
                 {data: 'name'},
                 {data: 'phone'},
                 {data: 'email'},
-                {data: 'role'},
+                {data: 'roles'},
                 {data: 'status'},
                 {data: ''}
             ],
@@ -45,7 +45,7 @@ $(function () {
                 {
                     targets: 6,
                     render: function (data, type, full, meta) {
-                        return data ? data.name : '-';
+                        return data[0] ? data[0].name : '-';
                     }
                 },
                 {
@@ -229,6 +229,9 @@ $(function () {
                 'city': {
                     required: true
                 },
+                'role': {
+                    required: true
+                },
                 'address': {
                     required: true
                 },
@@ -238,7 +241,7 @@ $(function () {
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
         $('#files').dropzone({
-            url: assetPath + 'api/admin/owners/' + type,
+            url: assetPath + 'api/admin/admins/' + type,
             autoProcessQueue: false,
             addRemoveLinks: true,
             autoQueue: false,
@@ -252,7 +255,7 @@ $(function () {
             }
         });
 
-        $('#country,#city').select2();
+        $('#country,#city,#role').select2();
 
         newForm.on('submit', function (e) {
             e.preventDefault();
@@ -273,7 +276,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/owners/' + type,
+                    url: assetPath + 'api/admin/admins/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -333,12 +336,13 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#name').val(data.contact_name);
+        $('#name').val(data.name);
+        $('#phone').val(data.phone);
         $('#dealgo_id').val(data.dealgo_id);
         $('#email').val(data.email);
         $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id);
-        $('#country').trigger('change.select2');
+        $('#country').val(data.city.country.id).trigger('change.select2');
+        $('#role').val(data.roles[0].id).trigger('change.select2');
         $('#address').val(data.address);
         $('#object_id').val(data.id);
     });
