@@ -404,6 +404,7 @@ $(function () {
         data.goods_types.forEach(item => {
             goods_types.push(item.id);
         });
+        console.log(goods_types);
         $('#gtype').val(goods_types).trigger('change.select2');
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
