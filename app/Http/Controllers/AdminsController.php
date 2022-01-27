@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\PasswordEmail;
 use App\Models\Admin;
 use App\Models\Country;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -119,7 +117,7 @@ class AdminsController extends Controller
                 $item->password = bcrypt($params['password']);
             }
 
-            Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
+//            Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
 
             $files = $request->file('files', []);
             $filesArr = [];
