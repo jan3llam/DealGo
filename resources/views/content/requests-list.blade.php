@@ -183,7 +183,7 @@
                                     <select type="text" class="form-control dt-full-name select2" id="owner"
                                             name="owner">
                                         @foreach($owners as $owner)
-                                            <option value="{{$owner->id}}">{{$owner->name}}</option>
+                                            <option value="{{$owner->id}}">{{$owner->contact_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
