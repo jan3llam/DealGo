@@ -45,13 +45,13 @@ $(function () {
                     }
                 },
                 {
-                    targets: [6, 7],
+                    targets: 7,
                     render: function (data, type, full, meta) {
                         return data ? data.name : '-';
                     }
                 },
                 {
-                    targets: 3,
+                    targets: [3, 6],
                     render: function (data, type, full, meta) {
                         return data ? data.contact_name : '-';
                     }
