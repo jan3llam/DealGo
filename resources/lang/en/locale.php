@@ -7,7 +7,7 @@ return [
     "Goods types" => "Goods types",
     "Vessels types" => "Vessels types",
     "Crews" => "Crews",
-    "Offices" => "Offices",
+    "Offices" => "Shipping Agents",
     "Ports" => "Ports",
     "Requests" => "Requests",
     "Maintenances" => "Maintenances",

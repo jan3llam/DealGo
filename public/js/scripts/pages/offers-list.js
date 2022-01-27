@@ -24,7 +24,7 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'owner.name'},
+                {data: 'owner'},
                 {data: 'total'},
                 {data: 'start_at'},
                 {data: 'status'},
@@ -39,6 +39,12 @@ $(function () {
                     targets: 0,
                     render: function (data, type, full, meta) {
                         return ''
+                    }
+                },
+                {
+                    targets: 2,
+                    render: function (data, type, full, meta) {
+                        return data ? data.contact_name : '-';
                     }
                 },
                 {
@@ -225,17 +231,17 @@ $(function () {
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
-        $('#file').dropzone({
+        $('#files').dropzone({
             url: assetPath + 'api/admin/offers/' + type,
             autoProcessQueue: false,
             addRemoveLinks: true,
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("file", file);
+                    data.append("files", file);
                 });
                 this.on("removedfile", function () {
-                    data.delete('file');
+                    data.delete('files');
                 });
             }
         });
@@ -250,7 +256,7 @@ $(function () {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());
                 }
-                newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+                newForm.find('#request,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
                 });
                 $.ajax({

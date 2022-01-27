@@ -39,7 +39,7 @@ class OffersController extends Controller
 
     public function list_api()
     {
-        return response()->success(Offer::withTrashed()->with('city.country')->withCount('vessels')->get());
+        return response()->success(Offer::all());
     }
 
     public function add(Request $request)
@@ -97,15 +97,15 @@ class OffersController extends Controller
             $fileName = null;
 
             $paymentItem = new OffersPayment;
-            $paymentItem->value = $payment->value;
-            $paymentItem->date = $payment->date;
-            $paymentItem->description = $payment->description;
+            $paymentItem->value = $payment['value'];
+            $paymentItem->date = $payment['date'];
+            $paymentItem->description = $payment['description'];
 
-            if ($payment->hasFile('file')) {
-                $extension = $request->file('file')->getClientOriginalExtension();
-                $fileName = Str::random(18) . '.' . $extension;
-                Storage::disk('public_images')->putFileAs('', $request->file('file'), $fileName);
-            }
+//            if ($payment->hasFile('file')) {
+//                $extension = $request->file('file')->getClientOriginalExtension();
+//                $fileName = Str::random(18) . '.' . $extension;
+//                Storage::disk('public_images')->putFileAs('', $request->file('file'), $fileName);
+//            }
 
             $paymentItem->file = $fileName;
 

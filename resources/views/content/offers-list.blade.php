@@ -58,7 +58,7 @@
                         <input type="hidden" value="1" id="form_status">
                         <input type="hidden" value="" id="object_id">
                         @if($request)
-                            <input type="hidden" value="{{$request->id}}" name="request">
+                            <input type="hidden" value="{{$request->id}}" name="request" id="request">
                         @endif
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
@@ -166,10 +166,16 @@
                                                        placeholder="Date" name="date"/>
                                             </div>
                                         </div>
-                                        <div class="mb-1">
-                                            <label class="form-label" for="description">Details</label>
-                                            <input type="text" class="form-control dt-full-name"
-                                                   placeholder="Details" name="description"/>
+                                        <div class="mb-1 row">
+                                            <div class="col-6">
+                                                <label class="form-label" for="description">Details</label>
+                                                <input type="text" class="form-control dt-full-name"
+                                                       placeholder="Details" name="description"/>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="formFile" class="form-label">File</label>
+                                                <input class="form-control" type="file" name="file"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -184,8 +190,8 @@
                                           placeholder="Description" name="description"></textarea>
                             </div>
                             <div class=mb-1>
-                                <label for="file" class="form-label">File</label>
-                                <div class="dropzone" id="file">
+                                <label for="files" class="form-label">Files</label>
+                                <div class="dropzone" id="files">
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">

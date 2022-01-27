@@ -45,9 +45,15 @@ $(function () {
                     }
                 },
                 {
-                    targets: [6, 3, 7],
+                    targets: [6, 7],
                     render: function (data, type, full, meta) {
                         return data ? data.name : '-';
+                    }
+                },
+                {
+                    targets: 3,
+                    render: function (data, type, full, meta) {
+                        return data ? data.contact_name : '-';
                     }
                 },
                 {
