@@ -403,7 +403,7 @@ $(function () {
         $('#image_container').attr('src', '');
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
-            $(this).val('').trigger('change');
+            $(this).val('');
         })
     });
 })
