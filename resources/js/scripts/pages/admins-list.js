@@ -223,9 +223,6 @@ $(function () {
                 'phone': {
                     required: true
                 },
-                'password': {
-                    required: true
-                },
                 'city': {
                     required: true
                 },
