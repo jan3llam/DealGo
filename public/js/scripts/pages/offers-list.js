@@ -25,7 +25,7 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'owner'},
-                {data: 'total'},
+                {data: 'payments'},
                 {data: 'start_at'},
                 {data: 'status'},
                 {data: ''}
@@ -45,6 +45,18 @@ $(function () {
                     targets: 2,
                     render: function (data, type, full, meta) {
                         return data ? data.contact_name : '-';
+                    }
+                },
+                {
+                    targets: 3,
+                    render: function (data, type, full, meta) {
+                        var sum = 0
+                        if (data) {
+                            data.forEach(item => {
+                                sum += item.value;
+                            })
+                        }
+                        return sum;
                     }
                 },
                 {
