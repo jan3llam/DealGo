@@ -30,7 +30,7 @@ class AuthController extends Controller
         $credentials = [
             'email' => $request->input('email'),
             'password' => $request->input('password'),
-            'active' => 1
+            'status' => 1
         ];
 
         if ($this->guard()->attempt($credentials, $request->filled('remember'))) {

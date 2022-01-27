@@ -385,6 +385,7 @@ $(function () {
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
         $('#type').val(data.type);
+        $('#type').trigger('change');
         $('#object_id').val(data.id);
     });
 
