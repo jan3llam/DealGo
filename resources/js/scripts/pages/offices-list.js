@@ -388,8 +388,8 @@ $(function () {
         $('#commercial').val(data.commercial_number);
         $('#email').val(data.email);
         $('#phone').val(data.phone);
-        $('#city_id').val(data.city.id);
         $('#country').val(data.city.country.id).trigger('change.select2');
+        $('#city_id').val(data.city.id);
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
@@ -402,7 +402,7 @@ $(function () {
         $('#image_container').attr('src', '');
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
-            $(this).val('');
+            $(this).val('').trigger('change');
         })
     });
 })

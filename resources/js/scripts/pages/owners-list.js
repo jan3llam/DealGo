@@ -389,8 +389,8 @@ $(function () {
         $('#commercial').val(data.commercial_number);
         $('#email').val(data.email);
         $('#phone').val(data.phone);
+        $('#country').val(data.city.country.id).trigger('change.select2');
         $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id)
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
