@@ -100,7 +100,6 @@ class AdminsController extends Controller
             'address' => 'required|string',
             'email' => 'required|email',
             'city' => 'required|numeric',
-            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -115,7 +114,10 @@ class AdminsController extends Controller
             $item->phone = $params['phone'];
             $item->address = $params['address'];
             $item->city_id = $params['city'];
-            $item->password = bcrypt($params['password']);
+
+            if ($request->has('password')) {
+                $item->password = bcrypt($params['password']);
+            }
 
             Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
 

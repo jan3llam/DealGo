@@ -130,8 +130,6 @@ class TenantsController extends Controller
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => 'required_if:type,1',
-            'commercial' => 'required_if:type,1',
-            'company' => 'required_if:type,1|file',
             'license' => 'required_if:type,1|file',
             'type' => 'required|numeric',
             'contact' => 'required|string',
@@ -139,11 +137,9 @@ class TenantsController extends Controller
             'address_1' => 'required|string',
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
-            'password' => 'required',
             'email' => 'required',
             'phone' => 'required',
             'gtype' => 'required',
-            'legal' => 'required|file',
         ]);
 
         if ($validator->fails()) {
@@ -158,7 +154,9 @@ class TenantsController extends Controller
 
         $item = Tenant::withTrashed()->where('id', $id)->first();
 
-        $item->legal_file = $fileName;
+        if ($request->hasFile('legal')) {
+            $item->legal_file = $fileName;
+        }
 
         if ($request->type == 1) {
 
@@ -186,7 +184,9 @@ class TenantsController extends Controller
         $item->email = $params['email'];
         $item->phone = $params['phone'];
         $item->contact_name = $params['contact'];
-        $item->password = bcrypt($params['password']);
+        if ($request->has('password')) {
+            $item->password = bcrypt($params['password']);
+        }
         $item->city_id = $params['city'];
         $item->type = $params['type'];
         $item->zip_code = $params['zip'];

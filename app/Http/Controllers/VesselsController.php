@@ -68,7 +68,7 @@ class VesselsController extends Controller
         $item->name = $params['name'];
         $item->type_id = $params['type'];
         $item->owner_id = $params['owner'];
-        $item->country_id = $params['owner'];
+        $item->country_id = $params['country'];
         $item->imo = $params['imo'];
         $item->mmsi = $params['mmsi'];
         $item->capacity = $params['capacity'];
@@ -116,7 +116,7 @@ class VesselsController extends Controller
         $item->name = $params['name'];
         $item->type_id = $params['type'];
         $item->owner_id = $params['owner'];
-        $item->country_id = $params['owner'];
+        $item->country_id = $params['country'];
         $item->imo = $params['imo'];
         $item->mmsi = $params['mmsi'];
         $item->capacity = $params['capacity'];

@@ -239,6 +239,15 @@ $(function () {
                 'email': {
                     required: true
                 },
+                'zip': {
+                    required: true
+                },
+                'city': {
+                    required: true
+                },
+                'address_1': {
+                    required: true
+                },
                 'phone': {
                     required: true
                 },
