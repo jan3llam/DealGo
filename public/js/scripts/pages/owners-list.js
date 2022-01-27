@@ -390,13 +390,12 @@ $(function () {
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id);
-        $('#country').trigger('change.select2');
+        $('#country').val(data.city.country.id)
+        trigger('change.select2');
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
-        $('#type').val(data.type);
-        $('#type').trigger('change');
+        $('#type').val(data.type).trigger('change');
         $('#object_id').val(data.id);
     });
 
