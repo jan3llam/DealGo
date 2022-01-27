@@ -404,12 +404,11 @@ $(function () {
         data.goods_types.forEach(item => {
             goods_types.push(item.id);
         });
-        console.log(goods_types);
         $('#gtype').val(goods_types).trigger('change.select2');
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
-        $('#type').val(data.type);
+        $('#type').val(data.type).trigger('change');
         $('#object_id').val(data.id);
     });
 
@@ -418,7 +417,7 @@ $(function () {
         $('#image_container').attr('src', '');
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
-            $(this).val('');
+            $(this).val('').trigger('change');
         })
     });
 })
