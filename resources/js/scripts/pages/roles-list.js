@@ -23,6 +23,11 @@ $(function () {
         $('#contact').val(data.description);
     });
 
+    var assetPath = '../../../app-assets/';
+
+    if ($('body').attr('data-framework') === 'laravel') {
+        assetPath = $('body').attr('data-asset-path')
+    }
 
     $(document).on('click', '.item-delete', function () {
         var element = $(this);
@@ -32,7 +37,7 @@ $(function () {
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
-                    dtTable.DataTable().ajax.reload();
+                    element.parents('.col-xl-4').remove()
                     toastr['success'](response.message);
                 } else {
                     toastr['error'](response.message);

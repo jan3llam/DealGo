@@ -24,7 +24,7 @@ class RolesController extends Controller
 
     public function list_api()
     {
-        return response()->success(Role::withTrashed()->get());
+        return response()->success(Role::all());
     }
 
     public function add(Request $request)
@@ -84,11 +84,9 @@ class RolesController extends Controller
     public function delete($id)
     {
 
-        $item = Role::withTrashed()->where('id', $id)->first();
+        $item = Role::where('id', $id)->first();
 
         if ($item) {
-            $item->status = 0;
-            $item->save();
             $item->delete();
         }
 
