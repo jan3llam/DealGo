@@ -39,7 +39,9 @@ class OffersController extends Controller
 
     public function list_api()
     {
-        return response()->success(Offer::all());
+        return response()->success(Offer::with(['payments' => function ($query) {
+            $query->sum('value');
+        }])->get());
     }
 
     public function add(Request $request)

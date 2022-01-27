@@ -16,6 +16,11 @@ class Offer extends Model
         return $this->belongsTo(Request::class);
     }
 
+    public function total()
+    {
+        return $this->payments()->sum('value');
+    }
+
     public function payments()
     {
         return $this->hasMany(OffersPayment::class);

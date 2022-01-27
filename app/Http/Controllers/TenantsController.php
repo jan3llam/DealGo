@@ -205,6 +205,7 @@ class TenantsController extends Controller
         }
 
         $gtypes = explode(',', $request->input('gtype', null));
+        $item->goods_types()->detach();
         foreach ($gtypes as $type) {
             $item->goods_types()->attach($type);
         }

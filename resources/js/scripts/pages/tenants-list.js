@@ -404,7 +404,7 @@ $(function () {
         data.goods_types.forEach(item => {
             goods_types.push(item.id);
         });
-        $('#vtype').val(goods_types).trigger('change.select2');
+        $('#gtype').val(goods_types).trigger('change.select2');
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
