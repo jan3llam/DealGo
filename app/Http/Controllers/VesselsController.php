@@ -96,7 +96,6 @@ class VesselsController extends Controller
             'mmsi' => 'required|string',
             'capacity' => 'required',
             'build' => 'required',
-            'image' => 'required|file',
         ]);
 
         if ($validator->fails()) {
@@ -110,7 +109,9 @@ class VesselsController extends Controller
         }
         $item = Vessel::withTrashed()->where('id', $id)->first();
 
-        $item->image = $fileName;
+        if ($request->hasFile('image')) {
+            $item->image = $fileName;
+        }
 
         $item->name = $params['name'];
         $item->type_id = $params['type'];

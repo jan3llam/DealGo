@@ -115,7 +115,6 @@ class CrewsController extends Controller
             'city' => 'required|numeric',
             'email' => 'required',
             'phone' => 'required',
-            'file' => 'required|file',
         ]);
 
         if ($validator->fails()) {
@@ -130,7 +129,9 @@ class CrewsController extends Controller
 
         $item = Crew::withTrashed()->where('id', $id)->first();
 
-        $item->file = $fileName;
+        if ($request->hasFile('file')) {
+            $item->file = $fileName;
+        }
 
         $item->vessel_id = $params['vessel'];
         $item->email = $params['email'];

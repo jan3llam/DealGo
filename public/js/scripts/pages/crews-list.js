@@ -368,8 +368,8 @@ $(function () {
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id);
-        $('#country').trigger('change.select2');
+        $('#country').val(data.city.country.id).trigger('change.select2');
+        $('#vessel').val(data.vessel_id).trigger('change.select2');
         $('#address').val(data.address);
         $('#type').val(data.type);
         $('#object_id').val(data.id);

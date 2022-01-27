@@ -206,6 +206,9 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
+                'vessel': {
+                    required: true
+                },
                 'name': {
                     required: true
                 },
@@ -222,6 +225,8 @@ $(function () {
         })
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+
+        $('#vessel').select2();
 
         $('#files').dropzone({
             url: assetPath + 'api/admin/maintenances/' + type,
@@ -298,6 +303,7 @@ $(function () {
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
         $('#name').val(data.name);
+        $('#vessel').val(data.vessel_id).trigger('change.select2');
         $('#start').val(data.start_at);
         $('#end').val(data.end_at);
         $('#description').val(data.description);
