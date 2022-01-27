@@ -43,7 +43,6 @@
                         <th>Owner</th>
                         <th>Total</th>
                         <th>Start @</th>
-                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>

@@ -27,7 +27,6 @@ $(function () {
                 {data: 'owner'},
                 {data: 'payments'},
                 {data: 'date'},
-                {data: 'status'},
                 {data: ''}
             ],
             columnDefs: [
@@ -144,17 +143,6 @@ $(function () {
                         setTimeout(function () {
                             $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
                         }, 50)
-                    }
-                },
-                {
-                    text: 'Add new',
-                    className: 'add-offer btn btn-primary',
-                    attr: {
-                        'data-bs-toggle': 'modal',
-                        'data-bs-target': '#modals-slide-in'
-                    },
-                    init: function (api, node, config) {
-                        $(node).removeClass('btn-secondary')
                     }
                 }
             ],
