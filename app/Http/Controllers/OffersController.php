@@ -211,8 +211,7 @@ class OffersController extends Controller
         $item = Offer::withTrashed()->where('id', $id)->first();
 
         if ($item) {
-            $item->status = 0;
-            $item->save();
+
             $item->delete();
         }
 

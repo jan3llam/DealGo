@@ -194,8 +194,6 @@ class RequestsController extends Controller
         $item = ShippingRequest::withTrashed()->where('id', $id)->first();
 
         if ($item) {
-            $item->status = 0;
-            $item->save();
             $item->delete();
         }
 
