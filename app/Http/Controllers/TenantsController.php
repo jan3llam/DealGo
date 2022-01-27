@@ -130,7 +130,7 @@ class TenantsController extends Controller
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => 'required_if:type,1',
-            'license' => 'required_if:type,1|file',
+            'commercial' => 'required_if:type,1',
             'type' => 'required|numeric',
             'contact' => 'required|string',
             'zip' => 'required|string',
