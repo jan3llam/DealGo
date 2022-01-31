@@ -24,9 +24,10 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'owner'},
-                {data: 'payments'},
-                {data: 'date'},
+                {data: 'owner.name'},
+                {data: 'total'},
+                {data: 'start_at'},
+                {data: 'status'},
                 {data: ''}
             ],
             columnDefs: [
@@ -38,24 +39,6 @@ $(function () {
                     targets: 0,
                     render: function (data, type, full, meta) {
                         return ''
-                    }
-                },
-                {
-                    targets: 2,
-                    render: function (data, type, full, meta) {
-                        return data ? data.contact_name : '-';
-                    }
-                },
-                {
-                    targets: 3,
-                    render: function (data, type, full, meta) {
-                        var sum = 0
-                        if (data) {
-                            data.forEach(item => {
-                                sum += item.value;
-                            })
-                        }
-                        return sum;
                     }
                 },
                 {
@@ -144,6 +127,17 @@ $(function () {
                             $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
                         }, 50)
                     }
+                },
+                {
+                    text: 'Add new',
+                    className: 'add-offer btn btn-primary',
+                    attr: {
+                        'data-bs-toggle': 'modal',
+                        'data-bs-target': '#modals-slide-in'
+                    },
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary')
+                    }
                 }
             ],
             // For responsive popup
@@ -231,17 +225,17 @@ $(function () {
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
-        $('#files').dropzone({
+        $('#file').dropzone({
             url: assetPath + 'api/admin/offers/' + type,
             autoProcessQueue: false,
             addRemoveLinks: true,
             autoQueue: false,
             init: function () {
                 this.on("addedfile", function (file) {
-                    data.append("files", file);
+                    data.append("file", file);
                 });
                 this.on("removedfile", function () {
-                    data.delete('files');
+                    data.delete('file');
                 });
             }
         });
@@ -256,7 +250,7 @@ $(function () {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());
                 }
-                newForm.find('#request,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+                newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
                 });
                 $.ajax({

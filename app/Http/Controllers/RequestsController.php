@@ -181,7 +181,7 @@ class RequestsController extends Controller
             $item->routes()->detach();
             $routes = $request->input('routes', []);
             foreach ($routes as $index => $route) {
-                $item->routes()->attach($route, ['order' => $index]);
+                $item->routes()->attach($route, ['ord   er' => $index]);
             }
         }
 

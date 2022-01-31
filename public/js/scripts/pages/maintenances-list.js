@@ -226,7 +226,7 @@ $(function () {
 
         var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
-        $('#vessel').select2();
+        $('#vessel').select2({dropdownParent: newSidebar});
 
         $('#files').dropzone({
             url: assetPath + 'api/admin/maintenances/' + type,

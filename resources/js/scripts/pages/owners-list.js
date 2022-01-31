@@ -5,6 +5,7 @@ $(function () {
 
     var dtTable = $('.owners-list-table'),
         newSidebar = $('.new-owner-modal'),
+        viewSidebar = $('.view-owner-modal'),
         newForm = $('.add-new-owner'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
@@ -19,7 +20,27 @@ $(function () {
     }
     if (dtTable.length) {
         dtTable.dataTable({
-            ajax: assetPath + 'api/admin/owners/list',
+            ajax: function (data, callback, settings) {
+                // make a regular ajax request using data.start and data.length
+                $.get(assetPath + 'api/admin/owners/list', {
+                    length: data.length,
+                    start: data.start,
+                    draw: data.draw,
+                    search: data.search.value,
+                    trashed: $('#trashed').val(),
+                    direction: data.order[0].dir,
+                    order: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                }, function (res) {
+                    callback({
+                        draw: res.data.meta.draw,
+                        recordsTotal: res.data.meta.total,
+                        recordsFiltered: res.data.meta.count,
+                        data: res.data.data
+                    });
+                });
+            },
+            processing: true,
+            serverSide: true,
             columns: [
                 // columns according to JSON
                 {data: ''},
@@ -45,6 +66,7 @@ $(function () {
                 },
                 {
                     targets: 7,
+                    orderable: false,
                     render: function (data, type, full, meta) {
                         var $status = full['status']
                         return (
@@ -74,6 +96,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            'View</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             'Edit</a>' +
@@ -105,6 +130,11 @@ $(function () {
                 if (data.deleted_at) {
                     $(row).addClass('table-secondary');
                 }
+            },
+            initComplete: function () {
+                $('#trashed').on('change', function () {
+                    dtTable.DataTable().ajax.reload();
+                });
             },
             // Buttons with Dropdown
             buttons: [
@@ -382,7 +412,7 @@ $(function () {
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
-        $('#modals-slide-in').modal('show')
+        newSidebar.modal('show')
         $('#form_status').val(2);
         $('#name').val(data.full_name);
         $('#contact').val(data.contact_name);
@@ -396,6 +426,24 @@ $(function () {
         $('#zip').val(data.zip_code);
         $('#type').val(data.type).trigger('change');
         $('#object_id').val(data.id);
+    });
+
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        viewSidebar.modal('show');
+        $('#view-name').val(data.full_name);
+        $('#view-name').val(data.full_name);
+        $('#view-contact').val(data.contact_name);
+        $('#view-commercial').val(data.commercial_number);
+        $('#view-email').val(data.email);
+        $('#view-phone').val(data.phone);
+        $('#view-country').val(data.city.country.name).trigger('change.select2');
+        $('#view-city').val(data.city.name);
+        $('#view-address_1').val(data.address_1);
+        $('#view-address_2').val(data.address_2);
+        $('#view-zip').val(data.zip_code);
+
     });
 
     $(document).on('click', '.add-owner', function () {
