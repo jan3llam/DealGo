@@ -27,17 +27,7 @@
         <div class="card">
             <div class="card-body border-bottom">
                 <h4 class="card-title">Search & Filter</h4>
-            </div>
-            <div class="card-body mt-2">
-                <div class="row g-1 mb-md-1">
-                    <div class="col-md-4">
-                        <label class="form-label">Trashed :</label>
-                        <select class="form-control dt-input dt-full-name" id="trashed">
-                            <option value="0" selected>No</option>
-                            <option value="1">Yes</option>
-                        </select>
-                    </div>
-                </div>
+                <input type="hidden" id="trashed" value="0">
             </div>
             <div class="card-datatable table-responsive pt-0">
                 <table class="owners-list-table table">
