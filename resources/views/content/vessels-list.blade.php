@@ -35,7 +35,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>IMO</th>
-                        <th>Owner name</th>
+                        <th>Ship owner</th>
                         <th>Country</th>
                         <th>Status</th>
                         <th>Actions</th>

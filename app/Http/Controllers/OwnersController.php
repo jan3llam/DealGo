@@ -14,7 +14,7 @@ class OwnersController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Vessels owners"]
+            ['link' => "admin/home", 'name' => "Home"], ['name' => "Ship owners"]
         ];
 
         $countries = Country::all();
@@ -90,7 +90,7 @@ class OwnersController extends Controller
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
             'password' => 'required',
-            'email' => 'required|unique:owners,',
+            'email' => 'required',
             'phone' => 'required',
             'legal' => 'required|file',
         ]);

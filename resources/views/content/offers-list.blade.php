@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Requests offers')
+@section('title', 'Requests Responses')
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -61,7 +61,7 @@
                         @endif
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add offer</h5>
+                            <h5 class="modal-title" id="modal-label">Add response</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">

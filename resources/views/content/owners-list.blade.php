@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Owners')
+@section('title', 'Ship owners')
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -54,7 +54,7 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add owner</h5>
+                            <h5 class="modal-title" id="modal-label">Add ship owner</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
@@ -167,7 +167,7 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View owner</h5>
+                            <h5 class="modal-title" id="modal-label">View ship owner</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">

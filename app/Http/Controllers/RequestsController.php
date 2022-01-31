@@ -49,7 +49,7 @@ class RequestsController extends Controller
             },
             'owner' => function ($q) {
                 $q->withTrashed();
-            }])->get());
+            }])->withCount('offers')->get());
     }
 
     public function add(Request $request)

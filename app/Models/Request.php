@@ -16,6 +16,11 @@ class Request extends Model
         return $this->belongsTo(Owner::class);
     }
 
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
+    }
+
     public function port_from()
     {
         return $this->belongsTo(Port::class, 'port_from');

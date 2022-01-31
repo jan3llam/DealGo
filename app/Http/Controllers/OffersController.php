@@ -18,7 +18,7 @@ class OffersController extends Controller
     public function list($id = null)
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Offers"]
+            ['link' => "admin/home", 'name' => "Home"], ['name' => "Responses"]
         ];
 
         $requests = ShipmentRequest::all();
