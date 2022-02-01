@@ -32,7 +32,7 @@ class TenantsController extends Controller
         $order_sort = 'desc';
 
         $params = $request->all();
-        $query = Tenant::withCount('vessels');
+        $query = Tenant::query();
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
