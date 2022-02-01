@@ -319,9 +319,7 @@ $(function () {
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
                 });
-                newForm.find('input[type=file]').each(function () {
-                    data.append($(this).attr('name'), $(this)[0].files[0]);
-                });
+
                 $.ajax({
                     type: 'POST',
                     url: assetPath + 'api/admin/tenants/' + type,
@@ -390,21 +388,6 @@ $(function () {
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
-        $("#legal").fileinput('destroy').fileinput({
-            initialPreview: [assetPath + 'images/' + data.legal_file],
-            showUpload: false,
-            initialPreviewAsData: true,
-        });
-        $("#company").fileinput('destroy').fileinput({
-            initialPreview: [assetPath + 'images/' + data.company_file],
-            showUpload: false,
-            initialPreviewAsData: true,
-        });
-        $("#license").fileinput('destroy').fileinput({
-            initialPreview: [assetPath + 'images/' + data.license_file],
-            showUpload: false,
-            initialPreviewAsData: true,
-        });
         $('#country').val(data.city.country.id).trigger('change.select2');
         var goods_types = [];
         data.goods_types.forEach(item => {
@@ -418,40 +401,12 @@ $(function () {
         $('#object_id').val(data.id);
     });
 
-    $(document).on('click', '.item-view', function () {
-        var element = $(this);
-        let data = dtTable.api().row(element.parents('tr')).data();
-        viewSidebar.modal('show');
-        $('#view-type').html(data.type);
-        if (data.type == 1) {
-            $('#view-company-container').show();
-        }
-        $('#view-legal').html('<a href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-license').html('<a href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-company').html('<a href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-name').html(data.full_name);
-        $('#view-contact').html(data.contact_name);
-        $('#view-commercial').html(data.commercial_number);
-        $('#view-email').html(data.email);
-        $('#view-phone').html(data.phone);
-        $('#view-country').html(data.city.country.name).trigger('change.select2');
-        $('#view-city').html(data.city.name);
-        $('#view-address-1').html(data.address_1);
-        $('#view-address-2').html(data.address_2);
-        $('#view-zip').html(data.zip_code);
-
-    })
-
     $(document).on('click', '.add-tenant', function () {
         $('#form_status').val(1);
         $('#image_container').attr('src', '');
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        });
-        $("#legal").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
-        $("#company").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
-        $("#license").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
-
+        })
     });
 })
