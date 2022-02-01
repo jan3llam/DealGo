@@ -90,7 +90,7 @@ class OwnersController extends Controller
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
             'password' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:owners,email',
             'phone' => 'required',
             'legal' => 'required|file',
         ]);
@@ -177,7 +177,7 @@ class OwnersController extends Controller
             'address_1' => 'required|string',
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
-            'email' => 'required',
+            'email' => 'required|unique:owners,email',
             'phone' => 'required',
         ]);
 
