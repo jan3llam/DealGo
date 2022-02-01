@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/file-uploaders/dropzone.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-file-uploader.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/css/intlTelInput.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css">
 @endsection
 
 @section('page-style')
@@ -159,6 +160,94 @@
                 </div>
             </div>
             <!-- Modal to add new user Ends-->
+            <div class="modal modal-slide-in view-office-modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content pt-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title" id="modal-label">View ship owner</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <div class="info-container">
+                                <ul class="list-unstyled">
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Type:</span>
+                                        <span id="view-type"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="view-company-container" style="display: none">
+                                <div class="info-container">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-75">
+                                            <span class="fw-bolder me-25">Full name:</span>
+                                            <span id="view-name"></span>
+                                        </li>
+                                        <li class="mb-75">
+                                            <span class="fw-bolder me-25">Commercial #:</span>
+                                            <span id="view-commercial"></span>
+                                        </li>
+                                        <li class="mb-75">
+                                            <span class="fw-bolder me-25">License file:</span>
+                                            <span id="view-license"></span>
+                                        </li>
+                                        <li class="mb-75">
+                                            <span class="fw-bolder me-25">Company file:</span>
+                                            <span id="view-company"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="info-container">
+                                <ul class="list-unstyled">
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Contact name:</span>
+                                        <span id="view-contact"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Email:</span>
+                                        <span id="view-email"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Phone:</span>
+                                        <span id="view-phone"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Zip code:</span>
+                                        <span id="view-zip"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Country:</span>
+                                        <span id="view-country"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">City:</span>
+                                        <span id="view-city"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Address 1:</span>
+                                        <span id="view-address-1"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Address 2:</span>
+                                        <span id="view-address-2"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Legal file (ID, Passport):</span>
+                                        <span id="view-legal"></span>
+                                    </li>
+
+                                </ul>
+                                <div class="d-flex justify-content-center pt-2">
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- list and filter end -->
     </section>
@@ -179,11 +268,12 @@
     <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/file-uploaders/dropzone.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/moment.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/intlTelInput.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
 @endsection
 
 @section('page-script')

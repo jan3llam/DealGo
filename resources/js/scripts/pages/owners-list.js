@@ -283,51 +283,6 @@ $(function () {
 
         $("#legal,#company,#license").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
-        // $('#legal').dropzone({
-        //     url: assetPath + 'api/admin/owners/' + type,
-        //     autoProcessQueue: false,
-        //     addRemoveLinks: true,
-        //     autoQueue: false,
-        //     init: function () {
-        //         this.on("addedfile", function (file) {
-        //             data.append("legal", file);
-        //         });
-        //         this.on("removedfile", function () {
-        //             data.delete('legal');
-        //         });
-        //     }
-        // });
-
-        // $('#company').dropzone({
-        //     url: assetPath + 'api/admin/owners/' + type,
-        //     autoProcessQueue: false,
-        //     addRemoveLinks: true,
-        //     autoQueue: false,
-        //     init: function () {
-        //         this.on("addedfile", function (file)    {
-        //             data.append("company", file);
-        //         });
-        //         this.on("removedfile", function () {
-        //             data.delete('company');
-        //         });
-        //     }
-        // });
-        //
-        // $('#license').dropzone({
-        //     url: assetPath + 'api/admin/owners/' + type,
-        //     autoProcessQueue: false,
-        //     addRemoveLinks: true,
-        //     autoQueue: false,
-        //     init: function () {
-        //         this.on("addedfile", function (file) {
-        //             data.append("license", file);
-        //         });
-        //         this.on("removedfile", function () {
-        //             data.delete('license');
-        //         });
-        //     }
-        // });
-
         $('#country,#city').select2({
             dropdownParent: newSidebar
         });
@@ -444,16 +399,25 @@ $(function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         viewSidebar.modal('show');
-        $('#view-name').val(data.full_name);
-        $('#view-contact').val(data.contact_name);
-        $('#view-commercial').val(data.commercial_number);
-        $('#view-email').val(data.email);
-        $('#view-phone').val(data.phone);
-        $('#view-country').val(data.city.country.name).trigger('change.select2');
-        $('#view-city').val(data.city.name);
-        $('#view-address_1').val(data.address_1);
-        $('#view-address_2').val(data.address_2);
-        $('#view-zip').val(data.zip_code);
+        $('#view-type').html(data.type);
+        if (data.type == 1) {
+            $('#view-company-container').show();
+        }
+
+        $('#view-legal').html('<a href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-license').html('<a href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-company').html('<a href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+
+        $('#view-name').html(data.full_name);
+        $('#view-contact').html(data.contact_name);
+        $('#view-commercial').html(data.commercial_number);
+        $('#view-email').html(data.email);
+        $('#view-phone').html(data.phone);
+        $('#view-country').html(data.city.country.name).trigger('change.select2');
+        $('#view-city').html(data.city.name);
+        $('#view-address-1').html(data.address_1);
+        $('#view-address-2').html(data.address_2);
+        $('#view-zip').html(data.zip_code);
 
     });
 
