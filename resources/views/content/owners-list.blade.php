@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/css/intlTelInput.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css">
 @endsection
 
 @section('page-style')
@@ -78,16 +80,12 @@
                                            placeholder="Commercial #" name="commercial"/>
                                 </div>
                                 <div class=mb-1>
-                                    <label for="file" class="form-label">License file</label>
-                                    <div class="dropzone" id="license">
-                                        <div class="dz-message">Drop files here or click to upload.</div>
-                                    </div>
+                                    <label for="license" class="form-label">License file</label>
+                                    <input type="file" name="license" id="license">
                                 </div>
                                 <div class=mb-1>
-                                    <label for="file" class="form-label">Company file</label>
-                                    <div class="dropzone" id="company">
-                                        <div class="dz-message">Drop files here or click to upload.</div>
-                                    </div>
+                                    <label for="company" class="form-label">Company file</label>
+                                    <input type="file" name="company" id="company">
                                 </div>
                             </div>
                             <div class="mb-1">
@@ -145,9 +143,8 @@
                                        placeholder="Address 2" name="address_2"/>
                             </div>
                             <div class=mb-1>
-                                <label for="file" class="form-label">Legal file (ID, Passport)</label>
-                                <div class="dropzone" id="legal">
-                                </div>
+                                <label for="legal" class="form-label">Legal file (ID, Passport)</label>
+                                <input type="file" name="legal" id="legal"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 Submit
@@ -276,6 +273,8 @@
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/intlTelInput.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
 @endsection
 
 @section('page-script')

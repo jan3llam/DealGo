@@ -227,8 +227,6 @@ $(function () {
     }
 
     if (newForm.length) {
-        let data = new FormData();
-
         $(document).on('change', '#type', function () {
             var element = $(this);
             if (parseInt(element.val()) === 1) {
@@ -261,7 +259,9 @@ $(function () {
                     required: true
                 },
                 'legal': {
-                    required: true
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
                 },
                 'email': {
                     required: true
@@ -281,66 +281,63 @@ $(function () {
             }
         })
 
-        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+        $("#legal,#company,#license").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
-        $('#legal').dropzone({
-            url: assetPath + 'api/admin/owners/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("legal", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('legal');
-                });
-            }
-        });
+        // $('#legal').dropzone({
+        //     url: assetPath + 'api/admin/owners/' + type,
+        //     autoProcessQueue: false,
+        //     addRemoveLinks: true,
+        //     autoQueue: false,
+        //     init: function () {
+        //         this.on("addedfile", function (file) {
+        //             data.append("legal", file);
+        //         });
+        //         this.on("removedfile", function () {
+        //             data.delete('legal');
+        //         });
+        //     }
+        // });
 
-        $('#company').dropzone({
-            url: assetPath + 'api/admin/owners/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("company", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('company');
-                });
-            }
-        });
-
-        $('#license').dropzone({
-            url: assetPath + 'api/admin/owners/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("license", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('license');
-                });
-            }
-        });
+        // $('#company').dropzone({
+        //     url: assetPath + 'api/admin/owners/' + type,
+        //     autoProcessQueue: false,
+        //     addRemoveLinks: true,
+        //     autoQueue: false,
+        //     init: function () {
+        //         this.on("addedfile", function (file)    {
+        //             data.append("company", file);
+        //         });
+        //         this.on("removedfile", function () {
+        //             data.delete('company');
+        //         });
+        //     }
+        // });
+        //
+        // $('#license').dropzone({
+        //     url: assetPath + 'api/admin/owners/' + type,
+        //     autoProcessQueue: false,
+        //     addRemoveLinks: true,
+        //     autoQueue: false,
+        //     init: function () {
+        //         this.on("addedfile", function (file) {
+        //             data.append("license", file);
+        //         });
+        //         this.on("removedfile", function () {
+        //             data.delete('license');
+        //         });
+        //     }
+        // });
 
         $('#country,#city').select2({
             dropdownParent: newSidebar
         });
 
         newForm.on('submit', function (e) {
+            let data = new FormData();
+
             e.preventDefault();
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-            // var data = new FormData();
-            //
-            // for (var i = 0; i < dataFiles.serializeArray().length; i++) {
-            //     data.append(dataFiles[i].name, dataFiles[i].value);
-            // }
 
             if (isValid) {
                 if (type === 'update') {
@@ -348,6 +345,9 @@ $(function () {
                 }
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
+                });
+                newForm.find('input[type=file]').each(function () {
+                    data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
                 $.ajax({
                     type: 'POST',
@@ -414,6 +414,21 @@ $(function () {
         $('#name').val(data.full_name);
         $('#contact').val(data.contact_name);
         $('#commercial').val(data.commercial_number);
+        $("#legal").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.legal_file],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
+        $("#company").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.company_file],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
+        $("#license").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.license_file],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#country').val(data.city.country.id).trigger('change.select2');
@@ -429,7 +444,6 @@ $(function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         viewSidebar.modal('show');
-        $('#view-name').val(data.full_name);
         $('#view-name').val(data.full_name);
         $('#view-contact').val(data.contact_name);
         $('#view-commercial').val(data.commercial_number);
@@ -449,6 +463,9 @@ $(function () {
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        })
+        });
+        $("#legal").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#company").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#license").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })
