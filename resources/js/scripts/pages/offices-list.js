@@ -1,10 +1,9 @@
-Dropzone.autoDiscover = false;
-
 $(function () {
     ;('use strict')
 
     var dtTable = $('.offices-list-table'),
         newSidebar = $('.new-office-modal'),
+        viewSidebar = $('.view-office-modal'),
         newForm = $('.add-new-office'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
@@ -106,6 +105,12 @@ $(function () {
                     $(row).addClass('table-secondary');
                 }
             },
+            initComplete: function () {
+                $(document).on('click', '.trashed-item', function () {
+                    $('#trashed').val($(this).data('trashed'));
+                    dtTable.DataTable().ajax.reload();
+                });
+            },
             // Buttons with Dropdown
             buttons: [
                 {
@@ -142,6 +147,34 @@ $(function () {
                             text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
+                        }
+                    ],
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary')
+                        $(node).parent().removeClass('btn-group')
+                        setTimeout(function () {
+                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
+                        }, 50)
+                    }
+                },
+                {
+                    extend: 'collection',
+                    className: 'btn btn-outline-secondary dropdown-toggle me-2',
+                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Trashed',
+                    buttons: [
+                        {
+                            text: 'Yes',
+                            attr: {
+                                "data-trashed": 1
+                            },
+                            className: 'trashed-item dropdown-item',
+                        },
+                        {
+                            text: 'No',
+                            attr: {
+                                "data-trashed": 0
+                            },
+                            className: 'trashed-item dropdown-item',
                         }
                     ],
                     init: function (api, node, config) {

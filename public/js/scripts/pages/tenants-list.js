@@ -5,6 +5,7 @@ $(function () {
 
     var dtTable = $('.tenants-list-table'),
         newSidebar = $('.new-tenant-modal'),
+        viewSidebar = $('.view-tenant-modal'),
         newForm = $('.add-new-tenant'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
@@ -106,6 +107,12 @@ $(function () {
                     $(row).addClass('table-secondary');
                 }
             },
+            initComplete: function () {
+                $(document).on('click', '.trashed-item', function () {
+                    $('#trashed').val($(this).data('trashed'));
+                    dtTable.DataTable().ajax.reload();
+                });
+            },
             // Buttons with Dropdown
             buttons: [
                 {
@@ -142,6 +149,34 @@ $(function () {
                             text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
+                        }
+                    ],
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary')
+                        $(node).parent().removeClass('btn-group')
+                        setTimeout(function () {
+                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
+                        }, 50)
+                    }
+                },
+                {
+                    extend: 'collection',
+                    className: 'btn btn-outline-secondary dropdown-toggle me-2',
+                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Trashed',
+                    buttons: [
+                        {
+                            text: 'Yes',
+                            attr: {
+                                "data-trashed": 1
+                            },
+                            className: 'trashed-item dropdown-item',
+                        },
+                        {
+                            text: 'No',
+                            attr: {
+                                "data-trashed": 0
+                            },
+                            className: 'trashed-item dropdown-item',
                         }
                     ],
                     init: function (api, node, config) {
@@ -234,7 +269,9 @@ $(function () {
                     required: true
                 },
                 'legal': {
-                    required: true
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
                 },
                 'email': {
                     required: true
@@ -257,52 +294,7 @@ $(function () {
             }
         })
 
-        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-
-        $('#legal').dropzone({
-            url: assetPath + 'api/admin/tenants/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("legal", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('legal');
-                });
-            }
-        });
-
-        $('#company').dropzone({
-            url: assetPath + 'api/admin/tenants/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("company", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('company');
-                });
-            }
-        });
-
-        $('#license').dropzone({
-            url: assetPath + 'api/admin/tenants/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("license", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('license');
-                });
-            }
-        });
+        $("#legal,#company,#license").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         $('#country,#city').select2({
             dropdownParent: newSidebar
@@ -318,11 +310,7 @@ $(function () {
 
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-            // var data = new FormData();
-            //
-            // for (var i = 0; i < dataFiles.serializeArray().length; i++) {
-            //     data.append(dataFiles[i].name, dataFiles[i].value);
-            // }
+            var data = new FormData();
 
             if (isValid) {
                 if (type === 'update') {
@@ -330,6 +318,9 @@ $(function () {
                 }
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
+                });
+                newForm.find('input[type=file]').each(function () {
+                    data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
                 $.ajax({
                     type: 'POST',
@@ -399,6 +390,21 @@ $(function () {
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
+        $("#legal").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.legal_file],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
+        $("#company").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.company_file],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
+        $("#license").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.license_file],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
         $('#country').val(data.city.country.id).trigger('change.select2');
         var goods_types = [];
         data.goods_types.forEach(item => {
@@ -412,12 +418,40 @@ $(function () {
         $('#object_id').val(data.id);
     });
 
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        viewSidebar.modal('show');
+        $('#view-type').html(data.type);
+        if (data.type == 1) {
+            $('#view-company-container').show();
+        }
+        $('#view-legal').html('<a href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-license').html('<a href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-company').html('<a href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-name').html(data.full_name);
+        $('#view-contact').html(data.contact_name);
+        $('#view-commercial').html(data.commercial_number);
+        $('#view-email').html(data.email);
+        $('#view-phone').html(data.phone);
+        $('#view-country').html(data.city.country.name).trigger('change.select2');
+        $('#view-city').html(data.city.name);
+        $('#view-address-1').html(data.address_1);
+        $('#view-address-2').html(data.address_2);
+        $('#view-zip').html(data.zip_code);
+
+    })
+
     $(document).on('click', '.add-tenant', function () {
         $('#form_status').val(1);
         $('#image_container').attr('src', '');
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        })
+        });
+        $("#legal").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#company").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#license").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+
     });
 })
