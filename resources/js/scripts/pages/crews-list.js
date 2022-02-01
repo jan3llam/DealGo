@@ -1,10 +1,9 @@
-Dropzone.autoDiscover = false;
-
 $(function () {
     ;('use strict')
 
     var dtTable = $('.crews-list-table'),
         newSidebar = $('.new-crew-modal'),
+        viewSidebar = $('.view-crew-modal'),
         newForm = $('.add-new-crew'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
@@ -108,6 +107,12 @@ $(function () {
                     $(row).addClass('table-secondary');
                 }
             },
+            initComplete: function () {
+                $(document).on('click', '.trashed-item', function () {
+                    $('#trashed').val($(this).data('trashed'));
+                    dtTable.DataTable().ajax.reload();
+                });
+            },
             // Buttons with Dropdown
             buttons: [
                 {
@@ -166,68 +171,10 @@ $(function () {
                     }
                 }
             ],
-            // For responsive popup
-            responsive: {
-                details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function (row) {
-                            var data = row.data()
-                            return 'Details of  ' + data['name']
-                        }
-                    }),
-                    type: 'column',
-                    renderer: function (api, rowIdx, columns) {
-                        var data = $.map(columns, function (col, i) {
-                            return col.columnIndex !== 6 // ? Do not show row in modal popup if title is blank (for check box)
-                                ? '<tr data-dt-row="' +
-                                col.rowIdx +
-                                '" data-dt-column="' +
-                                col.columnIndex +
-                                '">' +
-                                '<td>' +
-                                col.title +
-                                ':' +
-                                '</td> ' +
-                                '<td>' +
-                                col.data +
-                                '</td>' +
-                                '</tr>'
-                                : ''
-                        }).join('')
-                        return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
-                    }
-                }
-            },
-            initComplete: function () {
-                $(document).find('[data-bs-toggle="tooltip"]').tooltip();
-                // Adding role filter once table initialized
-                this.api()
-                    .columns(7)
-                    .every(function () {
-                        var column = this;
-                        var select = $(
-                            '<select id="UserRole" class="form-select ms-50 text-capitalize"><option value=""> Select Status </option></select>'
-                        )
-                            .appendTo('.invoice_status')
-                            .on('change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                                column.search(val ? '^' + val + '$' : '', true, false).draw();
-                            });
-
-                        column
-                            .data()
-                            .unique()
-                            .sort()
-                            .each(function (d, j) {
-                                select.append('<option value="' + d + '" class="text-capitalize">' + d + '</option>');
-                            });
-                    });
-            }
         })
     }
 
     if (newForm.length) {
-        let data = new FormData();
 
         var phone = document.getElementById('phone');
 
@@ -263,22 +210,7 @@ $(function () {
             }
         })
 
-        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-
-        $('#file').dropzone({
-            url: assetPath + 'api/admin/crews/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("file", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('file');
-                });
-            }
-        });
+        $("#file").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         $('#country,#city,#vessel').select2({dropdownParent: newSidebar});
 
@@ -286,11 +218,7 @@ $(function () {
             e.preventDefault();
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-            // var data = new FormData();
-            //
-            // for (var i = 0; i < dataFiles.serializeArray().length; i++) {
-            //     data.append(dataFiles[i].name, dataFiles[i].value);
-            // }
+            var data = new FormData();
 
             if (isValid) {
                 if (type === 'update') {
@@ -298,6 +226,9 @@ $(function () {
                 }
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
+                });
+                newForm.find('input[type=file]').each(function () {
+                    data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
                 $.ajax({
                     type: 'POST',
@@ -356,20 +287,40 @@ $(function () {
         })
     });
 
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        viewSidebar.modal('show');
+        $('#view-file').html('<a href="' + assetPath + 'images/' + data.file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-first-name').html(data.first_name);
+        $('#view-last-name').html(data.last_name);
+        $('#view-job').html(data.job_title);
+        $('#view-email').html(data.email);
+        $('#view-phone').html(data.phone);
+        $('#view-country').html(data.city.country.name);
+        $('#view-city').html(data.city.name);
+        $('#view-birth').html(data.dob);
+        $('#view-address').html(data.address);
+    });
+
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
         $('#first_name').val(data.first_name);
+        $("#file").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.file],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
         $('#last_name').val(data.last_name);
         $('#job').val(data.job_title);
         $('#birth').val(data.dob);
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id);
-        $('#country').trigger('change.select2');
+        $('#country').val(data.city.country.id).trigger('change.select2');
         $('#address').val(data.address);
         $('#type').val(data.type);
         $('#object_id').val(data.id);
@@ -382,5 +333,6 @@ $(function () {
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         })
+        $("#file").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })

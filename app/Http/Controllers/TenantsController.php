@@ -99,6 +99,9 @@ class TenantsController extends Controller
         ]);
 
         if ($validator->fails()) {
+            if (isset($failedRules['email']['Unique'])) {
+                return response()->error('alreadyExist');
+            }
             return response()->error('missingParameters', $validator->failed());
         }
 
@@ -191,6 +194,9 @@ class TenantsController extends Controller
         ]);
 
         if ($validator->fails()) {
+            if (isset($failedRules['email']['Unique'])) {
+                return response()->error('alreadyExist');
+            }
             return response()->error('missingParameters');
         }
 

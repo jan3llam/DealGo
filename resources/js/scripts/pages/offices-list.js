@@ -73,6 +73,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            'View</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             'Edit</a>' +
@@ -197,38 +200,6 @@ $(function () {
                     }
                 }
             ],
-            // For responsive popup
-            responsive: {
-                details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function (row) {
-                            var data = row.data()
-                            return 'Details of  ' + data['name']
-                        }
-                    }),
-                    type: 'column',
-                    renderer: function (api, rowIdx, columns) {
-                        var data = $.map(columns, function (col, i) {
-                            return col.columnIndex !== 6 // ? Do not show row in modal popup if title is blank (for check box)
-                                ? '<tr data-dt-row="' +
-                                col.rowIdx +
-                                '" data-dt-column="' +
-                                col.columnIndex +
-                                '">' +
-                                '<td>' +
-                                col.title +
-                                ':' +
-                                '</td> ' +
-                                '<td>' +
-                                col.data +
-                                '</td>' +
-                                '</tr>'
-                                : ''
-                        }).join('')
-                        return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
-                    }
-                }
-            }
         })
     }
 

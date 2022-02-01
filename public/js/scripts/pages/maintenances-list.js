@@ -1,10 +1,9 @@
-Dropzone.autoDiscover = false;
-
 $(function () {
     ;('use strict')
 
     var dtTable = $('.maintenances-list-table'),
         newSidebar = $('.new-maintenance-modal'),
+        viewSidebar = $('.view-maintenance-modal'),
         newForm = $('.add-new-maintenance');
 
 
@@ -50,6 +49,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            'View</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             'Edit</a>' +
@@ -81,6 +83,13 @@ $(function () {
                 if (data.deleted_at) {
                     $(row).addClass('table-secondary');
                 }
+            },
+
+            initComplete: function () {
+                $(document).on('click', '.trashed-item', function () {
+                    $('#trashed').val($(this).data('trashed'));
+                    dtTable.DataTable().ajax.reload();
+                });
             },
             // Buttons with Dropdown
             buttons: [
@@ -129,6 +138,34 @@ $(function () {
                     }
                 },
                 {
+                    extend: 'collection',
+                    className: 'btn btn-outline-secondary dropdown-toggle me-2',
+                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Trashed',
+                    buttons: [
+                        {
+                            text: 'Yes',
+                            attr: {
+                                "data-trashed": 1
+                            },
+                            className: 'trashed-item dropdown-item',
+                        },
+                        {
+                            text: 'No',
+                            attr: {
+                                "data-trashed": 0
+                            },
+                            className: 'trashed-item dropdown-item',
+                        }
+                    ],
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary')
+                        $(node).parent().removeClass('btn-group')
+                        setTimeout(function () {
+                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
+                        }, 50)
+                    }
+                },
+                {
                     text: 'Add new',
                     className: 'add-maintenance btn btn-primary',
                     attr: {
@@ -140,68 +177,10 @@ $(function () {
                     }
                 }
             ],
-            // For responsive popup
-            responsive: {
-                details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function (row) {
-                            var data = row.data()
-                            return 'Details of  ' + data['name']
-                        }
-                    }),
-                    type: 'column',
-                    renderer: function (api, rowIdx, columns) {
-                        var data = $.map(columns, function (col, i) {
-                            return col.columnIndex !== 6 // ? Do not show row in modal popup if title is blank (for check box)
-                                ? '<tr data-dt-row="' +
-                                col.rowIdx +
-                                '" data-dt-column="' +
-                                col.columnIndex +
-                                '">' +
-                                '<td>' +
-                                col.title +
-                                ':' +
-                                '</td> ' +
-                                '<td>' +
-                                col.data +
-                                '</td>' +
-                                '</tr>'
-                                : ''
-                        }).join('')
-                        return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
-                    }
-                }
-            },
-            initComplete: function () {
-                $(document).find('[data-bs-toggle="tooltip"]').tooltip();
-                // Adding role filter once table initialized
-                this.api()
-                    .columns(7)
-                    .every(function () {
-                        var column = this;
-                        var select = $(
-                            '<select id="UserRole" class="form-select ms-50 text-capitalize"><option value=""> Select Status </option></select>'
-                        )
-                            .appendTo('.invoice_status')
-                            .on('change', function () {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                                column.search(val ? '^' + val + '$' : '', true, false).draw();
-                            });
-
-                        column
-                            .data()
-                            .unique()
-                            .sort()
-                            .each(function (d, j) {
-                                select.append('<option value="' + d + '" class="text-capitalize">' + d + '</option>');
-                            });
-                    });
-            }
         })
     }
 
     if (newForm.length) {
-        let data = new FormData();
 
         newForm.validate({
             errorClass: 'error',
@@ -224,31 +203,16 @@ $(function () {
             }
         })
 
-        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
 
         $('#vessel').select2({dropdownParent: newSidebar});
-
-        $('#files').dropzone({
-            url: assetPath + 'api/admin/maintenances/' + type,
-            autoProcessQueue: false,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("files[]", file);
-                });
-            }
-        });
+        $("#files").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         newForm.on('submit', function (e) {
             e.preventDefault();
+            let data = new FormData();
 
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-            // var data = new FormData();
-            //
-            // for (var i = 0; i < dataFiles.serializeArray().length; i++) {
-            //     data.append(dataFiles[i].name, dataFiles[i].value);
-            // }
 
             if (isValid) {
                 if (type === 'update') {
@@ -256,6 +220,9 @@ $(function () {
                 }
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
+                });
+                newForm.find('input[type=file]').each(function () {
+                    data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
                 $.ajax({
                     type: 'POST',
@@ -302,6 +269,11 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
+        $("#files").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.files],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
         $('#name').val(data.name);
         $('#vessel').val(data.vessel_id).trigger('change.select2');
         $('#start').val(data.start_at);
@@ -317,5 +289,6 @@ $(function () {
         newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         })
+        $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })

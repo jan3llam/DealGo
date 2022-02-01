@@ -1,10 +1,9 @@
-Dropzone.autoDiscover = false;
-
 $(function () {
     ;('use strict')
 
     var dtTable = $('.requests-list-table'),
         newSidebar = $('.new-request-modal'),
+        viewSidebar = $('.view-request-modal'),
         newForm = $('.add-new-request'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
@@ -100,6 +99,12 @@ $(function () {
                     $(row).addClass('table-secondary');
                 }
             },
+            initComplete: function () {
+                $(document).on('click', '.trashed-item', function () {
+                    $('#trashed').val($(this).data('trashed'));
+                    dtTable.DataTable().ajax.reload();
+                });
+            },
             // Buttons with Dropdown
             buttons: [
                 {
@@ -147,6 +152,34 @@ $(function () {
                     }
                 },
                 {
+                    extend: 'collection',
+                    className: 'btn btn-outline-secondary dropdown-toggle me-2',
+                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Trashed',
+                    buttons: [
+                        {
+                            text: 'Yes',
+                            attr: {
+                                "data-trashed": 1
+                            },
+                            className: 'trashed-item dropdown-item',
+                        },
+                        {
+                            text: 'No',
+                            attr: {
+                                "data-trashed": 0
+                            },
+                            className: 'trashed-item dropdown-item',
+                        }
+                    ],
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary')
+                        $(node).parent().removeClass('btn-group')
+                        setTimeout(function () {
+                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
+                        }, 50)
+                    }
+                },
+                {
                     text: 'Add new',
                     className: 'add-request btn btn-primary',
                     attr: {
@@ -158,43 +191,10 @@ $(function () {
                     }
                 }
             ],
-            // For responsive popup
-            responsive: {
-                details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function (row) {
-                            var data = row.data()
-                            return 'Details of  ' + data['name']
-                        }
-                    }),
-                    type: 'column',
-                    renderer: function (api, rowIdx, columns) {
-                        var data = $.map(columns, function (col, i) {
-                            return col.columnIndex !== 6 // ? Do not show row in modal popup if title is blank (for check box)
-                                ? '<tr data-dt-row="' +
-                                col.rowIdx +
-                                '" data-dt-column="' +
-                                col.columnIndex +
-                                '">' +
-                                '<td>' +
-                                col.title +
-                                ':' +
-                                '</td> ' +
-                                '<td>' +
-                                col.data +
-                                '</td>' +
-                                '</tr>'
-                                : ''
-                        }).join('')
-                        return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
-                    }
-                }
-            }
         })
     }
 
     if (newForm.length) {
-        let data = new FormData();
 
         $('#goods_container').repeater({
             initEmpty: true,
@@ -255,7 +255,9 @@ $(function () {
                     required: true
                 },
                 'legal': {
-                    required: true
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
                 },
                 'email': {
                     required: true
@@ -266,26 +268,12 @@ $(function () {
             }
         })
 
-        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-
-        $('#files').dropzone({
-            url: assetPath + 'api/admin/requests/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("files", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('files');
-                });
-            }
-        });
 
         $('#tenant,#port_from,#port_to,#contract,#owner').select2({dropdownParent: newSidebar});
+        $("#files").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         newForm.on('submit', function (e) {
+            let data = new FormData();
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
             e.preventDefault()
@@ -295,6 +283,9 @@ $(function () {
                 }
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
+                });
+                newForm.find('input[type=file]').each(function () {
+                    data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
                 $.ajax({
                     type: 'POST',
@@ -358,14 +349,18 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
+        $("#files").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.files],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
         $('#name').val(data.full_name);
         $('#contact').val(data.contact_name);
         $('#commercial').val(data.commercial_number);
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id);
-        $('#country').trigger('change.select2');
+        $('#country').val(data.city.country.id).trigger('change.select2');
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
@@ -379,6 +374,7 @@ $(function () {
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        })
+        });
+        $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })

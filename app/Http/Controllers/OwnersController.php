@@ -96,6 +96,9 @@ class OwnersController extends Controller
         ]);
 
         if ($validator->fails()) {
+            if (isset($failedRules['email']['Unique'])) {
+                return response()->error('alreadyExist');
+            }
             return response()->error('missingParameters', $validator->failed());
         }
 
@@ -182,6 +185,9 @@ class OwnersController extends Controller
         ]);
 
         if ($validator->fails()) {
+            if (isset($failedRules['email']['Unique'])) {
+                return response()->error('alreadyExist');
+            }
             return response()->error('missingParameters', $validator->failed());
         }
 

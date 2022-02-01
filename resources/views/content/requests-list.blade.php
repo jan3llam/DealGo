@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap5.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/buttons.bootstrap5.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/rowGroup.bootstrap5.min.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('vendors/css/file-uploaders/dropzone.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-file-uploader.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css">
 @endsection
 
 @section('page-style')
@@ -192,10 +193,9 @@
                                 <textarea class="form-control dt-full-name" id="description"
                                           placeholder="Description" name="description"></textarea>
                             </div>
-                            <div class=mb-1>
-                                <label for="files" class="form-label">Files</label>
-                                <div class="dropzone" id="files">
-                                </div>
+                            <div class="mb-1">
+                                <label for="files" class="form-label">Attachments</label>
+                                <input type="file" name="files" id="files"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 Submit
@@ -208,6 +208,64 @@
                 </div>
             </div>
             <!-- Modal to add new user Ends-->
+            <div class="modal modal-slide-in view-request-modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content pt-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title" id="modal-label">View request</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <div class="info-container">
+                                <ul class="list-unstyled">
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Title:</span>
+                                        <span id="view-name"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Charter:</span>
+                                        <span id="view-tenant"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Origin of shipment:</span>
+                                        <span id="view-origin"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Destination of shipment:</span>
+                                        <span id="view-destination"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Contract type:</span>
+                                        <span id="view-contract"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Date to:</span>
+                                        <span id="view-date-to"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Date from:</span>
+                                        <span id="view-date-from"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Description:</span>
+                                        <span id="view-description"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Attachments:</span>
+                                        <span id="view-files"></span>
+                                    </li>
+
+                                </ul>
+                                <div class="d-flex justify-content-center pt-2">
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- list and filter end -->
     </section>
@@ -228,11 +286,12 @@
     <script src="{{ asset(mix('vendors/js/tables/datatable/buttons.print.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/file-uploaders/dropzone.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/moment.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/repeater/jquery.repeater.min.js')) }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
 @endsection
 
 @section('page-script')
