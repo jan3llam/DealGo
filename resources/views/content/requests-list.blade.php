@@ -41,7 +41,6 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Title</th>
                         <th>Charter</th>
                         <th>Origin of shipment</th>
                         <th>Destination of shipment</th>
