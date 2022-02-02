@@ -65,6 +65,16 @@ $(function () {
                     }
                 },
                 {
+                    targets: 3,
+                    render: function (data, type, full, meta) {
+                        var sum = 0;
+                        full['payments'].forEach(item => {
+                            sum += item.value;
+                        })
+                        return sum;
+                    }
+                },
+                {
                     // Actions
                     targets: -1,
                     title: 'Actions',
