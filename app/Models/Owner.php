@@ -21,4 +21,9 @@ class Owner extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value);
+    }
+
 }

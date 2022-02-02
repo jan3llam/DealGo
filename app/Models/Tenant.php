@@ -20,4 +20,9 @@ class Tenant extends Model
     {
         return $this->belongsToMany(gType::class, 'tenants_goods_types', 'tenant_id', 'good_id');
     }
+
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

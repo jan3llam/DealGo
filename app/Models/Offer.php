@@ -41,4 +41,9 @@ class Offer extends Model
         return $this->belongsToMany(RequestsGoodsType::class, 'offers_requests_goods_types_vessels', 'offer_id', 'request_good_id');
     }
 
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value);
+    }
+
 }
