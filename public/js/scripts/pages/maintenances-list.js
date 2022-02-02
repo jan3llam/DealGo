@@ -187,7 +187,9 @@ $(function () {
                     className: 'add-maintenance btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
-                        'data-bs-target': '#modals-slide-in'
+                        'data-bs-target': '#modals-slide-in',
+                        'data-bs-backdrop': 'static',
+                        'data-bs-keyboard': 'false'
                     },
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
