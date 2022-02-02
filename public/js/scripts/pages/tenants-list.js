@@ -438,6 +438,7 @@ $(function () {
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         });
+        $('#gtype').val('').trigger('change.select2');
         $("#legal").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
         $("#company").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
         $("#license").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});

@@ -67,7 +67,7 @@
                                     <option value="" disabled selected>Kindly choose</option>
                                     @foreach($vessels as $item)
                                         <option value="{{$item->id}}"
-                                                @if($vessel->id === $item->id) selected @endif>{{$item->name}}</option>
+                                                @if($vessel && $vessel->id === $item->id) selected @endif>{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
