@@ -188,7 +188,7 @@ class TenantsController extends Controller
             'address_1' => 'required|string',
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
-            'email' => 'required|unique:tenants,email',
+            'email' => 'required',
             'phone' => 'required',
             'gtype' => 'required',
         ]);

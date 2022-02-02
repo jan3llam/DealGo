@@ -180,7 +180,7 @@ class OfficesController extends Controller
             'address_1' => 'required|string',
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
-            'email' => 'required|unique:offices,email',
+            'email' => 'required',
             'phone' => 'required',
         ]);
 

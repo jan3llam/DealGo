@@ -180,7 +180,7 @@ class OwnersController extends Controller
             'address_1' => 'required|string',
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
-            'email' => 'required|unique:owners,email',
+            'email' => 'required',
             'phone' => 'required',
         ]);
 

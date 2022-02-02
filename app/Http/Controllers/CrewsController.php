@@ -169,7 +169,7 @@ class CrewsController extends Controller
             'birth' => 'required|string',
             'address' => 'required|string',
             'city' => 'required|numeric',
-            'email' => 'required|unique:crews,email',
+            'email' => 'required',
             'phone' => 'required',
         ]);
 
