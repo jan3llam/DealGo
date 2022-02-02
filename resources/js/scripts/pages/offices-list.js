@@ -18,7 +18,27 @@ $(function () {
     }
     if (dtTable.length) {
         dtTable.dataTable({
-            ajax: assetPath + 'api/admin/offices/list',
+            ajax: function (data, callback, settings) {
+                // make a regular ajax request using data.start and data.length
+                $.get(assetPath + 'api/admin/offices/list', {
+                    length: data.length,
+                    start: data.start,
+                    draw: data.draw,
+                    search: data.search.value,
+                    trashed: $('#trashed').val(),
+                    direction: data.order[0].dir,
+                    order: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                }, function (res) {
+                    callback({
+                        draw: res.data.meta.draw,
+                        recordsTotal: res.data.meta.total,
+                        recordsFiltered: res.data.meta.count,
+                        data: res.data.data
+                    });
+                });
+            },
+            processing: true,
+            serverSide: true,
             columns: [
                 // columns according to JSON
                 {data: ''},
