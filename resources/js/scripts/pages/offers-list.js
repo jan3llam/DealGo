@@ -176,8 +176,6 @@ $(function () {
     }
 
     if (newForm.length) {
-        let data = new FormData();
-
         $('#payments_container').repeater({
             initEmpty: true,
             show: function () {
@@ -223,28 +221,14 @@ $(function () {
             }
         })
 
-        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-
-        $('#file').dropzone({
-            url: assetPath + 'api/admin/offers/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("file", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('file');
-                });
-            }
-        });
-
         $('.vessels-select2,#owner').select2({dropdownParent: newSidebar});
+        $("#file").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+            let data = new FormData();
+
             e.preventDefault()
             if (isValid) {
                 if (type === 'update') {
@@ -321,11 +305,7 @@ $(function () {
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id);
-        $('#country').trigger('change.select2');
-        $('#address_1').val(data.address_1);
-        $('#address_2').val(data.address_2);
-        $('#zip').val(data.zip_code);
+        $('#country').val(data.city.country.id).trigger('change.select2');
         $('#type').val(data.type);
         $('#object_id').val(data.id);
     });
@@ -336,6 +316,7 @@ $(function () {
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        })
+        });
+        $("#file").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })
