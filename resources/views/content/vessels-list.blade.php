@@ -116,10 +116,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class=mb-1>
-                                <label for="file" class="form-label">Image</label>
-                                <div class="dropzone" id="image">
-                                </div>
+                            <div class="mb-1">
+                                <label for="image" class="form-label">Attachments:</label>
+                                <input type="file" name="image" id="image"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 Submit
