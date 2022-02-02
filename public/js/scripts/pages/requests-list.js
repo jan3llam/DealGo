@@ -292,7 +292,22 @@ $(function () {
         })
 
 
-        $('#tenant,#port_from,#port_to,#contract,#owner').select2({dropdownParent: newSidebar});
+        $('#port_from,#port_to').select2({
+            dropdownParent: newSidebar,
+            ajax: {
+                url: assetPath + 'api/admin/ports/list',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        search: params.term,
+                        length: 100
+                    }
+                }
+            }
+        });
+
+        $('#tenant,#contract,#owner').select2({dropdownParent: newSidebar});
+
         $("#files").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         newForm.on('submit', function (e) {
