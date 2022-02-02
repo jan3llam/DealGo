@@ -232,8 +232,17 @@ $(function () {
                             data: function (params) {
                                 return {
                                     search: params.term,
-                                    length: 100
+                                    start: params.page || 0
                                 }
+                            },
+                            processResults: function (data) {
+                                data = data.data.data.map(function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.name,
+                                    };
+                                });
+                                return {results: data};
                             }
                         }
                     });
@@ -310,7 +319,6 @@ $(function () {
                             text: item.name,
                         };
                     });
-                    console.log(data);
                     return {results: data};
                 }
             }
