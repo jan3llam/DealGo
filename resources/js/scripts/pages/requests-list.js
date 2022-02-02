@@ -310,6 +310,7 @@ $(function () {
                             text: item.name,
                         };
                     });
+                    console.log(data);
                     return {results: data};
                 }
             }
