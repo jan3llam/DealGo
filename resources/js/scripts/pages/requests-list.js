@@ -305,6 +305,9 @@ $(function () {
                 },
                 processResults: function (data) {
                     // Transforms the top-level key of the response object from 'items' to 'results'
+                    $.each(data.data, function (i, d) {
+                        data.items[i]['text'] = d.name;
+                    });
                     return {
                         results: data.data
                     };
