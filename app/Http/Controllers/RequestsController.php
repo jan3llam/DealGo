@@ -44,7 +44,7 @@ class RequestsController extends Controller
         $order_sort = 'desc';
 
         $params = $request->all();
-        $query = ShippingRequest::withCount('query');
+        $query = ShippingRequest::query();
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
