@@ -153,7 +153,7 @@ class RequestsController extends Controller
 
             $goods = $request->input('goods', []);
             foreach ($goods as $index => $good) {
-                $item->goods_types()->attach($good->gtype, ['weight' => $good->gtype]);
+                $item->goods_types()->attach($good['gtype'], ['weight' => $good['weight']]);
             }
         }
         if ($request->contract != 1) {
@@ -221,7 +221,7 @@ class RequestsController extends Controller
             $item->goods_types()->detach();
             $goods = $request->input('goods', []);
             foreach ($goods as $index => $good) {
-                $item->goods_types()->attach($good->gtype, ['weight' => $good->gtype]);
+                $item->goods_types()->attach($good['gtype'], ['weight' => $good['weight']]);
             }
         }
         if ($request->contract != 1) {
