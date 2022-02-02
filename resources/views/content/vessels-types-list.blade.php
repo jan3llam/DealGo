@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Vessels types')
+@section('title', 'Vessels Types')
 
 @section('vendor-style')
     {{-- Page Css files --}}

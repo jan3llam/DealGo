@@ -12,7 +12,7 @@ class GoodsTypesController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Goods types"]
+            ['link' => "admin/home", 'name' => "Home"], ['name' => "Goods Types"]
         ];
 
         $gTypes = gType::all();
