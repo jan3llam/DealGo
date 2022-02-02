@@ -203,7 +203,12 @@ $(function () {
         })
 
         $('#parent').select2({dropdownParent: newSidebar});
-        $('#vtype').select2({multiple: true});
+
+        $('#vtype').select2({
+            multiple: true,
+            placeholder: "-- Select --",
+            dropdownParent: newSidebar
+        }).val(null).trigger('change.select2')
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
@@ -266,8 +271,8 @@ $(function () {
         data.vessels_types.forEach(item => {
             vessels_types.push(item.id);
         });
-        $('#parent').val(data.parent_id).trigger('change.select2');
         $('#vtype').val(vessels_types).trigger('change.select2');
+        $('#parent').val(data.parent_id).trigger('change.select2');
         $('#object_id').val(data.id);
     });
 
