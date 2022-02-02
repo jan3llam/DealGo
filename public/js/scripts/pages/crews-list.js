@@ -354,7 +354,7 @@ $(function () {
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
-        $('#modals-slide-in').modal('show')``
+        newSidebar.modal('show');
         $('#form_status').val(2);
         $('#first_name').val(data.first_name);
         $("#file").fileinput('destroy').fileinput({
