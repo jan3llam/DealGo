@@ -69,9 +69,6 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
-                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
-                            'View</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             'Edit</a>' +
