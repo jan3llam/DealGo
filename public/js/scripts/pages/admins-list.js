@@ -5,6 +5,7 @@ $(function () {
 
     var dtTable = $('.admins-list-table'),
         newSidebar = $('.new-admin-modal'),
+        viewSidebar = $('.view-admin-modal'),
         newForm = $('.add-new-admin'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
@@ -105,6 +106,12 @@ $(function () {
                     $(row).addClass('table-secondary');
                 }
             },
+            initComplete: function () {
+                $(document).on('click', '.trashed-item', function () {
+                    $('#trashed').val($(this).data('trashed'));
+                    dtTable.DataTable().ajax.reload();
+                });
+            },
             // Buttons with Dropdown
             buttons: [
                 {
@@ -152,6 +159,34 @@ $(function () {
                     }
                 },
                 {
+                    extend: 'collection',
+                    className: 'btn btn-outline-secondary dropdown-toggle me-2',
+                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Trashed',
+                    buttons: [
+                        {
+                            text: 'Yes',
+                            attr: {
+                                "data-trashed": 1
+                            },
+                            className: 'trashed-item dropdown-item',
+                        },
+                        {
+                            text: 'No',
+                            attr: {
+                                "data-trashed": 0
+                            },
+                            className: 'trashed-item dropdown-item',
+                        }
+                    ],
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary')
+                        $(node).parent().removeClass('btn-group')
+                        setTimeout(function () {
+                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
+                        }, 50)
+                    }
+                },
+                {
                     text: 'Add new',
                     className: 'add-admin btn btn-primary',
                     attr: {
@@ -167,8 +202,6 @@ $(function () {
     }
 
     if (newForm.length) {
-        let data = new FormData();
-
         var phone = document.getElementById('phone');
 
         window.intlTelInput(phone, {
@@ -203,22 +236,7 @@ $(function () {
             }
         })
 
-        var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-
-        $('#files').dropzone({
-            url: assetPath + 'api/admin/admins/' + type,
-            autoProcessQueue: false,
-            addRemoveLinks: true,
-            autoQueue: false,
-            init: function () {
-                this.on("addedfile", function (file) {
-                    data.append("files", file);
-                });
-                this.on("removedfile", function () {
-                    data.delete('files');
-                });
-            }
-        });
+        $("#files").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         $('#country,#city,#role').select2({dropdownParent: newSidebar});
 
@@ -226,11 +244,7 @@ $(function () {
             e.preventDefault();
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-            // var data = new FormData();
-            //
-            // for (var i = 0; i < dataFiles.serializeArray().length; i++) {
-            //     data.append(dataFiles[i].name, dataFiles[i].value);
-            // }
+            var data = new FormData();
 
             if (isValid) {
                 if (type === 'update') {
@@ -238,6 +252,9 @@ $(function () {
                 }
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
+                });
+                newForm.find('input[type=file]').each(function () {
+                    data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
                 $.ajax({
                     type: 'POST',
@@ -304,6 +321,11 @@ $(function () {
         $('#name').val(data.name);
         $('#phone').val(data.phone);
         $('#dealgo_id').val(data.dealgo_id);
+        $("#files").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.files],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
         $('#email').val(data.email);
         $('#city_id').val(data.city.id);
         $('#country').val(data.city.country.id).trigger('change.select2');
@@ -318,6 +340,7 @@ $(function () {
         $('#object_id').val('');
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        })
+        });
+        $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })
