@@ -224,7 +224,19 @@ $(function () {
             initEmpty: true,
             show: function () {
                 $(this).slideDown(function () {
-                    $(this).find('.routes-select2').select2({dropdownParent: newSidebar});
+                    $(this).find('.routes-select2').select2({
+                        dropdownParent: newSidebar,
+                        ajax: {
+                            url: assetPath + 'api/admin/ports/list',
+                            dataType: 'json',
+                            data: function (params) {
+                                return {
+                                    search: params.term,
+                                    length: 100
+                                }
+                            }
+                        }
+                    });
                 });
                 // Feather Icons
                 if (feather) {
