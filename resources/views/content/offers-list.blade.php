@@ -325,11 +325,4 @@
 @section('page-script')
     {{-- Page js files --}}
     <script src="{{ asset(mix('js/scripts/pages/offers-list.js')) }}"></script>
-    @if($request)
-        <script>
-            $(document).ready(function () {
-                $('.new-offer-modal').modal('show')
-            });
-        </script>
-    @endif
 @endsection

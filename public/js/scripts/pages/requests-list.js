@@ -199,6 +199,9 @@ $(function () {
                     },
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
+                        if (!$('#request_id').val()) {
+                            node.remove();
+                        }
                     }
                 }
             ],
@@ -337,6 +340,7 @@ $(function () {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());
                 }
+                data.append('request', $('#request_id').val());
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
                 });
