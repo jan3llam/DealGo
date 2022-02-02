@@ -308,6 +308,7 @@ $(function () {
                     $.each(data.data, function (i, d) {
                         data.items[i]['text'] = d.name;
                     });
+                    console.log(data);
                     return {
                         results: data.data
                     };

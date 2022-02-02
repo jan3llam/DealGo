@@ -43,7 +43,7 @@ class PortsController extends Controller
                     $item = explode('.', $item);
                     if (sizeof($item) == 3) {
                         $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
-                            $qu->orWhereHas($item[1], function ($que) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
                                 $que->where($item[2], 'like', '%' . $search_val . '%');
                             });
                         })->get();
@@ -54,6 +54,7 @@ class PortsController extends Controller
                     } elseif (sizeof($item) == 1) {
                         $q->orWhere($item[0], 'like', '%' . $search_val . '%');
                     }
+
                 }
             });
         }
