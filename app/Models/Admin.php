@@ -30,4 +30,9 @@ class Admin extends Authenticatable implements CanResetPassword
         return $this->belongsTo(City::class);
     }
 
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value);
+    }
+
 }
