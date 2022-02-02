@@ -69,7 +69,7 @@
                             </div>
                             <div id="company-container" style="display: none">
                                 <div class="mb-1">
-                                    <label class="form-label" for="name">Full name</label>
+                                    <label class="form-label" for="name">Business legal name</label>
                                     <input type="text" class="form-control dt-full-name" id="name"
                                            placeholder="Full name" name="name"/>
                                 </div>
@@ -79,7 +79,7 @@
                                            placeholder="Commercial #" name="commercial"/>
                                 </div>
                                 <div class=mb-1>
-                                    <label for="license" class="form-label">License file</label>
+                                    <label for="license" class="form-label">Business license</label>
                                     <input type="file" name="license" id="license">
                                 </div>
                                 <div class=mb-1>
@@ -98,7 +98,7 @@
                                        placeholder="Email" name="email"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="phone">Phone</label>
+                                <label class="form-label" for="phone">Mobile</label>
                                 <input type="tel" class="form-control dt-full-name" id="phone"
                                        placeholder="Phone" name="phone"/>
                             </div>
@@ -112,7 +112,11 @@
                                 <input type="password" class="form-control dt-full-name" id="password"
                                        placeholder="Password" name="password"/>
                             </div>
-
+                            <div class="mb-1">
+                                <label class="form-label" for="confirm_password">Confirm password</label>
+                                <input type="password" class="form-control dt-full-name" id="confirm_password"
+                                       placeholder="Confirm password"/>
+                            </div>
                             <div class="mb-1">
                                 <label class="form-label" for="country">Country</label>
                                 <select type="text" class="form-control dt-full-name select2" id="country"
