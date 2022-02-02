@@ -304,15 +304,13 @@ $(function () {
                     }
                 },
                 processResults: function (data) {
-                    console.log(data);
-                    // Transforms the top-level key of the response object from 'items' to 'results'
-                    $.each(data.data, function (i, d) {
-                        data.items[i]['text'] = d.name;
+                    data = data.data.map(function (item) {
+                        return {
+                            id: item.id,
+                            text: item.name,
+                        };
                     });
-                    console.log(data);
-                    return {
-                        results: data.data
-                    };
+                    return {results: data};
                 }
             }
         });
