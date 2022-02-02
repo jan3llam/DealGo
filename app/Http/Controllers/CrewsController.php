@@ -104,7 +104,7 @@ class CrewsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            if (isset($failedRules['email']['Unique'])) {
+            if (isset($validator->failed()['email']['Unique'])) {
                 return response()->error('alreadyExist');
             }
             return response()->error('missingParameters', $validator->failed());
