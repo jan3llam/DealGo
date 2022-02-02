@@ -178,38 +178,6 @@ $(function () {
                     }
                 }
             ],
-            // For responsive popup
-            responsive: {
-                details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function (row) {
-                            var data = row.data()
-                            return 'Details of  ' + data['name']
-                        }
-                    }),
-                    type: 'column',
-                    renderer: function (api, rowIdx, columns) {
-                        var data = $.map(columns, function (col, i) {
-                            return col.columnIndex !== 6 // ? Do not show row in modal popup if title is blank (for check box)
-                                ? '<tr data-dt-row="' +
-                                col.rowIdx +
-                                '" data-dt-column="' +
-                                col.columnIndex +
-                                '">' +
-                                '<td>' +
-                                col.title +
-                                ':' +
-                                '</td> ' +
-                                '<td>' +
-                                col.data +
-                                '</td>' +
-                                '</tr>'
-                                : ''
-                        }).join('')
-                        return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
-                    }
-                }
-            }
         })
     }
 
@@ -272,6 +240,7 @@ $(function () {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());
                 }
+                data.append('request', $('#request_id').val());
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
                 });
