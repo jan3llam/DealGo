@@ -43,12 +43,9 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'name'},
                 {data: 'tenant'},
                 {data: 'port_from.name'},
                 {data: 'port_to.name'},
-                {data: 'owner'},
-                {data: 'vessel'},
                 {data: 'date_from'},
                 {data: ''}
             ],
@@ -64,13 +61,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 7,
-                    render: function (data, type, full, meta) {
-                        return data ? data.name : '-';
-                    }
-                },
-                {
-                    targets: [3, 6],
+                    targets: 2,
                     render: function (data, type, full, meta) {
                         return data ? data.contact_name : '-';
                     }

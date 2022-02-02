@@ -42,12 +42,10 @@
                         <th></th>
                         <th>#</th>
                         <th>Title</th>
-                        <th>Tenant</th>
-                        <th>From Port</th>
-                        <th>To Port</th>
-                        <th>Owner</th>
-                        <th>Vessel</th>
-                        <th>Arrive @</th>
+                        <th>Charter</th>
+                        <th>Origin of shipment</th>
+                        <th>Destination of shipment</th>
+                        <th>Date</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -134,7 +132,7 @@
                                 </div>
                                 <button class="btn btn-icon btn-success" type="button" data-repeater-create>
                                     <i data-feather="plus" class="me-25"></i>
-                                    <span>Add New</span>
+                                    <span>Add Route</span>
                                 </button>
                             </div>
                             <div class="mb-1">
@@ -149,6 +147,7 @@
                             </div>
                             <div id="goods_container">
                                 <div data-repeater-list="goods">
+                                    <label class="form-label" for="route">Loads</label>
                                     <div data-repeater-item>
                                         <div class="mb-1">
                                             <label class="form-label" for="gtype">Goods type</label>
@@ -175,7 +174,7 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-icon btn-success" type="button" data-repeater-create>
-                                    <i data-feather="plus" class="me-25"></i><span>Add New</span>
+                                    <i data-feather="plus" class="me-25"></i><span>Add another load</span>
                                 </button>
                             </div>
                             <div id="owners_container" style="display: none">
