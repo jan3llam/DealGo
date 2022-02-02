@@ -36,8 +36,8 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Full legal name</th>
-                        <th>Vessels count</th>
+                        <th>Business legal name</th>
+                        <th>Ships</th>
                         <th>Contact name</th>
                         <th>Phone</th>
                         <th>Email</th>
