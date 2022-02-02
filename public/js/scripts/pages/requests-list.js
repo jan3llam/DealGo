@@ -304,7 +304,7 @@ $(function () {
                     }
                 },
                 processResults: function (data) {
-                    data = data.data.map(function (item) {
+                    data = data.data.data.map(function (item) {
                         return {
                             id: item.id,
                             text: item.name,
