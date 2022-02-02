@@ -87,10 +87,9 @@
                                 <textarea class="form-control dt-full-name" id="description"
                                           placeholder="Description" name="description"></textarea>
                             </div>
-                            <div class=mb-1>
-                                <label for="files" class="form-label">Files</label>
-                                <div class="dropzone" id="files">
-                                </div>
+                            <div class="mb-1">
+                                <label for="files" class="form-label">Attachments</label>
+                                <input type="file" name="files" id="files"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 Submit
