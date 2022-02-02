@@ -300,8 +300,14 @@ $(function () {
                 data: function (params) {
                     return {
                         search: params.term,
-                        length: 100
+                        start: params.page || 0
                     }
+                },
+                processResults: function (data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    return {
+                        results: data.data
+                    };
                 }
             }
         });
