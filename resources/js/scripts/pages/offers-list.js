@@ -44,7 +44,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'owner'},
                 {data: 'total'},
-                {data: 'start_at'},
+                {data: 'date'},
                 {data: ''}
             ],
             columnDefs: [
