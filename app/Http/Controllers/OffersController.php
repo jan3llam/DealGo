@@ -18,11 +18,18 @@ class OffersController extends Controller
     public function list($id = null)
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Responses"]
+            ['link' => "admin/home", 'name' => "Home"]
         ];
 
-        $requests = ShipmentRequest::all();
         $request = ShipmentRequest::withTrashed()->where('id', $id)->first();
+
+        if ($request) {
+            array_push($breadcrumbs, ['name' => $request->name . ' (#' . $request->id . ')']);
+        }
+        array_push($breadcrumbs, ['name' => 'Responses']);
+
+
+        $requests = ShipmentRequest::all();
         $owners = Owner::all();
         $ports = Port::all();
         $vessels = Vessel::all();
