@@ -42,7 +42,7 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'owner.name'},
+                {data: 'owner'},
                 {data: 'total'},
                 {data: 'start_at'},
                 {data: ''}
@@ -56,6 +56,12 @@ $(function () {
                     targets: 0,
                     render: function (data, type, full, meta) {
                         return ''
+                    }
+                },
+                {
+                    targets: 2,
+                    render: function (data, type, full, meta) {
+                        return data ? data.name : '-';
                     }
                 },
                 {
