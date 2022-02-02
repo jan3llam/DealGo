@@ -52,9 +52,14 @@ class OffersController extends Controller
         $order_sort = 'desc';
 
         $params = $request->all();
-        $query = Offer::with(['payments' => function ($query) {
-            $query->sum('value');
-        }]);
+        $query = Offer::with([
+            'payments' => function ($query) {
+                $query->sum('value');
+            },
+            'owner' => function ($q) {
+                $q->withTrashed();
+            },
+        ]);
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
