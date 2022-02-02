@@ -14,15 +14,21 @@ class MaintenancesController extends Controller
 {
     public function list($id = null)
     {
-        $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Vessels maintenances"]
-        ];
-
-        $vessels = Vessel::all();
         $vessel = null;
         if ($id) {
             $vessel = Vessel::withTrashed()->where('id', $id)->first();
         }
+
+        $breadcrumbs = [
+            ['link' => "admin/home", 'name' => "Home"],
+        ];
+
+        if ($vessel) {
+            array_push($breadcrumbs, ['name' => $vessel->name]);
+        }
+        array_push($breadcrumbs, ['name' => 'Vessel maintenances']);
+
+        $vessels = Vessel::all();
 
         return view('content.maintenances-list', [
             'breadcrumbs' => $breadcrumbs,

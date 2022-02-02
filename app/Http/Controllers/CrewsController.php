@@ -18,16 +18,17 @@ class CrewsController extends Controller
         if ($id) {
             $vessel = Vessel::withTrashed()->where('id', $id)->first();
         }
-        $vesselBreadcrumb = $vessel ? ['name' => $vessel->name] : null;
         $breadcrumbs = [
             ['link' => "admin/home", 'name' => "Home"],
-            $vesselBreadcrumb,
-            ['name' => "Vessels crew"]
         ];
+
+        if ($vessel) {
+            array_push($breadcrumbs, ['name' => $vessel->name]);
+        }
+        array_push($breadcrumbs, ['name' => 'Vessel crew']);
 
         $countries = Country::all();
         $vessels = Vessel::all();
-
 
         return view('content.crews-list', [
             'breadcrumbs' => $breadcrumbs,
