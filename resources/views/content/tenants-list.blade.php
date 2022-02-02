@@ -36,7 +36,7 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Full legal name</th>
+                        <th>Business legal name</th>
                         <th>City</th>
                         <th>Contact name</th>
                         <th>Phone</th>
