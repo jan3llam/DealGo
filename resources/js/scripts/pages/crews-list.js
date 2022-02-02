@@ -349,6 +349,7 @@ $(function () {
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
         $('#country').val(data.city.country.id).trigger('change.select2');
+        $('#vessel').val(data.vessel_id).trigger('change.select2');
         $('#address').val(data.address);
         $('#type').val(data.type);
         $('#object_id').val(data.id);
@@ -361,6 +362,9 @@ $(function () {
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         })
+        $('#vessel').val().trigger('change.select2');
+        $('#country').val().trigger('change.select2');
+        $('#city').val().trigger('change.select2');
         $("#file").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })
