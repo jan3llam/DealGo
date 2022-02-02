@@ -107,6 +107,7 @@ class OffersController extends Controller
     {
         $params = $request->all();
         $validator = Validator::make($params, [
+            'owner' => 'required|numeric',
             'request' => 'required|numeric',
             'date' => 'required',
             'commercial' => 'required_if:type,1',
@@ -120,6 +121,7 @@ class OffersController extends Controller
         $item = new Offer;
 
         $item->request_id = $params['request'];
+        $item->owner_id = $params['owner'];
         $item->date = $params['date'];
         $item->description = $params['description'];
 
