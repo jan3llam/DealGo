@@ -81,8 +81,8 @@ class OwnersController extends Controller
         $validator = Validator::make($params, [
             'name' => 'required_if:type,1',
             'commercial' => 'required_if:type,1',
-            'company' => 'required_if:type,1|file',
-            'license' => 'required_if:type,1|file',
+            'company' => 'required_if:type,1',
+            'license' => 'required_if:type,1',
             'type' => 'required|numeric',
             'contact' => 'required|string',
             'zip' => 'required|string',
