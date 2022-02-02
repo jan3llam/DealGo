@@ -52,8 +52,7 @@
             </div>
 
             <!-- Modal to add new user starts-->
-            <div class="modal modal-slide-in new-offer-modal fade @if($request) show @endif" id="modals-slide-in"
-                 @if($request) style="display: block;" @endif>
+            <div class="modal modal-slide-in new-offer-modal fade" id="modals-slide-in">
                 <div class="modal-dialog">
                     <form class="add-new-offer modal-content pt-0">
                         <input type="hidden" value="1" id="form_status">
