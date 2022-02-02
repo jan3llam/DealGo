@@ -52,7 +52,7 @@ class OffersController extends Controller
         $order_sort = 'desc';
 
         $params = $request->all();
-        $query = with(['payments' => function ($query) {
+        $query = Offer::with(['payments' => function ($query) {
             $query->sum('value');
         }]);
 
