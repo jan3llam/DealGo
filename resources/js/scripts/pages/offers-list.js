@@ -17,7 +17,27 @@ $(function () {
     }
     if (dtTable.length) {
         dtTable.dataTable({
-            ajax: assetPath + 'api/admin/offers/list',
+            ajax: function (data, callback, settings) {
+                // make a regular ajax request using data.start and data.length
+                $.get(assetPath + 'api/admin/offers/list', {
+                    length: data.length,
+                    start: data.start,
+                    draw: data.draw,
+                    search: data.search.value,
+                    trashed: $('#trashed').val(),
+                    direction: data.order[0].dir,
+                    order: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                }, function (res) {
+                    callback({
+                        draw: res.data.meta.draw,
+                        recordsTotal: res.data.meta.total,
+                        recordsFiltered: res.data.meta.count,
+                        data: res.data.data
+                    });
+                });
+            },
+            processing: true,
+            serverSide: true,
             columns: [
                 // columns according to JSON
                 {data: ''},
@@ -222,7 +242,7 @@ $(function () {
         })
 
         $('.vessels-select2,#owner').select2({dropdownParent: newSidebar});
-        $("#file").fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#files").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
@@ -317,6 +337,6 @@ $(function () {
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         });
-        $("#file").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })
