@@ -20,10 +20,58 @@ class PortsController extends Controller
         return view('content.ports-list', ['breadcrumbs' => $breadcrumbs, 'countries' => $countries]);
     }
 
-    public function list_api()
+    public function list_api(Request $request)
     {
-        return response()->success(Port::withTrashed()->with('city.country')->get());
+
+        $data = [];
+        $search_clm = ['user.name', 'user.username', 'user.gsm', 'user.email'];
+        $order_field = 'created_at';
+        $order_sort = 'desc';
+
+        $params = $request->all();
+        $query = Port::query();
+
+        $search_val = isset($params['search']) ? $params['search'] : null;
+        $sort_field = isset($params['order']) ? $params['order'] : null;
+        $page = isset($params['start']) ? $params['start'] : 0;
+        $filter_trashed = isset($params['trashed']) ? $params['trashed'] : 0;
+        $per_page = isset($params['length']) ? $params['length'] : 10;
+
+        if ($search_val) {
+            $query->where(function ($q) use ($search_clm, $search_val) {
+                foreach ($search_clm as $item) {
+//                    $item = explode('.', $item);
+//                    $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+//                        $qu->where($item[1], 'like', '%' . $search_val . '%');
+//                    })->get();
+                    $q->orWhere($item[1], 'like', '%' . $search_val . '%');
+                }
+            });
+        }
+
+        if ($sort_field) {
+            $order_field = $sort_field;
+            $order_sort = $params['direction'];
+        }
+
+        if ($filter_trashed) {
+            $query->onlyTrashed();
+        }
+
+        $total = $query->limit($per_page)->count();
+
+        $data['data'] = $query->skip(($page) * $per_page)
+            ->with('city.country')->take($per_page)->orderBy($order_field, $order_sort)->get();
+
+
+        $data['meta']['draw'] = $request->input('draw');
+        $data['meta']['total'] = $total;
+        $data['meta']['count'] = $data['data']->count();
+        $data['data'] = $data['data']->toArray();
+
+        return response()->success($data);
     }
+
 
     public function add(Request $request)
     {
