@@ -25,7 +25,6 @@ $(function () {
                 {data: 'owner.name'},
                 {data: 'total'},
                 {data: 'start_at'},
-                {data: 'status'},
                 {data: ''}
             ],
             columnDefs: [

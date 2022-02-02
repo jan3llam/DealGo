@@ -28,7 +28,6 @@ class OffersController extends Controller
         }
         array_push($breadcrumbs, ['name' => 'Responses']);
 
-
         $requests = ShipmentRequest::all();
         $owners = Owner::all();
         $ports = Port::all();

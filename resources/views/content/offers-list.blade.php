@@ -210,7 +210,7 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View ship owner</h5>
+                            <h5 class="modal-title" id="modal-label">View response</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
