@@ -14,16 +14,20 @@ class CrewsController extends Controller
 {
     public function list($id = null)
     {
-        $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Vessels crew"]
-        ];
-
-        $countries = Country::all();
-        $vessels = Vessel::all();
         $vessel = null;
         if ($id) {
             $vessel = Vessel::withTrashed()->where('id', $id)->first();
         }
+        $vesselBreadcrumb = $vessel ? ['name' => $vessel->name] : null;
+        $breadcrumbs = [
+            ['link' => "admin/home", 'name' => "Home"],
+            $vesselBreadcrumb,
+            ['name' => "Vessels crew"]
+        ];
+
+        $countries = Country::all();
+        $vessels = Vessel::all();
+
 
         return view('content.crews-list', [
             'breadcrumbs' => $breadcrumbs,
