@@ -63,8 +63,9 @@
                                 <select type="text" class="form-control dt-full-name select2" id="vessel"
                                         name="vessel">
                                     <option value="" disabled selected>Kindly choose</option>
-                                    @foreach($vessels as $vessel)
-                                        <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                    @foreach($vessels as $item)
+                                        <option value="{{$item->id}}"
+                                                @if($vessel->id === $item->id) selected @endif>{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
