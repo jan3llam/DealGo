@@ -220,8 +220,6 @@ $(function () {
     }
 
     if (newForm.length) {
-        let data = new FormData();
-
         $(document).on('change', '#type', function () {
             var element = $(this);
             if (parseInt(element.val()) === 1) {
