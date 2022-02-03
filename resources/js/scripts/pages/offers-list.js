@@ -61,7 +61,7 @@ $(function () {
                 {
                     targets: 2,
                     render: function (data, type, full, meta) {
-                        return data ? data.name : '-';
+                        return data ? data.contact_name : '-';
                     }
                 },
                 {
