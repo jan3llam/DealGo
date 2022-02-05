@@ -37,15 +37,6 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    /**
      * The accessors to append to the model's array form.
      *
      * @var array
@@ -85,4 +76,21 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Notification::class, 'user_id', 'id');
     }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public function userable()
+    {
+        return $this->morphTo();
+    }
+
+
 }

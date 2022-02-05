@@ -43,12 +43,12 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'full_name'},
+                {data: 'user.full_name'},
                 {data: 'vessels_count'},
-                {data: 'contact_name'},
-                {data: 'phone'},
-                {data: 'email'},
-                {data: 'status'},
+                {data: 'user.contact_name'},
+                {data: 'user.phone'},
+                {data: 'user.email'},
+                {data: 'user.status'},
                 {data: ''}
             ],
             columnDefs: [
@@ -66,7 +66,7 @@ $(function () {
                     targets: 7,
                     orderable: false,
                     render: function (data, type, full, meta) {
-                        var $status = full['status']
+                        var $status = data
                         return (
                             '<span class="badge rounded-pill btn ' +
                             statusObj[$status].class +
@@ -264,10 +264,37 @@ $(function () {
                     }
                 },
                 'email': {
-                    required: true
+                    required: true,
+                    email: true,
+                    remote: {
+                        url: assetPath + 'api/admin/users/check_field',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            email: function () {
+                                return $("#email").val();
+                            }
+                        },
+                        dataFilter: function (response) {
+                            return parseInt(JSON.parse(response).code) === 1;
+                        }
+                    }
                 },
                 'zip': {
-                    required: true
+                    required: true,
+                    remote: {
+                        url: assetPath + 'api/admin/users/check_field',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            zip: function () {
+                                return $("#zip").val();
+                            }
+                        },
+                        dataFilter: function (response) {
+                            return parseInt(JSON.parse(response).code) === 1;
+                        }
+                    }
                 },
                 'city': {
                     required: true
@@ -276,8 +303,32 @@ $(function () {
                     required: true
                 },
                 'phone': {
-                    required: true
+                    required: true,
+                    remote: {
+                        url: assetPath + 'api/admin/users/check_field',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            phone: function () {
+                                return $("#phone").val();
+                            }
+                        },
+                        dataFilter: function (response) {
+                            return parseInt(JSON.parse(response).code) === 1;
+                        }
+                    }
                 },
+            },
+            messages: {
+                email: {
+                    remote: "This email already in use"
+                },
+                phone: {
+                    remote: "This phone already in use"
+                },
+                zip: {
+                    remote: "This zip code already in use"
+                }
             }
         })
 
@@ -364,7 +415,9 @@ $(function () {
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
-        newSidebar.modal('show')
+        newSidebar.modal('show');
+        $('#object_id').val(data.id);
+        data = data.user;
         $('#form_status').val(2);
         $('#name').val(data.full_name);
         $('#contact').val(data.contact_name);
@@ -392,12 +445,11 @@ $(function () {
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
         $('#type').val(data.type).trigger('change');
-        $('#object_id').val(data.id);
     });
 
     $(document).on('click', '.item-view', function () {
         var element = $(this);
-        let data = dtTable.api().row(element.parents('tr')).data();
+        let data = dtTable.api().row(element.parents('tr')).data().user;
         viewSidebar.modal('show');
         $('#view-type').html(data.type);
         if (data.type == 1) {

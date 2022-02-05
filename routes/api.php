@@ -230,6 +230,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'users'], function () {
         Route::get('/list', [UsersAPI::class, 'list_api']);
+        Route::post('/check_field', [UsersAPI::class, 'check_field']);
         Route::put('/status/{id}', [UsersAPI::class, 'status']);
         Route::put('/update', [UsersAPI::class, 'update']);
         Route::delete('/{id}', [UsersAPI::class, 'delete']);

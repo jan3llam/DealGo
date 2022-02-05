@@ -16,6 +16,11 @@ class Tenant extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function user()
+    {
+        return $this->morphOne(User::class, 'userable');
+    }
+
     public function goods_types()
     {
         return $this->belongsToMany(gType::class, 'tenants_goods_types', 'tenant_id', 'good_id');

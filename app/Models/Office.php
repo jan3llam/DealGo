@@ -16,6 +16,11 @@ class Office extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function user()
+    {
+        return $this->morphOne(User::class, 'userable');
+    }
+
     public function getFilesAttribute($value)
     {
         return json_decode($value);

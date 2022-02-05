@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Models\Owner;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -25,8 +26,8 @@ class OwnersController extends Controller
     {
 
         $data = [];
-        $search_clm = ['contact_name', 'phone', 'full_name', 'email', 'city.name_ar', 'city.name_en', 'city.name_fr',
-            'city.country.name_ar', 'city.country.name_en', 'city.country.name_fr'];
+        $search_clm = ['user.contact_name', 'user.phone', 'user.full_name', 'user.email', 'user.city.name_ar', 'user.city.name_en', 'user.city.name_fr',
+            'user.city.country.name_ar', 'user.city.country.name_en', 'user.city.country.name_fr'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
@@ -43,7 +44,15 @@ class OwnersController extends Controller
             $query->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
                     $item = explode('.', $item);
-                    if (sizeof($item) == 3) {
+                    if (sizeof($item) == 4) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
+                                $que->whereHas($item[2], function ($quer) use ($item, $search_val) {
+                                    $quer->where($item[3], 'like', '%' . $search_val . '%');
+                                });
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 3) {
                         $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
                             $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
                                 $que->where($item[2], 'like', '%' . $search_val . '%');
@@ -73,7 +82,7 @@ class OwnersController extends Controller
 
         $data['data'] = $query->skip(($page) * $per_page)
             ->take($per_page)->orderBy($order_field, $order_sort)
-            ->with(['city.country'])->get();
+            ->with(['user.city.country'])->get();
 
 
         $data['meta']['draw'] = $request->input('draw');
@@ -100,7 +109,7 @@ class OwnersController extends Controller
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
             'password' => 'required',
-            'email' => 'required|unique:owners,email',
+            'email' => 'required|unique:users,email',
             'phone' => 'required',
             'legal' => 'required|file',
         ]);
@@ -118,8 +127,9 @@ class OwnersController extends Controller
             Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
         }
 
-        $item = new Owner;
-
+        $item = new User;
+        $owner = new Owner;
+        $owner->save();
         $item->legal_file = $fileName;
 
         if ($request->type == 1) {
@@ -154,6 +164,8 @@ class OwnersController extends Controller
         $item->zip_code = $params['zip'];
         $item->address_1 = $params['address_1'];
         $item->address_2 = $params['address_2'];
+        $item->userable_id = $owner->id;
+        $item->userable_type = Owner::class;
 
         $files = $request->file('files', []);
         $filesArr = [];
@@ -208,6 +220,7 @@ class OwnersController extends Controller
         }
 
         $item = Owner::withTrashed()->where('id', $id)->first();
+        $item = $item->user;
 
         if ($request->hasFile('legal')) {
             $item->legal_file = $fileName;

@@ -56,12 +56,37 @@ class UsersController extends Controller
         return redirect()->route('admin.user', $request->object_id);
     }
 
-
     public function list_api()
     {
         return response()->success(User::all());
     }
 
+    public function check_field(Request $request)
+    {
+        $email = $request->input('email', null);
+        $phone = $request->input('phone', null);
+        $zip = $request->input('zip', null);
+        if ($email) {
+            $user = User::where('email', $email)->first();
+            if ($user) {
+                return response()->error('alreadyExist');
+            }
+            return response()->success();
+        } elseif ($phone) {
+            $user = User::where('phone', $phone)->first();
+            if ($user) {
+                return response()->error('alreadyExist');
+            }
+            return response()->success();
+        } elseif ($zip) {
+            $user = User::where('zip_code', $zip)->first();
+            if ($user) {
+                return response()->error('alreadyExist');
+            }
+            return response()->success();
+        }
+        return response()->error('alreadyExist');
+    }
 
     public function delete($id)
     {
