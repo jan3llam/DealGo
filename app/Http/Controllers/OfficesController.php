@@ -109,7 +109,7 @@ class OfficesController extends Controller
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
             'password' => 'required',
-            'email' => 'required|unique:offices,email',
+            'email' => 'required|unique:users,email',
             'phone' => 'required',
             'legal' => 'required|file',
         ]);
