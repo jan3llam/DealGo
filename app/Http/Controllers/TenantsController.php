@@ -302,8 +302,9 @@ class TenantsController extends Controller
         $item = Tenant::withTrashed()->where('id', $id)->first();
 
         if ($item) {
-            $item->status = 0;
+            $item->user->status = 0;
             $item->save();
+            $item->user->delete();
             $item->delete();
         }
 
@@ -316,10 +317,10 @@ class TenantsController extends Controller
         $item = Tenant::withTrashed()->where('id', $id)->first();
         if ($item) {
 
-            if ($item->status === 0 && $item->deleted_at !== null) {
+            if ($item->user->status === 0 && $item->deleted_at !== null) {
                 $item->restore();
             }
-            $item->status = $item->status == 1 ? 0 : 1;
+            $item->user->status = $item->user->status == 1 ? 0 : 1;
             $item->save();
         }
 
