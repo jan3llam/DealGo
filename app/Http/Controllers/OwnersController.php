@@ -82,8 +82,9 @@ class OwnersController extends Controller
 
         $data['data'] = $query->skip(($page) * $per_page)
             ->take($per_page)->orderBy($order_field, $order_sort)
-            ->with(['user.city.country'])->get();
-
+            ->with(['user' => function ($q) {
+                $q->withTrashed();
+            }, 'user.city.country', 'goods_types'])->get();
 
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
