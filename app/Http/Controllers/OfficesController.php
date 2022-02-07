@@ -84,7 +84,7 @@ class OfficesController extends Controller
             ->take($per_page)->orderBy($order_field, $order_sort)
             ->with(['user' => function ($q) {
                 $q->withTrashed();
-            }, 'user.city.country', 'goods_types'])->get();
+            }, 'user.city.country'])->get();
 
 
         $data['meta']['draw'] = $request->input('draw');
