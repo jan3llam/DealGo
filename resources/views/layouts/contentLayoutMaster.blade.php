@@ -30,7 +30,11 @@
 
     {{-- Include core + vendor Styles --}}
     @include('panels/styles')
-
+    <style>
+        .kv-file-remove {
+            display: none;
+        }
+    </style>
 </head>
 <!-- END: Head-->
 
