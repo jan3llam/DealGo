@@ -322,7 +322,15 @@ $(function () {
             }
         })
 
-        $("#legal,#company,#license").fileinput({'showUpload': false, 'showRemove': false, 'previewFileType': 'any'});
+        $("#legal,#company,#license").fileinput({
+            'showUpload': false, fileActionSettings: {
+                showRemove: false,
+                showUpload: false,
+                showZoom: true,
+                showDrag: false,
+            },
+            'previewFileType': 'any'
+        });
 
         $('#country,#city').select2({
             dropdownParent: newSidebar
