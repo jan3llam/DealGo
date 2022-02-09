@@ -45,7 +45,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'name'},
                 {data: 'imo'},
-                {data: 'owner.contact_name'},
+                {data: 'owner.user.contact_name'},
                 {data: 'country.name'},
                 {data: 'status'},
                 {data: ''}
