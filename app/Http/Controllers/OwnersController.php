@@ -307,7 +307,7 @@ class OwnersController extends Controller
                 $item->restore();
             }
             $item = $item->user;
-            $item->status = $item->user->status == 1 ? 0 : 1;
+            $item->status = $item->status == 1 ? 0 : 1;
             $item->save();
         }
 
