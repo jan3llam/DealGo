@@ -321,7 +321,8 @@ class TenantsController extends Controller
             if ($item->user->status === 0 && $item->deleted_at !== null) {
                 $item->restore();
             }
-            $item->user->status = $item->user->status == 1 ? 0 : 1;
+            $item = $item->user;
+            $item->status = $item->status == 1 ? 0 : 1;
             $item->save();
         }
 
