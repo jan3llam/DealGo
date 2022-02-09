@@ -275,25 +275,15 @@ $(function () {
                             }
                         },
                         dataFilter: function (response) {
-                            return parseInt(JSON.parse(response).code) === 1;
+                            if ($("#form_status").val() === 1) {
+                                return parseInt(JSON.parse(response).code) === 1;
+                            }
+                            return true;
                         }
                     }
                 },
                 'zip': {
                     required: true,
-                    remote: {
-                        url: assetPath + 'api/admin/users/check_field',
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            zip: function () {
-                                return $("#zip").val();
-                            }
-                        },
-                        dataFilter: function (response) {
-                            return parseInt(JSON.parse(response).code) === 1;
-                        }
-                    }
                 },
                 'city': {
                     required: true
@@ -313,7 +303,10 @@ $(function () {
                             }
                         },
                         dataFilter: function (response) {
-                            return parseInt(JSON.parse(response).code) === 1;
+                            if ($("#form_status").val() === 1) {
+                                return parseInt(JSON.parse(response).code) === 1;
+                            }
+                            return true;
                         }
                     }
                 },
@@ -324,9 +317,6 @@ $(function () {
                 },
                 phone: {
                     remote: "This phone already in use"
-                },
-                zip: {
-                    remote: "This zip code already in use"
                 }
             }
         });
