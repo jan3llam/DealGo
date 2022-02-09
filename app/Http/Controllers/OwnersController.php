@@ -306,7 +306,8 @@ class OwnersController extends Controller
             if ($item->user->status === 0 && $item->deleted_at !== null) {
                 $item->restore();
             }
-            $item->user->update(['status' => $item->user->status == 1 ? 0 : 1]);
+            $item = $item->user;
+            $item->status = $item->user->status == 1 ? 0 : 1;
             $item->save();
         }
 
