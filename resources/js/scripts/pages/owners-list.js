@@ -323,12 +323,8 @@ $(function () {
         })
 
         $("#legal,#company,#license").fileinput({
-            'showUpload': false, fileActionSettings: {
-                showRemove: false,
-                showUpload: false,
-                showZoom: true,
-                showDrag: false,
-            },
+            'showUpload': false,
+            'showRemove': false,
             'previewFileType': 'any'
         });
 
