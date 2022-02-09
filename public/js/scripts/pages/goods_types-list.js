@@ -12,7 +12,27 @@ $(function () {
     }
     if (dtTable.length) {
         dtTable.dataTable({
-            ajax: assetPath + 'api/admin/goods-types/list',
+            ajax: function (data, callback, settings) {
+                // make a regular ajax request using data.start and data.length
+                $.get(assetPath + 'api/admin/goods-types/list', {
+                    length: data.length,
+                    start: data.start,
+                    draw: data.draw,
+                    search: data.search.value,
+                    trashed: $('#trashed').val(),
+                    direction: data.order[0].dir,
+                    order: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                }, function (res) {
+                    callback({
+                        draw: res.data.meta.draw,
+                        recordsTotal: res.data.meta.total,
+                        recordsFiltered: res.data.meta.count,
+                        data: res.data.data
+                    });
+                });
+            },
+            processing: true,
+            serverSide: true,
             columns: [
                 // columns according to JSON
                 {data: ''},
@@ -94,6 +114,12 @@ $(function () {
                     $(row).addClass('table-secondary');
                 }
             },
+            initComplete: function () {
+                $(document).on('click', '.trashed-item', function () {
+                    $('#trashed').val($(this).data('trashed'));
+                    dtTable.DataTable().ajax.reload();
+                });
+            },
             // Buttons with Dropdown
             buttons: [
                 {
@@ -141,6 +167,34 @@ $(function () {
                     }
                 },
                 {
+                    extend: 'collection',
+                    className: 'btn btn-outline-secondary dropdown-toggle me-2',
+                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Trashed',
+                    buttons: [
+                        {
+                            text: 'Yes',
+                            attr: {
+                                "data-trashed": 1
+                            },
+                            className: 'trashed-item dropdown-item',
+                        },
+                        {
+                            text: 'No',
+                            attr: {
+                                "data-trashed": 0
+                            },
+                            className: 'trashed-item dropdown-item',
+                        }
+                    ],
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary')
+                        $(node).parent().removeClass('btn-group')
+                        setTimeout(function () {
+                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
+                        }, 50)
+                    }
+                },
+                {
                     text: 'Add new',
                     className: 'add-goods-type btn btn-primary',
                     attr: {
@@ -154,38 +208,6 @@ $(function () {
                     }
                 }
             ],
-            // For responsive popup
-            responsive: {
-                details: {
-                    display: $.fn.dataTable.Responsive.display.modal({
-                        header: function (row) {
-                            var data = row.data()
-                            return 'Details of  ' + data['name']
-                        }
-                    }),
-                    type: 'column',
-                    renderer: function (api, rowIdx, columns) {
-                        var data = $.map(columns, function (col, i) {
-                            return col.columnIndex !== 6 // ? Do not show row in modal popup if title is blank (for check box)
-                                ? '<tr data-dt-row="' +
-                                col.rowIdx +
-                                '" data-dt-column="' +
-                                col.columnIndex +
-                                '">' +
-                                '<td>' +
-                                col.title +
-                                ':' +
-                                '</td> ' +
-                                '<td>' +
-                                col.data +
-                                '</td>' +
-                                '</tr>'
-                                : ''
-                        }).join('')
-                        return data ? $('<table class="table"/>').append('<tbody>' + data + '</tbody>') : false
-                    }
-                }
-            }
         })
     }
 
