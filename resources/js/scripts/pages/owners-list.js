@@ -322,7 +322,7 @@ $(function () {
             }
         })
 
-        $("#legal,#company,#license").fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#legal,#company,#license").fileinput({'showUpload': false, 'showRemove': false, 'previewFileType': 'any'});
 
         $('#country,#city').select2({
             dropdownParent: newSidebar
