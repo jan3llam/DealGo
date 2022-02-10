@@ -190,7 +190,7 @@ class TenantsController extends Controller
 
         $gtypes = explode(',', $request->input('gtype', null));
         foreach ($gtypes as $type) {
-            $item->goods_types()->attach($type);
+            $tenant->goods_types()->attach($type);
         }
 
         return response()->success();
