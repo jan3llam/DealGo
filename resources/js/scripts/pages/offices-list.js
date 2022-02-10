@@ -333,11 +333,11 @@ $(function () {
         });
 
         newForm.on('submit', function (e) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
             if (e.isTrigger) {
                 return;
             }
-            e.stopImmediatePropagation();
-            e.preventDefault();
             let data = new FormData();
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
