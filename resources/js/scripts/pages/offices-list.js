@@ -259,7 +259,7 @@ $(function () {
                 'contact': {
                     required: true
                 },
-                'password_confirm': {
+                'confirm_password': {
                     equalTo: "#password"
                 },
                 'legal': {
