@@ -146,9 +146,10 @@ class VesselsTypesController extends Controller
         }
 
         $item = vType::withTrashed()->where('id', $id)->first();
+        $parent = $request->input('parent');
 
         $item->name = $params['name'];
-        $item->parent_id = $request->input('parent', null);
+        $item->parent_id = $parent ? null : $parent;
         $item->dwt = $params['dwt'];
         $item->draught = $params['draught'];
         $item->loa = $params['loa'];

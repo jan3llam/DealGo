@@ -199,7 +199,9 @@ $(function () {
                     className: 'add-vessels-type btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
-                        'data-bs-target': '#modals-slide-in'
+                        'data-bs-target': '#modals-slide-in',
+                        'data-bs-backdrop': 'static',
+                        'data-bs-keyboard': 'false'
                     },
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
@@ -303,8 +305,7 @@ $(function () {
         $('#loa').val(data.loa);
         $('#geared').val(data.geared);
         $('#holds').val(data.holds);
-        $('#parent').val(data.parent_id);
-        $('#parent').trigger('change.select2');
+        $('#parent').val(data.parent_id).trigger('change.select2');
         $('#description').val(data.description);
         $('#object_id').val(data.id);
     });

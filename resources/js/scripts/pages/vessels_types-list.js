@@ -305,8 +305,7 @@ $(function () {
         $('#loa').val(data.loa);
         $('#geared').val(data.geared);
         $('#holds').val(data.holds);
-        $('#parent').val(data.parent_id);
-        $('#parent').trigger('change.select2');
+        $('#parent').val(data.parent_id).trigger('change.select2');
         $('#description').val(data.description);
         $('#object_id').val(data.id);
     });
