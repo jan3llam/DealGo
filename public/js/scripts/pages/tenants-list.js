@@ -435,15 +435,18 @@ $(function () {
             initialPreviewAsData: true,
         });
         $('#country').val(data.city.country.id).trigger('change.select2');
-        var goods_types = [];
-        data.goods_types.forEach(item => {
-            goods_types.push(item.id);
-        });
-        $('#gtype').val(goods_types).trigger('change.select2');
+
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
         $('#type').val(data.type).trigger('change');
+        if (data.goods_types.length) {
+            var goods_types = [];
+            data.goods_types.forEach(item => {
+                goods_types.push(item.id);
+            })
+        }
+        $('#gtype').val(goods_types).trigger('change.select2');
     });
 
     $(document).on('click', '.item-view', function () {
