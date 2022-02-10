@@ -230,8 +230,8 @@ class TenantsController extends Controller
             Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
         }
 
-        $item = Tenant::withTrashed()->where('id', $id)->first();
-        $item = $item->user;
+        $itemT = Tenant::withTrashed()->where('id', $id)->first();
+        $item = $itemT->user;
 
         if ($request->hasFile('legal')) {
             $item->legal_file = $fileName;
@@ -284,14 +284,15 @@ class TenantsController extends Controller
         }
 
         $gtypes = explode(',', $request->input('gtype', null));
-        $item->goods_types()->detach();
+        $itemT->goods_types()->detach();
         foreach ($gtypes as $type) {
-            $item->goods_types()->attach($type);
+            $itemT->goods_types()->attach($type);
         }
 
         $item->files = json_encode($filesArr);
         $item->status = 1;
 
+        $itemT->save();
         $item->save();
 
         return response()->success();
