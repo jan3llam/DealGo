@@ -28,7 +28,7 @@ class OffersController extends Controller
         }
         array_push($breadcrumbs, ['name' => 'Responses']);
 
-        $requests = ShipmentRequest::where();
+        $requests = ShipmentRequest::all();
         $owners = Owner::all();
         $ports = Port::all();
         $vessels = Vessel::all();
