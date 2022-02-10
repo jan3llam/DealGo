@@ -16,19 +16,112 @@ $(function () {
         assetPath = $('body').attr('data-asset-path')
     }
 
-    var addBtn = $('#request_id').val() ? {
-        text: 'Add new',
-        className: 'add-office btn btn-primary',
-        attr: {
-            'data-bs-toggle': 'modal',
-            'data-bs-target': '#modals-slide-in',
-            'data-bs-backdrop': 'static',
-            'data-bs-keyboard': 'false'
-        },
-        init: function (api, node, config) {
-            $(node).removeClass('btn-secondary')
-        }
-    } : {};
+    var btn = $('#request_id').val() ?
+        [
+            {
+                extend: 'collection',
+                className: 'btn btn-outline-secondary dropdown-toggle me-2',
+                text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    },
+                    {
+                        extend: 'csv',
+                        text: feather.icons['file-text'].toSvg({class: 'font-small-4 me-50'}) + 'CSV',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    },
+                    {
+                        extend: 'excel',
+                        text: feather.icons['file'].toSvg({class: 'font-small-4 me-50'}) + 'Excel',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    },
+                    {
+                        extend: 'pdf',
+                        text: feather.icons['clipboard'].toSvg({class: 'font-small-4 me-50'}) + 'PDF',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    },
+                    {
+                        extend: 'copy',
+                        text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    }
+                ],
+                init: function (api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                    $(node).parent().removeClass('btn-group')
+                    setTimeout(function () {
+                        $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
+                    }, 50)
+                }
+            },
+            {
+                text: 'Add new',
+                className: 'add-office btn btn-primary',
+                attr: {
+                    'data-bs-toggle': 'modal',
+                    'data-bs-target': '#modals-slide-in',
+                    'data-bs-backdrop': 'static',
+                    'data-bs-keyboard': 'false'
+                },
+                init: function (api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            }
+        ] :
+        [
+            {
+                extend: 'collection',
+                className: 'btn btn-outline-secondary dropdown-toggle me-2',
+                text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    },
+                    {
+                        extend: 'csv',
+                        text: feather.icons['file-text'].toSvg({class: 'font-small-4 me-50'}) + 'CSV',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    },
+                    {
+                        extend: 'excel',
+                        text: feather.icons['file'].toSvg({class: 'font-small-4 me-50'}) + 'Excel',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    },
+                    {
+                        extend: 'pdf',
+                        text: feather.icons['clipboard'].toSvg({class: 'font-small-4 me-50'}) + 'PDF',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    },
+                    {
+                        extend: 'copy',
+                        text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
+                        className: 'dropdown-item',
+                        exportOptions: {columns: [1, 2, 3, 4, 5]}
+                    }
+                ],
+                init: function (api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                    $(node).parent().removeClass('btn-group')
+                    setTimeout(function () {
+                        $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
+                    }, 50)
+                }
+            }
+        ];
 
     if (dtTable.length) {
         dtTable.dataTable({
@@ -135,53 +228,7 @@ $(function () {
                 }
             },
             // Buttons with Dropdown
-            buttons: [
-                {
-                    extend: 'collection',
-                    className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
-                    buttons: [
-                        {
-                            extend: 'print',
-                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
-                            className: 'dropdown-item',
-                            exportOptions: {columns: [1, 2, 3, 4, 5]}
-                        },
-                        {
-                            extend: 'csv',
-                            text: feather.icons['file-text'].toSvg({class: 'font-small-4 me-50'}) + 'CSV',
-                            className: 'dropdown-item',
-                            exportOptions: {columns: [1, 2, 3, 4, 5]}
-                        },
-                        {
-                            extend: 'excel',
-                            text: feather.icons['file'].toSvg({class: 'font-small-4 me-50'}) + 'Excel',
-                            className: 'dropdown-item',
-                            exportOptions: {columns: [1, 2, 3, 4, 5]}
-                        },
-                        {
-                            extend: 'pdf',
-                            text: feather.icons['clipboard'].toSvg({class: 'font-small-4 me-50'}) + 'PDF',
-                            className: 'dropdown-item',
-                            exportOptions: {columns: [1, 2, 3, 4, 5]}
-                        },
-                        {
-                            extend: 'copy',
-                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
-                            className: 'dropdown-item',
-                            exportOptions: {columns: [1, 2, 3, 4, 5]}
-                        }
-                    ],
-                    init: function (api, node, config) {
-                        $(node).removeClass('btn-secondary')
-                        $(node).parent().removeClass('btn-group')
-                        setTimeout(function () {
-                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
-                        }, 50)
-                    }
-                },
-                addBtn
-            ],
+            buttons: btn,
         })
     }
 
