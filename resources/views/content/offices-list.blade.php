@@ -50,7 +50,7 @@
             <!-- Modal to add new user starts-->
             <div class="modal modal-slide-in new-office-modal fade" id="modals-slide-in">
                 <div class="modal-dialog">
-                    <form class="add-new-office modal-content pt-0">
+                    <form class="add-new-office modal-content pt-0" method="post">
                         <input type="hidden" value="1" id="form_status">
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
