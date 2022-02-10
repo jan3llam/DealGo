@@ -43,7 +43,7 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'tenant'},
+                {data: 'tenant.user'},
                 {data: 'port_from.name'},
                 {data: 'port_to.name'},
                 {data: 'date_from'},
