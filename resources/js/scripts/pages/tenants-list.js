@@ -444,7 +444,7 @@ $(function () {
             var goods_types = [];
             data.goods_types.forEach(item => {
                 goods_types.push(item.id);
-            });
+            })
         }
         $('#gtype').val(goods_types).trigger('change.select2');
     });
