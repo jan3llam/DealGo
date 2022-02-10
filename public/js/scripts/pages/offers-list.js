@@ -311,6 +311,7 @@ $(function () {
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
         $('#name').val(data.full_name);
+
         $('#contact').val(data.contact_name);
         $('#commercial').val(data.commercial_number);
         $('#email').val(data.email);
@@ -328,6 +329,7 @@ $(function () {
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         });
+        $('#owner').trigger('change.select2');
         $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })
