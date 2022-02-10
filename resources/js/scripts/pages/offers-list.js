@@ -15,6 +15,21 @@ $(function () {
     if ($('body').attr('data-framework') === 'laravel') {
         assetPath = $('body').attr('data-asset-path')
     }
+
+    var addBtn = $('#request_id').val() ? {
+        text: 'Add new',
+        className: 'add-office btn btn-primary',
+        attr: {
+            'data-bs-toggle': 'modal',
+            'data-bs-target': '#modals-slide-in',
+            'data-bs-backdrop': 'static',
+            'data-bs-keyboard': 'false'
+        },
+        init: function (api, node, config) {
+            $(node).removeClass('btn-secondary')
+        }
+    } : null;
+
     if (dtTable.length) {
         dtTable.dataTable({
             ajax: function (data, callback, settings) {
@@ -165,19 +180,7 @@ $(function () {
                         }, 50)
                     }
                 },
-                {
-                    text: 'Add new',
-                    className: 'add-offer btn btn-primary',
-                    attr: {
-                        'data-bs-toggle': 'modal',
-                        'data-bs-target': '#modals-slide-in',
-                        'data-bs-backdrop': 'static',
-                        'data-bs-keyboard': 'false'
-                    },
-                    init: function (api, node, config) {
-                        $(node).removeClass('btn-secondary')
-                    }
-                }
+                addBtn
             ],
         })
     }
