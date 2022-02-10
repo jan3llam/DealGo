@@ -259,8 +259,8 @@ $(function () {
                 'contact': {
                     required: true
                 },
-                'confirm_password': {
-                    equalTo: "#pass"
+                'pass': {
+                    equalTo: "#confirm_password"
                 },
                 'legal': {
                     required: function (element) {
