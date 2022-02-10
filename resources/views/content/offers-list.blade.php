@@ -115,12 +115,12 @@
                                     <div class="mb-1 row">
                                         <div class="col-7">
                                             <label class="form-label">Goods type</label>
-                                            <label class="form-label font-weight-bolder">{{$item->name}}</label>
+                                            <label class="form-label"><b>{{$item->name}}</b></label>
                                         </div>
                                         <div class="col-5">
                                             <label class="form-label">Gross weight, kg</label>
                                             <label
-                                                class="form-label font-weight-bolder">{{$item->pivot->weight}}</label>
+                                                class="form-label"><b>{{$item->pivot->weight}}</b></label>
                                         </div>
                                     </div>
                                     <div class="mb-1">

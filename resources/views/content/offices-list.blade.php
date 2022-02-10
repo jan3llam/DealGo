@@ -115,7 +115,7 @@
                             <div class="mb-1">
                                 <label class="form-label" for="confirm_password">Confirm password</label>
                                 <input type="password" class="form-control dt-full-name" id="confirm_password"
-                                       placeholder="Confirm password"/>
+                                       equalTo="#pass" placeholder="Confirm password"/>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="country">Country</label>
