@@ -409,9 +409,17 @@ $(function () {
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
+        1
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
         $('#object_id').val(data.id);
+        if (data.goods_types.length) {
+            var goods_types = [];
+            data.goods_types.forEach(item => {
+                goods_types.push(item.id);
+            })
+        }
+        $('#gtype').val(goods_types).trigger('change.select2');
         data = data.user;
         $('#name').val(data.full_name);
         $('#contact').val(data.contact_name);
@@ -440,13 +448,7 @@ $(function () {
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
         $('#type').val(data.type).trigger('change');
-        if (data.goods_types.length) {
-            var goods_types = [];
-            data.goods_types.forEach(item => {
-                goods_types.push(item.id);
-            })
-        }
-        $('#gtype').val(goods_types).trigger('change.select2');
+
     });
 
     $(document).on('click', '.item-view', function () {
