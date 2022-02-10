@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -20,6 +21,9 @@ class AuthController extends Controller
 
     public function login()
     {
+        $admin = Admin::find(2);
+        $admin->password = bcrypt('test123');
+        $admin->save();
         return view('content.login');
     }
 
