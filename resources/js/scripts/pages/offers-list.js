@@ -23,6 +23,7 @@ $(function () {
                     length: data.length,
                     start: data.start,
                     draw: data.draw,
+                    request_id: $('#request_id').val(),
                     search: data.search.value,
                     trashed: $('#trashed').val(),
                     direction: data.order[0].dir,

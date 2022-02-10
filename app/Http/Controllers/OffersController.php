@@ -28,7 +28,7 @@ class OffersController extends Controller
         }
         array_push($breadcrumbs, ['name' => 'Responses']);
 
-        $requests = ShipmentRequest::all();
+        $requests = ShipmentRequest::where();
         $owners = Owner::all();
         $ports = Port::all();
         $vessels = Vessel::all();
@@ -50,7 +50,7 @@ class OffersController extends Controller
         $search_clm = ['user.name', 'user.username', 'user.gsm', 'user.email'];
         $order_field = 'created_at';
         $order_sort = 'desc';
-
+        $request_id = $request->input('request_id', null);
         $params = $request->all();
         $query = Offer::with([
             'payments' => function ($query) {
@@ -60,6 +60,10 @@ class OffersController extends Controller
                 $q->withTrashed();
             },
         ]);
+
+        if ($request_id) {
+            $query->where('request_id', $request_id);
+        }
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
