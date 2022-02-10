@@ -71,7 +71,9 @@ class VesselsController extends Controller
         $total = $query->limit($per_page)->count();
 
         $data['data'] = $query->skip(($page) * $per_page)
-            ->with(['country', 'owner.user'])->take($per_page)->orderBy($order_field, $order_sort)->get();
+            ->with(['country', 'owner.user' => function ($q) {
+                $q->withTrashed();
+            }])->take($per_page)->orderBy($order_field, $order_sort)->get();
 
 
         $data['meta']['draw'] = $request->input('draw');
