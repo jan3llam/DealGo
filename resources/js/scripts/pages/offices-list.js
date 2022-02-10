@@ -333,6 +333,7 @@ $(function () {
         });
 
         newForm.on('submit', function (e) {
+            console.log(e);
             e.preventDefault();
             let data = new FormData();
             var isValid = newForm.valid()
