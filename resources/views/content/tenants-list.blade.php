@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Charters')
+@section('title', 'Charterers')
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -55,7 +55,7 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add charter</h5>
+                            <h5 class="modal-title" id="modal-label">Add charterer</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
@@ -170,7 +170,7 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View charter</h5>
+                            <h5 class="modal-title" id="modal-label">View charterer</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">

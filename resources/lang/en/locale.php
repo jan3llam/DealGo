@@ -13,7 +13,7 @@ return [
     "Maintenances" => "Maintenances",
     "Roles" => "Roles",
     "Administrators" => "Administrators",
-    "Tenants" => "Charters",
+    "Tenants" => "Charterers",
     "Offers" => "Responses",
     "Shipments" => "Shipments",
     "Owners" => "Ship Owners",

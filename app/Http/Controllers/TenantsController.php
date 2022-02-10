@@ -16,7 +16,7 @@ class TenantsController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Vessels charters"]
+            ['link' => "admin/home", 'name' => "Home"], ['name' => "Vessels charterers"]
         ];
 
         $countries = Country::all();

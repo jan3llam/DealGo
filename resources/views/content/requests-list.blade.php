@@ -67,7 +67,7 @@
                                        placeholder="Title" name="name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="tenant">Charter</label>
+                                <label class="form-label" for="tenant">Charterer</label>
                                 <select class="form-control dt-full-name select2" id="tenant"
                                         name="tenant">
                                     <option value="" disabled selected>Kindly choose</option>
@@ -222,7 +222,7 @@
                                         <span id="view-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Charter:</span>
+                                        <span class="fw-bolder me-25">Charterer:</span>
                                         <span id="view-tenant"></span>
                                     </li>
                                     <li class="mb-75">
