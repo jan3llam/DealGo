@@ -112,6 +112,7 @@
                             <hr>
                             @isset($request)
                                 @foreach($request->goods_types as $index => $item)
+                                    @dd($item)
                                     <div class="mb-1 row">
                                         <div class="col-7">
                                             <label class="form-label" for="gtype">Goods type</label>
