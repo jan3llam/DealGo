@@ -42,9 +42,9 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Owner</th>
-                        <th>Total</th>
-                        <th>Start @</th>
+                        <th>Shipowner</th>
+                        <th>Value</th>
+                        <th>Date</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
