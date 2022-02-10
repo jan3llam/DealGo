@@ -42,7 +42,7 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'owner'},
+                {data: 'owner.user'},
                 {data: 'total'},
                 {data: 'date'},
                 {data: ''}
