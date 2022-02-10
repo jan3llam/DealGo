@@ -260,7 +260,7 @@ $(function () {
                     required: true
                 },
                 'confirm_password': {
-                    equalTo: "#password"
+                    equalTo: "#pass"
                 },
                 'legal': {
                     required: function (element) {

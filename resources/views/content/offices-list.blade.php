@@ -108,8 +108,8 @@
                                        placeholder="Zip code" name="zip"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="password">Password</label>
-                                <input type="password" class="form-control dt-full-name" id="password"
+                                <label class="form-label" for="pass">Password</label>
+                                <input type="password" class="form-control dt-full-name" id="pass"
                                        placeholder="Password" name="password"/>
                             </div>
                             <div class="mb-1">
