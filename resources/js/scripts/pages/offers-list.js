@@ -28,7 +28,7 @@ $(function () {
         init: function (api, node, config) {
             $(node).removeClass('btn-secondary')
         }
-    } : null;
+    } : {};
 
     if (dtTable.length) {
         dtTable.dataTable({
