@@ -333,6 +333,10 @@ $(function () {
         }).val(null).trigger('change.select2')
 
         newForm.on('submit', function (e) {
+            if (e.isTrigger) {
+                return;
+            }
+            e.stopImmediatePropagation();
             e.preventDefault();
 
             var isValid = newForm.valid()

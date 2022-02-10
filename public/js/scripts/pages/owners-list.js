@@ -329,11 +329,15 @@ $(function () {
         });
 
         newForm.on('submit', function (e) {
-            let data = new FormData();
 
+            if (e.isTrigger) {
+                return;
+            }
+            e.stopImmediatePropagation();
             e.preventDefault();
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
+            let data = new FormData();
 
             if (isValid) {
                 if (type === 'update') {

@@ -333,7 +333,9 @@ $(function () {
         });
 
         newForm.on('submit', function (e) {
-            console.log(e);
+            if (e.isTrigger) {
+                return;
+            }
             e.stopImmediatePropagation();
             e.preventDefault();
             let data = new FormData();

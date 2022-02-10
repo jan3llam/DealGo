@@ -333,6 +333,10 @@ $(function () {
         }).val(null).trigger('change.select2')
 
         newForm.on('submit', function (e) {
+            if (e.isTrigger) {
+                return;
+            }
+            e.stopImmediatePropagation();
             e.preventDefault();
 
             var isValid = newForm.valid()
@@ -409,7 +413,6 @@ $(function () {
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
-        1
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
         $('#object_id').val(data.id);
