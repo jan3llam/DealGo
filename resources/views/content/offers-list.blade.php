@@ -45,7 +45,7 @@
                         <th>Shipowner</th>
                         <th>Value</th>
                         <th>Date</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                 </table>
@@ -114,13 +114,12 @@
                                 @foreach($request->goods_types as $index => $item)
                                     <div class="mb-1 row">
                                         <div class="col-7">
-                                            <label class="form-label" for="gtype">Goods type</label>
-                                            <input type="text" readonly class="form-control" value="{{$item->name}}">
+                                            <label class="form-label">Goods type</label>
+                                            <label class="form-label">{{$item->name}}</label>
                                         </div>
                                         <div class="col-5">
-                                            <label class="form-label" for="weight">Gross weight, kg</label>
-                                            <input type="text" readonly class="form-control"
-                                                   value="{{$item->pivot->weight}}">
+                                            <label class="form-label">Gross weight, kg</label>
+                                            <label class="form-label">{{$item->pivot->weight}}</label>
                                         </div>
                                     </div>
                                     <div class="mb-1">
