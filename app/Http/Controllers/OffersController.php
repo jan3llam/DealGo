@@ -7,6 +7,7 @@ use App\Models\OffersPayment;
 use App\Models\Owner;
 use App\Models\Port;
 use App\Models\Request as ShipmentRequest;
+use App\Models\User;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
