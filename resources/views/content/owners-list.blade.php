@@ -108,11 +108,15 @@
                                        placeholder="Zip code" name="zip"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="password">Password</label>
-                                <input type="password" class="form-control dt-full-name" id="password"
+                                <label class="form-label" for="pass">Password</label>
+                                <input type="password" class="form-control dt-full-name" id="pass"
                                        placeholder="Password" name="password"/>
                             </div>
-
+                            <div class="mb-1">
+                                <label class="form-label" for="confirm_password">Confirm password</label>
+                                <input type="password" class="form-control dt-full-name" id="confirm_password"
+                                       equalTo="#pass" placeholder="Confirm password"/>
+                            </div>
                             <div class="mb-1">
                                 <label class="form-label" for="country">Country</label>
                                 <select type="text" class="form-control dt-full-name select2" id="country"

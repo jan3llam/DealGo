@@ -258,6 +258,9 @@ $(function () {
                 'contact': {
                     required: true
                 },
+                'password': {
+                    equalTo: "#confirm_password"
+                },
                 'legal': {
                     required: function (element) {
                         return parseInt($("#form_status").val()) === 1;
@@ -467,14 +470,16 @@ $(function () {
     });
 
     $(document).on('click', '.add-owner', function () {
+        if ($('#form_status').val() != 1) {
+            newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+                $(this).val('');
+            });
+            $("#legal").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+            $("#company").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+            $("#license").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        }
         $('#form_status').val(1);
         $('#image_container').attr('src', '');
         $('#object_id').val('');
-        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
-            $(this).val('');
-        });
-        $("#legal").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
-        $("#company").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
-        $("#license").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })
