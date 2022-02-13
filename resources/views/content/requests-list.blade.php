@@ -72,7 +72,7 @@
                                         name="tenant">
                                     <option value="" disabled selected>Kindly choose</option>
                                     @foreach($tenants as $tenant)
-                                        <option value="{{$tenant->id}}">{{$tenant->user->contact_name}}</option>
+                                        <option value="{{$tenant->id}}">{{$tenant->contact_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -182,7 +182,7 @@
                                     <select type="text" class="form-control dt-full-name select2" id="owner"
                                             name="owner">
                                         @foreach($owners as $owner)
-                                            <option value="{{$owner->id}}">{{$owner->user->contact_name}}</option>
+                                            <option value="{{$owner->id}}">{{$owner->contact_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

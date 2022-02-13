@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Models\Owner;
+use App\Models\User;
 use App\Models\Vessel;
 use App\Models\vType;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class VesselsController extends Controller
         ];
 
         $countries = Country::all();
-        $owners = Owner::all();
+        $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();
         $types = vType::all();
         return view('content.vessels-list', [
             'breadcrumbs' => $breadcrumbs,

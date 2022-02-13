@@ -29,7 +29,8 @@ class OffersController extends Controller
         array_push($breadcrumbs, ['name' => 'Responses']);
 
         $requests = ShipmentRequest::all();
-        $owners = Owner::all();
+        $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();
+
         $ports = Port::all();
         $vessels = Vessel::all();
 

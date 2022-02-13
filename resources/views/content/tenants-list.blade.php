@@ -69,7 +69,7 @@
                             </div>
                             <div id="company-container" style="display: none">
                                 <div class="mb-1">
-                                    <label class="form-label" for="name">Full name</label>
+                                    <label class="form-label" for="name">Business legal name</label>
                                     <input type="text" class="form-control dt-full-name" id="name"
                                            placeholder="Full name" name="name"/>
                                 </div>

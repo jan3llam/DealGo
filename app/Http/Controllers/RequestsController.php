@@ -7,6 +7,7 @@ use App\Models\Owner;
 use App\Models\Port;
 use App\Models\Request as ShippingRequest;
 use App\Models\Tenant;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -21,8 +22,8 @@ class RequestsController extends Controller
             ['link' => "admin/home", 'name' => "Home"], ['name' => "Shipping requests"]
         ];
 
-        $owners = Owner::all();
-        $tenants = Tenant::all();
+        $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();
+        $tenants = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->get();
         $ports = Port::all();
         $types = gType::all();
 
