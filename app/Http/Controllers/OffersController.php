@@ -59,7 +59,7 @@ class OffersController extends Controller
                 $query->sum('value');
             },
             'owner' => function ($q) {
-                $q->withTrashed();
+                $q->withTrashed()->with('user');
             },
         ]);
 

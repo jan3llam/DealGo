@@ -89,7 +89,7 @@ class RequestsController extends Controller
             ->take($per_page)->orderBy($order_field, $order_sort)
             ->with([
                 'tenant' => function ($q) {
-                    $q->withTrashed();
+                    $q->withTrashed()->with('user');
                 },
                 'port_from' => function ($q) {
                     $q->withTrashed();
@@ -98,7 +98,7 @@ class RequestsController extends Controller
                     $q->withTrashed();
                 },
                 'owner' => function ($q) {
-                    $q->withTrashed();
+                    $q->withTrashed()->with('user');
                 }])->withCount('offers')->get();
 
 
