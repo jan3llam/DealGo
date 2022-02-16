@@ -37,6 +37,7 @@
                         <th>Name</th>
                         <th>Country</th>
                         <th>City</th>
+                        <th>UN/Locode</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -77,6 +78,17 @@
                                     <option value="" disabled selected>Kindly choose</option>
                                 </select>
                             </div>
+                            <div class="mb-1">
+                                <input type="hidden" name="longitude" id="longitude">
+                                <input type="hidden" name="latitude" id="latitude">
+                                <label class="form-label" for="map">Location on map</label>
+                                <div id="map" style="min-height: 350px"></div>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="unlocode">UN/Locode</label>
+                                <input type="text" class="form-control dt-full-name" id="unlocode"
+                                       placeholder="UN/Locode" name="unlocode"/>
+                            </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 Submit
                             </button>
@@ -116,7 +128,7 @@
 
 @section('page-script')
     {{-- Page js files --}}
-    <script src="{{ asset(mix('js/scripts/pages/ports-list.js')) }}"></script>
+
     <script>
         $('#country').on("change.select2", function () {
             var $element = $(this);
@@ -151,4 +163,35 @@
             }
         });
     </script>
+    <script>
+
+        var latElement = $('#latitude').val() ? $('#latitude').val() : '24.7241504';
+        var lngElement = $('#longitude').val() ? $('#longitude').val() : '46.2620616';
+        const myLatLng = {lat: latElement, lng: lngElement};
+        let map, marker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: new google.maps.LatLng(latElement, lngElement),
+                zoom: 8,
+            });
+
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(latElement, lngElement),
+                map,
+                draggable: true,
+                title: "Port",
+            });
+            google.maps.event.addListener(marker, "dragend", function (evt) {
+                var lat = marker.getPosition().lat();
+                var lng = marker.getPosition().lng();
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lng;
+            });
+        }
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO00YSn9MOE-UFK9Jua0Pp8c8GAbal-B0&callback=initMap&libraries=&v=weekly"
+        async></script>
+    <script src="{{ asset(mix('js/scripts/pages/ports-list.js')) }}"></script>
 @endsection

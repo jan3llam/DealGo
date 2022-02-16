@@ -48,6 +48,7 @@ $(function () {
                 {data: 'name'},
                 {data: 'city.country.name'},
                 {data: 'city.name'},
+                {data: 'unlocode'},
                 {data: 'status'},
                 {data: ''}
             ],
@@ -63,7 +64,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 5,
+                    targets: 6,
                     render: function (data, type, full, meta) {
                         var $status = full['status']
                         return (
@@ -228,6 +229,15 @@ $(function () {
                 'city': {
                     required: true
                 },
+                'longitude': {
+                    required: true
+                },
+                'latitude': {
+                    required: true
+                },
+                'unlocode': {
+                    required: true
+                },
             }
         })
 
@@ -241,7 +251,7 @@ $(function () {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());
                 }
-                newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+                newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select,#longitude,#latitude').each(function () {
                     data.append($(this).attr('name'), $(this).val());
                 });
                 $.ajax({
@@ -308,14 +318,20 @@ $(function () {
         $('#form_status').val(2);
         $('#name').val(data.name);
         $('#city_id').val(data.city.id);
+        $('#longitude').val(data.longitude);
+        $('#latitude').val(data.latitude);
+        $('#unlocode').val(data.unlocode);
         $('#country').val(data.city.country.id).trigger('change.select2');
         $('#object_id').val(data.id);
+        var latlng = new google.maps.LatLng(data.latitude, data.longitude);
+        marker.setMap(map);
+        marker.setPosition(latlng);
     });
 
     $(document).on('click', '.add-port', function () {
         $('#form_status').val(1);
         $('#object_id').val('');
-        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select,#longitude,#latitude').each(function () {
             $(this).val('');
         })
     });

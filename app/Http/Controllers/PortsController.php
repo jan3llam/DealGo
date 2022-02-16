@@ -89,6 +89,9 @@ class PortsController extends Controller
         $validator = Validator::make($params, [
             'name' => 'required|string',
             'city' => 'required|string',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
+            'unlocode' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -99,6 +102,9 @@ class PortsController extends Controller
 
         $item->name = $params['name'];
         $item->city_id = $params['city'];
+        $item->latitude = $params['latitude'];
+        $item->longitude = $params['longitude'];
+        $item->unlocode = $params['unlocode'];
 
         $item->status = 1;
 
@@ -115,6 +121,9 @@ class PortsController extends Controller
         $validator = Validator::make($params, [
             'name' => 'required|string',
             'city' => 'required|string',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string',
+            'unlocode' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -125,6 +134,9 @@ class PortsController extends Controller
 
         $item->name = $params['name'];
         $item->city_id = $params['city'];
+        $item->latitude = $params['latitude'];
+        $item->longitude = $params['longitude'];
+        $item->unlocode = $params['unlocode'];
 
         $item->save();
 
