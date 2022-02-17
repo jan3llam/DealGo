@@ -24,7 +24,7 @@
     <meta name="author" content="PIXINVENT">
     <title>@yield('title') - {{env('APP_NAME')}}</title>
     <link rel="apple-touch-icon" href="{{asset('images/ico/apple-icon-120.png')}}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/logo/favicon.ico')}}">
+    <link rel="shortcut icon" type="image/png" href="{{asset('images/logo/logo.png')}}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
           rel="stylesheet">
 
