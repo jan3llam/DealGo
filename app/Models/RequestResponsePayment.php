@@ -6,18 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Offer extends Model
+class RequestResponsePayment extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'requests_responses_payments';
 
-    public function responses()
+    public function response()
     {
-        return $this->hasMany(OfferResponse::class);
+        return $this->belongsTo(RequestResponse::class, 'offer_id');
     }
 
-    public function vessel()
-    {
-        return $this->belongsTo(Vessel::class);
-    }
 }

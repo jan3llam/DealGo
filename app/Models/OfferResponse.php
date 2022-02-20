@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OffersPayment extends Model
+class OfferResponse extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'offers_responses';
 
     public function offer()
     {

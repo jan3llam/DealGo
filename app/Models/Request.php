@@ -16,9 +16,9 @@ class Request extends Model
         return $this->belongsTo(Owner::class);
     }
 
-    public function offers()
+    public function responses()
     {
-        return $this->hasMany(Offer::class);
+        return $this->hasMany(RequestResponse::class);
     }
 
     public function port_from()

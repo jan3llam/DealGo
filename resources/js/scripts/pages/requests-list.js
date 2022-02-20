@@ -78,9 +78,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="/admin/offers/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
+                            '<a href="/admin/requests_responses/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
                             feather.icons['thumbs-up'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Responses (' + full['offers_count'] + ')</a>' +
+                            'Responses (' + full['responses_count'] + ')</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             'Delete</a></div>' +

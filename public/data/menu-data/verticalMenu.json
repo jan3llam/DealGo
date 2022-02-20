@@ -89,10 +89,10 @@
                     "slug": "admin.requests"
                 },
                 {
-                    "url": "/admin/offers",
-                    "name": "Offers",
+                    "url": "/admin/requests_responses",
+                    "name": "Requests Responses",
                     "icon": "thumbs-up",
-                    "slug": "admin.offers"
+                    "slug": "admin.requests_responses"
                 },
                 {
                     "url": "/admin/gtypes",
@@ -101,6 +101,12 @@
                     "slug": "admin.gtypes"
                 }
             ]
+        },
+        {
+            "url": "/admin/offers",
+            "name": "Offers",
+            "icon": "file-plus",
+            "slug": "admin.offers"
         },
         {
             "url": "/admin/ports",

@@ -11,6 +11,7 @@ use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
 use App\Http\Controllers\PortsController as PortsAPI;
 use App\Http\Controllers\RequestsController as RequestsAPI;
+use App\Http\Controllers\RequestsResponsesController as RequestsResponsesAPI;
 use App\Http\Controllers\RolesController as RolesAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
 use App\Http\Controllers\UsersController as UsersAPI;
@@ -204,6 +205,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('/{id}', [RequestsAPI::class, 'delete']);
     });
 
+    Route::group(['prefix' => 'offers'], function () {
+        Route::get('/list', [OffersAPI::class, 'list_api']);
+        Route::post('/add', [OffersAPI::class, 'add']);
+        Route::post('/update', [OffersAPI::class, 'update']);
+        Route::put('/status/{id}', [OffersAPI::class, 'status']);
+        Route::delete('/{id}', [OffersAPI::class, 'delete']);
+    });
+
     Route::group(['prefix' => 'admins'], function () {
         Route::get('/list', [AdminsAPI::class, 'list_api']);
         Route::post('/add', [AdminsAPI::class, 'add']);
@@ -220,12 +229,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('/{id}', [RolesAPI::class, 'delete']);
     });
 
-    Route::group(['prefix' => 'offers'], function () {
-        Route::get('/list', [OffersAPI::class, 'list_api']);
-        Route::post('/add', [OffersAPI::class, 'add']);
-        Route::post('/update', [OffersAPI::class, 'update']);
-        Route::put('/status/{id}', [OffersAPI::class, 'status']);
-        Route::delete('/{id}', [OffersAPI::class, 'delete']);
+    Route::group(['prefix' => 'requests_responses'], function () {
+        Route::get('/list', [RequestsResponsesAPI::class, 'list_api']);
+        Route::post('/add', [RequestsResponsesAPI::class, 'add']);
+        Route::post('/update', [RequestsResponsesAPI::class, 'update']);
+        Route::put('/status/{id}', [RequestsResponsesAPI::class, 'status']);
+        Route::delete('/{id}', [RequestsResponsesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'users'], function () {

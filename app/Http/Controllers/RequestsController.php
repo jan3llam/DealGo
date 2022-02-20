@@ -99,7 +99,7 @@ class RequestsController extends Controller
                 },
                 'owner' => function ($q) {
                     $q->withTrashed()->with('user');
-                }])->withCount('offers')->get();
+                }])->withCount('responses')->get();
 
 
         $data['meta']['draw'] = $request->input('draw');

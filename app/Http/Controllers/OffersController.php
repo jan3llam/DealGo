@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
-use App\Models\OffersPayment;
 use App\Models\Owner;
-use App\Models\Port;
-use App\Models\Request as ShipmentRequest;
 use App\Models\User;
 use App\Models\Vessel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -16,31 +14,18 @@ use Validator;
 
 class OffersController extends Controller
 {
-    public function list($id = null)
+    public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"]
+            ['link' => "admin/home", 'name' => "Home"], ['name' => "Shipping offers"]
         ];
 
-        $request = ShipmentRequest::withTrashed()->where('id', $id)->first();
-
-        if ($request) {
-            array_push($breadcrumbs, ['name' => $request->name . ' (#' . $request->id . ')']);
-        }
-        array_push($breadcrumbs, ['name' => 'Responses']);
-
-        $requests = ShipmentRequest::all();
         $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();
-
-        $ports = Port::all();
-        $vessels = Vessel::all();
+        $vessels = Vessel::where('status', 1)->get();
 
         return view('content.offers-list', [
             'breadcrumbs' => $breadcrumbs,
-            'requests' => $requests,
-            'request' => $request,
             'owners' => $owners,
-            'ports' => $ports,
             'vessels' => $vessels,
         ]);
     }
@@ -49,23 +34,12 @@ class OffersController extends Controller
     {
 
         $data = [];
-        $search_clm = ['user.name', 'user.username', 'user.gsm', 'user.email'];
+        $search_clm = ['vessel.name', 'vessel.owner.contact_name', 'vessel.owner.full_name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
-        $request_id = $request->input('request_id', null);
-        $params = $request->all();
-        $query = Offer::with([
-            'payments' => function ($query) {
-                $query->sum('value');
-            },
-            'owner' => function ($q) {
-                $q->withTrashed()->with('user');
-            },
-        ]);
 
-        if ($request_id) {
-            $query->where('request_id', $request_id);
-        }
+        $params = $request->all();
+        $query = Offer::query();
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
@@ -76,11 +50,20 @@ class OffersController extends Controller
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
-//                    $item = explode('.', $item);
-//                    $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
-//                        $qu->where($item[1], 'like', '%' . $search_val . '%');
-//                    })->get();
-                    $q->orWhere($item[1], 'like', '%' . $search_val . '%');
+                    $item = explode('.', $item);
+                    if (sizeof($item) == 3) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
+                                $que->where($item[2], 'like', '%' . $search_val . '%');
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 2) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->where($item[1], 'like', '%' . $search_val . '%');
+                        })->get();
+                    } elseif (sizeof($item) == 1) {
+                        $q->orWhere($item[0], 'like', '%' . $search_val . '%');
+                    }
                 }
             });
         }
@@ -97,7 +80,13 @@ class OffersController extends Controller
         $total = $query->limit($per_page)->count();
 
         $data['data'] = $query->skip(($page) * $per_page)
-            ->take($per_page)->orderBy($order_field, $order_sort)->get();
+            ->take($per_page)->orderBy($order_field, $order_sort)
+            ->with([
+                'vessel' => function ($q) {
+                    $q->withTrashed()->with(['owner' => function ($q) {
+                        $q->withTrashed()->with('user');
+                    }]);
+                }])->withCount('responses')->get();
 
 
         $data['meta']['draw'] = $request->input('draw');
@@ -113,11 +102,11 @@ class OffersController extends Controller
     {
         $params = $request->all();
         $validator = Validator::make($params, [
-            'owner' => 'required|numeric',
-            'request' => 'required|numeric',
-            'date' => 'required',
-            'commercial' => 'required_if:type,1',
+            'vessel' => 'required|numeric',
             'description' => 'required|string',
+            'date_from' => 'required|string',
+            'date_to' => 'required|string',
+            'weight' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -126,10 +115,11 @@ class OffersController extends Controller
 
         $item = new Offer;
 
-        $item->request_id = $params['request'];
-        $item->owner_id = $params['owner'];
-        $item->date = $params['date'];
+        $item->vessel_id = $params['vessel'];
+        $item->date_from = Carbon::parse($params['date_from'])->toDateString();
+        $item->date_to = Carbon::parse($params['date_to'])->toDateString();
         $item->description = $params['description'];
+        $item->weight = $params['weight'];
 
         $files = $request->file('files', []);
         $filesArr = [];
@@ -146,49 +136,6 @@ class OffersController extends Controller
 
         $item->save();
 
-
-        if ($item->request->contract == 1) {
-
-            $routes = $request->input('routes', []);
-            foreach ($routes as $index => $route) {
-                $item->routes()->attach($route, ['order' => $index]);
-            }
-        }
-
-        $vessels = $request->input('vessels', []);
-        foreach ($vessels as $vessel) {
-            $item->vessels()->attach($vessel->id, ['request_good_id' => $vessel->request_good_id]);
-        }
-
-        $payments = $request->input('payments', []);
-        $paymentsArr = [];
-        foreach ($payments as $payment) {
-            $fileName = null;
-
-            $paymentItem = new OffersPayment;
-            $paymentItem->value = $payment['value'];
-            $paymentItem->date = $payment['date'];
-            $paymentItem->description = $payment['description'];
-
-//            if ($payment->hasFile('file')) {
-//                $extension = $request->file('file')->getClientOriginalExtension();
-//                $fileName = Str::random(18) . '.' . $extension;
-//                Storage::disk('public_images')->putFileAs('', $request->file('file'), $fileName);
-//            }
-
-            $paymentItem->file = $fileName;
-
-            array_push($paymentsArr, $paymentItem);
-        }
-        $paymentItem = new OffersPayment;
-        $paymentItem->value = $request->down_value;
-        $paymentItem->date = null;
-        $paymentItem->is_down = 1;
-        $paymentItem->description = $request->down_description;
-        array_push($paymentsArr, $paymentItem);
-
-        $item->payments()->saveMany($paymentsArr);
-
         return response()->success();
     }
 
@@ -196,62 +143,26 @@ class OffersController extends Controller
     {
         $id = $request->object_id;
 
-        $fileName = null;
-
         $params = $request->all();
         $validator = Validator::make($params, [
-            'request' => 'required|numeric',
-            'date' => 'required',
-            'commercial' => 'required_if:type,1',
+            'vessel' => 'required|numeric',
             'description' => 'required|string',
+            'date_from' => 'required|string',
+            'date_to' => 'required|string',
+            'weight' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
             return response()->error('missingParameters');
         }
 
-        if ($request->hasFile('legal')) {
-            $extension = $request->file('legal')->getClientOriginalExtension();
-            $fileName = Str::random(18) . '.' . $extension;
-            Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
-        }
-
         $item = Offer::withTrashed()->where('id', $id)->first();
 
-        $item->legal_file = $fileName;
-
-        if ($request->type == 1) {
-
-            if ($request->hasFile('company')) {
-                $fileName = null;
-                $extension = $request->file('company')->getClientOriginalExtension();
-                $fileName = Str::random(18) . '.' . $extension;
-                Storage::disk('public_images')->putFileAs('', $request->file('company'), $fileName);
-                $item->company_file = $fileName;
-            }
-
-            if ($request->hasFile('license')) {
-                $fileName = null;
-                $extension = $request->file('license')->getClientOriginalExtension();
-                $fileName = Str::random(18) . '.' . $extension;
-                Storage::disk('public_images')->putFileAs('', $request->file('license'), $fileName);
-                $item->license_file = $fileName;
-            }
-
-
-            $item->full_name = $params['name'];
-            $item->commercial_number = $params['commercial'];
-
-        }
-        $item->email = $params['email'];
-        $item->phone = $params['phone'];
-        $item->contact_name = $params['contact'];
-        $item->password = bcrypt($params['password']);
-        $item->city_id = $params['city'];
-        $item->type = $params['type'];
-        $item->zip_code = $params['zip'];
-        $item->address_1 = $params['address_1'];
-        $item->address_2 = $params['address_2'];
+        $item->vessel_id = $params['vessel'];
+        $item->date_from = Carbon::parse($params['date_from'])->toDateString();
+        $item->date_to = Carbon::parse($params['date_to'])->toDateString();
+        $item->description = $params['description'];
+        $item->weight = $params['weight'];
 
         $files = $request->file('files', []);
         $filesArr = [];
@@ -265,7 +176,6 @@ class OffersController extends Controller
         }
 
         $item->files = json_encode($filesArr);
-        $item->status = 1;
 
         $item->save();
 
@@ -278,7 +188,6 @@ class OffersController extends Controller
         $item = Offer::withTrashed()->where('id', $id)->first();
 
         if ($item) {
-
             $item->delete();
         }
 

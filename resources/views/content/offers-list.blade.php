@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Requests Responses')
+@section('title', 'Shipping offers')
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -29,7 +29,6 @@
 @section('content')
     <!-- users list start -->
     <section class="offers-list">
-        <input type="hidden" id="request_id" value="{{$request ? $request->id : null}}">
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
@@ -42,31 +41,29 @@
                     <tr>
                         <th></th>
                         <th>#</th>
+                        <th>Vessel</th>
                         <th>Shipowner</th>
-                        <th>Value</th>
                         <th>Date</th>
+                        <th>Origin of shipment</th>
+                        <th>Destination of shipment</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                 </table>
             </div>
-
             <!-- Modal to add new user starts-->
             <div class="modal modal-slide-in new-offer-modal fade" id="modals-slide-in">
                 <div class="modal-dialog">
                     <form class="add-new-offer modal-content pt-0">
                         <input type="hidden" value="1" id="form_status">
                         <input type="hidden" value="" id="object_id">
-                        @if($request)
-                            <input type="hidden" value="{{$request->id}}" name="request" id="request">
-                        @endif
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add response</h5>
+                            <h5 class="modal-title" id="modal-label">Add request</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="owner">Owner</label>
+                                <label class="form-label" for="owner">Shipowner</label>
                                 <select type="text" class="form-control dt-full-name select2" id="owner"
                                         name="owner">
                                     <option value="" disabled selected>Kindly choose</option>
@@ -76,113 +73,24 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="date">Date</label>
-                                <input type="date" class="form-control dt-full-name" id="date"
-                                       placeholder="Date" name="date"/>
+                                <label class="form-label" for="vessel">Vessel</label>
+                                <select type="text" class="form-control dt-full-name select2" id="vessel"
+                                        name="vessel">
+                                    <option value="" disabled selected>Kindly choose</option>
+                                    @foreach($vessels as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div id="routes_container"
-                                 @isset($request) @if ($request->contract !== 1)style="display: none" @endif @endisset>
-                                <div data-repeater-list="routes">
-                                    <label class="form-label" for="route">Routes</label>
-                                    <div data-repeater-item>
-                                        <div class="mb-1">
-                                            <div class="input-group">
-                                                <select class="form-control dt-full-name routes-select2"
-                                                        name="route">
-                                                    <option value="" disabled selected>Kindly choose</option>
-                                                    @foreach($ports as $port)
-                                                        <option value="{{$port->id}}">{{$port->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-icon btn-danger" type="button"
-                                                            data-repeater-delete>
-                                                        <i data-feather="trash" class="me-25"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-icon btn-success" type="button" data-repeater-create>
-                                    <i data-feather="plus" class="me-25"></i>
-                                    <span>Add New</span>
-                                </button>
+                            <div class="mb-1">
+                                <label class="form-label" for="date_from">From date</label>
+                                <input type="date" class="form-control dt-full-name" id="date_from"
+                                       placeholder="From date" name="date_from"/>
                             </div>
-                            <hr>
-                            @isset($request)
-                                @foreach($request->goods_types as $index => $item)
-                                    <div class="mb-1 row">
-                                        <div class="col-7">
-                                            <label class="form-label">Goods type</label>
-                                            <label class="form-label"><b>{{$item->name}}</b></label>
-                                        </div>
-                                        <div class="col-5">
-                                            <label class="form-label">Gross weight, kg</label>
-                                            <label
-                                                class="form-label"><b>{{$item->pivot->weight}}</b></label>
-                                        </div>
-                                    </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="vessel">Vessels</label>
-                                        <select type="text" class="form-control dt-full-name vessels-select2"
-                                                id="vessel"
-                                                name="vessel">
-                                            <option value="" disabled selected>Kindly choose</option>
-                                            @foreach($vessels->whereIn('type_id',$item->vessels_types->pluck('id')) as $vessel)
-                                                <option value="{{$vessel->id}}">{{$vessel->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <hr>
-                                @endforeach
-                            @endisset
-                            <label class="form-label">Payments</label>
-                            <div class="mb-1 row">
-                                <div class="col-6">
-                                    <label class="form-label" for="down_value">Down payment value</label>
-                                    <input type="number" class="form-control dt-full-name"
-                                           placeholder="Down payment value" name="down_value"/>
-                                </div>
-                                <div class="col-6">
-                                    <label class="form-label" for="down_description">Details</label>
-                                    <input type="text" class="form-control dt-full-name"
-                                           placeholder="Details" name="down_description"/>
-                                </div>
-                            </div>
-                            <div id="payments_container"
-                                 @if(!$request) style="display: none" @endif>
-                                <div data-repeater-list="payments">
-                                    <div data-repeater-item>
-                                        <div class="mb-1 row">
-                                            <div class="col-6">
-                                                <label class="form-label" for="value">Value</label>
-                                                <input type="number" class="form-control dt-full-name"
-                                                       placeholder="Value" name="value"/>
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="form-label" for="date">Next payment</label>
-                                                <input type="date" class="form-control dt-full-name"
-                                                       placeholder="Date" name="date"/>
-                                            </div>
-                                        </div>
-                                        <div class="mb-1 row">
-                                            <div class="col-6">
-                                                <label class="form-label" for="description">Details</label>
-                                                <input type="text" class="form-control dt-full-name"
-                                                       placeholder="Details" name="description"/>
-                                            </div>
-                                            <div class="col-6">
-                                                <label for="formFile" class="form-label">File</label>
-                                                <input class="form-control" type="file" name="file"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-icon btn-success" type="button" data-repeater-create>
-                                    <i data-feather="plus" class="me-25"></i>
-                                    <span>Add New</span>
-                                </button>
+                            <div class="mb-1">
+                                <label class="form-label" for="date_to">To date</label>
+                                <input type="date" class="form-control dt-full-name" id="date_to"
+                                       placeholder="To date" name="date_to"/>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="description">Description</label>
@@ -204,81 +112,47 @@
                 </div>
             </div>
             <!-- Modal to add new user Ends-->
-            <div class="modal modal-slide-in view-offer-modal fade">
+            <div class="modal modal-slide-in view-request-modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View response</h5>
+                            <h5 class="modal-title" id="modal-label">View request</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Type:</span>
-                                        <span id="view-type"></span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div id="view-company-container" style="display: none">
-                                <div class="info-container">
-                                    <ul class="list-unstyled">
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Full name:</span>
-                                            <span id="view-name"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Commercial #:</span>
-                                            <span id="view-commercial"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">License file:</span>
-                                            <span id="view-license"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Company file:</span>
-                                            <span id="view-company"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="info-container">
-                                <ul class="list-unstyled">
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Contact name:</span>
-                                        <span id="view-contact"></span>
+                                        <span class="fw-bolder me-25">Title:</span>
+                                        <span id="view-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Email:</span>
-                                        <span id="view-email"></span>
+                                        <span class="fw-bolder me-25">Shipowner:</span>
+                                        <span id="view-tenant"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Phone:</span>
-                                        <span id="view-phone"></span>
+                                        <span class="fw-bolder me-25">Origin of shipment:</span>
+                                        <span id="view-origin"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Zip code:</span>
-                                        <span id="view-zip"></span>
+                                        <span class="fw-bolder me-25">Destination of shipment:</span>
+                                        <span id="view-destination"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Country:</span>
-                                        <span id="view-country"></span>
+                                        <span class="fw-bolder me-25">Date to:</span>
+                                        <span id="view-date-to"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">City:</span>
-                                        <span id="view-city"></span>
+                                        <span class="fw-bolder me-25">Date from:</span>
+                                        <span id="view-date-from"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 1:</span>
-                                        <span id="view-address-1"></span>
+                                        <span class="fw-bolder me-25">Description:</span>
+                                        <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 2:</span>
-                                        <span id="view-address-2"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Legal file (ID, Passport):</span>
-                                        <span id="view-legal"></span>
+                                        <span class="fw-bolder me-25">Attachments:</span>
+                                        <span id="view-files"></span>
                                     </li>
 
                                 </ul>
@@ -292,7 +166,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!-- list and filter end -->
     </section>
