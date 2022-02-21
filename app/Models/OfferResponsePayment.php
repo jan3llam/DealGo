@@ -6,17 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RequestsGoodsType extends Model
+class OfferResponsePayment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function good_type()
+    protected $table = 'offers_responses_payments';
+
+    public function response()
     {
-        return $this->belongsTo(gType::class, 'good_id');
+        return $this->belongsTo(OfferResponse::class, 'offer_id');
     }
 
-    public function request()
-    {
-        return $this->belongsTo(Request::class);
-    }
 }

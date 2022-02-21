@@ -7,6 +7,7 @@ use App\Http\Controllers\CrewsController as CrewsAPI;
 use App\Http\Controllers\GoodsTypesController as GoodsTypesAPI;
 use App\Http\Controllers\MaintenancesController as MaintenancesAPI;
 use App\Http\Controllers\OffersController as OffersAPI;
+use App\Http\Controllers\OffersResponsesController as OffersResponsesAPI;
 use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
 use App\Http\Controllers\PortsController as PortsAPI;
@@ -235,6 +236,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update', [RequestsResponsesAPI::class, 'update']);
         Route::put('/status/{id}', [RequestsResponsesAPI::class, 'status']);
         Route::delete('/{id}', [RequestsResponsesAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'offers_responses'], function () {
+        Route::get('/list', [OffersResponsesAPI::class, 'list_api']);
+        Route::post('/add', [OffersResponsesAPI::class, 'add']);
+        Route::post('/update', [OffersResponsesAPI::class, 'update']);
+        Route::put('/status/{id}', [OffersResponsesAPI::class, 'status']);
+        Route::delete('/{id}', [OffersResponsesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'users'], function () {

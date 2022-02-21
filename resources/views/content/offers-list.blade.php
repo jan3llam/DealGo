@@ -83,6 +83,11 @@
                                 </select>
                             </div>
                             <div class="mb-1">
+                                <label class="form-label" for="weight">Max weight</label>
+                                <input type="number" class="form-control dt-full-name" id="weight"
+                                       placeholder="Max weight" name="weight"/>
+                            </div>
+                            <div class="mb-1">
                                 <label class="form-label" for="date_from">From date</label>
                                 <input type="date" class="form-control dt-full-name" id="date_from"
                                        placeholder="From date" name="date_from"/>

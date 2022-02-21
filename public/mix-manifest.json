@@ -111,6 +111,7 @@
     "/js/scripts/pages/modal-add-role.js": "/js/scripts/pages/modal-add-role.js",
     "/js/scripts/pages/modal-edit-user.js": "/js/scripts/pages/modal-edit-user.js",
     "/js/scripts/pages/offers-list.js": "/js/scripts/pages/offers-list.js",
+    "/js/scripts/pages/offers-responses-list.js": "/js/scripts/pages/offers-responses-list.js",
     "/js/scripts/pages/offices-list.js": "/js/scripts/pages/offices-list.js",
     "/js/scripts/pages/owners-list.js": "/js/scripts/pages/owners-list.js",
     "/js/scripts/pages/ports-list.js": "/js/scripts/pages/ports-list.js",

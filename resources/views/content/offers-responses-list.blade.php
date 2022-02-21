@@ -52,9 +52,9 @@
             </div>
 
             <!-- Modal to add new user starts-->
-            <div class="modal modal-slide-in new-offer-modal fade" id="modals-slide-in">
+            <div class="modal modal-slide-in new-response-modal fade" id="modals-slide-in">
                 <div class="modal-dialog">
-                    <form class="add-new-offer modal-content pt-0">
+                    <form class="add-new-response modal-content pt-0">
                         <input type="hidden" value="1" id="form_status">
                         <input type="hidden" value="" id="object_id">
                         @if($offer)
@@ -66,22 +66,51 @@
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="owner">Owner</label>
-                                <select type="text" class="form-control dt-full-name select2" id="owner"
-                                        name="owner">
+                                <label class="form-label" for="name">Title</label>
+                                <input type="text" class="form-control dt-full-name" id="name"
+                                       placeholder="Title" name="name"/>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="tenant">Charterer</label>
+                                <select class="form-control dt-full-name select2" id="tenant"
+                                        name="tenant">
                                     <option value="" disabled selected>Kindly choose</option>
-                                    @foreach($owners as $owner)
-                                        <option value="{{$owner->id}}">{{$owner->contact_name}}</option>
+                                    @foreach($tenants as $tenant)
+                                        <option value="{{$tenant->id}}">{{$tenant->contact_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="date">Date</label>
-                                <input type="date" class="form-control dt-full-name" id="date"
-                                       placeholder="Date" name="date"/>
+                                <label class="form-label" for="port_from">Origin of shipment</label>
+                                <select class="form-control dt-full-name select2" id="port_from"
+                                        name="port_from">
+                                    <option value="" disabled selected>Kindly choose</option>
+                                    @foreach($ports as $port)
+                                        <option value="{{$port->id}}">{{$port->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div id="routes_container"
-                                 @isset($request) @if ($request->contract !== 1)style="display: none" @endif @endisset>
+                            <div class="mb-1">
+                                <label class="form-label" for="port_to">Destination of shipment</label>
+                                <select class="form-control dt-full-name select2" id="port_to"
+                                        name="port_to">
+                                    <option value="" disabled selected>Kindly choose</option>
+                                    @foreach($ports as $port)
+                                        <option value="{{$port->id}}">{{$port->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="contract">Contract type</label>
+                                <select class="form-control dt-full-name select2" id="contract" name="contract">
+                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="1">Voyage</option>
+                                    <option value="2">Time</option>
+                                    <option value="3">Bareboat</option>
+                                    <option value="4">COA</option>
+                                </select>
+                            </div>
+                            <div id="routes_container" style="display: none">
                                 <div data-repeater-list="routes">
                                     <label class="form-label" for="route">Routes</label>
                                     <div data-repeater-item>
@@ -106,37 +135,51 @@
                                 </div>
                                 <button class="btn btn-icon btn-success" type="button" data-repeater-create>
                                     <i data-feather="plus" class="me-25"></i>
-                                    <span>Add New</span>
+                                    <span>Add Route</span>
                                 </button>
                             </div>
-                            <hr>
-                            @isset($offer)
-                                @foreach($offer->goods_types as $index => $item)
-                                    <div class="mb-1 row">
-                                        <div class="col-7">
-                                            <label class="form-label">Goods type</label>
-                                            <label class="form-label"><b>{{$item->name}}</b></label>
+                            <div class="mb-1">
+                                <label class="form-label" for="date_from">From date</label>
+                                <input type="date" class="form-control dt-full-name" id="date_from"
+                                       placeholder="From date" name="date_from"/>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="date_to">To date</label>
+                                <input type="date" class="form-control dt-full-name" id="date_to"
+                                       placeholder="To date" name="date_to"/>
+                            </div>
+                            <div id="goods_container">
+                                <div data-repeater-list="goods">
+                                    <label class="form-label" for="route">Loads</label>
+                                    <div data-repeater-item>
+                                        <div class="mb-1">
+                                            <label class="form-label" for="gtype">Goods type</label>
+                                            <select type="text" class="form-control dt-full-name goods-select2"
+                                                    name="gtype">
+                                                @foreach($types as $type)
+                                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                        <div class="col-5">
-                                            <label class="form-label">Gross weight, kg</label>
-                                            <label
-                                                class="form-label"><b>{{$item->pivot->weight}}</b></label>
+                                        <div class="mb-1">
+                                            <label class="form-label" for="weight">Gross weight, kg</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control dt-full-name"
+                                                       placeholder="Gross weight, kg" name="weight"/>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-icon btn-danger" type="button"
+                                                            data-repeater-delete>
+                                                        <i data-feather="trash" class="me-25"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="vessel">Vessels</label>
-                                        <select type="text" class="form-control dt-full-name vessels-select2"
-                                                id="vessel"
-                                                name="vessel">
-                                            <option value="" disabled selected>Kindly choose</option>
-                                            @foreach($vessels->whereIn('type_id',$item->vessels_types->pluck('id')) as $vessel)
-                                                <option value="{{$vessel->id}}">{{$vessel->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <hr>
-                                @endforeach
-                            @endisset
+                                </div>
+                                <button class="btn btn-icon btn-success" type="button" data-repeater-create>
+                                    <i data-feather="plus" class="me-25"></i><span>Add another load</span>
+                                </button>
+                            </div>
                             <label class="form-label">Payments</label>
                             <div class="mb-1 row">
                                 <div class="col-6">
