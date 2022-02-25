@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\CitiesController as CitiesAPI;
+use App\Http\Controllers\ContractsController as ContractsAPI;
 use App\Http\Controllers\CountriesController as CountriesAPI;
 use App\Http\Controllers\CrewsController as CrewsAPI;
 use App\Http\Controllers\GoodsTypesController as GoodsTypesAPI;
@@ -14,6 +15,7 @@ use App\Http\Controllers\PortsController as PortsAPI;
 use App\Http\Controllers\RequestsController as RequestsAPI;
 use App\Http\Controllers\RequestsResponsesController as RequestsResponsesAPI;
 use App\Http\Controllers\RolesController as RolesAPI;
+use App\Http\Controllers\ShipmentsController as ShipmentsAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
 use App\Http\Controllers\UsersController as UsersAPI;
 use App\Http\Controllers\VesselsController as VesselsAPI;
@@ -244,6 +246,16 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update', [OffersResponsesAPI::class, 'update']);
         Route::put('/status/{id}', [OffersResponsesAPI::class, 'status']);
         Route::delete('/{id}', [OffersResponsesAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'contracts'], function () {
+        Route::get('/list', [ContractsAPI::class, 'list_api']);
+        Route::delete('/{id}', [ContractsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'shipments'], function () {
+        Route::get('/list', [ShipmentsAPI::class, 'list_api']);
+        Route::delete('/{id}', [ShipmentsAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'users'], function () {

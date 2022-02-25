@@ -83,6 +83,12 @@
             "slug": "admin.shipments",
             "submenu": [
                 {
+                    "url": "/admin/shipments",
+                    "name": "Shipments",
+                    "icon": "file-text",
+                    "slug": "admin.shipments"
+                },
+                {
                     "url": "/admin/requests",
                     "name": "Requests",
                     "icon": "file-text",
@@ -107,6 +113,12 @@
             "name": "Offers",
             "icon": "file-plus",
             "slug": "admin.offers"
+        },
+        {
+            "url": "/admin/contracts",
+            "name": "Contracts",
+            "icon": "dollar-sign",
+            "slug": "admin.contracts"
         },
         {
             "url": "/admin/ports",

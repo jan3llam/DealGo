@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\CrewsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoodsTypesController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\RequestsController;
 use App\Http\Controllers\RequestsResponsesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ShipmentsController;
 use App\Http\Controllers\TenantsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VesselsController;
@@ -64,6 +66,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('requests_responses/{id?}', [RequestsResponsesController::class, 'list'])->name('requests_responses');
         Route::get('offers_responses/{id?}', [OffersResponsesController::class, 'list'])->name('offers_responses');
         Route::get('vessels', [VesselsController::class, 'list'])->name('vessels');
+        Route::get('contracts', [ContractsController::class, 'list'])->name('contracts');
+        Route::get('shipments', [ShipmentsController::class, 'list'])->name('shipments');
         Route::get('vtypes', [VesselsTypesController::class, 'list'])->name('vtypes');
         Route::get('gtypes', [GoodsTypesController::class, 'list'])->name('gtypes');
         Route::get('crews/{id?}', [CrewsController::class, 'list'])->name('crews');
