@@ -55,7 +55,6 @@ class VesselsController extends Controller
             'v' => 5,
             'mmsi' => $mmsi,
             'protocol' => 'json',
-            'timespan' => 2880,
         ]);
         if ($response->successful()) {
             if ($data = json_decode($response->getBody()->getContents())) {
@@ -65,6 +64,8 @@ class VesselsController extends Controller
                     'latitude' => $data[0][1],
                     'longitude' => $data[0][2]
                 ]);
+            } else {
+                return response()->error('objectNotFound');
             }
         }
         $data = json_decode($response->getBody()->getContents())->errors[0];
