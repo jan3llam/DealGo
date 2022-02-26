@@ -66,6 +66,7 @@ $(function () {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(thrownError);
+                ;
             }
         });
     });
