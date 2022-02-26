@@ -54,7 +54,7 @@
         var latElement = $('#latitude').val() ? $('#latitude').val() : '24.7241504';
         var lngElement = $('#longitude').val() ? $('#longitude').val() : '46.2620616';
         const myLatLng = {lat: latElement, lng: lngElement};
-        let map, marker;
+        let map, marker, info;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {

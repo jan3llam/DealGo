@@ -58,7 +58,10 @@ $(function () {
                         marker.setPosition(latlng);
                         marker.setTitle("Vessel (" + result.data.name + ")");
                     }
-                    var info = new google.maps.InfoWindow({
+                    if (info) {
+                        info.close();
+                    }
+                    info = new google.maps.InfoWindow({
                         content: "Vessel (" + result.data.name + ")"
                     });
                     map.setCenter(latlng);
