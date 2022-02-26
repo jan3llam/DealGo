@@ -53,7 +53,7 @@ $(function () {
                         });
                     } else {
                         var icon = marker.getIcon();
-                        icon.rotation = result.data.rotation;
+                        icon.rotation = parseInt(result.data.rotation);
                         marker.setIcon(icon);
                         marker.setPosition(latlng);
                         marker.setTitle("Vessel (" + result.data.name + ")");
