@@ -15,6 +15,7 @@ return [
     "Administrators" => "Administrators",
     "Tenants" => "Charterers",
     "Contracts" => "Contracts",
+    "Track vessels" => "Track vessels",
     "Offers" => "Ships offers",
     "Requests Responses" => "Requests Responses",
     "Shipments" => "Shipments",

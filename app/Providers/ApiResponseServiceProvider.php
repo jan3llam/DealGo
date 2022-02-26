@@ -45,6 +45,16 @@ class ApiResponseServiceProvider extends ServiceProvider
             return $factory->make($format);
         });
 
+        $factory->macro('customError', function ($code, $message) use ($factory) {
+            $format = [
+                'code' => $code,
+                'message' => ucwords($message),
+                'data' => null,
+            ];
+
+            return $factory->make($format);
+        });
+
         $factory->macro('httpError', function ($code) use ($factory) {
             $format = [
                 'code' => __('api.codes.' . $code . '.code'),

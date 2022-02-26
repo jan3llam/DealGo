@@ -189,7 +189,7 @@
         }
     </script>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO00YSn9MOE-UFK9Jua0Pp8c8GAbal-B0&callback=initMap&libraries=&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&callback=initMap&libraries=&v=weekly"
         async></script>
     <script src="{{ asset(mix('js/scripts/pages/ports-list.js')) }}"></script>
 @endsection

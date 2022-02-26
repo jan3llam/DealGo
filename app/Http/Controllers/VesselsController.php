@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Vessel;
 use App\Models\vType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Validator;
@@ -31,11 +32,51 @@ class VesselsController extends Controller
         ]);
     }
 
+    public function track()
+    {
+        $breadcrumbs = [
+            ['link' => "admin/home", 'name' => "Home"], ['name' => "Track Vessels"]
+        ];
+
+        $vessels = Vessel::where('status', 1)->get();
+
+        return view('content.vessels-track', [
+            'breadcrumbs' => $breadcrumbs,
+            'vessels' => $vessels,
+        ]);
+    }
+
+    public function check_ps07($id, Request $request)
+    {
+        $vessel = Vessel::withTrashed()->where('id', $id)->first();
+        $mmsi = $vessel->mmsi;
+
+        $response = Http::get('https://services.marinetraffic.com/api/exportvessel/' . env('MARINETRAFFIC_API_KEY_PS07'), [
+            'v' => 5,
+            'mmsi' => $mmsi,
+            'protocol' => 'json',
+            'timespan' => 2880,
+        ]);
+        if ($response->successful()) {
+            if ($data = json_decode($response->getBody()->getContents())) {
+                return response()->success([
+                    'name' => $vessel->name,
+                    'rotation' => $data[0][4],
+                    'latitude' => $data[0][1],
+                    'longitude' => $data[0][2]
+                ]);
+            }
+        }
+        $data = json_decode($response->getBody()->getContents())->errors[0];
+        return response()->customError($data->code, $data->detail);
+
+    }
+
     public function list_api(Request $request)
     {
 
         $data = [];
-        $search_clm = ['user.name', 'user.username', 'user.gsm', 'user.email'];
+        $search_clm = ['build_year', 'imo', 'mmsi', 'country.name', 'owner.user.name', 'type.name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
@@ -51,11 +92,21 @@ class VesselsController extends Controller
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
-//                    $item = explode('.', $item);
-//                    $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
-//                        $qu->where($item[1], 'like', '%' . $search_val . '%');
-//                    })->get();
-                    $q->orWhere($item[1], 'like', '%' . $search_val . '%');
+                    $item = explode('.', $item);
+                    if (sizeof($item) == 3) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
+                                $que->where($item[2], 'like', '%' . $search_val . '%');
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 2) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->where($item[1], 'like', '%' . $search_val . '%');
+                        })->get();
+                    } elseif (sizeof($item) == 1) {
+                        $q->orWhere($item[0], 'like', '%' . $search_val . '%');
+                    }
+
                 }
             });
         }

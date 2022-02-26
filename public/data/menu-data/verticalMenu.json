@@ -57,6 +57,12 @@
                     "slug": "admin.vessels"
                 },
                 {
+                    "url": "/admin/track",
+                    "name": "Track vessels",
+                    "icon": "crosshair",
+                    "slug": "admin.vessels.track"
+                },
+                {
                     "url": "/admin/crews",
                     "name": "Crews",
                     "icon": "users",

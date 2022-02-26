@@ -194,6 +194,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'vessels'], function () {
         Route::get('/list', [VesselsAPI::class, 'list_api']);
+        Route::get('/check/{id}', [VesselsAPI::class, 'check_ps07']);
         Route::post('/add', [VesselsAPI::class, 'add']);
         Route::post('/update', [VesselsAPI::class, 'update']);
         Route::put('/status/{id}', [VesselsAPI::class, 'status']);
