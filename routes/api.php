@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminsController as AdminsAPI;
+use App\Http\Controllers\ArticlesController as ArticlesAPI;
+use App\Http\Controllers\CategoriesController as CategoriesAPI;
 use App\Http\Controllers\CitiesController as CitiesAPI;
 use App\Http\Controllers\ContractsController as ContractsAPI;
 use App\Http\Controllers\CountriesController as CountriesAPI;
@@ -190,6 +192,20 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update', [MaintenancesAPI::class, 'update']);
         Route::put('/status/{id}', [MaintenancesAPI::class, 'status']);
         Route::delete('/{id}', [MaintenancesAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'articles'], function () {
+        Route::get('/list/{id?}', [ArticlesAPI::class, 'list_api']);
+        Route::post('/add', [ArticlesAPI::class, 'add']);
+        Route::post('/update', [ArticlesAPI::class, 'update']);
+        Route::delete('/{id}', [ArticlesAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/list/{id?}', [CategoriesAPI::class, 'list_api']);
+        Route::post('/add', [CategoriesAPI::class, 'add']);
+        Route::post('/update', [CategoriesAPI::class, 'update']);
+        Route::delete('/{id}', [CategoriesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'vessels'], function () {

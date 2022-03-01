@@ -131,6 +131,32 @@
             "name": "Ports",
             "icon": "flag",
             "slug": "admin.ports"
+        },
+        {
+            "url": "/admin/help",
+            "name": "Help",
+            "icon": "life-buoy",
+            "slug": "admin.help",
+            "submenu": [
+                {
+                    "url": "/admin/categories",
+                    "name": "Categories",
+                    "icon": "layers",
+                    "slug": "admin.categories"
+                },
+                {
+                    "url": "/admin/articles",
+                    "name": "Articles",
+                    "icon": "edit-3",
+                    "slug": "admin.articles"
+                }
+            ]
+        },
+        {
+            "url": "/admin/tickets",
+            "name": "Tickets",
+            "icon": "info",
+            "slug": "admin.tickets"
         }
     ]
 }

@@ -2,34 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\gType;
-use App\Models\vType;
+use App\Models\Article;
+use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
-class GoodsTypesController extends Controller
+class ArticlesController extends Controller
 {
-    public function list()
+    public function list($id = null)
     {
+        $category = null;
+        if ($id) {
+            $category = Category::withTrashed()->where('id', $id)->first();
+        }
+
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Goods Types"]
+            ['link' => "admin/home", 'name' => "Home"],
         ];
 
-        $gTypes = gType::all();
-        $vTypes = vType::all();
-        return view('content.goods-types-list', ['breadcrumbs' => $breadcrumbs, 'gTypes' => $gTypes, 'vTypes' => $vTypes]);
+        if ($category) {
+            array_push($breadcrumbs, ['name' => $category->name]);
+        }
+        array_push($breadcrumbs, ['name' => 'Helpdesk articles']);
+
+        $categories = Category::withoutTrashed()->get();
+        $articles = Article::withoutTrashed()->get();
+
+        return view('content.articles-list', [
+            'breadcrumbs' => $breadcrumbs,
+            'category' => $category,
+            'categories' => $categories,
+            'articles' => $articles
+        ]);
     }
 
-    public function list_api(Request $request)
+    public function list_api($id = null, Request $request)
     {
 
         $data = [];
-        $search_clm = ['parent.name', 'name'];
+        $search_clm = ['name', 'category.name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
         $params = $request->all();
-        $query = gType::query();
+        $query = Article::with(['category' => function ($q) {
+            $q->withTrashed();
+        }, 'related']);
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
@@ -41,15 +60,7 @@ class GoodsTypesController extends Controller
             $query->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
                     $item = explode('.', $item);
-                    if (sizeof($item) == 4) {
-                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
-                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
-                                $que->whereHas($item[2], function ($quer) use ($item, $search_val) {
-                                    $quer->where($item[3], 'like', '%' . $search_val . '%');
-                                });
-                            });
-                        })->get();
-                    } elseif (sizeof($item) == 3) {
+                    if (sizeof($item) == 3) {
                         $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
                             $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
                                 $que->where($item[2], 'like', '%' . $search_val . '%');
@@ -62,6 +73,7 @@ class GoodsTypesController extends Controller
                     } elseif (sizeof($item) == 1) {
                         $q->orWhere($item[0], 'like', '%' . $search_val . '%');
                     }
+
                 }
             });
         }
@@ -74,13 +86,15 @@ class GoodsTypesController extends Controller
         if ($filter_trashed) {
             $query->onlyTrashed();
         }
+
+        if ($id) {
+            $query->where('category_id', $id);
+        }
+
         $total = $query->limit($per_page)->count();
 
         $data['data'] = $query->skip(($page) * $per_page)
-            ->take($per_page)->orderBy($order_field, $order_sort)
-            ->with(['parent' => function ($q) {
-                $q->withTrashed();
-            }, 'vessels_types'])->get();
+            ->take($per_page)->orderBy($order_field, $order_sort)->get();
 
 
         $data['meta']['draw'] = $request->input('draw');
@@ -91,32 +105,39 @@ class GoodsTypesController extends Controller
         return response()->success($data);
     }
 
-
     public function add(Request $request)
     {
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => 'required|string',
-            'parent' => 'nullable',
-            'vtype' => 'required',
+            'created_at' => 'required|string',
+            'updated_at' => 'required|string',
+            'description' => 'required|string',
         ]);
 
         if ($validator->fails()) {
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $item = new gType;
+        $item = new Article;
 
-        $parent = $request->input('parent', null);
-        $parent = $parent === 'null' ? null : $parent;
+        $item->category_id = $request->input('category', null) === 'null' ? null : $request->input('category', null);
         $item->name = $params['name'];
-        $item->parent_id = $parent;
+        $item->description = $params['description'];
+        $item->created_at = Carbon::parse($params['created_at'])->toDateTimeString();
+        $item->updated_at = Carbon::parse($params['updated_at'])->toDateTimeString();
+
         $item->save();
 
-        $vtypes = explode(',', $request->input('vtype', null));
-        foreach ($vtypes as $type) {
-            $item->vessels_types()->attach($type);
+        $related = explode(',', $request->input('related', null));
+
+        foreach ($related as $i) {
+            if ($i) {
+                $item->related()->attach($i);
+            }
         }
+
+        $item->save();
 
         return response()->success();
     }
@@ -128,34 +149,32 @@ class GoodsTypesController extends Controller
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => 'required|string',
-            'parent' => 'nullable',
-            'vtype' => 'required',
+            'created_at' => 'required|string',
+            'updated_at' => 'required|string',
+            'description' => 'required|string',
         ]);
 
         if ($validator->fails()) {
             return response()->error('missingParameters');
         }
 
-        $item = gType::withTrashed()->where('id', $id)->first();
+        $item = Article::withTrashed()->where('id', $id)->first();
 
-        $parent = $request->input('parent', null);
-        $parent = $parent === 'null' ? null : $parent;
+        $item->category_id = $request->input('category', null) === 'null' ? null : $request->input('category', null);
         $item->name = $params['name'];
-        $item->parent_id = $parent;
+        $item->description = $params['description'];
+        $item->created_at = Carbon::parse($params['created_at'])->toDateTimeString();
+        $item->updated_at = Carbon::parse($params['updated_at'])->toDateTimeString();
 
         $item->save();
 
-        $item->vessels_types()->detach();
-        $vtypes = $request->input('vtype', null);
-        if (!is_integer($vtypes)) {
-            $vtypes = explode(',', $request->input('vtype', null));
-            foreach ($vtypes as $type) {
-                $item->vessels_types()->attach($type);
+        $item->related()->detach();
+        $related = explode(',', $request->input('related', null));
+        foreach ($related as $i) {
+            if ($i) {
+                $item->related()->attach($i);
             }
-        } else {
-            $item->vessels_types()->attach($vtypes);
         }
-
 
         return response()->success();
     }
@@ -163,7 +182,7 @@ class GoodsTypesController extends Controller
     public function delete($id)
     {
 
-        $item = gType::withTrashed()->where('id', $id)->first();
+        $item = Article::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->delete();

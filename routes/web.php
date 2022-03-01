@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminsController;
+use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\CrewsController;
@@ -73,6 +75,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('gtypes', [GoodsTypesController::class, 'list'])->name('gtypes');
         Route::get('crews/{id?}', [CrewsController::class, 'list'])->name('crews');
         Route::get('maintenances/{id?}', [MaintenancesController::class, 'list'])->name('maintenances');
+        Route::get('articles/{id?}', [ArticlesController::class, 'list'])->name('articles');
+        Route::get('categories/{id?}', [CategoriesController::class, 'list'])->name('categories');
         Route::get('users', [UsersController::class, 'list'])->name('users');
         Route::get('user/{id}', [UsersController::class, 'view'])->name('user');
         Route::post('user/update', [UsersController::class, 'update'])->name('user.update');
