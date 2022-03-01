@@ -41,7 +41,7 @@ class MaintenancesController extends Controller
     {
 
         $data = [];
-        $search_clm = ['user.name', 'user.username', 'user.gsm', 'user.email'];
+        $search_clm = ['name', 'vessel.name', 'description'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
@@ -57,11 +57,21 @@ class MaintenancesController extends Controller
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
-//                    $item = explode('.', $item);
-//                    $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
-//                        $qu->where($item[1], 'like', '%' . $search_val . '%');
-//                    })->get();
-                    $q->orWhere($item[1], 'like', '%' . $search_val . '%');
+                    $item = explode('.', $item);
+                    if (sizeof($item) == 3) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
+                                $que->where($item[2], 'like', '%' . $search_val . '%');
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 2) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->where($item[1], 'like', '%' . $search_val . '%');
+                        })->get();
+                    } elseif (sizeof($item) == 1) {
+                        $q->orWhere($item[0], 'like', '%' . $search_val . '%');
+                    }
+
                 }
             });
         }
