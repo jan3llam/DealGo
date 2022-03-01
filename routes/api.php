@@ -19,6 +19,7 @@ use App\Http\Controllers\RequestsResponsesController as RequestsResponsesAPI;
 use App\Http\Controllers\RolesController as RolesAPI;
 use App\Http\Controllers\ShipmentsController as ShipmentsAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
+use App\Http\Controllers\TicketsController as TicketsAPI;
 use App\Http\Controllers\UsersController as UsersAPI;
 use App\Http\Controllers\VesselsController as VesselsAPI;
 use App\Http\Controllers\VesselsTypesController as VesselsTypesAPI;
@@ -247,6 +248,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update', [RolesAPI::class, 'update']);
         Route::put('/status/{id}', [RolesAPI::class, 'status']);
         Route::delete('/{id}', [RolesAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'tickets'], function () {
+        Route::get('/list', [TicketsAPI::class, 'list_api']);
+        Route::put('/status/{id}', [TicketsAPI::class, 'status']);
+        Route::delete('/{id}', [TicketsAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'requests_responses'], function () {

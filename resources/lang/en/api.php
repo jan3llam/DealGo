@@ -78,6 +78,10 @@ return [
             'code' => "-25",
             'message' => 'File not valid'
         ],
+        'notAuthorized' => [
+            'code' => "-26",
+            'message' => 'You\'re not authorized to do this action'
+        ],
         //HTTP Errors
         'unauthorized' => [
             'code' => "-401",

@@ -23,6 +23,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ShipmentsController;
 use App\Http\Controllers\TenantsController;
+use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VesselsController;
 use App\Http\Controllers\VesselsTypesController;
@@ -68,6 +69,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('requests_responses/{id?}', [RequestsResponsesController::class, 'list'])->name('requests_responses');
         Route::get('offers_responses/{id?}', [OffersResponsesController::class, 'list'])->name('offers_responses');
         Route::get('vessels', [VesselsController::class, 'list'])->name('vessels');
+        Route::get('tickets', [TicketsController::class, 'list'])->name('tickets');
+        Route::get('ticket/{id}', [TicketsController::class, 'view'])->name('ticket');
+        Route::post('ticket/{id}', [TicketsController::class, 'reply'])->name('reply');
         Route::get('track', [VesselsController::class, 'track'])->name('vessels.track');
         Route::get('contracts', [ContractsController::class, 'list'])->name('contracts');
         Route::get('shipments', [ShipmentsController::class, 'list'])->name('shipments');
