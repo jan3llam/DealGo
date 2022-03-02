@@ -180,7 +180,7 @@ $(function () {
                         full['payments'].forEach(item => {
                             sum += item.value;
                         })
-                        return sum;
+                        return sum.toLocaleString(undefined, {minimumFractionDigits: 0});
                     }
                 },
                 {
