@@ -18,10 +18,14 @@ $(function () {
     }
     if (dtTable.length) {
         var vessel_id = $('#vessel_id').val();
+        var link = assetPath + 'api/admin/crews/list/';
+        if (vessel_id) {
+            link += vessel_id;
+        }
         dtTable.dataTable({
             ajax: function (data, callback, settings) {
                 // make a regular ajax request using data.start and data.length
-                $.get(assetPath + 'api/admin/crews/list/' + vessel_id, {
+                $.get(link, {
                     length: data.length,
                     start: data.start,
                     draw: data.draw,
@@ -236,6 +240,9 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
+                'vessel': {
+                    required: true
+                },
                 'first_name': {
                     required: true
                 },
