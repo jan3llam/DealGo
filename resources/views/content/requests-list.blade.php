@@ -41,7 +41,7 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Charter</th>
+                        <th>Charterer</th>
                         <th>Origin of shipment</th>
                         <th>Destination of shipment</th>
                         <th>Date</th>

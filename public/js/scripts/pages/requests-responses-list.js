@@ -3,12 +3,7 @@ $(function () {
 
     var dtTable = $('.offers-list-table'),
         newSidebar = $('.new-offer-modal'),
-        newForm = $('.add-new-offer'),
-        statusObj = {
-            1: {title: 'Active', class: 'badge-light-success status-switcher'},
-            0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
-        }
-
+        newForm = $('.add-new-offer');
 
     var assetPath = '../../../app-assets/';
 
@@ -179,8 +174,8 @@ $(function () {
                         var sum = 0;
                         full['payments'].forEach(item => {
                             sum += item.value;
-                        })
-                        return sum;
+                        });
+                        return sum.toLocaleString(undefined, {minimumFractionDigits: 0});
                     }
                 },
                 {
