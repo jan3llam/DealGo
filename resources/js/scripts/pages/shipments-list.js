@@ -244,6 +244,4 @@ $(function () {
         $('#view-zip').html(data.zip_code);
 
     });
-
-    ;
 })

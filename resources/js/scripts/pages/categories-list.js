@@ -218,10 +218,10 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'name': {
+                name: {
                     required: true
                 },
-                'description': {
+                description: {
                     required: true
                 },
             }
@@ -298,7 +298,18 @@ $(function () {
 
         newForm.on('submit', function (e) {
             e.preventDefault();
+
+            function isQuillEmpty(quill) {
+                if ((quill.getContents()['ops'] || []).length !== 1) {
+                    return false
+                }
+                return quill.getText().trim().length === 0
+            }
+
+            let editorEmpty = isQuillEmpty(editor);
             let data = new FormData();
+
+            $("#hiddenDescription").val(editorEmpty === true ? '' : 1);
 
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
@@ -313,7 +324,6 @@ $(function () {
                 newForm.find('input[type=file]').each(function () {
                     data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
-
                 data.append('description', JSON.stringify(editor.getContents()));
                 $.ajax({
                     type: 'POST',
@@ -363,6 +373,7 @@ $(function () {
         $('#name').val(data.name);
         $('#category').val(data.parent_id).trigger('change.select2');
         editor.setContents(JSON.parse(data.description));
+        $('#hiddenDescription').val(JSON.parse(data.description) ? 1 : '');
         $('#object_id').val(data.id);
     });
 
@@ -373,6 +384,7 @@ $(function () {
         editor.deleteText(0, editor.getLength());
         newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        })
+        });
+        $('#category').val($('#category_id').val()).trigger('change.select2')
     });
 })

@@ -1,5 +1,3 @@
-Dropzone.autoDiscover = false;
-
 $(function () {
     ;('use strict')
 
@@ -11,7 +9,6 @@ $(function () {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
             0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
         }
-
 
     var assetPath = '../../../app-assets/';
 

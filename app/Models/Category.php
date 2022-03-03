@@ -17,7 +17,7 @@ class Category extends Model
 
     public function parent()
     {
-        return $this->belongsTo(self::class, 'parent_id')->withDefault();
+        return $this->belongsTo(self::class, 'parent_id');
     }
 
     public function children()

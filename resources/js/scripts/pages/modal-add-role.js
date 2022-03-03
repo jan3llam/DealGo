@@ -5,7 +5,18 @@
 
     // add role form validation
     if (addRoleForm.length) {
+        $.validator.addMethod("permissions", function (value, elem, param) {
+            return $("input[type=checkbox]:checkbox:checked").length > 0;
+        }, "You must select at least one!");
+
         addRoleForm.validate({
+            submitHandler: function (form) {
+                if ($("input[type=checkbox]:checkbox:checked").length > 0) {
+                    form.submit();
+                } else {
+                    $('#permissions-msg').html('Please select at least one type of permissions').addClass('error').show();
+                }
+            },
             rules: {
                 name: {
                     required: true

@@ -382,6 +382,7 @@ $(function () {
         editor.deleteText(0, editor.getLength());
         newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        })
+        });
+        $('#category').val($('#category_id').val()).trigger('change.select2')
     });
 })

@@ -60,8 +60,8 @@
                                         name="category">
                                     <option value="" disabled selected>Kindly choose</option>
                                     @foreach($categories as $item)
-                                        <option value="{{$item->id}}"
-                                                @if($category && $category->id === $item->id) selected @endif>{{$item->name}}</option>
+                                        <option @if($category && $category->id === $item->id) selected
+                                                @endif value="{{$item->id}}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

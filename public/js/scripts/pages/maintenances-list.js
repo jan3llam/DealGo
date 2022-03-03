@@ -14,14 +14,10 @@ $(function () {
     }
     if (dtTable.length) {
         var vessel_id = $('#vessel_id').val();
-        var link = assetPath + 'api/admin/maintenances/list/';
-        if (vessel_id) {
-            link += vessel_id;
-        }
         dtTable.dataTable({
             ajax: function (data, callback, settings) {
                 // make a regular ajax request using data.start and data.length
-                $.get(link, {
+                $.get(assetPath + 'api/admin/maintenances/list/', {
                     length: data.length,
                     start: data.start,
                     draw: data.draw,

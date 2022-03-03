@@ -44,7 +44,7 @@ class CategoriesController extends Controller
         $order_sort = 'desc';
 
         $params = $request->all();
-        $query = Category::withCount('articles')->withCount('children');
+        $query = Category::withCount('articles')->withCount('children')->with('parent');
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;

@@ -40,7 +40,7 @@
                                     </td>
                                     <td>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="selectAll"/>
+                                            <input class="form-check-input" type="checkbox" name="all" id="selectAll"/>
                                             <label class="form-check-label" for="selectAll"> Select All </label>
                                         </div>
                                     </td>
@@ -68,6 +68,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <span style="display: none" id="permissions-msg"></span>
                         <!-- Permission table -->
                     </div>
                     <div class="col-12 text-center mt-2">

@@ -210,10 +210,10 @@ $(function () {
                 'name': {
                     required: true
                 },
-                'start_at': {
+                'start': {
                     required: true
                 },
-                'end_at': {
+                'end': {
                     required: true
                 },
                 'description': {

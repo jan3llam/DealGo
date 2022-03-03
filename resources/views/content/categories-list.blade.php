@@ -64,13 +64,15 @@
                                         name="category">
                                     <option value="" disabled selected>Kindly choose</option>
                                     @foreach($categories as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                        <option @if($category && $category->id === $item->id) selected
+                                                @endif value="{{$item->id}}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="description">Description</label>
-                                <div class="editor"></div>
+                                <div class="editor" id="description"></div>
+                                <input type="hidden" name="description" id="hiddenDescription"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 Submit

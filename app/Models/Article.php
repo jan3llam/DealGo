@@ -12,6 +12,11 @@ class Article extends Model
 
     public $timestamps = false;
 
+    protected $casts = [
+        'created_at' => 'date:Y-m-d',
+        'updated_at' => 'date:Y-m-d',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
