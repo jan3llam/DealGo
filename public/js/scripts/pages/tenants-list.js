@@ -258,7 +258,10 @@ $(function () {
                     required: true
                 },
                 'password': {
-                    equalTo: "#confirm_password"
+                    equalTo: "#confirm_password",
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
                 },
                 'legal': {
                     required: function (element) {

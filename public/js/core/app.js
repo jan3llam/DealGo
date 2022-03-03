@@ -940,7 +940,8 @@ window.colors = {
 
   var currentLocalStorageLayout = localStorage.getItem(dataLayout + '-current-skin'); // Set layout on screen load
   //? Comment it if you don't want to sync layout with local db
-  // setLayout(currentLocalStorageLayout);
+
+  setLayout(currentLocalStorageLayout);
 
   function setLayout(currentLocalStorageLayout) {
     var navLinkStyle = $('.nav-link-style'),
@@ -948,7 +949,7 @@ window.colors = {
         mainMenu = $('.main-menu'),
         navbar = $('.header-navbar'),
         // Witch to local storage layout if we have else current layout
-    switchToLayout = currentLocalStorageLayout ? currentLocalStorageLayout : currentLayout;
+        switchToLayout = currentLocalStorageLayout ? currentLocalStorageLayout : currentLayout;
     $html.removeClass('semi-dark-layout dark-layout bordered-layout');
 
     if (switchToLayout === 'dark-layout') {
