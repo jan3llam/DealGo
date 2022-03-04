@@ -122,6 +122,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [AdminsAPI::class, 'add']);
         Route::put('/status/{id}', [AdminsAPI::class, 'status']);
         Route::post('/update', [AdminsAPI::class, 'update']);
+        Route::delete('/bulk', [AdminsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [AdminsAPI::class, 'delete']);
     });
 
@@ -130,6 +131,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [OwnersAPI::class, 'add']);
         Route::post('/update', [OwnersAPI::class, 'update']);
         Route::put('/status/{id}', [OwnersAPI::class, 'status']);
+        Route::delete('/bulk', [OwnersAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [OwnersAPI::class, 'delete']);
     });
 
@@ -138,6 +140,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [TenantsAPI::class, 'add']);
         Route::post('/update', [TenantsAPI::class, 'update']);
         Route::put('/status/{id}', [TenantsAPI::class, 'status']);
+        Route::delete('/bulk', [TenantsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [TenantsAPI::class, 'delete']);
     });
 
@@ -146,6 +149,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [OfficesAPI::class, 'add']);
         Route::post('/update', [OfficesAPI::class, 'update']);
         Route::put('/status/{id}', [OfficesAPI::class, 'status']);
+        Route::delete('/bulk', [OfficesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [OfficesAPI::class, 'delete']);
     });
 
@@ -154,6 +158,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [OwnersAPI::class, 'add']);
         Route::post('/update', [OwnersAPI::class, 'update']);
         Route::put('/status/{id}', [OwnersAPI::class, 'status']);
+        Route::delete('/bulk', [OwnersAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [OwnersAPI::class, 'delete']);
     });
 
@@ -162,6 +167,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [PortsAPI::class, 'add']);
         Route::post('/update', [PortsAPI::class, 'update']);
         Route::put('/status/{id}', [PortsAPI::class, 'status']);
+        Route::delete('/bulk', [PortsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [PortsAPI::class, 'delete']);
     });
 
@@ -169,6 +175,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/list', [VesselsTypesAPI::class, 'list_api']);
         Route::post('/add', [VesselsTypesAPI::class, 'add']);
         Route::post('/update', [VesselsTypesAPI::class, 'update']);
+        Route::delete('/bulk', [VesselsTypesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [VesselsTypesAPI::class, 'delete']);
     });
 
@@ -176,6 +183,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/list', [GoodsTypesAPI::class, 'list_api']);
         Route::post('/add', [GoodsTypesAPI::class, 'add']);
         Route::post('/update', [GoodsTypesAPI::class, 'update']);
+        Route::delete('/bulk', [GoodsTypesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [GoodsTypesAPI::class, 'delete']);
     });
 
@@ -184,6 +192,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [CrewsAPI::class, 'add']);
         Route::post('/update', [CrewsAPI::class, 'update']);
         Route::put('/status/{id}', [CrewsAPI::class, 'status']);
+        Route::delete('/bulk', [CrewsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [CrewsAPI::class, 'delete']);
     });
 
@@ -192,6 +201,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [MaintenancesAPI::class, 'add']);
         Route::post('/update', [MaintenancesAPI::class, 'update']);
         Route::put('/status/{id}', [MaintenancesAPI::class, 'status']);
+        Route::delete('/bulk', [MaintenancesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [MaintenancesAPI::class, 'delete']);
     });
 
@@ -199,6 +209,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/list/{id?}', [ArticlesAPI::class, 'list_api']);
         Route::post('/add', [ArticlesAPI::class, 'add']);
         Route::post('/update', [ArticlesAPI::class, 'update']);
+        Route::delete('/bulk', [ArticlesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [ArticlesAPI::class, 'delete']);
     });
 
@@ -206,6 +217,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/list/{id?}', [CategoriesAPI::class, 'list_api']);
         Route::post('/add', [CategoriesAPI::class, 'add']);
         Route::post('/update', [CategoriesAPI::class, 'update']);
+        Route::delete('/bulk', [CategoriesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [CategoriesAPI::class, 'delete']);
     });
 
@@ -215,6 +227,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [VesselsAPI::class, 'add']);
         Route::post('/update', [VesselsAPI::class, 'update']);
         Route::put('/status/{id}', [VesselsAPI::class, 'status']);
+        Route::delete('/bulk', [VesselsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [VesselsAPI::class, 'delete']);
     });
 
@@ -223,6 +236,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [RequestsAPI::class, 'add']);
         Route::post('/update', [RequestsAPI::class, 'update']);
         Route::put('/status/{id}', [RequestsAPI::class, 'status']);
+        Route::delete('/bulk', [RequestsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [RequestsAPI::class, 'delete']);
     });
 
@@ -231,6 +245,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [OffersAPI::class, 'add']);
         Route::post('/update', [OffersAPI::class, 'update']);
         Route::put('/status/{id}', [OffersAPI::class, 'status']);
+        Route::delete('/bulk', [OffersAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [OffersAPI::class, 'delete']);
     });
 
@@ -239,6 +254,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [AdminsAPI::class, 'add']);
         Route::post('/update', [AdminsAPI::class, 'update']);
         Route::put('/status/{id}', [AdminsAPI::class, 'status']);
+        Route::delete('/bulk', [AdminsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [AdminsAPI::class, 'delete']);
     });
 
@@ -253,6 +269,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'tickets'], function () {
         Route::get('/list', [TicketsAPI::class, 'list_api']);
         Route::put('/status/{id}', [TicketsAPI::class, 'status']);
+        Route::delete('/bulk', [TicketsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [TicketsAPI::class, 'delete']);
     });
 
@@ -261,6 +278,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [RequestsResponsesAPI::class, 'add']);
         Route::post('/update', [RequestsResponsesAPI::class, 'update']);
         Route::put('/status/{id}', [RequestsResponsesAPI::class, 'status']);
+        Route::delete('/bulk', [RequestsResponsesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [RequestsResponsesAPI::class, 'delete']);
     });
 
@@ -269,16 +287,19 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/add', [OffersResponsesAPI::class, 'add']);
         Route::post('/update', [OffersResponsesAPI::class, 'update']);
         Route::put('/status/{id}', [OffersResponsesAPI::class, 'status']);
+        Route::delete('/bulk', [OffersResponsesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [OffersResponsesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'contracts'], function () {
         Route::get('/list', [ContractsAPI::class, 'list_api']);
+        Route::delete('/bulk', [ContractsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [ContractsAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'shipments'], function () {
         Route::get('/list', [ShipmentsAPI::class, 'list_api']);
+        Route::delete('/bulk', [ShipmentsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [ShipmentsAPI::class, 'delete']);
     });
 
@@ -287,6 +308,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/check_field', [UsersAPI::class, 'check_field']);
         Route::put('/status/{id}', [UsersAPI::class, 'status']);
         Route::put('/update', [UsersAPI::class, 'update']);
+        Route::delete('/bulk', [UsersAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [UsersAPI::class, 'delete']);
     });
 });

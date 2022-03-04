@@ -11,12 +11,15 @@
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/editors/quill/quill.snow.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('vendors/css/animate/animate.min.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/sweetalert2.min.css')) }}">
 @endsection
 
 @section('page-style')
     {{-- Page Css files --}}
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-quill-editor.css')) }}">
+    <link rel="stylesheet" href="{{asset(mix('css/base/plugins/extensions/ext-component-sweet-alerts.css'))}}">
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
 @endsection
 @section('content')
@@ -27,7 +30,7 @@
         <div class="card">
             <div class="card-body border-bottom">
                 <h4 class="card-title">Search & Filter</h4>
-                <input type="hidden" id="trashed" value="0">
+                <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
                 <table class="articles-list-table table">
@@ -157,6 +160,7 @@
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/responsive.bootstrap5.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.checkboxes.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.buttons.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/jszip.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/pdfmake.min.js')) }}"></script>
@@ -169,6 +173,8 @@
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/editors/quill/quill.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/sweetalert2.all.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/polyfill.min.js')) }}"></script>
 @endsection
 
 @section('page-script')

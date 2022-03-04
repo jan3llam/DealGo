@@ -39,7 +39,7 @@ class TenantsController extends Controller
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
         $page = isset($params['start']) ? $params['start'] : 0;
-        $filter_trashed = isset($params['trashed']) ? $params['trashed'] : 0;
+        $filter_status = isset($params['status']) ? $params['status'] : 1;
         $per_page = isset($params['length']) ? $params['length'] : 10;
 
         if ($search_val) {
@@ -76,8 +76,30 @@ class TenantsController extends Controller
             $order_sort = $params['direction'];
         }
 
-        if ($filter_trashed) {
-            $query->onlyTrashed();
+        if ($filter_status !== null) {
+            switch ($filter_status) {
+                case 1:
+                {
+                    $query->whereHas('user', function ($q) {
+                        $q->where('status', 1)->withoutTrashed();
+                    })->withoutTrashed();
+                    break;
+                }
+                case 2:
+                {
+                    $query->whereHas('user', function ($q) {
+                        $q->onlyTrashed();
+                    })->onlyTrashed();
+                    break;
+                }
+                case 0:
+                {
+                    $query->whereHas('user', function ($q) {
+                        $q->where('status', 0)->withoutTrashed();
+                    })->withoutTrashed();
+                    break;
+                }
+            }
         }
 
         $total = $query->limit($per_page)->count();
@@ -298,6 +320,20 @@ class TenantsController extends Controller
         return response()->success();
     }
 
+    public function bulk_delete(Request $request)
+    {
+        foreach ($request->input('ids', []) as $id) {
+            $item = Tenant::withTrashed()->where('id', $id)->first();
+            if ($item) {
+                $item->user->status = 0;
+                $item->save();
+                $item->user->delete();
+                $item->delete();
+            }
+        }
+        return response()->success();
+    }
+
     public function delete($id)
     {
 
@@ -312,7 +348,6 @@ class TenantsController extends Controller
 
         return response()->success();
     }
-
 
     public function status($id)
     {

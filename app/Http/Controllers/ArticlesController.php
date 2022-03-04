@@ -53,7 +53,7 @@ class ArticlesController extends Controller
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
         $page = isset($params['start']) ? $params['start'] : 0;
-        $filter_trashed = isset($params['trashed']) ? $params['trashed'] : 0;
+        $filter_status = isset($params['status']) ? $params['status'] : 1;
         $per_page = isset($params['length']) ? $params['length'] : 10;
 
         if ($search_val) {
@@ -83,8 +83,19 @@ class ArticlesController extends Controller
             $order_sort = $params['direction'];
         }
 
-        if ($filter_trashed) {
-            $query->onlyTrashed();
+        if ($filter_status !== null) {
+            switch ($filter_status) {
+                case 1:
+                {
+                    $query->withoutTrashed();
+                    break;
+                }
+                case 2:
+                {
+                    $query->onlyTrashed();
+                    break;
+                }
+            }
         }
 
         if ($id) {
@@ -176,6 +187,17 @@ class ArticlesController extends Controller
             }
         }
 
+        return response()->success();
+    }
+
+    public function bulk_delete(Request $request)
+    {
+        foreach ($request->input('ids', []) as $id) {
+            $item = Article::withTrashed()->where('id', $id)->first();
+            if ($item) {
+                $item->delete();
+            }
+        }
         return response()->success();
     }
 

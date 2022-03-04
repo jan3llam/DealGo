@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-file-uploader.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('vendors/css/animate/animate.min.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/sweetalert2.min.css')) }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/css/intlTelInput.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css">
@@ -19,6 +21,7 @@
 @section('page-style')
     {{-- Page Css files --}}
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
+    <link rel="stylesheet" href="{{asset(mix('css/base/plugins/extensions/ext-component-sweet-alerts.css'))}}">
     <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
 @endsection
 @section('content')
@@ -29,7 +32,7 @@
         <div class="card">
             <div class="card-body border-bottom">
                 <h4 class="card-title">Search & Filter</h4>
-                <input type="hidden" id="trashed" value="0">
+                <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
                 <table class="crews-list-table table">
@@ -213,6 +216,7 @@
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/responsive.bootstrap5.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.checkboxes.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.buttons.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/jszip.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/pdfmake.min.js')) }}"></script>
@@ -224,6 +228,8 @@
     <script src="{{ asset(mix('vendors/js/extensions/moment.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/sweetalert2.all.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/polyfill.min.js')) }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/intlTelInput.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
