@@ -237,9 +237,6 @@ $(function () {
                     text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Delete',
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
-                        if (!$('#request_id').val()) {
-                            node.remove();
-                        }
                     }
                 },
                 {

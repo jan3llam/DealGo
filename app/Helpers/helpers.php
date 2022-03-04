@@ -16,7 +16,7 @@ class Helper
             'mainLayoutType' => 'vertical',
             'theme' => 'light',
             'sidebarCollapsed' => false,
-            'navbarColor' => '',
+            'navbarColor' => 'bg-warning',
             'horizontalMenuType' => 'floating',
             'verticalMenuNavbarType' => 'floating',
             'footerType' => 'static', //footer

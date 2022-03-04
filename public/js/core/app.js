@@ -949,7 +949,7 @@ window.colors = {
         mainMenu = $('.main-menu'),
         navbar = $('.header-navbar'),
         // Witch to local storage layout if we have else current layout
-        switchToLayout = currentLocalStorageLayout ? currentLocalStorageLayout : currentLayout;
+    switchToLayout = currentLocalStorageLayout ? currentLocalStorageLayout : currentLayout;
     $html.removeClass('semi-dark-layout dark-layout bordered-layout');
 
     if (switchToLayout === 'dark-layout') {
