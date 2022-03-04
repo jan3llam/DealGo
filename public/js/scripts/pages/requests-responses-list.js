@@ -180,7 +180,7 @@ $(function () {
                         full['payments'].forEach(item => {
                             sum += item.value;
                         })
-                        return sum;
+                        return sum.toLocaleString(undefined, {minimumFractionDigits: 0});
                     }
                 },
                 {
@@ -350,6 +350,17 @@ $(function () {
                 }
             }
         })
+    });
+
+
+    $(document).on('change', '.calculate-value', function () {
+        let element = $('#total');
+        let total = 0;
+
+        $('.calculate-value').each(() => {
+            total += parseInt($(this).val());
+        });
+        element.val(total.toLocaleString(undefined, {minimumFractionDigits: 0}));
     });
 
     $(document).on('click', '.item-update', function () {

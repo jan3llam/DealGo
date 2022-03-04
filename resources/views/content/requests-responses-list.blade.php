@@ -139,9 +139,16 @@
                             @endisset
                             <label class="form-label">Payments</label>
                             <div class="mb-1 row">
+                                <div class="col-12">
+                                    <label class="form-label" for="total">Total value</label>
+                                    <input type="text" id="total" disabled readonly class="form-control dt-full-name"
+                                           placeholder="Total value"/>
+                                </div>
+                            </div>
+                            <div class="mb-1 row">
                                 <div class="col-6">
                                     <label class="form-label" for="down_value">Down payment value</label>
-                                    <input type="number" class="form-control dt-full-name"
+                                    <input type="number" class="form-control calculate-value dt-full-name"
                                            placeholder="Down payment value" name="down_value"/>
                                 </div>
                                 <div class="col-6">
@@ -157,7 +164,7 @@
                                         <div class="mb-1 row">
                                             <div class="col-6">
                                                 <label class="form-label" for="value">Value</label>
-                                                <input type="number" class="form-control dt-full-name"
+                                                <input type="number" class="form-control calculate-value dt-full-name"
                                                        placeholder="Value" name="value"/>
                                             </div>
                                             <div class="col-6">
