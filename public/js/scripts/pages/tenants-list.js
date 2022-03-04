@@ -329,6 +329,9 @@ $(function () {
                 'city': {
                     required: true
                 },
+                'province': {
+                    required: true
+                },
                 'address_1': {
                     required: true
                 },

@@ -130,6 +130,7 @@ class OfficesController extends Controller
             'type' => 'required|numeric',
             'contact' => 'required|string',
             'zip' => 'required|string',
+            'province' => 'required|string',
             'address_1' => 'required|string',
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
@@ -188,6 +189,7 @@ class OfficesController extends Controller
         $item->city_id = $params['city'];
         $item->type = $params['type'];
         $item->zip_code = $params['zip'];
+        $item->province = $params['province'];
         $item->address_1 = $params['address_1'];
         $item->address_2 = $params['address_2'];
         $item->userable_id = $office->id;
@@ -225,6 +227,7 @@ class OfficesController extends Controller
             'type' => 'required|numeric',
             'contact' => 'required|string',
             'zip' => 'required|string',
+            'province' => 'required|string',
             'address_1' => 'required|string',
             'address_2' => 'nullable|string',
             'city' => 'required|numeric',
@@ -285,6 +288,7 @@ class OfficesController extends Controller
         $item->city_id = $params['city'];
         $item->type = $params['type'];
         $item->zip_code = $params['zip'];
+        $item->province = $params['province'];
         $item->address_1 = $params['address_1'];
         $item->address_2 = $params['address_2'];
 

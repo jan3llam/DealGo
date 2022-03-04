@@ -140,12 +140,17 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="address_1">Address 1</label>
+                                <label class="form-label" for="province">Province</label>
+                                <input type="text" class="form-control dt-full-name" id="province"
+                                       placeholder="Province" name="province"/>
+                            </div>
+                            <div class="mb-1">
+                                <label class="form-label" for="address_1">Address line 1</label>
                                 <input type="text" class="form-control dt-full-name" id="address_1"
                                        placeholder="Address 1" name="address_1"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="address_2">Address 2</label>
+                                <label class="form-label" for="address_2">Address line 2</label>
                                 <input type="text" class="form-control dt-full-name" id="address_2"
                                        placeholder="Address 2" name="address_2"/>
                             </div>
