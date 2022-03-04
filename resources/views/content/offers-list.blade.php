@@ -43,6 +43,7 @@
                     <thead class="table-light">
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>#</th>
                         <th>Vessel</th>
                         <th>Shipowner</th>

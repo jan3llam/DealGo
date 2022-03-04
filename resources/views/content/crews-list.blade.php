@@ -39,6 +39,7 @@
                     <thead class="table-light">
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>#</th>
                         <th>Full name</th>
                         <th>Phone</th>

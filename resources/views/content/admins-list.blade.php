@@ -36,6 +36,7 @@
                     <thead class="table-light">
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>#</th>
                         <th>DealGo ID</th>
                         <th>Contact name</th>

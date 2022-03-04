@@ -76,7 +76,7 @@ class AdminsController extends Controller
             switch ($filter_status) {
                 case 1:
                 {
-                    $query->where('active', 1)->withoutTrashed();
+                    $query->where('status', 1)->withoutTrashed();
                     break;
                 }
                 case 2:
@@ -86,7 +86,7 @@ class AdminsController extends Controller
                 }
                 case 0:
                 {
-                    $query->where('active', 0)->withoutTrashed();;
+                    $query->where('status', 0)->withoutTrashed();;
                     break;
                 }
             }
@@ -222,6 +222,8 @@ class AdminsController extends Controller
         foreach ($request->input('ids', []) as $id) {
             $item = Admin::withTrashed()->where('id', $id)->first();
             if ($item) {
+                $item->status = 0;
+                $item->save();
                 $item->delete();
             }
         }

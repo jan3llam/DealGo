@@ -37,6 +37,7 @@
                     <thead class="table-light">
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>#</th>
                         <th>Name</th>
                         <th>IMO</th>

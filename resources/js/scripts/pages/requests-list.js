@@ -1,8 +1,7 @@
-var dtTable;
 $(function () {
     ;('use strict')
 
-    dtTable = $('.requests-list-table'),
+    var dtTable = $('.requests-list-table'),
         newSidebar = $('.new-request-modal'),
         viewSidebar = $('.view-request-modal'),
         newForm = $('.add-new-request'),

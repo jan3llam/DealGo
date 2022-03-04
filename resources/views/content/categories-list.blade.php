@@ -37,6 +37,7 @@
                     <thead class="table-light">
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>#</th>
                         <th>Title</th>
                         <th>Parent category</th>

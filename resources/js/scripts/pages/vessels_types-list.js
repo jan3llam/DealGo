@@ -19,7 +19,7 @@ $(function () {
                     start: data.start,
                     draw: data.draw,
                     search: data.search.value,
-                    trashed: $('#trashed').val(),
+                    status: $('#status_filter').val(),
                     direction: data.order[0].dir,
                     order: data.columns[data.order[0].column].data.replace(/\./g, "__"),
                 }, function (res) {
@@ -36,6 +36,7 @@ $(function () {
             columns: [
                 // columns according to JSON
                 {data: ''},
+                {data: 'id'},
                 {data: 'id'},
                 {data: 'name'},
                 {data: 'parent'},
@@ -59,13 +60,33 @@ $(function () {
                     }
                 },
                 {
-                    targets: 3,
+                    // For Checkboxes
+                    targets: 1,
+                    orderable: false,
+                    responsivePriority: 3,
+                    render: function (data, type, full, meta) {
+                        return (
+                            '<div class="form-check"> <input class="form-check-input dt-checkboxes" type="checkbox" value="' + data + '" id="checkbox-' +
+                            data +
+                            '" /><label class="form-check-label" for="checkbox-' +
+                            data +
+                            '"></label></div>'
+                        );
+                    },
+                    checkboxes: {
+                        selectRow: true,
+                        selectAllRender:
+                            '<div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="checkboxSelectAll" /><label class="form-check-label" for="checkboxSelectAll"></label></div>'
+                    }
+                },
+                {
+                    targets: 4,
                     render: function (data, type, full, meta) {
                         return data ? data.name : '-';
                     }
                 },
                 {
-                    targets: 7,
+                    targets: 8,
                     render: function (data, type, full, meta) {
                         return data == 1 ? 'Yes' : 'No';
                     }
@@ -97,8 +118,8 @@ $(function () {
             order: [[1, 'desc']],
             dom:
                 '<"d-flex justify-content-between align-items-center header-actions mx-2 row mt-75"' +
-                '<"col-sm-12 col-lg-4 d-flex justify-content-center justify-content-lg-start" l>' +
-                '<"col-sm-12 col-lg-8 ps-xl-75 ps-0"<"dt-action-buttons d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap"<"me-1"f>B>>' +
+                '<"col-sm-12 col-lg-3 d-flex justify-content-center justify-content-lg-start" l>' +
+                '<"col-sm-12 col-lg-9 ps-xl-75 ps-0"<"dt-action-buttons d-flex align-items-center justify-content-center justify-content-lg-end flex-lg-nowrap flex-wrap"<"me-1"f>B>>' +
                 '>t' +
                 '<"d-flex justify-content-between mx-2 row mb-1"' +
                 '<"col-sm-12 col-md-6"i>' +
@@ -115,8 +136,8 @@ $(function () {
                 }
             },
             initComplete: function () {
-                $(document).on('click', '.trashed-item', function () {
-                    $('#trashed').val($(this).data('trashed'));
+                $(document).on('click', '.status-item', function () {
+                    $('#status_filter').val($(this).data('status'));
                     dtTable.DataTable().ajax.reload();
                 });
             },
@@ -169,21 +190,21 @@ $(function () {
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Trashed',
+                    text: 'Status',
                     buttons: [
                         {
-                            text: 'Yes',
+                            text: 'Active',
                             attr: {
-                                "data-trashed": 1
+                                "data-status": 1
                             },
-                            className: 'trashed-item dropdown-item',
+                            className: 'status-item dropdown-item',
                         },
                         {
-                            text: 'No',
+                            text: 'Trashed',
                             attr: {
-                                "data-trashed": 0
+                                "data-status": 2
                             },
-                            className: 'trashed-item dropdown-item',
+                            className: 'status-item dropdown-item',
                         }
                     ],
                     init: function (api, node, config) {
@@ -192,6 +213,16 @@ $(function () {
                         setTimeout(function () {
                             $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
                         }, 50)
+                    }
+                },
+                {
+                    className: 'items-delete btn btn-danger me-2',
+                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Delete',
+                    init: function (api, node, config) {
+                        $(node).removeClass('btn-secondary')
+                        if (!$('#request_id').val()) {
+                            node.remove();
+                        }
                     }
                 },
                 {
@@ -276,6 +307,50 @@ $(function () {
         })
     }
 
+    $(document).on('click', '.items-delete', function () {
+        var ids = dtTable.api().columns().checkboxes.selected()[1];
+        if (ids.length) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete those (' + ids.length + ') rows!',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: assetPath + 'api/admin/vessels-types/bulk',
+                        data: {ids: ids},
+                        dataType: 'json',
+                        success: function (response) {
+                            if (parseInt(response.code) === 1) {
+                                dtTable.DataTable().ajax.reload();
+                                toastr['success'](response.message);
+                            } else {
+                                toastr['error'](response.message);
+                            }
+                        }
+                    })
+                }
+            })
+        } else {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Choose rows to delete',
+                icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            })
+        }
+    });
 
     $(document).on('click', '.item-delete', function () {
         var element = $(this);

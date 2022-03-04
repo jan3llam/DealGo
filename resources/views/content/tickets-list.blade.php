@@ -33,6 +33,7 @@
                     <thead class="table-light">
                     <tr>
                         <th></th>
+                        <th></th>
                         <th>#</th>
                         <th>Subject</th>
                         <th>Username</th>
