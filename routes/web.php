@@ -10,6 +10,7 @@ use App\Http\Controllers\CrewsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoodsTypesController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\LanguagesController;
 use App\Http\Controllers\MaintenancesController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\OffersController;
@@ -76,6 +77,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('contracts', [ContractsController::class, 'list'])->name('contracts');
         Route::get('shipments', [ShipmentsController::class, 'list'])->name('shipments');
         Route::get('vtypes', [VesselsTypesController::class, 'list'])->name('vtypes');
+        Route::get('languages', [LanguagesController::class, 'list'])->name('languages');
         Route::get('gtypes', [GoodsTypesController::class, 'list'])->name('gtypes');
         Route::get('crews/{id?}', [CrewsController::class, 'list'])->name('crews');
         Route::get('maintenances/{id?}', [MaintenancesController::class, 'list'])->name('maintenances');

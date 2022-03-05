@@ -10,7 +10,6 @@ class Vessel extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     public function owner()
     {
         return $this->belongsTo(Owner::class);

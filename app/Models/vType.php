@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Translatable\HasTranslations;
 
 class vType extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasTranslations;
 
+    public $translatable = ['name', 'description'];
     protected $table = 'vessels_types';
+    protected $appends = ['name_translation'];
 
     public function parent()
     {
@@ -20,5 +23,10 @@ class vType extends Model
     public function vessels()
     {
         return $this->hasMany(Vessel::class, 'type_id');
+    }
+
+    public function getNameTranslationAttribute()
+    {
+        return $this->name;
     }
 }

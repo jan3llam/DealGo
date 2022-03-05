@@ -12,6 +12,7 @@ return [
     "Requests" => "Requests",
     "Maintenances" => "Maintenances",
     "Roles" => "Roles",
+    "Languages" => "Languages",
     "Administrators" => "Administrators",
     "Tenants" => "Charterers",
     "Contracts" => "Contracts",

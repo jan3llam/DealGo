@@ -8,6 +8,7 @@ use App\Http\Controllers\ContractsController as ContractsAPI;
 use App\Http\Controllers\CountriesController as CountriesAPI;
 use App\Http\Controllers\CrewsController as CrewsAPI;
 use App\Http\Controllers\GoodsTypesController as GoodsTypesAPI;
+use App\Http\Controllers\LanguagesController as LanguagesAPI;
 use App\Http\Controllers\MaintenancesController as MaintenancesAPI;
 use App\Http\Controllers\OffersController as OffersAPI;
 use App\Http\Controllers\OffersResponsesController as OffersResponsesAPI;
@@ -177,6 +178,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update', [VesselsTypesAPI::class, 'update']);
         Route::delete('/bulk', [VesselsTypesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [VesselsTypesAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'languages'], function () {
+        Route::get('/list', [LanguagesAPI::class, 'list_api']);
+        Route::post('/add', [LanguagesAPI::class, 'add']);
+        Route::post('/update', [LanguagesAPI::class, 'update']);
+        Route::delete('/bulk', [LanguagesAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [LanguagesAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'goods-types'], function () {

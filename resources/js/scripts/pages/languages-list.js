@@ -1,9 +1,9 @@
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.vessels-types-list-table'),
-        newSidebar = $('.new-vessels-type-modal'),
-        newForm = $('.add-new-vessels-type');
+    var dtTable = $('.languages-list-table'),
+        newSidebar = $('.new-language-modal'),
+        newForm = $('.add-new-language');
 
     var assetPath = '../../../app-assets/';
 
@@ -14,7 +14,7 @@ $(function () {
         dtTable.dataTable({
             ajax: function (data, callback, settings) {
                 // make a regular ajax request using data.start and data.length
-                $.get(assetPath + 'api/admin/vessels-types/list', {
+                $.get(assetPath + 'api/admin/languages/list', {
                     length: data.length,
                     start: data.start,
                     draw: data.draw,
@@ -38,14 +38,9 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'id'},
-                {data: 'name_translation'},
-                {data: 'parent'},
-                {data: 'dwt'},
-                {data: 'draught'},
-                {data: 'loa'},
-                {data: 'geared'},
-                {data: 'holds'},
-                {data: 'vessels_count'},
+                {data: 'name'},
+                {data: 'code'},
+                {data: 'country'},
                 {data: ''}
             ],
             columnDefs: [
@@ -77,18 +72,6 @@ $(function () {
                         selectRow: true,
                         selectAllRender:
                             '<div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="checkboxSelectAll" /><label class="form-check-label" for="checkboxSelectAll"></label></div>'
-                    }
-                },
-                {
-                    targets: 4,
-                    render: function (data, type, full, meta) {
-                        return data ? data.name : '-';
-                    }
-                },
-                {
-                    targets: 8,
-                    render: function (data, type, full, meta) {
-                        return data == 1 ? 'Yes' : 'No';
                     }
                 },
                 {
@@ -227,7 +210,7 @@ $(function () {
                 },
                 {
                     text: 'Add new',
-                    className: 'add-vessels-type btn btn-primary',
+                    className: 'add-language btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in',
@@ -248,31 +231,19 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'dwt': {
+                'name': {
                     required: true
                 },
-                'loa': {
+                'code': {
                     required: true
                 },
-                'draught': {
+                'country': {
                     required: true
-                },
-                'geared': {
-                    required: true
-                },
-                'holds': {
-                    required: true
-                },
+                }
             }
-        });
+        })
 
-        $('[name^="name"],[name^="description"]').each(function () {
-            $(this).rules('add', {
-                required: true,
-            });
-        });
-
-        $('#parent').select2({dropdownParent: newSidebar});
+        $('#country').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
@@ -287,7 +258,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/vessels-types/' + type,
+                    url: assetPath + 'api/admin/languages/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -325,7 +296,7 @@ $(function () {
                 if (result.value) {
                     $.ajax({
                         type: 'DELETE',
-                        url: assetPath + 'api/admin/vessels-types/bulk',
+                        url: assetPath + 'api/admin/languages/bulk',
                         data: {ids: ids},
                         dataType: 'json',
                         success: function (response) {
@@ -356,7 +327,7 @@ $(function () {
         var element = $(this);
         $.ajax({
             type: 'DELETE',
-            url: assetPath + 'api/admin/vessels-types/' + element.data('id'),
+            url: assetPath + 'api/admin/languages/' + element.data('id'),
             dataType: 'json',
             success: function (response) {
                 if (parseInt(response.code) === 1) {
@@ -368,32 +339,19 @@ $(function () {
             }
         })
     });
-    $(document).on('show.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
-        var language = e.target.dataset.language;
-        $('.tab-pane.active').removeClass('active').addClass('hidden');
-        $('#name-tab-' + language).addClass('active').removeClass('hidden');
-        $('#description-tab-' + language).addClass('active').removeClass('hidden');
-    })
 
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        for (const [key, value] of Object.entries(data.name)) {
-            $('[name="name[' + key + ']"]').val(data.name[key]);
-            $('[name="description[' + key + ']"]').val(data.description[key]);
-        }
-        $('#dwt').val(data.dwt);
-        $('#draught').val(data.draught);
-        $('#loa').val(data.loa);
-        $('#geared').val(data.geared);
-        $('#holds').val(data.holds);
-        $('#parent').val(data.parent_id).trigger('change.select2');
+        $('#name').val(data.name);
+        $('#code').val(data.code);
+        $('#country').val(data.country).trigger('change.select2');
         $('#object_id').val(data.id);
     });
 
-    $(document).on('click', '.add-vessels-type', function () {
+    $(document).on('click', '.add-language', function () {
         $('#form_status').val(1);
         $('#object_id').val('');
         newForm.find('#parent_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {

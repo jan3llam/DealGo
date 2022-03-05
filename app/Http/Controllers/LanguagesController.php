@@ -3,33 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
-use App\Models\vType;
 use Illuminate\Http\Request;
 use Validator;
 
-class VesselsTypesController extends Controller
+class LanguagesController extends Controller
 {
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Vessels Types"]
+            ['link' => "admin/home", 'name' => "Home"], ['name' => "Languages"]
         ];
 
-        $types = vType::all();
-        $languages = Language::withoutTrashed()->get();
-        return view('content.vessels-types-list', ['breadcrumbs' => $breadcrumbs, 'types' => $types, 'languages' => $languages]);
+        return view('content.languages-list', ['breadcrumbs' => $breadcrumbs]);
     }
 
     public function list_api(Request $request)
     {
 
         $data = [];
-        $search_clm = ['name', 'parent.name'];
+        $search_clm = ['name', 'code'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
         $params = $request->all();
-        $query = vType::with('parent')->withCount('vessels');
+        $query = Language::query();
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
@@ -96,33 +93,20 @@ class VesselsTypesController extends Controller
     {
         $params = $request->all();
         $validator = Validator::make($params, [
-
-            'name' => 'required|array',
-            'parent' => 'nullable',
-            'dwt' => 'required|string',
-            'draught' => 'required|string',
-            'loa' => 'required|string',
-            'geared' => 'required|string',
-            'holds' => 'required|string',
-            'description' => 'required|array',
+            'name' => 'required|string',
+            'code' => 'required|string',
+            'country' => 'required|string'
         ]);
 
         if ($validator->fails()) {
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $item = new vType;
+        $item = new Language;
 
-        $parent = $request->input('parent', null);
-        $parent = $parent === 'null' ? null : $parent;
         $item->name = $params['name'];
-        $item->parent_id = $parent;
-        $item->dwt = $params['dwt'];
-        $item->draught = $params['draught'];
-        $item->loa = $params['loa'];
-        $item->geared = $params['geared'];
-        $item->holds = $params['holds'];
-        $item->description = $params['description'];
+        $item->code = $params['code'];
+        $item->country = $params['country'];
 
         $item->save();
 
@@ -135,32 +119,20 @@ class VesselsTypesController extends Controller
 
         $params = $request->all();
         $validator = Validator::make($params, [
-
-            'name' => 'required|array',
-            'parent' => 'nullable',
-            'dwt' => 'required|string',
-            'draught' => 'required|string',
-            'loa' => 'required|string',
-            'geared' => 'required|string',
-            'holds' => 'required|string',
-            'description' => 'required|array',
+            'name' => 'required|string',
+            'code' => 'required|string',
+            'country' => 'required|string'
         ]);
 
         if ($validator->fails()) {
             return response()->error('missingParameters');
         }
 
-        $item = vType::withTrashed()->where('id', $id)->first();
-        $parent = $request->input('parent');
+        $item = Language::withTrashed()->where('id', $id)->first();
 
         $item->name = $params['name'];
-        $item->parent_id = $parent ? null : $parent;
-        $item->dwt = $params['dwt'];
-        $item->draught = $params['draught'];
-        $item->loa = $params['loa'];
-        $item->geared = $params['geared'];
-        $item->holds = $params['holds'];
-        $item->description = $params['description'];
+        $item->code = $params['code'];
+        $item->country = $params['country'];
 
         $item->save();
 
@@ -170,7 +142,7 @@ class VesselsTypesController extends Controller
     public function bulk_delete(Request $request)
     {
         foreach ($request->input('ids', []) as $id) {
-            $item = vType::withTrashed()->where('id', $id)->first();
+            $item = Language::withTrashed()->where('id', $id)->first();
             if ($item) {
                 $item->delete();
             }
@@ -181,7 +153,7 @@ class VesselsTypesController extends Controller
     public function delete($id)
     {
 
-        $item = vType::withTrashed()->where('id', $id)->first();
+        $item = Language::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->delete();

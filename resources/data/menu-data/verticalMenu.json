@@ -157,6 +157,12 @@
             "name": "Tickets",
             "icon": "info",
             "slug": "admin.tickets"
+        },
+        {
+            "url": "/admin/languages",
+            "name": "Languages",
+            "icon": "globe",
+            "slug": "admin.languages"
         }
     ]
 }

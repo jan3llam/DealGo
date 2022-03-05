@@ -38,7 +38,7 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'id'},
-                {data: 'name'},
+                {data: 'name_translation'},
                 {data: 'parent'},
                 {data: 'dwt'},
                 {data: 'draught'},
@@ -248,9 +248,6 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'name': {
-                    required: true
-                },
                 'dwt': {
                     required: true
                 },
@@ -266,11 +263,14 @@ $(function () {
                 'holds': {
                     required: true
                 },
-                'description': {
-                    required: true
-                },
             }
-        })
+        });
+
+        $('[name^="name"],[name^="description"]').each(function () {
+            $(this).rules('add', {
+                required: true,
+            });
+        });
 
         $('#parent').select2({dropdownParent: newSidebar});
 
@@ -368,20 +368,28 @@ $(function () {
             }
         })
     });
+    $(document).on('show.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
+        var language = e.target.dataset.language;
+        $('.tab-pane.active').removeClass('active').addClass('hidden');
+        $('#name-tab-' + language).addClass('active').removeClass('hidden');
+        $('#description-tab-' + language).addClass('active').removeClass('hidden');
+    })
 
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#name').val(data.name);
+        for (const [key, value] of Object.entries(data.name)) {
+            $('[name="name[' + key + ']"]').val(data.name[key]);
+            $('[name="description[' + key + ']"]').val(data.description[key]);
+        }
         $('#dwt').val(data.dwt);
         $('#draught').val(data.draught);
         $('#loa').val(data.loa);
         $('#geared').val(data.geared);
         $('#holds').val(data.holds);
         $('#parent').val(data.parent_id).trigger('change.select2');
-        $('#description').val(data.description);
         $('#object_id').val(data.id);
     });
 
