@@ -94,8 +94,10 @@ class OffersController extends Controller
             ->take($per_page)->orderBy($order_field, $order_sort)
             ->with([
                 'vessel' => function ($q) {
-                    $q->withTrashed()->with(['owner' => function ($q) {
-                        $q->withTrashed()->with('user');
+                    $q->withTrashed()->with(['owner' => function ($qu) {
+                        $qu->withTrashed()->with('user', function ($que) {
+                            $que->withTrashed();
+                        });
                     }]);
                 }])->withCount('responses')->get();
 
