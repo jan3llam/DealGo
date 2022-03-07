@@ -247,6 +247,11 @@ $(function () {
             show: function () {
                 $(this).slideDown(function () {
                     $(this).find('.goods-select2').select2({dropdownParent: newSidebar});
+                    $('[name^="goods"]').each(function () {
+                        $(this).rules('add', {
+                            required: true,
+                        });
+                    });
                 });
                 // Feather Icons
                 if (feather) {
@@ -281,6 +286,11 @@ $(function () {
                             }
                         }
                     });
+                    $('[name^="routes"]').each(function () {
+                        $(this).rules('add', {
+                            required: true,
+                        });
+                    });
                 });
                 // Feather Icons
                 if (feather) {
@@ -309,27 +319,28 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'type': {
+                'name': {
                     required: true
                 },
-                'full_name': {
+                'tenant': {
                     required: true
                 },
-                'commercial_number': {
+                'port_from': {
                     required: true
                 },
-                'contact': {
+                'port_to': {
                     required: true
                 },
-                'legal': {
-                    required: function (element) {
-                        return parseInt($("#form_status").val()) === 1;
-                    }
-                },
-                'email': {
+                'contract': {
                     required: true
                 },
-                'phone': {
+                'date_from': {
+                    required: true
+                },
+                'date_to': {
+                    required: true
+                },
+                'description': {
                     required: true
                 },
             }
@@ -402,19 +413,35 @@ $(function () {
 
     $(document).on('click', '.item-delete', function () {
         var element = $(this);
-        $.ajax({
-            type: 'DELETE',
-            url: assetPath + 'api/admin/requests/' + element.data('id'),
-            dataType: 'json',
-            success: function (response) {
-                if (parseInt(response.code) === 1) {
-                    dtTable.DataTable().ajax.reload();
-                    toastr['success'](response.message);
-                } else {
-                    toastr['error'](response.message);
-                }
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete this item!',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-outline-danger ms-1'
+            },
+            buttonsStyling: false
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: assetPath + 'api/admin/requests/' + element.data('id'),
+                    dataType: 'json',
+                    success: function (response) {
+                        if (parseInt(response.code) === 1) {
+                            dtTable.DataTable().ajax.reload();
+                            toastr['success'](response.message);
+                        } else {
+                            toastr['error'](response.message);
+                        }
+                    }
+                })
             }
-        })
+        });
     });
 
     $(document).on('click', '.items-delete', function () {

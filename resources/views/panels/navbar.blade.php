@@ -61,23 +61,21 @@
                                href="javascript:void(0);"
                                data-bs-toggle="dropdown" aria-haspopup="true">
                                 <div class="user-nav d-sm-flex d-none">
-          <span class="user-name fw-bolder">
-            @if (Auth::check())
-                  {{ Auth::user()->name }}
-              @else
-                  John Doe
-              @endif
-          </span>
-                                    <span class="user-status">
-            Admin
-          </span>
+                                  <span class="user-name fw-bolder">
+                                    @if (Auth::check())
+                                          {{ Auth::user()->name }}
+                                      @else
+                                          John Doe
+                                      @endif
+                                  </span>
+                                    <span class="user-status">{{Auth::user()->getRoleNames()->first()}}</span>
                                 </div>
                                 <span class="avatar">
-          <img class="round"
-               src="{{ asset('images/avatars/blank.png') }}"
-               alt="avatar" height="40" width="40">
-          <span class="avatar-status-online"></span>
-        </span>
+                                  <img class="round"
+                                       src="{{ asset('images/avatars/blank.png') }}"
+                                       alt="avatar" height="40" width="40">
+                                  <span class="avatar-status-online"></span>
+                                </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
 

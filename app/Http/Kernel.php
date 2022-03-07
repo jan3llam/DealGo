@@ -4,6 +4,8 @@ namespace App\Http;
 
 use App\Http\Middleware\ApiLogger;
 use App\Http\Middleware\CheckProfile;
+use App\Http\Middleware\Permission;
+use App\Http\Middleware\Permissions;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,7 +67,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-
         'api.logger' => ApiLogger::class,
         'profile.check' => CheckProfile::class,
         'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,

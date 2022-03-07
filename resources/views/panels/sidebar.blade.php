@@ -29,7 +29,7 @@
             {{-- Foreach menu item starts --}}
             @if(isset($menuData[0]))
                 @foreach($menuData[0]->menu as $menu)
-                    @if(Auth::user()->hasAnyPermission($menu->permissions))
+                    @if(Auth::user()->hasAnyPermission($menu->permissions,'admins'))
                         @if(isset($menu->navheader))
                             <li class="navigation-header">
                                 <span>{{ __('locale.'.$menu->navheader) }}</span>

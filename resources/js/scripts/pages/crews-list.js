@@ -305,6 +305,12 @@ $(function () {
                 'phone': {
                     required: true
                 },
+                'city': {
+                    required: true
+                },
+                'address': {
+                    required: true
+                },
                 'job': {
                     required: true
                 },
@@ -400,19 +406,35 @@ $(function () {
 
     $(document).on('click', '.item-delete', function () {
         var element = $(this);
-        $.ajax({
-            type: 'DELETE',
-            url: assetPath + 'api/admin/crews/' + element.data('id'),
-            dataType: 'json',
-            success: function (response) {
-                if (parseInt(response.code) === 1) {
-                    dtTable.DataTable().ajax.reload();
-                    toastr['success'](response.message);
-                } else {
-                    toastr['error'](response.message);
-                }
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete this item!',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-outline-danger ms-1'
+            },
+            buttonsStyling: false
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: assetPath + 'api/admin/crews/' + element.data('id'),
+                    dataType: 'json',
+                    success: function (response) {
+                        if (parseInt(response.code) === 1) {
+                            dtTable.DataTable().ajax.reload();
+                            toastr['success'](response.message);
+                        } else {
+                            toastr['error'](response.message);
+                        }
+                    }
+                })
             }
-        })
+        });
     })
 
     $(document).on('click', '.status-switcher', function () {

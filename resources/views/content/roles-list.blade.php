@@ -24,9 +24,11 @@
                                 <h4 class="fw-bolder">{{$role->name}}</h4>
                                 <p class="lead">{{$role->description}}</p>
                             </div>
-                            <a href="javascript:void(0);" class="text-body item-delete" data-id="{{$role->id}}">
-                                <i data-feather="trash" class="font-medium-5"></i>
-                            </a>
+                            @if ($role->id !== 1)
+                                <a href="javascript:void(0);" class="text-body item-delete" data-id="{{$role->id}}">
+                                    <i data-feather="trash" class="font-medium-5"></i>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>

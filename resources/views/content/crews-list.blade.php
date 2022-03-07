@@ -117,7 +117,7 @@
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="city_id">
-                                <label class="form-label" for="city">Cities</label>
+                                <label class="form-label" for="city">City</label>
                                 <select type="text" class="form-control dt-full-name select2" id="city"
                                         name="city">
                                     <option value="" disabled selected>Kindly choose</option>
