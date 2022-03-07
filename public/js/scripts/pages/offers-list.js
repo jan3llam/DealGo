@@ -45,7 +45,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'vessel.name'},
-                {data: 'vessel.owner.name'},
+                {data: 'vessel.owner.user.contact_name'},
                 {data: 'date_from'},
                 {data: 'port_from'},
                 {data: 'port_to'},

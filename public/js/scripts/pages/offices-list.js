@@ -527,6 +527,7 @@ $(function () {
         data = data.user;
         $('#name').val(data.full_name);
         $('#contact').val(data.contact_name);
+        $('#province').val(data.province);
         $('#commercial').val(data.commercial_number);
         $("#legal").fileinput('destroy').fileinput({
             initialPreview: [assetPath + 'images/' + data.legal_file],

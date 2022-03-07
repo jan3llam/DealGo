@@ -4,43 +4,58 @@
             "url": "/admin/home",
             "name": "Home",
             "icon": "home",
-            "slug": "admin.home"
+            "slug": "admin.home",
+            "permissions": [
+                82
+            ]
         },
         {
             "url": "/admin/users",
             "name": "Users",
             "icon": "users",
             "slug": "admin.users",
+            "permissions": [
+                8,
+                12,
+                16,
+                20,
+                40
+            ],
             "submenu": [
                 {
                     "url": "/admin/owners",
                     "name": "Owners",
                     "icon": "user-check",
-                    "slug": "admin.owners"
+                    "slug": "admin.owners",
+                    "permission": 8
                 },
                 {
                     "url": "/admin/tenants",
                     "name": "Tenants",
                     "icon": "user-plus",
-                    "slug": "admin.tenants"
+                    "slug": "admin.tenants",
+                    "permission": 12
                 },
                 {
                     "url": "/admin/offices",
                     "name": "Offices",
                     "icon": "briefcase",
-                    "slug": "admin.offices"
+                    "slug": "admin.offices",
+                    "permission": 40
                 },
                 {
                     "url": "/admin/admins",
                     "name": "Administrators",
                     "icon": "lock",
-                    "slug": "admin.admins"
+                    "slug": "admin.admins",
+                    "permission": 20
                 },
                 {
                     "url": "/admin/roles",
                     "name": "Roles",
                     "icon": "shield",
-                    "slug": "admin.roles"
+                    "slug": "admin.roles",
+                    "permission": 16
                 }
             ]
         },
@@ -49,36 +64,48 @@
             "name": "Vessels",
             "icon": "anchor",
             "slug": "admin.vessels",
+            "permissions": [
+                24,
+                28,
+                44,
+                48,
+                65
+            ],
             "submenu": [
                 {
                     "url": "/admin/vessels",
                     "name": "Vessels",
                     "icon": "anchor",
-                    "slug": "admin.vessels"
+                    "slug": "admin.vessels",
+                    "permission": 24
                 },
                 {
                     "url": "/admin/track",
                     "name": "Track vessels",
                     "icon": "crosshair",
-                    "slug": "admin.vessels.track"
+                    "slug": "admin.vessels.track",
+                    "permission": 65
                 },
                 {
                     "url": "/admin/crews",
                     "name": "Crews",
                     "icon": "users",
-                    "slug": "admin.crews"
+                    "slug": "admin.crews",
+                    "permission": 48
                 },
                 {
                     "url": "/admin/vtypes",
                     "name": "Vessels types",
                     "icon": "tool",
-                    "slug": "admin.vtypes"
+                    "slug": "admin.vtypes",
+                    "permission": 28
                 },
                 {
                     "url": "/admin/maintenances",
                     "name": "Maintenances",
                     "icon": "file-text",
-                    "slug": "admin.maintenances"
+                    "slug": "admin.maintenances",
+                    "permission": 44
                 }
             ]
         },
@@ -87,30 +114,40 @@
             "name": "Shipments",
             "icon": "file-text",
             "slug": "admin.shipments",
+            "permissions": [
+                32,
+                52,
+                59,
+                64
+            ],
             "submenu": [
                 {
                     "url": "/admin/shipments",
                     "name": "Shipments",
                     "icon": "file-text",
-                    "slug": "admin.shipments"
+                    "slug": "admin.shipments",
+                    "permission": 16
                 },
                 {
                     "url": "/admin/requests",
                     "name": "Requests",
                     "icon": "file-text",
-                    "slug": "admin.requests"
+                    "slug": "admin.requests",
+                    "permission": 52
                 },
                 {
                     "url": "/admin/requests_responses",
                     "name": "Requests Responses",
                     "icon": "thumbs-up",
-                    "slug": "admin.requests_responses"
+                    "slug": "admin.requests_responses",
+                    "permission": 59
                 },
                 {
                     "url": "/admin/gtypes",
                     "name": "Goods types",
                     "icon": "package",
-                    "slug": "admin.gtypes"
+                    "slug": "admin.gtypes",
+                    "permission": 32
                 }
             ]
         },
@@ -118,37 +155,52 @@
             "url": "/admin/offers",
             "name": "Offers",
             "icon": "file-plus",
-            "slug": "admin.offers"
+            "slug": "admin.offers",
+            "permissions": [
+                56
+            ]
         },
         {
             "url": "/admin/contracts",
             "name": "Contracts",
             "icon": "dollar-sign",
-            "slug": "admin.contracts"
+            "slug": "admin.contracts",
+            "permissions": [
+                66
+            ]
         },
         {
             "url": "/admin/ports",
             "name": "Ports",
             "icon": "flag",
-            "slug": "admin.ports"
+            "slug": "admin.ports",
+            "permissions": [
+                36
+            ]
         },
         {
             "url": "/admin/help",
             "name": "Help",
             "icon": "life-buoy",
             "slug": "admin.help",
+            "permissions": [
+                69,
+                73
+            ],
             "submenu": [
                 {
                     "url": "/admin/categories",
                     "name": "Categories",
                     "icon": "layers",
-                    "slug": "admin.categories"
+                    "slug": "admin.categories",
+                    "permission": 69
                 },
                 {
                     "url": "/admin/articles",
                     "name": "Articles",
                     "icon": "edit-3",
-                    "slug": "admin.articles"
+                    "slug": "admin.articles",
+                    "permission": 73
                 }
             ]
         },
@@ -156,13 +208,19 @@
             "url": "/admin/tickets",
             "name": "Tickets",
             "icon": "info",
-            "slug": "admin.tickets"
+            "slug": "admin.tickets",
+            "permissions": [
+                75
+            ]
         },
         {
             "url": "/admin/languages",
             "name": "Languages",
             "icon": "globe",
-            "slug": "admin.languages"
+            "slug": "admin.languages",
+            "permissions": [
+                80
+            ]
         }
     ]
 }

@@ -523,6 +523,7 @@ $(function () {
         $('#country').val(data.city.country.id).trigger('change.select2');
         $('#city_id').val(data.city.id);
         $('#address_1').val(data.address_1);
+        $('#province').val(data.province);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
         $('#type').val(data.type).trigger('change');
