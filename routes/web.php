@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AdvantagesController;
 use App\Http\Controllers\ArticlesController;
@@ -33,7 +34,6 @@ use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\VesselsController;
 use App\Http\Controllers\VesselsTypesController;
 use Illuminate\Support\Facades\Route;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +84,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('slider', [SliderController::class, 'list'])->name('slider');
         Route::get('vtypes', [VesselsTypesController::class, 'list'])->name('vtypes');
         Route::get('languages', [LanguagesController::class, 'list'])->name('languages');
+        Route::get('about', [AboutController::class, 'list'])->name('about');
         Route::get('gtypes', [GoodsTypesController::class, 'list'])->name('gtypes');
         Route::get('crews/{id?}', [CrewsController::class, 'list'])->name('crews');
         Route::get('maintenances/{id?}', [MaintenancesController::class, 'list'])->name('maintenances');

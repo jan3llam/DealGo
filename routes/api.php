@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController as AboutAPI;
 use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
@@ -347,6 +348,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update', [SliderAPI::class, 'update']);
         Route::delete('/bulk', [SliderAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [SliderAPI::class, 'delete']);
+    });
+
+
+    Route::group(['prefix' => 'about'], function () {
+        Route::get('/list', [AboutAPI::class, 'list_api']);
+        Route::post('/add', [AboutAPI::class, 'add']);
+        Route::post('/update', [AboutAPI::class, 'update']);
+        Route::delete('/bulk', [AboutAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [AboutAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'posts'], function () {
