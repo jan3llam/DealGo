@@ -72,7 +72,8 @@
                                         name="owner">
                                     <option value="" disabled selected>Kindly choose</option>
                                     @foreach($owners as $owner)
-                                        <option value="{{$owner->id}}">{{$owner->contact_name}}</option>
+                                        <option
+                                            value="{{$owner->userable->id}}">{{$owner->userable->contact_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
