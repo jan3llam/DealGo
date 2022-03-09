@@ -38,7 +38,7 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'id'},
-                {data: 'name'},
+                {data: 'name_translation'},
                 {data: 'parent'},
                 {data: 'vessels_types'},
                 {data: ''}
@@ -101,7 +101,7 @@ $(function () {
                 {
                     targets: 4,
                     render: function (data, type, full, meta) {
-                        return data ? data.name : '-';
+                        return data ? data.name_translation : '-';
                     }
                 },
                 {
