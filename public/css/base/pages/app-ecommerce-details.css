@@ -17,7 +17,7 @@
   color: #babfc7;
 }
 .ecommerce-application .app-ecommerce-details .item-price {
-    color: #4486FE;
+  color: #4486FE;
 }
 .ecommerce-application .app-ecommerce-details .item-company {
   display: inline-flex;
@@ -65,10 +65,10 @@
 }
 .ecommerce-application .app-ecommerce-details .item-features i,
 .ecommerce-application .app-ecommerce-details .item-features svg {
-    font-size: 2.5rem;
-    height: 2.5rem;
-    width: 2.5rem;
-    color: #4486FE;
+  font-size: 2.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  color: #4486FE;
 }
 .ecommerce-application .swiper-responsive-breakpoints.swiper-container .swiper-slide {
   text-align: center;
@@ -100,47 +100,47 @@
   left: 0;
 }
 .ecommerce-application .swiper-button-prev:after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234486FE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-left'%3E%3Cpolyline points='15 18 9 12 15 6'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 44px;
-    color: #6e6b7b;
-    width: 44px;
-    height: 44px;
-    content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234486FE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-left'%3E%3Cpolyline points='15 18 9 12 15 6'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 44px;
+  color: #6e6b7b;
+  width: 44px;
+  height: 44px;
+  content: "";
 }
 .ecommerce-application .swiper-button-next {
   right: 0;
 }
 .ecommerce-application .swiper-button-next:after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234486FE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-right'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 44px;
-    color: #6e6b7b;
-    width: 44px;
-    height: 44px;
-    content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234486FE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-right'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 44px;
+  color: #6e6b7b;
+  width: 44px;
+  height: 44px;
+  content: "";
 }
 .ecommerce-application .swiper-container-rtl .swiper-button-prev:after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234486FE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-right'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 44px;
-    color: #6e6b7b;
-    width: 44px;
-    height: 44px;
-    content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234486FE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-right'%3E%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 44px;
+  color: #6e6b7b;
+  width: 44px;
+  height: 44px;
+  content: "";
 }
 .ecommerce-application .swiper-container-rtl .swiper-button-next:after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234486FE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-left'%3E%3Cpolyline points='15 18 9 12 15 6'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 44px;
-    color: #6e6b7b;
-    width: 44px;
-    height: 44px;
-    content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234486FE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-left'%3E%3Cpolyline points='15 18 9 12 15 6'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 44px;
+  color: #6e6b7b;
+  width: 44px;
+  height: 44px;
+  content: "";
 }
 .ecommerce-application .product-color-options .color-option {
   border: 1px solid transparent;
@@ -155,10 +155,10 @@
   border-radius: 50%;
 }
 .ecommerce-application .product-color-options .selected .b-primary {
-    border-color: #4486FE;
+  border-color: #4486FE;
 }
 .ecommerce-application .product-color-options .selected .b-primary .filloption {
-    box-shadow: 0 2px 4px 0 rgba(68, 134, 254, 0.4);
+  box-shadow: 0 2px 4px 0 rgba(68, 134, 254, 0.4);
 }
 .ecommerce-application .product-color-options .selected .b-success {
   border-color: #28c76f;
@@ -185,7 +185,7 @@
   box-shadow: 0 2px 4px 0 rgba(0, 207, 232, 0.4);
 }
 .ecommerce-application .product-color-options .b-primary .filloption {
-    box-shadow: 0 2px 4px 0 rgba(68, 134, 254, 0.4);
+  box-shadow: 0 2px 4px 0 rgba(68, 134, 254, 0.4);
 }
 .ecommerce-application .product-color-options .b-success .filloption {
   box-shadow: 0 2px 4px 0 rgba(40, 199, 111, 0.4);

@@ -1,6 +1,6 @@
 .faq-search {
-    background-size: cover;
-    background-color: rgba(68, 134, 254, 0.12) !important;
+  background-size: cover;
+  background-color: rgba(68, 134, 254, 0.12) !important;
 }
 .faq-search .faq-search-input .input-group:focus-within {
   box-shadow: none;

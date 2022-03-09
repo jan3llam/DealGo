@@ -14,11 +14,11 @@
   border: 1px solid transparent;
 }
 .icon-card.active {
-    border-color: #4486FE;
+  border-color: #4486FE;
 }
 .icon-card.active i,
 .icon-card.active svg {
-    color: #4486FE;
+  color: #4486FE;
 }
 
 @media (max-width: 1024px) {

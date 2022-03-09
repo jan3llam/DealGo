@@ -103,6 +103,7 @@
     "/js/scripts/forms/form-wizard.js": "/js/scripts/forms/form-wizard.js",
     "/js/scripts/forms/pickers/form-pickers.js": "/js/scripts/forms/pickers/form-pickers.js",
     "/js/scripts/maps/map-leaflet.js": "/js/scripts/maps/map-leaflet.js",
+    "/js/scripts/pages/about-list.js": "/js/scripts/pages/about-list.js",
     "/js/scripts/pages/admins-list.js": "/js/scripts/pages/admins-list.js",
     "/js/scripts/pages/advantages-list.js": "/js/scripts/pages/advantages-list.js",
     "/js/scripts/pages/articles-list.js": "/js/scripts/pages/articles-list.js",

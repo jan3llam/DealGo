@@ -55,7 +55,7 @@
   box-shadow: none;
 }
 .jstree .jstree-container-ul .jstree-node .jstree-wholerow-clicked {
-    background: rgba(68, 134, 254, 0.1);
+  background: rgba(68, 134, 254, 0.1);
 }
 .jstree .jstree-container-ul .jstree-node .jstree-wholerow-hovered:not(.jstree-wholerow-clicked) {
   background: transparent;
