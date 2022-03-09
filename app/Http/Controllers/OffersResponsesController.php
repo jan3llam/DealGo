@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\gType;
 use App\Models\Offer;
+use App\Models\OfferResponse;
+use App\Models\OfferResponsePayment;
 use App\Models\Port;
-use App\Models\RequestResponse;
 use App\Models\RequestResponsePayment;
 use App\Models\Tenant;
 use App\Models\User;
@@ -57,7 +58,7 @@ class OffersResponsesController extends Controller
         $order_sort = 'desc';
         $offer_id = $request->input('offer_id', null);
         $params = $request->all();
-        $query = Offer::with([
+        $query = OfferResponse::with([
             'payments' => function ($query) {
                 $query->sum('value');
             },
@@ -117,7 +118,7 @@ class OffersResponsesController extends Controller
         $params = $request->all();
         $validator = Validator::make($params, [
             'owner' => 'required|numeric',
-            'request' => 'required|numeric',
+            'offer' => 'required|numeric',
             'date' => 'required',
             'commercial' => 'required_if:type,1',
             'description' => 'required|string',
@@ -127,7 +128,7 @@ class OffersResponsesController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $item = new RequestResponse;
+        $item = new OfferResponse;
 
         $item->request_id = $params['request'];
         $item->owner_id = $params['owner'];
@@ -183,7 +184,7 @@ class OffersResponsesController extends Controller
 
             array_push($paymentsArr, $paymentItem);
         }
-        $paymentItem = new RequestResponsePayment;
+        $paymentItem = new OfferResponsePayment;
         $paymentItem->value = $request->down_value;
         $paymentItem->date = null;
         $paymentItem->is_down = 1;
@@ -203,7 +204,7 @@ class OffersResponsesController extends Controller
 
         $params = $request->all();
         $validator = Validator::make($params, [
-            'request' => 'required|numeric',
+            'offer' => 'required|numeric',
             'date' => 'required',
             'commercial' => 'required_if:type,1',
             'description' => 'required|string',
@@ -219,7 +220,7 @@ class OffersResponsesController extends Controller
             Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
         }
 
-        $item = RequestResponse::withTrashed()->where('id', $id)->first();
+        $item = OfferResponse::withTrashed()->where('id', $id)->first();
 
         $item->legal_file = $fileName;
 
@@ -278,7 +279,7 @@ class OffersResponsesController extends Controller
     public function delete($id)
     {
 
-        $item = RequestResponse::withTrashed()->where('id', $id)->first();
+        $item = OfferResponse::withTrashed()->where('id', $id)->first();
 
         if ($item) {
 
@@ -291,7 +292,7 @@ class OffersResponsesController extends Controller
 
     public function status($id)
     {
-        $item = RequestResponse::withTrashed()->where('id', $id)->first();
+        $item = OfferResponse::withTrashed()->where('id', $id)->first();
         if ($item) {
 
             if ($item->status === 0 && $item->deleted_at !== null) {
