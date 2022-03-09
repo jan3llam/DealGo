@@ -76,7 +76,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @dd($owners)
                             <div class="mb-1">
                                 <input type="hidden" value="" id="owner_id">
                                 <label class="form-label" for="owner">Owner</label>
