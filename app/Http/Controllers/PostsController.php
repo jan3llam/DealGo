@@ -174,7 +174,6 @@ class PostsController extends Controller
             'description' => 'required|array',
             'meta_name' => 'required|string',
             'meta_description' => 'required|string',
-            'meta_image' => 'required|file',
         ]);
 
         if ($validator->fails()) {
