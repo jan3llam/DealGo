@@ -233,7 +233,7 @@ $(function () {
                         {
                             text: 'Closed',
                             attr: {
-                                "data-status": 2
+                                "data-status": 3
                             },
                             className: 'status-item dropdown-item',
                         },
