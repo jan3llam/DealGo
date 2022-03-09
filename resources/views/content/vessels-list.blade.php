@@ -79,7 +79,7 @@
                             <div class="mb-1">
                                 <input type="hidden" value="" id="owner_id">
                                 <label class="form-label" for="owner">Owner</label>
-                                <select type="text" class="form-control dt-full-name select2" id="owner"
+                                <select type="text" class="form-control dt-full-name  select2" id="owner"
                                         name="owner">
                                     <option value="" disabled selected>Kindly choose</option>
                                     @foreach($owners as $owner)
