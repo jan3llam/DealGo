@@ -1,8 +1,8 @@
 .noUi-target {
-  background-color: rgba(255, 193, 7, 0.12);
-  border-width: 0;
-  box-shadow: none;
-  border-radius: 1rem;
+    background-color: rgba(68, 134, 254, 0.12);
+    border-width: 0;
+    box-shadow: none;
+    border-radius: 1rem;
 }
 .noUi-target.noUi-connect {
   box-shadow: none;
@@ -40,19 +40,19 @@
 }
 
 .noUi-handle {
-  box-shadow: none;
-  border: none;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid #ffc107;
+    box-shadow: none;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #4486FE;
 }
 .noUi-handle:after, .noUi-handle:before {
   display: none;
 }
 
 .noUi-connect {
-  background: #ffc107;
-  box-shadow: none;
+    background: #4486FE;
+    box-shadow: none;
 }
 
 .noUi-tooltip {

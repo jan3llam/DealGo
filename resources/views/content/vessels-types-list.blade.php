@@ -83,7 +83,6 @@
                                         </div>
                                     @endforeach
                                 </div>
-
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="parent_id">

@@ -273,8 +273,8 @@
   position: relative;
 }
 .ecommerce-application .list-view .ecommerce-card .item-options .item-wrapper .item-cost .item-price {
-  color: #ffc107;
-  margin-bottom: 0;
+    color: #4486FE;
+    margin-bottom: 0;
 }
 .ecommerce-application .list-view .ecommerce-card .item-options .shipping {
   margin-top: 0.75rem;

@@ -221,6 +221,76 @@
             "permissions": [
                 80
             ]
+        },
+        {
+            "url": "/admin/content",
+            "name": "Content",
+            "icon": "monitor",
+            "slug": "admin.content",
+            "permissions": [
+                69,
+                73
+            ],
+            "submenu": [
+                {
+                    "url": "/admin/slider",
+                    "name": "Slider",
+                    "icon": "image",
+                    "slug": "admin.slider",
+                    "permission": 69
+                },
+                {
+                    "url": "/admin/services",
+                    "name": "Services",
+                    "icon": "server",
+                    "slug": "admin.services",
+                    "permission": 73
+                },
+                {
+                    "url": "/admin/about",
+                    "name": "About",
+                    "icon": "info",
+                    "slug": "admin.about",
+                    "permission": 73
+                },
+                {
+                    "url": "/admin/clients",
+                    "name": "Clients",
+                    "icon": "users",
+                    "slug": "admin.clients",
+                    "permission": 73
+                },
+                {
+                    "url": "/admin/advantages",
+                    "name": "Advantages",
+                    "icon": "plus-square",
+                    "slug": "admin.advantages",
+                    "permission": 73
+                },
+                {
+                    "url": "/admin/blog",
+                    "name": "Blog",
+                    "icon": "align-justify",
+                    "slug": "admin.blog",
+                    "permission": 73,
+                    "submenu": [
+                        {
+                            "url": "/admin/classifications",
+                            "name": "Classifications",
+                            "icon": "grid",
+                            "slug": "admin.classifications",
+                            "permission": 69
+                        },
+                        {
+                            "url": "/admin/posts",
+                            "name": "Posts",
+                            "icon": "align-justify",
+                            "slug": "admin.posts",
+                            "permission": 69
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

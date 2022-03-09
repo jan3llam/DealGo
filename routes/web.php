@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AdminsController;
+use App\Http\Controllers\AdvantagesController;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\ContentController;
+use App\Http\Controllers\ClassificationsController;
+use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\CrewsController;
 use App\Http\Controllers\DashboardController;
@@ -18,14 +20,16 @@ use App\Http\Controllers\OffersResponsesController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\OwnersController;
 use App\Http\Controllers\PortsController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\RequestsController;
 use App\Http\Controllers\RequestsResponsesController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ShipmentsController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\TenantsController;
 use App\Http\Controllers\TicketsController;
-use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VesselsController;
 use App\Http\Controllers\VesselsTypesController;
 use Illuminate\Support\Facades\Route;
@@ -53,9 +57,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/', [DashboardController::class, 'home'])->name('home');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('home', [DashboardController::class, 'home'])->name('home');
-        Route::get('content', [ContentController::class, 'view'])->name('content');
         Route::get('settings', [SettingsController::class, 'view'])->name('settings');
-        Route::post('content', [ContentController::class, 'submit']);
         Route::post('settings', [SettingsController::class, 'submit']);
         Route::get('notification', [NotificationsController::class, 'list'])->name('notification');
         Route::post('notification', [NotificationsController::class, 'send']);
@@ -76,6 +78,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('track', [VesselsController::class, 'track'])->name('vessels.track');
         Route::get('contracts', [ContractsController::class, 'list'])->name('contracts');
         Route::get('shipments', [ShipmentsController::class, 'list'])->name('shipments');
+        Route::get('clients', [ClientsController::class, 'list'])->name('clients');
+        Route::get('advantages', [AdvantagesController::class, 'list'])->name('advantages');
+        Route::get('services', [ServicesController::class, 'list'])->name('services');
+        Route::get('slider', [SliderController::class, 'list'])->name('slider');
         Route::get('vtypes', [VesselsTypesController::class, 'list'])->name('vtypes');
         Route::get('languages', [LanguagesController::class, 'list'])->name('languages');
         Route::get('gtypes', [GoodsTypesController::class, 'list'])->name('gtypes');
@@ -83,9 +89,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('maintenances/{id?}', [MaintenancesController::class, 'list'])->name('maintenances');
         Route::get('articles/{id?}', [ArticlesController::class, 'list'])->name('articles');
         Route::get('categories/{id?}', [CategoriesController::class, 'list'])->name('categories');
-        Route::get('users', [UsersController::class, 'list'])->name('users');
-        Route::get('user/{id}', [UsersController::class, 'view'])->name('user');
-        Route::post('user/update', [UsersController::class, 'update'])->name('user.update');
+        Route::get('posts/{id?}', [PostsController::class, 'list'])->name('posts');
+        Route::get('classifications/{id?}', [ClassificationsController::class, 'list'])->name('classifications');
     });
 });
 

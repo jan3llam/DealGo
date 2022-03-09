@@ -384,17 +384,32 @@ $(function () {
 
     $(document).on('click', '.status-switcher', function () {
         let element = $(this);
-        $.ajax({
-            type: 'PUT',
-            url: assetPath + 'api/admin/offers_responses/status/' + element.data('id'),
-            dataType: 'json',
-            success: function (response) {
-                if (parseInt(response.code) === 1) {
-                    dtTable.DataTable().ajax.reload();
-                    toastr['success'](response.message);
-                } else {
-                    toastr['error'](response.message);
-                }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to change status for this item?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-outline-danger ms-1'
+            },
+            buttonsStyling: false
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type: 'PUT',
+                    url: assetPath + 'api/admin/offers_responses/status/' + element.data('id'),
+                    dataType: 'json',
+                    success: function (response) {
+                        if (parseInt(response.code) === 1) {
+                            dtTable.DataTable().ajax.reload();
+                            toastr['success'](response.message);
+                        } else {
+                            toastr['error'](response.message);
+                        }
+                    }
+                })
             }
         })
     });

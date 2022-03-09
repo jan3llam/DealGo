@@ -56,10 +56,28 @@
                             <h5 class="modal-title" id="modal-label">Add goods type</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
+                            <ul class="nav nav-tabs wrap-border" role="tablist">
+                                @foreach($languages as $language)
+                                    <li class="nav-item">
+                                        <a class="nav-link @if($loop->first) active @endif"
+                                           id="language-{{$language->code}}"
+                                           data-bs-toggle="tab" href="#" data-language="{{$language->code}}"
+                                           role="tab" aria-selected="true">{{strtoupper($language->code)}}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
                             <div class="mb-1">
-                                <label class="form-label" for="name">Name</label>
-                                <input type="text" class="form-control dt-full-name" id="name"
-                                       placeholder="Name" name="name"/>
+                                <div class="tap-content">
+                                    @foreach($languages as $language)
+                                        <div class="tab-pane @if($loop->first) active @else hidden @endif"
+                                             id="name-tab-{{$language->code}}"
+                                             aria-labelledby="language-{{$language->code}}" role="tabpanel">
+                                            <label class="form-label" for="name">Name</label>
+                                            <input type="text" class="form-control dt-full-name"
+                                                   placeholder="Name" name="name[{{$language->code}}]"/>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="parent_id">

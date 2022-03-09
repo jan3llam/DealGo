@@ -2,29 +2,29 @@
   color: #6e6b7b;
 }
 .flatpickr-calendar .flatpickr-day.today {
-  border-color: #ffc107;
+    border-color: #4486FE;
 }
 .flatpickr-calendar .flatpickr-day.today:hover {
   background: transparent;
   color: #6e6b7b;
 }
 .flatpickr-calendar .flatpickr-day.selected, .flatpickr-calendar .flatpickr-day.selected:hover {
-  background: #ffc107;
-  color: #fff;
-  border-color: #ffc107;
+    background: #4486FE;
+    color: #fff;
+    border-color: #4486FE;
 }
 .flatpickr-calendar .flatpickr-day.inRange, .flatpickr-calendar .flatpickr-day.inRange:hover {
-  background: #ffe7a0;
-  border-color: #ffe7a0;
-  box-shadow: -5px 0 0 #ffe7a0, 5px 0 0 #ffe7a0;
+    background: #dce8ff;
+    border-color: #dce8ff;
+    box-shadow: -5px 0 0 #dce8ff, 5px 0 0 #dce8ff;
 }
 .flatpickr-calendar .flatpickr-day.startRange, .flatpickr-calendar .flatpickr-day.endRange, .flatpickr-calendar .flatpickr-day.startRange:hover, .flatpickr-calendar .flatpickr-day.endRange:hover {
-  background: #ffc107;
-  color: #fff;
-  border-color: #ffc107;
+    background: #4486FE;
+    color: #fff;
+    border-color: #4486FE;
 }
 .flatpickr-calendar .flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n+1)), .flatpickr-calendar .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n+1)), .flatpickr-calendar .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n+1)) {
-  box-shadow: -10px 0 0 #ffc107;
+    box-shadow: -10px 0 0 #4486FE;
 }
 .flatpickr-calendar .flatpickr-day.flatpickr-disabled, .flatpickr-calendar .flatpickr-day.prevMonthDay, .flatpickr-calendar .flatpickr-day.nextMonthDay {
   color: #dae1e7;
@@ -42,7 +42,7 @@
 .flatpickr-calendar .flatpickr-months .flatpickr-prev-month:hover i, .flatpickr-calendar .flatpickr-months .flatpickr-prev-month:hover svg,
 .flatpickr-calendar .flatpickr-months .flatpickr-next-month:hover i,
 .flatpickr-calendar .flatpickr-months .flatpickr-next-month:hover svg {
-  fill: #ffc107;
+    fill: #4486FE;
 }
 .flatpickr-calendar .flatpickr-current-month span.cur-month {
   font-weight: 300;

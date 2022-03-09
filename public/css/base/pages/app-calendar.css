@@ -41,14 +41,14 @@
   box-shadow: none;
 }
 .fc .fc-toolbar .fc-button-group .fc-button-primary:not(.fc-prev-button):not(.fc-next-button) {
-  background-color: transparent;
-  border-color: #ffc107;
-  color: #ffc107;
+    background-color: transparent;
+    border-color: #4486FE;
+    color: #4486FE;
 }
 .fc .fc-toolbar .fc-button-group .fc-button-primary:not(.fc-prev-button):not(.fc-next-button).fc-button-active, .fc .fc-toolbar .fc-button-group .fc-button-primary:not(.fc-prev-button):not(.fc-next-button):hover {
-  background-color: rgba(255, 193, 7, 0.2) !important;
-  border-color: #ffc107 !important;
-  color: #ffc107;
+    background-color: rgba(68, 134, 254, 0.2) !important;
+    border-color: #4486FE !important;
+    color: #4486FE;
 }
 .fc .fc-toolbar .fc-button-group .fc-button-primary.fc-sidebarToggle-button {
   border: 0;

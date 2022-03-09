@@ -269,9 +269,6 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'name': {
-                    required: true
-                },
                 'vtype': {
                     required: true
                 },
@@ -351,6 +348,18 @@ $(function () {
         })
     });
 
+    $(document).on('show.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
+        var language = e.target.dataset.language;
+        $('.tab-pane.active').removeClass('active').addClass('hidden');
+        $('#name-tab-' + language).addClass('active').removeClass('hidden');
+    });
+
+    $('[name^="name"]').each(function () {
+        $(this).rules('add', {
+            required: true,
+        });
+    });
+
     $(document).on('click', '.items-delete', function () {
         var ids = dtTable.api().columns().checkboxes.selected()[1];
         if (ids.length) {
@@ -401,7 +410,9 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#name').val(data.name);
+        for (const [key, value] of Object.entries(data.name)) {
+            $('[name="name[' + key + ']"]').val(data.name[key]);
+        }
         var vessels_types = [];
         data.vessels_types.forEach(item => {
             vessels_types.push(item.id);

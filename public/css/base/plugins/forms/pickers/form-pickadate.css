@@ -4,7 +4,7 @@
 
 .picker__day--today:before,
 .picker__button--today:before {
-  border-top: 6px solid #ffc107;
+    border-top: 6px solid #4486FE;
 }
 
 .picker__button--clear:before {
@@ -17,7 +17,7 @@
 .picker__list-item--selected,
 .picker__list-item--selected:hover,
 .picker--focused .picker__list-item--selected {
-  background-color: #ffc107;
+    background-color: #4486FE;
 }
 
 .picker__nav--prev:before,

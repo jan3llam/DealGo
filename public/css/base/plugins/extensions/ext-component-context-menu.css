@@ -15,11 +15,11 @@
   border-color: transparent transparent transparent #6e6b7b;
 }
 .context-menu-list .context-menu-item.context-menu-hover, .context-menu-list .context-menu-item:hover, .context-menu-list .context-menu-item:focus {
-  background-color: rgba(255, 193, 7, 0.12) !important;
-  color: #ffc107;
+    background-color: rgba(68, 134, 254, 0.12) !important;
+    color: #4486FE;
 }
 .context-menu-list .context-menu-item.context-menu-hover.context-menu-submenu:after, .context-menu-list .context-menu-item:hover.context-menu-submenu:after, .context-menu-list .context-menu-item:focus.context-menu-submenu:after {
-  border-color: transparent transparent transparent #ffc107 !important;
+    border-color: transparent transparent transparent #4486FE !important;
 }
 .context-menu-list .context-menu-item:focus {
   outline: 0;
@@ -36,7 +36,7 @@
   color: #b4b7bd;
 }
 .dark-layout .context-menu-list .context-menu-item.context-menu-hover > span {
-  color: #ffc107;
+    color: #4486FE;
 }
 .dark-layout .context-menu-list .context-menu-item.context-menu-submenu:after {
   border-color: transparent transparent transparent #b4b7bd;
@@ -53,7 +53,7 @@
   border-color: transparent #6e6b7b transparent transparent;
 }
 [data-textdirection=rtl] .context-menu-list .context-menu-item.context-menu-hover.context-menu-submenu:after {
-  border-color: transparent #ffc107 transparent transparent !important;
+    border-color: transparent #4486FE transparent transparent !important;
 }
 [data-textdirection=rtl] .context-menu-list .context-menu-item > .context-menu-list {
   left: 100%;

@@ -383,6 +383,7 @@ $(function () {
             }
         })
     });
+
     $(document).on('show.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
         var language = e.target.dataset.language;
         $('.tab-pane.active').removeClass('active').addClass('hidden');

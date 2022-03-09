@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\AdminsController as AdminsAPI;
+use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
 use App\Http\Controllers\CategoriesController as CategoriesAPI;
 use App\Http\Controllers\CitiesController as CitiesAPI;
+use App\Http\Controllers\ClassificationsController as ClassificationsAPI;
+use App\Http\Controllers\ClientsController as ClientsAPI;
 use App\Http\Controllers\ContractsController as ContractsAPI;
 use App\Http\Controllers\CountriesController as CountriesAPI;
 use App\Http\Controllers\CrewsController as CrewsAPI;
@@ -15,13 +18,15 @@ use App\Http\Controllers\OffersResponsesController as OffersResponsesAPI;
 use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
 use App\Http\Controllers\PortsController as PortsAPI;
+use App\Http\Controllers\PostsController as PostsAPI;
 use App\Http\Controllers\RequestsController as RequestsAPI;
 use App\Http\Controllers\RequestsResponsesController as RequestsResponsesAPI;
 use App\Http\Controllers\RolesController as RolesAPI;
+use App\Http\Controllers\ServicesController as ServicesAPI;
 use App\Http\Controllers\ShipmentsController as ShipmentsAPI;
+use App\Http\Controllers\SliderController as SliderAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
 use App\Http\Controllers\TicketsController as TicketsAPI;
-use App\Http\Controllers\UsersController as UsersAPI;
 use App\Http\Controllers\VesselsController as VesselsAPI;
 use App\Http\Controllers\VesselsTypesController as VesselsTypesAPI;
 use Illuminate\Support\Facades\Route;
@@ -312,12 +317,51 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('/{id}', [ShipmentsAPI::class, 'delete']);
     });
 
-    Route::group(['prefix' => 'users'], function () {
-        Route::get('/list', [UsersAPI::class, 'list_api']);
-        Route::post('/check_field', [UsersAPI::class, 'check_field']);
-        Route::put('/status/{id}', [UsersAPI::class, 'status']);
-        Route::put('/update', [UsersAPI::class, 'update']);
-        Route::delete('/bulk', [UsersAPI::class, 'bulk_delete']);
-        Route::delete('/{id}', [UsersAPI::class, 'delete']);
+    Route::group(['prefix' => 'clients'], function () {
+        Route::get('/list', [ClientsAPI::class, 'list_api']);
+        Route::post('/add', [ClientsAPI::class, 'add']);
+        Route::post('/update', [ClientsAPI::class, 'update']);
+        Route::delete('/bulk', [ClientsAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [ClientsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'services'], function () {
+        Route::get('/list', [ServicesAPI::class, 'list_api']);
+        Route::post('/add', [ServicesAPI::class, 'add']);
+        Route::post('/update', [ServicesAPI::class, 'update']);
+        Route::delete('/bulk', [ServicesAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [ServicesAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'advantages'], function () {
+        Route::get('/list', [AdvantagesAPI::class, 'list_api']);
+        Route::post('/add', [AdvantagesAPI::class, 'add']);
+        Route::post('/update', [AdvantagesAPI::class, 'update']);
+        Route::delete('/bulk', [AdvantagesAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [AdvantagesAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'slider'], function () {
+        Route::get('/list', [SliderAPI::class, 'list_api']);
+        Route::post('/add', [SliderAPI::class, 'add']);
+        Route::post('/update', [SliderAPI::class, 'update']);
+        Route::delete('/bulk', [SliderAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [SliderAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'posts'], function () {
+        Route::get('/list/{id?}', [PostsAPI::class, 'list_api']);
+        Route::post('/add', [PostsAPI::class, 'add']);
+        Route::post('/update', [PostsAPI::class, 'update']);
+        Route::delete('/bulk', [PostsAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [PostsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'classifications'], function () {
+        Route::get('/list/{id?}', [ClassificationsAPI::class, 'list_api']);
+        Route::post('/add', [ClassificationsAPI::class, 'add']);
+        Route::post('/update', [ClassificationsAPI::class, 'update']);
+        Route::delete('/bulk', [ClassificationsAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [ClassificationsAPI::class, 'delete']);
     });
 });

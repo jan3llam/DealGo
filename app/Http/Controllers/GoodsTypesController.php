@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\gType;
+use App\Models\Language;
 use App\Models\vType;
 use Illuminate\Http\Request;
 use Validator;
@@ -17,7 +18,14 @@ class GoodsTypesController extends Controller
 
         $gTypes = gType::all();
         $vTypes = vType::all();
-        return view('content.goods-types-list', ['breadcrumbs' => $breadcrumbs, 'gTypes' => $gTypes, 'vTypes' => $vTypes]);
+        $languages = Language::withoutTrashed()->get();
+
+        return view('content.goods-types-list', [
+            'breadcrumbs' => $breadcrumbs,
+            'gTypes' => $gTypes,
+            'vTypes' => $vTypes,
+            'languages' => $languages
+        ]);
     }
 
     public function list_api(Request $request)
@@ -108,7 +116,7 @@ class GoodsTypesController extends Controller
     {
         $params = $request->all();
         $validator = Validator::make($params, [
-            'name' => 'required|string',
+            'name' => 'required|array',
             'parent' => 'nullable',
             'vtype' => 'required',
         ]);
@@ -139,7 +147,7 @@ class GoodsTypesController extends Controller
 
         $params = $request->all();
         $validator = Validator::make($params, [
-            'name' => 'required|string',
+            'name' => 'required|array',
             'parent' => 'nullable',
             'vtype' => 'required',
         ]);
