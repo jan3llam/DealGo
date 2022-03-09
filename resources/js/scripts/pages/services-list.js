@@ -243,7 +243,9 @@ $(function () {
             errorClass: 'error',
             rules: {
                 'file': {
-                    required: true
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
                 },
                 'meta_name': {
                     required: true
@@ -252,7 +254,9 @@ $(function () {
                     required: true
                 },
                 'meta_file': {
-                    required: true
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
                 },
             }
         })
