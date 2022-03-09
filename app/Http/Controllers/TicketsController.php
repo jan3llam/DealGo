@@ -196,7 +196,7 @@ class TicketsController extends Controller
             if ($item->status === 0 && $item->deleted_at !== null) {
                 $item->restore();
             }
-            $item->status = $request->status;
+            $item->status = 3;
             $item->save();
         }
 
