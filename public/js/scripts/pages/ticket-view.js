@@ -100,9 +100,10 @@ $(function () {
                     type: 'PUT',
                     url: assetPath + 'api/admin/tickets/status/' + element.data('id'),
                     dataType: 'json',
+                    data: {status: 3},
                     success: function (response) {
                         if (parseInt(response.code) === 1) {
-                            dtTable.DataTable().ajax.reload();
+                            window.location.reload();
                             toastr['success'](response.message);
                         } else {
                             toastr['error'](response.message);
