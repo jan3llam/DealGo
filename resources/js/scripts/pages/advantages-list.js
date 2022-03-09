@@ -1,10 +1,10 @@
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.clients-list-table'),
-        newSidebar = $('.new-client-modal'),
-        viewSidebar = $('.view-client-modal'),
-        newForm = $('.add-new-client');
+    var dtTable = $('.advantages-list-table'),
+        newSidebar = $('.new-advantage-modal'),
+        viewSidebar = $('.view-advantage-modal'),
+        newForm = $('.add-new-advantage');
 
 
     var assetPath = '../../../app-assets/';
@@ -13,8 +13,7 @@ $(function () {
         assetPath = $('body').attr('data-asset-path')
     }
     if (dtTable.length) {
-        var link = assetPath + 'api/admin/clients/list';
-
+        var link = assetPath + 'api/admin/advantages/list';
         dtTable.dataTable({
             ajax: function (data, callback, settings) {
                 // make a regular ajax request using data.start and data.length
@@ -42,6 +41,7 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'id'},
+                {data: 'name_translation'},
                 {data: 'file'},
                 {data: ''}
             ],
@@ -77,7 +77,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 4,
                     render: function (data, type, full, meta) {
                         return `<img height="30" src="${assetPath + 'images/' + data}"/>`;
                     }
@@ -212,11 +212,14 @@ $(function () {
                     text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Delete',
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
+                        if (!$('#vessel_id').val()) {
+                            node.remove();
+                        }
                     }
                 },
                 {
                     text: 'Add new',
-                    className: 'add-client btn btn-primary',
+                    className: 'add-advantage btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in',
@@ -239,14 +242,17 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'url': {
-                    required: true
-                },
                 'file': {
                     required: true
                 },
             }
         })
+
+        $('[name^="name"],[name^="description"]').each(function () {
+            $(this).rules('add', {
+                required: true,
+            });
+        });
 
         $("#file").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
@@ -269,7 +275,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/clients/' + type,
+                    url: assetPath + 'api/admin/advantages/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -307,7 +313,7 @@ $(function () {
                 if (result.value) {
                     $.ajax({
                         type: 'DELETE',
-                        url: assetPath + 'api/admin/clients/bulk',
+                        url: assetPath + 'api/admin/advantages/bulk',
                         data: {ids: ids},
                         dataType: 'json',
                         success: function (response) {
@@ -351,7 +357,7 @@ $(function () {
             if (result.value) {
                 $.ajax({
                     type: 'DELETE',
-                    url: assetPath + 'api/admin/clients/' + element.data('id'),
+                    url: assetPath + 'api/admin/advantages/' + element.data('id'),
                     dataType: 'json',
                     success: function (response) {
                         if (parseInt(response.code) === 1) {
@@ -366,11 +372,22 @@ $(function () {
         })
     })
 
+    $(document).on('show.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
+        var language = e.target.dataset.language;
+        $('.tab-pane.active').removeClass('active').addClass('hidden');
+        $('#name-tab-' + language).addClass('active').removeClass('hidden');
+        $('#description-tab-' + language).addClass('active').removeClass('hidden');
+    })
+
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
+        for (const [key, value] of Object.entries(data.name)) {
+            $('[name="name[' + key + ']"]').val(data.name[key]);
+            $('[name="description[' + key + ']"]').val(data.description[key]);
+        }
         $("#file").fileinput('destroy').fileinput({
             initialPreview: [assetPath + 'images/' + data.file],
             showUpload: false,
@@ -380,7 +397,7 @@ $(function () {
         $('#object_id').val(data.id);
     });
 
-    $(document).on('click', '.add-client', function () {
+    $(document).on('click', '.add-advantage', function () {
         $('#form_status').val(1);
         $('#file_container').attr('src', '');
         $('#object_id').val('');

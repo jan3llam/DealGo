@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Language;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,9 @@ class SliderController extends Controller
             ['link' => "admin/home", 'name' => "Home"], ['name' => "Content"], ['name' => "Slider"]
         ];
 
-        return view('content.slider-list', ['breadcrumbs' => $breadcrumbs]);
+        $languages = Language::withoutTrashed()->get();
+
+        return view('content.slider-list', ['breadcrumbs' => $breadcrumbs, 'languages' => $languages]);
     }
 
     public function list_api(Request $request)

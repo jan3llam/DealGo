@@ -8,16 +8,16 @@
 :root {
   --bs-blue: #00cfe8;
   --bs-indigo: #6610f2;
-  --bs-purple: #7367f0;
-  --bs-pink: #d63384;
-  --bs-red: #ea5455;
-  --bs-orange: #ff9f43;
-  --bs-yellow: #ffc107;
-  --bs-green: #28c76f;
-  --bs-teal: #20c997;
-  --bs-cyan: #0dcaf0;
-  --bs-white: #fff;
-  --bs-gray: #b8c2cc;
+    --bs-purple: #7367f0;
+    --bs-pink: #d63384;
+    --bs-red: #ea5455;
+    --bs-orange: #ff9f43;
+    --bs-yellow: #ffc107;
+    --bs-green: #28c76f;
+    --bs-teal: #20c997;
+    --bs-cyan: #0dcaf0;
+    --bs-white: #fff;
+    --bs-gray: #b8c2cc;
     --bs-gray-dark: #1e1e1e;
     --bs-gray-100: #babfc7;
     --bs-gray-200: #ededed;
@@ -47,16 +47,16 @@
     --bs-white-rgb: 255, 255, 255;
     --bs-black-rgb: 34, 41, 47;
     --bs-body-color-rgb: 110, 107, 123;
-  --bs-body-bg-rgb: 248, 248, 248;
-  --bs-font-sans-serif: "Montserrat", Helvetica, Arial, serif;
-  --bs-font-monospace: "Montserrat", Helvetica, Arial, serif;
-  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: var(--bs-font-sans-serif);
-  --bs-body-font-size: 1rem;
-  --bs-body-font-weight: 400;
-  --bs-body-line-height: 1.45;
-  --bs-body-color: #6e6b7b;
-  --bs-body-bg: #f8f8f8;
+    --bs-body-bg-rgb: 248, 248, 248;
+    --bs-font-sans-serif: "Montserrat", Helvetica, Arial, serif;
+    --bs-font-monospace: "Montserrat", Helvetica, Arial, serif;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    --bs-body-font-family: var(--bs-font-sans-serif);
+    --bs-body-font-size: 1rem;
+    --bs-body-font-weight: 400;
+    --bs-body-line-height: 1.45;
+    --bs-body-color: #6e6b7b;
+    --bs-body-bg: #f8f8f8;
 }
 
 *,
@@ -20412,9 +20412,9 @@ footer.footer-border {
     width: 38px;
     height: 38px;
     left: -39px;
-  text-align: center;
-  line-height: 40px;
-  cursor: pointer;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
 }
 .customizer .color-box {
   height: 24px;
@@ -20519,7 +20519,7 @@ footer.footer-border {
   padding-bottom: 1.8rem;
 }
 .timeline .timeline-item .timeline-point {
-  position: absolute;
+    position: absolute;
     left: -0.85rem;
     top: 0;
     z-index: 2;
