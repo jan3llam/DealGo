@@ -252,7 +252,9 @@ $(function () {
                     required: true
                 },
                 'meta_image': {
-                    required: true
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
                 },
             }
         })
