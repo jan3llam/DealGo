@@ -180,20 +180,20 @@ class PostsController extends Controller
             return response()->error('missingParameters');
         }
 
+        $item = Post::withTrashed()->where('id', $id)->first();
 
         if ($request->hasFile('meta_image')) {
             $extension = $request->file('meta_image')->getClientOriginalExtension();
             $fileName = Str::random(18) . '.' . $extension;
             Storage::disk('public_images')->putFileAs('', $request->file('meta_image'), $fileName);
+            $item->meta_file = $fileName;
         }
 
-        $item = Post::withTrashed()->where('id', $id)->first();
 
         $item->classification_id = $request->input('classification', null) === 'null' ? null : $request->input('classification', null);
         $item->name = $params['name'];
         $item->meta_name = $params['meta_name'];
         $item->meta_description = $params['meta_description'];
-        $item->meta_file = $fileName;
         $item->description = $params['description'];
         $item->created_at = Carbon::parse($params['created_at'])->toDateTimeString();
         $item->updated_at = Carbon::parse($params['updated_at'])->toDateTimeString();
