@@ -223,79 +223,28 @@
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Type:</span>
-                                        <span id="view-type"></span>
+                                        <span class="fw-bolder me-25">Owner:</span>
+                                        <span id="view-owner"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Date #:</span>
+                                        <span id="view-date"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Description:</span>
+                                        <span id="view-description"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Payments total:</span>
+                                        <span id="view-total"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">Attachments:</span>
+                                        <span id="view-files"></span>
                                     </li>
                                 </ul>
                             </div>
-                            <div id="view-company-container" style="display: none">
-                                <div class="info-container">
-                                    <ul class="list-unstyled">
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Full name:</span>
-                                            <span id="view-name"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Commercial #:</span>
-                                            <span id="view-commercial"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">License file:</span>
-                                            <span id="view-license"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Company file:</span>
-                                            <span id="view-company"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="info-container">
-                                <ul class="list-unstyled">
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Contact name:</span>
-                                        <span id="view-contact"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Email:</span>
-                                        <span id="view-email"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Phone:</span>
-                                        <span id="view-phone"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Zip code:</span>
-                                        <span id="view-zip"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Country:</span>
-                                        <span id="view-country"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">City:</span>
-                                        <span id="view-city"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 1:</span>
-                                        <span id="view-address-1"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 2:</span>
-                                        <span id="view-address-2"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Legal file (ID, Passport):</span>
-                                        <span id="view-legal"></span>
-                                    </li>
 
-                                </ul>
-                                <div class="d-flex justify-content-center pt-2">
-                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

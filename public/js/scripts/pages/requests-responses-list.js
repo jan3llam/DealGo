@@ -3,6 +3,7 @@ $(function () {
 
     var dtTable = $('.offers-list-table'),
         newSidebar = $('.new-offer-modal'),
+        viewSidebar = $('.view-offer-modal'),
         newForm = $('.add-new-offer'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
@@ -195,6 +196,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            'View</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             'Delete</a></div>' +
@@ -373,6 +377,17 @@ $(function () {
             }
         })
     });
+
+
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data().user;
+        viewSidebar.modal('show');
+        $('#view-description').html(data.description);
+        $('#view-date').html(data.date);
+        $('#view-owner').html(data.owner.contact_name);
+
+    })
 
     $(document).on('click', '.item-update', function () {
         var element = $(this);
