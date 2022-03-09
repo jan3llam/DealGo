@@ -25,7 +25,9 @@ class TicketsController extends Controller
             ['link' => "admin/home", 'name' => "Home"], ['link' => "admin/tickets", 'name' => "Tickets"], ['name' => "Ticket details"]
         ];
 
-        $ticket = Ticket::withTrashed()->where('id', $id)->first();
+        $ticket = Ticket::withTrashed()->where('id', $id)->with('user', function ($q) {
+            $q->withTrashed();
+        })->first();
 
         return view('content.ticket-view', ['breadcrumbs' => $breadcrumbs, 'ticket' => $ticket]);
     }
