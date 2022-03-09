@@ -18,7 +18,7 @@ class AboutController extends Controller
         ];
 
         $languages = Language::withoutTrashed()->get();
-        return view('content.advantages-list', ['breadcrumbs' => $breadcrumbs, 'languages' => $languages]);
+        return view('content.about-list', ['breadcrumbs' => $breadcrumbs, 'languages' => $languages]);
     }
 
     public function list_api(Request $request)

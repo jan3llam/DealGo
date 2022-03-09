@@ -11,6 +11,10 @@ class About extends Model
 {
     use HasFactory, SoftDeletes, HasTranslations;
 
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     public $translatable = ['name', 'description'];
     protected $table = 'about';
     protected $appends = ['name_translation'];
