@@ -557,7 +557,6 @@ $(function () {
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
         $('#object_id').val(data.id);
-        $('#province').val(data.province);
         if (data.goods_types.length) {
             var goods_types = [];
             data.goods_types.forEach(item => {
@@ -566,6 +565,7 @@ $(function () {
         }
         $('#gtype').val(goods_types).trigger('change.select2');
         data = data.user;
+        $('#province').val(data.province);
         $('#name').val(data.full_name);
         $('#contact').val(data.contact_name);
         $('#commercial').val(data.commercial_number);
