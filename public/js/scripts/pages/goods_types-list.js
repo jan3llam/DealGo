@@ -109,7 +109,7 @@ $(function () {
                     render: function (data, type, full, meta) {
                         var string = '<div>';
                         data.forEach(item => {
-                            string += '<span class="badge bg-primary">' + item.name + '</span>';
+                            string += '<span class="badge bg-primary">' + item.name_translation + '</span>';
                         });
                         string += '</div>'
                         return string;
