@@ -130,9 +130,6 @@ $(function () {
                             '<a href="/admin/ticket/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
                             feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
                             'View</a>' +
-                            '<a href="javascript:;" class="dropdown-item item-close" data-id="' + full['id'] + '">' +
-                            feather.icons['power'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Close</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             'Delete</a></div>' +
