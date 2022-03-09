@@ -142,10 +142,10 @@ class ClientsController extends Controller
             $extension = $request->file('file')->getClientOriginalExtension();
             $fileName = Str::random(18) . '.' . $extension;
             Storage::disk('public_images')->putFileAs('', $request->file('file'), $fileName);
+            $item->file = $fileName;
         }
 
         $item->url = $params['url'];
-        $item->file = $fileName;
 
         $item->save();
 
