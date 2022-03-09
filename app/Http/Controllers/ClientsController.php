@@ -130,7 +130,6 @@ class ClientsController extends Controller
         $params = $request->all();
         $validator = Validator::make($params, [
             'url' => 'required|string',
-            'file' => 'required|file',
         ]);
 
         if ($validator->fails()) {

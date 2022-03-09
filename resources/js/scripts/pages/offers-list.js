@@ -261,6 +261,9 @@ $(function () {
                 },
                 'weight': {
                     required: true
+                },
+                'description': {
+                    required: true
                 }
             }
         })

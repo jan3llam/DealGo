@@ -133,7 +133,6 @@ class AdvantagesController extends Controller
         $validator = Validator::make($params, [
 
             'name' => 'required|array',
-            'file' => 'required|file',
             'description' => 'required|array',
         ]);
 

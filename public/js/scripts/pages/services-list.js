@@ -1,14 +1,10 @@
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.offers-list-table'),
-        newSidebar = $('.new-offer-modal'),
-        viewSidebar = $('.view-offer-modal'),
-        newForm = $('.add-new-offer'),
-        statusObj = {
-            1: {title: 'Active', class: 'badge-light-success status-switcher'},
-            0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
-        }
+    var dtTable = $('.services-list-table'),
+        newSidebar = $('.new-service-modal'),
+        viewSidebar = $('.view-service-modal'),
+        newForm = $('.add-new-service');
 
 
     var assetPath = '../../../app-assets/';
@@ -17,10 +13,11 @@ $(function () {
         assetPath = $('body').attr('data-asset-path')
     }
     if (dtTable.length) {
+        var link = assetPath + 'api/admin/services/list';
         dtTable.dataTable({
             ajax: function (data, callback, settings) {
                 // make a regular ajax request using data.start and data.length
-                $.get(assetPath + 'api/admin/offers/list', {
+                $.get(link, {
                     length: data.length,
                     start: data.start,
                     draw: data.draw,
@@ -44,11 +41,8 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'id'},
-                {data: 'vessel.name'},
-                {data: 'vessel.owner.user.contact_name'},
-                {data: 'date_from'},
-                {data: 'port_from'},
-                {data: 'port_to'},
+                {data: 'name_translation'},
+                {data: 'file'},
                 {data: ''}
             ],
             columnDefs: [
@@ -83,9 +77,9 @@ $(function () {
                     }
                 },
                 {
-                    targets: [6, 7],
+                    targets: 4,
                     render: function (data, type, full, meta) {
-                        return data ? data : '-';
+                        return `<img height="30" src="${assetPath + 'images/' + data}"/>`;
                     }
                 },
                 {
@@ -95,11 +89,19 @@ $(function () {
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return (
-                            '<a href="/admin/offers_responses/' + full['id'] + '" class="btn btn-light btn-sm" data-id="' + full['id'] + '">' +
-                            feather.icons['thumbs-up'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Responses (' + full['responses_count'] + ')</a>' +
-                            '<a href="javascript:;" class="ms-2 item-delete" data-id="' + full['id'] + '">' +
-                            feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
+                            '<div class="btn-group">' +
+                            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
+                            feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
+                            '</a>' +
+                            '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
+                            feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
+                            'Edit</a>' +
+                            '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
+                            feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
+                            'Delete</a></div>' +
+                            '</div>' +
+                            '</div>'
                         )
                     }
                 }
@@ -124,6 +126,7 @@ $(function () {
                     $(row).addClass('table-secondary');
                 }
             },
+
             initComplete: function () {
                 $(document).on('click', '.status-item', function () {
                     $('#status_filter').val($(this).data('status'));
@@ -209,11 +212,14 @@ $(function () {
                     text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Delete',
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
+                        if (!$('#vessel_id').val()) {
+                            node.remove();
+                        }
                     }
                 },
                 {
                     text: 'Add new',
-                    className: 'add-offer btn btn-primary',
+                    className: 'add-service btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in',
@@ -222,6 +228,9 @@ $(function () {
                     },
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
+                        if (!$('#vessel_id').val()) {
+                            node.remove();
+                        }
                     }
                 }
             ],
@@ -230,53 +239,44 @@ $(function () {
 
     if (newForm.length) {
 
-        $('#goods_container').repeater({
-            initEmpty: true,
-            show: function () {
-                $(this).slideDown(function () {
-                    $(this).find('.goods-select2').select2({dropdownParent: newSidebar});
-                });
-                // Feather Icons
-                if (feather) {
-                    feather.replace({width: 14, height: 14});
-                }
-            }
-        });
-
-
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'vessel': {
+                'file': {
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
+                },
+                'meta_name': {
                     required: true
                 },
-                'owner': {
+                'meta_description': {
                     required: true
                 },
-                'date_from': {
-                    required: true
+                'meta_file': {
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
                 },
-                'date_to': {
-                    required: true
-                },
-                'weight': {
-                    required: true
-                },
-                'description': {
-                    required: true
-                }
             }
         })
 
-        $('#vessel,#owner').select2({dropdownParent: newSidebar});
+        $('[name^="name"],[name^="description"]').each(function () {
+            $(this).rules('add', {
+                required: true,
+            });
+        });
 
-        $("#files").fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#file").fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#meta_file").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         newForm.on('submit', function (e) {
+            e.preventDefault();
             let data = new FormData();
+
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
-            e.preventDefault()
+
             if (isValid) {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());
@@ -289,7 +289,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/offers/' + type,
+                    url: assetPath + 'api/admin/services/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -327,7 +327,7 @@ $(function () {
                 if (result.value) {
                     $.ajax({
                         type: 'DELETE',
-                        url: assetPath + 'api/admin/offers/bulk',
+                        url: assetPath + 'api/admin/services/bulk',
                         data: {ids: ids},
                         dataType: 'json',
                         success: function (response) {
@@ -371,39 +371,7 @@ $(function () {
             if (result.value) {
                 $.ajax({
                     type: 'DELETE',
-                    url: assetPath + 'api/admin/offers/' + element.data('id'),
-                    dataType: 'json',
-                    success: function (response) {
-                        if (parseInt(response.code) === 1) {
-                            dtTable.DataTable().ajax.reload();
-                            toastr['success'](response.message);
-                        } else {
-                            toastr['error'](response.message);
-                        }
-                    }
-                })
-            }
-        });
-    })
-
-    $(document).on('click', '.status-switcher', function () {
-        let element = $(this);
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to change status for this item?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn btn-outline-danger ms-1'
-            },
-            buttonsStyling: false
-        }).then(function (result) {
-            if (result.value) {
-                $.ajax({
-                    type: 'PUT',
-                    url: assetPath + 'api/admin/offers/status/' + element.data('id'),
+                    url: assetPath + 'api/admin/services/' + element.data('id'),
                     dataType: 'json',
                     success: function (response) {
                         if (parseInt(response.code) === 1) {
@@ -416,40 +384,48 @@ $(function () {
                 })
             }
         })
-    });
-    ;
+    })
+
+    $(document).on('show.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
+        var language = e.target.dataset.language;
+        $('.tab-pane.active').removeClass('active').addClass('hidden');
+        $('#name-tab-' + language).addClass('active').removeClass('hidden');
+        $('#description-tab-' + language).addClass('active').removeClass('hidden');
+    })
 
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $("#files").fileinput('destroy').fileinput({
-            initialPreview: [assetPath + 'images/' + data.files],
+        for (const [key, value] of Object.entries(data.name)) {
+            $('[name="name[' + key + ']"]').val(data.name[key]);
+            $('[name="description[' + key + ']"]').val(data.description[key]);
+        }
+        $('#meta_name').val(data.meta_name);
+        $('#meta_description').val(data.meta_description);
+        $("#file").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.file],
             showUpload: false,
             initialPreviewAsData: true,
         });
-        $('#name').val(data.full_name);
-        $('#contact').val(data.contact_name);
-        $('#commercial').val(data.commercial_number);
-        $('#email').val(data.email);
-        $('#phone').val(data.phone);
-        $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id).trigger('change.select2');
-        $('#address_1').val(data.address_1);
-        $('#address_2').val(data.address_2);
-        $('#zip').val(data.zip_code);
-        $('#type').val(data.type);
+        $("#meta_file").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.meta_file],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
+        $('#url').val(data.url);
         $('#object_id').val(data.id);
     });
 
-    $(document).on('click', '.add-request', function () {
+    $(document).on('click', '.add-service', function () {
         $('#form_status').val(1);
-        $('#image_container').attr('src', '');
+        $('#file_container').attr('src', '');
         $('#object_id').val('');
-        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+        newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        });
-        $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        })
+        $("#file").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#meta_file").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })

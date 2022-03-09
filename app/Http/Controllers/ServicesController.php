@@ -145,11 +145,9 @@ class ServicesController extends Controller
         $validator = Validator::make($params, [
 
             'name' => 'required|array',
-            'file' => 'required|file',
             'description' => 'required|array',
             'meta_name' => 'required|string',
             'meta_description' => 'required|string',
-            'meta_file' => 'required|file',
         ]);
 
         if ($validator->fails()) {

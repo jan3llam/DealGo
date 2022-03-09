@@ -127,7 +127,6 @@ class SliderController extends Controller
         $validator = Validator::make($params, [
             'name' => 'required|array',
             'description' => 'required|array',
-            'file' => 'required|file',
             'url' => 'required|string',
         ]);
 
