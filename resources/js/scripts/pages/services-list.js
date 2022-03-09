@@ -1,10 +1,10 @@
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.posts-list-table'),
-        newSidebar = $('.new-post-modal'),
-        viewSidebar = $('.view-post-modal'),
-        newForm = $('.add-new-post');
+    var dtTable = $('.services-list-table'),
+        newSidebar = $('.new-service-modal'),
+        viewSidebar = $('.view-service-modal'),
+        newForm = $('.add-new-service');
 
 
     var assetPath = '../../../app-assets/';
@@ -13,11 +13,7 @@ $(function () {
         assetPath = $('body').attr('data-asset-path')
     }
     if (dtTable.length) {
-        var link = assetPath + 'api/admin/posts/list/';
-        var classification_id = $('#classification_id').val();
-        if (classification_id) {
-            link += classification_id;
-        }
+        var link = assetPath + 'api/admin/services/list';
         dtTable.dataTable({
             ajax: function (data, callback, settings) {
                 // make a regular ajax request using data.start and data.length
@@ -46,8 +42,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'name_translation'},
-                {data: 'classification.name_translation'},
-                {data: 'created_at'},
+                {data: 'file'},
                 {data: ''}
             ],
             columnDefs: [
@@ -79,6 +74,12 @@ $(function () {
                         selectRow: true,
                         selectAllRender:
                             '<div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="checkboxSelectAll" /><label class="form-check-label" for="checkboxSelectAll"></label></div>'
+                    }
+                },
+                {
+                    targets: 4,
+                    render: function (data, type, full, meta) {
+                        return `<img height="30" src="${assetPath + 'images/' + data}"/>`;
                     }
                 },
                 {
@@ -211,11 +212,14 @@ $(function () {
                     text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Delete',
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
+                        if (!$('#vessel_id').val()) {
+                            node.remove();
+                        }
                     }
                 },
                 {
                     text: 'Add new',
-                    className: 'add-post btn btn-primary',
+                    className: 'add-service btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in',
@@ -224,6 +228,9 @@ $(function () {
                     },
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
+                        if (!$('#vessel_id').val()) {
+                            node.remove();
+                        }
                     }
                 }
             ],
@@ -231,18 +238,11 @@ $(function () {
     }
 
     if (newForm.length) {
-        var editor = null;
 
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'classification': {
-                    required: true
-                },
-                'created_at': {
-                    required: true
-                },
-                'updated_at': {
+                'file': {
                     required: true
                 },
                 'meta_name': {
@@ -251,7 +251,7 @@ $(function () {
                 'meta_description': {
                     required: true
                 },
-                'meta_image': {
+                'meta_file': {
                     required: true
                 },
             }
@@ -263,75 +263,8 @@ $(function () {
             });
         });
 
-        $('#classification').select2({dropdownParent: newSidebar});
-
-        $("#meta_image").fileinput({'showUpload': false, 'previewFileType': 'any'});
-
-        // editor = new Quill('.editor', {
-        //     bounds: '.editor',
-        //     modules: {
-        //         toolbar: [
-        //             [
-        //                 {
-        //                     font: []
-        //                 },
-        //                 {
-        //                     size: []
-        //                 }
-        //             ],
-        //             ['bold', 'italic', 'underline', 'strike'],
-        //             [
-        //                 {
-        //                     color: []
-        //                 },
-        //                 {
-        //                     background: []
-        //                 }
-        //             ],
-        //             [
-        //                 {
-        //                     script: 'super'
-        //                 },
-        //                 {
-        //                     script: 'sub'
-        //                 }
-        //             ],
-        //             [
-        //                 {
-        //                     header: '1'
-        //                 },
-        //                 {
-        //                     header: '2'
-        //                 },
-        //                 'blockquote',
-        //                 'code-block'
-        //             ],
-        //             [
-        //                 {
-        //                     list: 'ordered'
-        //                 },
-        //                 {
-        //                     list: 'bullet'
-        //                 },
-        //                 {
-        //                     indent: '-1'
-        //                 },
-        //                 {
-        //                     indent: '+1'
-        //                 }
-        //             ],
-        //             [
-        //                 'direction',
-        //                 {
-        //                     align: []
-        //                 }
-        //             ],
-        //             ['link'],
-        //             ['clean']
-        //         ]
-        //     },
-        //     theme: 'snow'
-        // })
+        $("#file").fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#meta_file").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         newForm.on('submit', function (e) {
             e.preventDefault();
@@ -350,10 +283,9 @@ $(function () {
                 newForm.find('input[type=file]').each(function () {
                     data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
-                // data.append('description', JSON.stringify(editor.getContents()));
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/posts/' + type,
+                    url: assetPath + 'api/admin/services/' + type,
                     dataType: 'json',
                     processData: false,
                     contentType: false,
@@ -373,31 +305,6 @@ $(function () {
         })
     }
 
-
-    $(document).on('click', '.item-delete', function () {
-        var element = $(this);
-        $.ajax({
-            type: 'DELETE',
-            url: assetPath + 'api/admin/posts/' + element.data('id'),
-            dataType: 'json',
-            success: function (response) {
-                if (parseInt(response.code) === 1) {
-                    dtTable.DataTable().ajax.reload();
-                    toastr['success'](response.message);
-                } else {
-                    toastr['error'](response.message);
-                }
-            }
-        })
-    });
-
-    $(document).on('show.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
-        var language = e.target.dataset.language;
-        $('.tab-pane.active').removeClass('active').addClass('hidden');
-        $('#name-tab-' + language).addClass('active').removeClass('hidden');
-        $('#description-tab-' + language).addClass('active').removeClass('hidden');
-    });
-
     $(document).on('click', '.items-delete', function () {
         var ids = dtTable.api().columns().checkboxes.selected()[1];
         if (ids.length) {
@@ -416,7 +323,7 @@ $(function () {
                 if (result.value) {
                     $.ajax({
                         type: 'DELETE',
-                        url: assetPath + 'api/admin/posts/bulk',
+                        url: assetPath + 'api/admin/services/bulk',
                         data: {ids: ids},
                         dataType: 'json',
                         success: function (response) {
@@ -443,37 +350,78 @@ $(function () {
         }
     });
 
+    $(document).on('click', '.item-delete', function () {
+        var element = $(this);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete this item!',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-outline-danger ms-1'
+            },
+            buttonsStyling: false
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: assetPath + 'api/admin/services/' + element.data('id'),
+                    dataType: 'json',
+                    success: function (response) {
+                        if (parseInt(response.code) === 1) {
+                            dtTable.DataTable().ajax.reload();
+                            toastr['success'](response.message);
+                        } else {
+                            toastr['error'](response.message);
+                        }
+                    }
+                })
+            }
+        })
+    })
+
+    $(document).on('show.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
+        var language = e.target.dataset.language;
+        $('.tab-pane.active').removeClass('active').addClass('hidden');
+        $('#name-tab-' + language).addClass('active').removeClass('hidden');
+        $('#description-tab-' + language).addClass('active').removeClass('hidden');
+    })
+
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#classification').val(data.classification_id).trigger('change.select2');
-        $('#meta_name').val(data.meta_name);
-        $('#meta_description').val(data.meta_description);
-        $('#created_at').val(data.created_at);
-        $('#updated_at').val(data.updated_at);
         for (const [key, value] of Object.entries(data.name)) {
             $('[name="name[' + key + ']"]').val(data.name[key]);
             $('[name="description[' + key + ']"]').val(data.description[key]);
         }
-        $("#meta_image").fileinput('destroy').fileinput({
+        $('#meta_name').val(data.meta_name);
+        $('#meta_description').val(data.meta_description);
+        $("#file").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.file],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
+        $("#meta_file").fileinput('destroy').fileinput({
             initialPreview: [assetPath + 'images/' + data.meta_file],
             showUpload: false,
             initialPreviewAsData: true,
         });
+        $('#url').val(data.url);
         $('#object_id').val(data.id);
     });
 
-    $(document).on('click', '.add-post', function () {
+    $(document).on('click', '.add-service', function () {
         $('#form_status').val(1);
-        $('#image_container').attr('src', '');
+        $('#file_container').attr('src', '');
         $('#object_id').val('');
-        $("#meta_image").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
-        // editor.deleteText(0, editor.getLength());
         newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
-        });
-        $('#classification').val($('#classification_id').val()).trigger('change.select2')
+        })
+        $("#file").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#meta_file").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })

@@ -245,6 +245,15 @@ $(function () {
                 'updated_at': {
                     required: true
                 },
+                'meta_name': {
+                    required: true
+                },
+                'meta_description': {
+                    required: true
+                },
+                'meta_image': {
+                    required: true
+                },
             }
         })
 

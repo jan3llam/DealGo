@@ -126,6 +126,7 @@
     "/js/scripts/pages/requests-list.js": "/js/scripts/pages/requests-list.js",
     "/js/scripts/pages/requests-responses-list.js": "/js/scripts/pages/requests-responses-list.js",
     "/js/scripts/pages/roles-list.js": "/js/scripts/pages/roles-list.js",
+    "/js/scripts/pages/services-list.js": "/js/scripts/pages/services-list.js",
     "/js/scripts/pages/settings-view.js": "/js/scripts/pages/settings-view.js",
     "/js/scripts/pages/shipments-list.js": "/js/scripts/pages/shipments-list.js",
     "/js/scripts/pages/slider-list.js": "/js/scripts/pages/slider-list.js",
