@@ -234,6 +234,11 @@ $(function () {
             initEmpty: true,
             show: function () {
                 $(this).slideDown();
+                $('[name^="payments"]').each(function () {
+                    $(this).rules('add', {
+                        required: true,
+                    });
+                });
                 // Feather Icons
                 if (feather) {
                     feather.replace({width: 14, height: 14});
@@ -246,6 +251,11 @@ $(function () {
             show: function () {
                 $(this).slideDown(function () {
                     $(this).find('.routes-select2').select2({dropdownParent: newSidebar});
+                    $('[name^="routes"]').each(function () {
+                        $(this).rules('add', {
+                            required: true,
+                        });
+                    });
                 });
                 // Feather Icons
                 if (feather) {

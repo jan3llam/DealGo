@@ -1,9 +1,9 @@
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.offers-list-table'),
-        newSidebar = $('.new-offer-modal'),
-        newForm = $('.add-new-offer'),
+    var dtTable = $('.responses-list-table'),
+        newSidebar = $('.new-response-modal'),
+        newForm = $('.add-new-response'),
         statusObj = {
             1: {title: 'Active', class: 'badge-light-success status-switcher'},
             0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
@@ -250,6 +250,11 @@ $(function () {
             show: function () {
                 $(this).slideDown(function () {
                     $(this).find('.goods-select2').select2({dropdownParent: newSidebar});
+                    $('[name^="goods"]').each(function () {
+                        $(this).rules('add', {
+                            required: true,
+                        });
+                    });
                 });
                 // Feather Icons
                 if (feather) {
@@ -262,6 +267,11 @@ $(function () {
             initEmpty: true,
             show: function () {
                 $(this).slideDown();
+                $('[name^="payments"]').each(function () {
+                    $(this).rules('add', {
+                        required: true,
+                    });
+                });
                 // Feather Icons
                 if (feather) {
                     feather.replace({width: 14, height: 14});
@@ -295,6 +305,11 @@ $(function () {
                             }
                         }
                     });
+                    $('[name^="routes"]').each(function () {
+                        $(this).rules('add', {
+                            required: true,
+                        });
+                    });
                 });
                 // Feather Icons
                 if (feather) {
@@ -318,6 +333,24 @@ $(function () {
                     required: true
                 },
                 'down_description': {
+                    required: true
+                },
+                'name': {
+                    required: true
+                },
+                'port_from': {
+                    required: true
+                },
+                'port_to': {
+                    required: true
+                },
+                'contract': {
+                    required: true
+                },
+                'date_from': {
+                    required: true
+                },
+                'date_to': {
                     required: true
                 },
                 'description': {

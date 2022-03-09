@@ -37,7 +37,7 @@
                 <input type="hidden" id="trashed" value="0">
             </div>
             <div class="card-datatable table-responsive pt-0">
-                <table class="offers-list-table table">
+                <table class="responses-list-table table">
                     <thead class="table-light">
                     <tr>
                         <th></th>
