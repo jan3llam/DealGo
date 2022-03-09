@@ -77,7 +77,7 @@
                                     <option value="" disabled selected>Kindly choose</option>
                                     @foreach($tenants as $tenant)
                                         <option
-                                            value="{{$tenant->userable->id}}">{{$tenant->userable->contact_name}}</option>
+                                            value="{{$tenant->userable->id}}">{{$tenant->contact_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -188,7 +188,7 @@
                                             name="owner">
                                         @foreach($owners as $owner)
                                             <option
-                                                value="{{$owner->userable->id}}">{{$owner->userable->contact_name}}</option>
+                                                value="{{$owner->userable->id}}">{{$owner->contact_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
