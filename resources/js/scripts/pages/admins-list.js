@@ -280,7 +280,9 @@ $(function () {
                     required: true
                 },
                 'password': {
-                    required: true
+                    required: function (element) {
+                        return parseInt($("#form_status").val()) === 1;
+                    }
                 },
                 'city': {
                     required: true
