@@ -86,6 +86,20 @@ $(function () {
                     }
                 },
                 {
+                    targets: 4,
+                    render: function (data, type, full, meta) {
+                        let string = data + '(';
+                        if (full['userable_type'] === 'App\\\\Models\\\\Tenant') {
+                            string += 'Charterer';
+                        } else if (full['userable_type'] === 'App\\\\Models\\\\Owner') {
+                            string += 'Shipowner';
+                        } else if (full['userable_type'] === 'App\\\\Models\\\\Office') {
+                            string += 'Shipping Agent';
+                        }
+                        return string + ')';
+                    }
+                },
+                {
                     targets: 5,
                     render: function (data, type, full, meta) {
                         var $category = full['type']
