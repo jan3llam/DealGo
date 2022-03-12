@@ -42,9 +42,11 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Shipowner</th>
-                        <th>Value</th>
+                        <th>Charterer</th>
+                        <th>Origin of shipment</th>
+                        <th>Destination of shipment</th>
                         <th>Date</th>
+                        <th>Value</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -76,7 +78,7 @@
                                         name="tenant">
                                     <option value="" disabled selected>Kindly choose</option>
                                     @foreach($tenants as $tenant)
-                                        <option value="{{$tenant->id}}">{{$tenant->contact_name}}</option>
+                                        <option value="{{$tenant->userable->id}}">{{$tenant->contact_name}}</option>
                                     @endforeach
                                 </select>
                             </div>

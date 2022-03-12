@@ -7,10 +7,10 @@ use App\Models\Offer;
 use App\Models\OfferResponse;
 use App\Models\OfferResponsePayment;
 use App\Models\Port;
-use App\Models\RequestResponsePayment;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Models\Vessel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -62,8 +62,14 @@ class OffersResponsesController extends Controller
             'payments' => function ($query) {
                 $query->sum('value');
             },
-            'owner' => function ($q) {
+            'tenant' => function ($q) {
                 $q->withTrashed()->with('user');
+            },
+            'port_from' => function ($q) {
+                $q->withTrashed();
+            },
+            'port_to' => function ($q) {
+                $q->withTrashed();
             },
         ]);
 
@@ -117,11 +123,17 @@ class OffersResponsesController extends Controller
     {
         $params = $request->all();
         $validator = Validator::make($params, [
-            'owner' => 'required|numeric',
-            'offer' => 'required|numeric',
-            'date' => 'required',
-            'commercial' => 'required_if:type,1',
+            'contract' => 'required|string',
+            'routes' => 'required_if:contract,2,3,4',
+            'goods' => 'required_if:contract,1,3',
             'description' => 'required|string',
+            'date_from' => 'required|string',
+            'date_to' => 'required|string',
+            'port_from' => 'required',
+            'port_to' => 'required',
+            'tenant' => 'required|numeric',
+            'offer' => 'required|numeric',
+            'name' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -130,10 +142,15 @@ class OffersResponsesController extends Controller
 
         $item = new OfferResponse;
 
-        $item->request_id = $params['request'];
-        $item->owner_id = $params['owner'];
-        $item->date = $params['date'];
+        $item->name = $params['name'];
+        $item->offer_id = $params['offer'];
+        $item->tenant_id = $params['tenant'];
+        $item->port_from = $params['port_from'];
+        $item->port_to = $params['port_to'];
+        $item->date_from = Carbon::parse($params['date_from'])->toDateString();
+        $item->date_to = Carbon::parse($params['date_to'])->toDateString();
         $item->description = $params['description'];
+        $item->contract = $params['contract'];
 
         $files = $request->file('files', []);
         $filesArr = [];
@@ -150,8 +167,14 @@ class OffersResponsesController extends Controller
 
         $item->save();
 
+        if ($request->contract == 1 || $request->contract == 3) {
 
-        if ($item->request->contract == 1) {
+            $goods = $request->input('goods', []);
+            foreach ($goods as $index => $good) {
+                $item->goods_types()->attach($good['gtype'], ['weight' => $good['weight']]);
+            }
+        }
+        if ($request->contract != 1) {
 
             $routes = $request->input('routes', []);
             foreach ($routes as $index => $route) {
@@ -159,27 +182,15 @@ class OffersResponsesController extends Controller
             }
         }
 
-        $vessels = $request->input('vessels', []);
-        foreach ($vessels as $vessel) {
-            $item->vessels()->attach($vessel->id, ['request_good_id' => $vessel->request_good_id]);
-        }
-
         $payments = $request->input('payments', []);
         $paymentsArr = [];
         foreach ($payments as $payment) {
             $fileName = null;
 
-            $paymentItem = new RequestResponsePayment;
+            $paymentItem = new OfferResponsePayment;
             $paymentItem->value = $payment['value'];
             $paymentItem->date = $payment['date'];
             $paymentItem->description = $payment['description'];
-
-//            if ($payment->hasFile('file')) {
-//                $extension = $request->file('file')->getClientOriginalExtension();
-//                $fileName = Str::random(18) . '.' . $extension;
-//                Storage::disk('public_images')->putFileAs('', $request->file('file'), $fileName);
-//            }
-
             $paymentItem->file = $fileName;
 
             array_push($paymentsArr, $paymentItem);

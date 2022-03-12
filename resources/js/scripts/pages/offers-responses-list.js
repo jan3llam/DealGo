@@ -151,9 +151,11 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'owner.user'},
+                {data: 'tenant.user'},
+                {data: 'port_from.name'},
+                {data: 'port_to.name'},
+                {data: 'date_from'},
                 {data: 'total'},
-                {data: 'date'},
                 {data: ''}
             ],
             columnDefs: [
@@ -174,7 +176,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 3,
+                    targets: 6,
                     render: function (data, type, full, meta) {
                         var sum = 0;
                         full['payments'].forEach(item => {
@@ -195,9 +197,6 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
-                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
-                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
-                            'View</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             'Delete</a></div>' +

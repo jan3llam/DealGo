@@ -37,9 +37,19 @@ class OfferResponse extends Model
         return $this->belongsToMany(Port::class, 'offers_responses_routes', 'offer_id', 'port_id')->withPivot('order');
     }
 
+    public function port_from()
+    {
+        return $this->belongsTo(Port::class, 'port_from');
+    }
+
+    public function port_to()
+    {
+        return $this->belongsTo(Port::class, 'port_to');
+    }
+
     public function goods_types()
     {
-        return $this->belongsToMany(OfferResponseGoodsType::class, 'offers_responses_goods_types', 'offer_id');
+        return $this->belongsToMany(OfferResponseGoodsType::class, 'offers_responses_goods_types', 'offer_id', 'good_id');
     }
 
     public function getFilesAttribute($value)
