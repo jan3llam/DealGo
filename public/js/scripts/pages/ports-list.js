@@ -43,7 +43,7 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'id'},
-                {data: 'name'},
+                {data: 'name_translation'},
                 {data: 'city.country.name'},
                 {data: 'city.name'},
                 {data: 'unlocode'},
@@ -255,9 +255,6 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'name': {
-                    required: true
-                },
                 'city': {
                     required: true
                 },
@@ -272,6 +269,12 @@ $(function () {
                 },
             }
         })
+
+        $('[name^="name"]').each(function () {
+            $(this).rules('add', {
+                required: true,
+            });
+        });
 
         $('#country,#city').select2({dropdownParent: newSidebar});
 
@@ -417,12 +420,21 @@ $(function () {
         })
     });
 
+
+    $(document).on('show.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
+        var language = e.target.dataset.language;
+        $('.tab-pane.active').removeClass('active').addClass('hidden');
+        $('#name-tab-' + language).addClass('active').removeClass('hidden');
+    })
+
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#name').val(data.name);
+        for (const [key, value] of Object.entries(data.name)) {
+            $('[name="name[' + key + ']"]').val(data.name[key]);
+        }
         $('#city_id').val(data.city.id);
         $('#longitude').val(data.longitude);
         $('#latitude').val(data.latitude);

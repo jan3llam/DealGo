@@ -320,6 +320,17 @@ $(function () {
 
         $('#tenant,#contract,#owner').select2({dropdownParent: newSidebar});
 
+        $.validator.addMethod("greaterThan",
+            function (value, element, params) {
+
+                if (!/Invalid|NaN/.test(new Date(value))) {
+                    return new Date(value) > new Date($(params).val());
+                }
+
+                return isNaN(value) && isNaN($(params).val())
+                    || (Number(value) > Number($(params).val()));
+            }, 'Must be greater than date from.');
+
         newForm.validate({
             errorClass: 'error',
             rules: {
@@ -351,7 +362,9 @@ $(function () {
                     required: true
                 },
                 'date_to': {
-                    required: true
+                    required: true,
+                    greaterThan: "#date_from"
+
                 },
                 'description': {
                     required: true

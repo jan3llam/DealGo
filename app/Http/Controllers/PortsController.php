@@ -87,7 +87,7 @@ class PortsController extends Controller
     {
         $params = $request->all();
         $validator = Validator::make($params, [
-            'name' => 'required|string',
+            'name' => 'required|array',
             'city' => 'required|string',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
@@ -119,7 +119,7 @@ class PortsController extends Controller
 
         $params = $request->all();
         $validator = Validator::make($params, [
-            'name' => 'required|string',
+            'name' => 'required|array',
             'city' => 'required|string',
             'latitude' => 'required|string',
             'longitude' => 'required|string',
