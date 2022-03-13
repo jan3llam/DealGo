@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\Language;
 use App\Models\Port;
 use Illuminate\Http\Request;
 use Validator;
@@ -16,8 +17,9 @@ class PortsController extends Controller
         ];
 
         $countries = Country::all();
+        $languages = Language::withoutTrashed()->get();
 
-        return view('content.ports-list', ['breadcrumbs' => $breadcrumbs, 'countries' => $countries]);
+        return view('content.ports-list', ['breadcrumbs' => $breadcrumbs, 'countries' => $countries, 'languages' => $languages]);
     }
 
     public function list_api(Request $request)
