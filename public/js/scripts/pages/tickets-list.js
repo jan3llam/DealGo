@@ -82,7 +82,7 @@ $(function () {
                     checkboxes: {
                         selectRow: true,
                         selectAllRender:
-                            '<div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="checkboxSelectAll" /><label class="form-check-label" for="checkboxSelectAll"></label></div>'
+                            '<div class="form-check"> <input class="form-check-input" type="checkbox"  value="" id="checkboxSelectAll" /><label class="form-check-label" for="checkboxSelectAll"></label></div>'
                     }
                 },
                 {
