@@ -50,8 +50,8 @@ $(function () {
                     dataType: 'json',
                     success: function (response) {
                         if (parseInt(response.code) === 1) {
-                            dtTable.DataTable().ajax.reload();
                             toastr['success'](response.message);
+                            window.location.reload();
                         } else {
                             toastr['error'](response.message);
                         }

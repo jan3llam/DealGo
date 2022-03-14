@@ -28,7 +28,7 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
-                <h4 class="card-title">Search & Filter</h4>
+                <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
@@ -64,7 +64,7 @@
                                 <label class="form-label" for="role">Role</label>
                                 <select type="text" class="form-control dt-full-name select2" id="role"
                                         name="role">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($roles as $role)
                                         <option value="{{$role->id}}">{{$role->name}}</option>
                                     @endforeach
@@ -97,10 +97,10 @@
                             </div>
 
                             <div class="mb-1">
-                                <label class="form-label" for="country">Country</label>
+                                <label class="form-label" for="country">{{__('locale.Country')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="country"
                                         name="country">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($countries as $country)
                                         <option value="{{$country->id}}">{{$country->name}}</option>
                                     @endforeach
@@ -108,10 +108,10 @@
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="city_id">
-                                <label class="form-label" for="city">Cities</label>
+                                <label class="form-label" for="city">{{__('locale.City')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="city"
                                         name="city">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                 </select>
                             </div>
                             <div class="mb-1">
@@ -125,7 +125,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary me-1 data-submit">
-                                Submit
+                                {{__('locale.Submit')}}
                             </button>
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                 {{__('locale.Cancel')}}

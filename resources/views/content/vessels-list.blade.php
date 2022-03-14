@@ -29,7 +29,7 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
-                <h4 class="card-title">Search & Filter</h4>
+                <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
@@ -39,7 +39,7 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>{{__('locale.Name')}}</th>
                         <th>IMO</th>
                         <th>Ship owner</th>
                         <th>Country</th>
@@ -61,9 +61,9 @@
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="name">Name</label>
+                                <label class="form-label" for="name">{{__('locale.Name')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="name"
-                                       placeholder="Name" name="name"/>
+                                       placeholder="{{__('locale.Name')}}" name="name"/>
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="type_id">
@@ -127,7 +127,7 @@
                                 <input type="file" name="image" id="image"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
-                                Submit
+                                {{__('locale.Submit')}}
                             </button>
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                 {{__('locale.Cancel')}}

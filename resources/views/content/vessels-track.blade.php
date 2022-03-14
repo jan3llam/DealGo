@@ -18,7 +18,7 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
-                <h4 class="card-title">Search & Filter</h4>
+                <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <div class="mb-1">
                     <div class="input-group">
                         <select class="form-control dt-full-name vessels-select2">

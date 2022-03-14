@@ -33,7 +33,7 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
-                <h4 class="card-title">Search & Filter</h4>
+                <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <input type="hidden" id="trashed" value="0">
             </div>
             <div class="card-datatable table-responsive pt-0">
@@ -230,19 +230,19 @@
                                 </button>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="description">Description</label>
+                                <label class="form-label" for="description">{{__('locale.Description')}}</label>
                                 <textarea class="form-control dt-full-name" id="description"
-                                          placeholder="Description" name="description"></textarea>
+                                          placeholder="{{__('locale.Description')}}" name="description"></textarea>
                             </div>
                             <div class="mb-1">
                                 <label for="files" class="form-label">Attachments</label>
                                 <input type="file" name="files" id="files"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
-                                Submit
+                                {{__('locale.Submit')}}
                             </button>
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancel
+                                {{__('locale.Cancel')}}
                             </button>
                         </div>
                     </form>

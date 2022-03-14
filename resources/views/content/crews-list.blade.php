@@ -31,7 +31,7 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
-                <h4 class="card-title">Search & Filter</h4>
+                <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
@@ -133,10 +133,10 @@
                                 <input type="file" name="file" id="file"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
-                                Submit
+                                {{__('locale.Submit')}}
                             </button>
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancel
+                                {{__('locale.Cancel')}}
                             </button>
                         </div>
                     </form>

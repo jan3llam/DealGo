@@ -14,14 +14,14 @@
                 <form id="addRoleForm" class="row" action="{{route('admin.roles.add')}}" method="post">
                     @csrf
                     <div class="col-12">
-                        <label class="form-label" for="modalRoleName">Role name</label>
+                        <label class="form-label" for="modalRoleName">{{__('locale.Name')}}</label>
                         <input type="text" id="modalRoleName" name="name" class="form-control"
-                               placeholder="Enter role name" tabindex="-1" data-msg="Please enter role name"/>
+                               placeholder="{{__('locale.Name')}}" tabindex="-1" data-msg="Please enter role name"/>
                     </div>
                     <div class="col-12">
-                        <label class="form-label" for="modalRoleName">Role description</label>
+                        <label class="form-label" for="modalRoleName">{{__('locale.Description')}}</label>
                         <input type="text" id="modalRoleName" name="description" class="form-control"
-                               placeholder="Enter role description" tabindex="-1"
+                               placeholder="{{__('locale.Description')}}" tabindex="-1"
                                data-msg="Please enter description name"/>
                     </div>
                     <div class="col-12">

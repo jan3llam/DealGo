@@ -49,5 +49,8 @@ return [
     "Submit" => "Submit",
     "Cancel" => "Cancel",
     "View" => "View",
+    "KindlyChoose" => "Kindly choose",
+    "Country" => "Country",
+    "City" => "City",
 
 ];

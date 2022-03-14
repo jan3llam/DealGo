@@ -29,7 +29,7 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
-                <h4 class="card-title">Search & Filter</h4>
+                <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
@@ -39,7 +39,7 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>{{__('locale.Name')}}</th>
                         <th>Image</th>
                         <th>Actions</th>
                     </tr>
@@ -73,9 +73,10 @@
                                         <div class="tab-pane @if($loop->first) active @else hidden @endif"
                                              id="name-tab-{{$language->code}}"
                                              aria-labelledby="language-{{$language->code}}" role="tabpanel">
-                                            <label class="form-label" for="name">Name</label>
+                                            <label class="form-label" for="name">{{__('locale.Name')}}</label>
                                             <input type="text" class="form-control dt-full-name"
-                                                   placeholder="Name" name="name[{{$language->code}}]"/>
+                                                   placeholder="{{__('locale.Name')}}"
+                                                   name="name[{{$language->code}}]"/>
                                         </div>
                                     @endforeach
                                 </div>
@@ -85,9 +86,9 @@
                                     <div class="tab-pane @if($loop->first) active @else hidden @endif"
                                          id="description-tab-{{$language->code}}"
                                          aria-labelledby="language-{{$language->code}}" role="tabpanel">
-                                        <label class="form-label" for="description">Description</label>
+                                        <label class="form-label" for="description">{{__('locale.Description')}}</label>
                                         <textarea class="form-control dt-full-name"
-                                                  placeholder="Description"
+                                                  placeholder="{{__('locale.Description')}}"
                                                   name="description[{{$language->code}}]"></textarea>
                                     </div>
                                 @endforeach
@@ -111,10 +112,10 @@
                                 <input type="file" name="meta_file" id="meta_file"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
-                                Submit
+                                {{__('locale.Submit')}}
                             </button>
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancel
+                                {{__('locale.Cancel')}}
                             </button>
                         </div>
                     </form>
@@ -132,11 +133,11 @@
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Name:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Name')}}:</span>
                                         <span id="view-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Description:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">

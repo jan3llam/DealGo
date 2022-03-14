@@ -29,7 +29,7 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
-                <h4 class="card-title">Search & Filter</h4>
+                <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
@@ -85,7 +85,7 @@
                                        placeholder="Update date" name="updated_at"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="description">Description</label>
+                                <label class="form-label" for="description">{{__('locale.Description')}}</label>
                                 <div class="editor"></div>
                             </div>
                             <div class="mb-1">
@@ -98,7 +98,7 @@
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
-                                Submit
+                                {{__('locale.Submit')}}
                             </button>
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                 {{__('locale.Cancel')}}
@@ -135,7 +135,7 @@
                                         <span id="view-updated"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Description:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
                                         <span id="view-description"></span>
                                     </li>
                                 </ul>
