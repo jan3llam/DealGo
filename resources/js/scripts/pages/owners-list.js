@@ -337,7 +337,7 @@ $(function () {
                             }
                         },
                         dataFilter: function (response) {
-                            if ($("#form_status").val() === 1) {
+                            if (parseInt($("#form_status").val()) === 1) {
                                 return parseInt(JSON.parse(response).code) === 1;
                             }
                             return true;
@@ -368,7 +368,7 @@ $(function () {
                             }
                         },
                         dataFilter: function (response) {
-                            if ($("#form_status").val() === 1) {
+                            if (parseInt($("#form_status").val()) === 1) {
                                 return parseInt(JSON.parse(response).code) === 1;
                             }
                             return true;
