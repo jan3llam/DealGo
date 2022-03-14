@@ -8,7 +8,7 @@ class DashboardController extends Controller
     public function home()
     {
         $breadcrumbs = [
-            ['name' => "Home"]
+            ['name' => __('locale.Home')]
         ];
 
         return view('content.home', [

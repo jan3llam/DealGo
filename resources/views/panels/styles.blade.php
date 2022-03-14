@@ -31,7 +31,7 @@
 
 <!-- BEGIN: Custom CSS-->
 
-@if ($configData['direction'] === 'rtl' && isset($configData['direction']))
+@if (app()->getLocale()==='ar')
     <link rel="stylesheet" href="{{ asset(mix('css-rtl/custom-rtl.css')) }}"/>
     <link rel="stylesheet" href="{{ asset(mix('css-rtl/style-rtl.css')) }}"/>
 

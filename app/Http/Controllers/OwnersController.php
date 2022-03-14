@@ -15,7 +15,7 @@ class OwnersController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Ship Owners"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Ship Owners"]
         ];
 
         $countries = Country::all();

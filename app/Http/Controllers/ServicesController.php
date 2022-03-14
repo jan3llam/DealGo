@@ -14,7 +14,7 @@ class ServicesController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Content"], ['name' => "Services"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Content"], ['name' => "Services"]
         ];
 
         $languages = Language::withoutTrashed()->get();

@@ -13,7 +13,7 @@ class TicketsController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Tickets"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Tickets"]
         ];
 
         return view('content.tickets-list', ['breadcrumbs' => $breadcrumbs]);
@@ -22,7 +22,7 @@ class TicketsController extends Controller
     public function view($id)
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['link' => "admin/tickets", 'name' => "Tickets"], ['name' => "Ticket details"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['link' => "admin/tickets", 'name' => "Tickets"], ['name' => "Ticket details"]
         ];
 
         $ticket = Ticket::withTrashed()->where('id', $id)->with('user', function ($q) {

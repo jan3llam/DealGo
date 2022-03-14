@@ -17,7 +17,7 @@ class OffersController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Shipping offers"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Shipping offers"]
         ];
 
         $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();

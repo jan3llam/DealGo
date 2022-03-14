@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Crews')
+@section('title', __('locale.Crews'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -41,14 +41,14 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Full name</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th>Job title</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Fullname')}}</th>
+                        <th>{{__('locale.Phone')}}</th>
+                        <th>{{__('locale.Email')}}</th>
+                        <th>{{__('locale.Country')}}</th>
+                        <th>{{__('locale.City')}}</th>
+                        <th>{{__('locale.JobTitle')}}</th>
+                        <th>{{__('locale.Status')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -61,14 +61,14 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add crew</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Crew')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="vessel">Vessel</label>
+                                <label class="form-label" for="vessel">{{__('locale.Vessel')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="vessel"
                                         name="vessel">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($vessels as $item)
                                         <option value="{{$item->id}}"
                                                 @if($vessel && $vessel->id === $item->id) selected @endif>{{$item->name}}</option>
@@ -76,40 +76,40 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="first_name">First name</label>
+                                <label class="form-label" for="first_name">{{__('locale.Firstname')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="first_name"
-                                       placeholder="First name" name="first_name"/>
+                                       placeholder="{{__('locale.Firstname')}}" name="first_name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="last_name">Last name</label>
+                                <label class="form-label" for="last_name">{{__('locale.Lastname')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="last_name"
-                                       placeholder="Last name" name="last_name"/>
+                                       placeholder="{{__('locale.Lastname')}}" name="last_name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="job">Job title</label>
+                                <label class="form-label" for="job">{{__('locale.JobTitle')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="job"
-                                       placeholder="Job title" name="job"/>
+                                       placeholder="{{__('locale.JobTitle')}}" name="job"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="birth">DOB</label>
+                                <label class="form-label" for="birth">{{__('locale.DOB')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="birth"
-                                       placeholder="DOB" name="birth"/>
+                                       placeholder="{{__('locale.DOB')}}" name="birth"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="email">Email</label>
+                                <label class="form-label" for="email">{{__('locale.Email')}}</label>
                                 <input type="email" class="form-control dt-full-name" id="email"
-                                       placeholder="Email" name="email"/>
+                                       placeholder="{{__('locale.Email')}}" name="email"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="phone">Phone</label>
+                                <label class="form-label" for="phone">{{__('locale.Phone')}}</label>
                                 <input type="tel" class="form-control dt-full-name" id="phone"
-                                       placeholder="Phone" name="phone"/>
+                                       placeholder="{{__('locale.Phone')}}" name="phone"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="country">Country</label>
+                                <label class="form-label" for="country">{{__('locale.Country')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="country"
                                         name="country">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($countries as $country)
                                         <option value="{{$country->id}}">{{$country->name}}</option>
                                     @endforeach
@@ -117,19 +117,19 @@
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="city_id">
-                                <label class="form-label" for="city">City</label>
+                                <label class="form-label" for="city">{{__('locale.City')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="city"
                                         name="city">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="address">Address</label>
+                                <label class="form-label" for="address">{{__('locale.Address')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="address"
-                                       placeholder="Address" name="address"/>
+                                       placeholder="{{__('locale.Address')}}" name="address"/>
                             </div>
                             <div class="mb-1">
-                                <label for="file" class="form-label">File</label>
+                                <label for="file" class="form-label">{{__('locale.File')}}</label>
                                 <input type="file" name="file" id="file"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -148,56 +148,56 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View crew</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Crew')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">First name:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Firstname')}}:</span>
                                         <span id="view-first-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Last name:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Lastname')}}:</span>
                                         <span id="view-last-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Job title:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.JobTitle')}}:</span>
                                         <span id="view-job"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Birthdate:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.DOB')}}:</span>
                                         <span id="view-birth"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Email:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Email')}}:</span>
                                         <span id="view-email"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Phone:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Phone')}}:</span>
                                         <span id="view-phone"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Country:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Country')}}:</span>
                                         <span id="view-country"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">City:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.City')}}:</span>
                                         <span id="view-city"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Address')}}:</span>
                                         <span id="view-address"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">File:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.File')}}:</span>
                                         <span id="view-file"></span>
                                     </li>
 
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>
@@ -234,6 +234,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.15/js/intlTelInput.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/locales/{{app()->getLocale()}}.js"></script>
 @endsection
 
 @section('page-script')

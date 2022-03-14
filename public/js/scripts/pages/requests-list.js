@@ -113,11 +113,7 @@ $(function () {
                 '<"col-sm-12 col-md-6"i>' +
                 '<"col-sm-12 col-md-6"p>' +
                 '>',
-            language: {
-                sLengthMenu: 'Showing _MENU_',
-                search: 'Search',
-                searchPlaceholder: 'Search..'
-            },
+
             createdRow: function (row, data, index) {
                 if (data.deleted_at) {
                     $(row).addClass('table-secondary');
@@ -237,6 +233,9 @@ $(function () {
                     }
                 }
             ],
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/' + $('html').attr('lang') + '.json'
+            },
         })
     }
 
@@ -315,16 +314,6 @@ $(function () {
 
         });
 
-        $.validator.addMethod("greaterThan",
-            function (value, element, params) {
-
-                if (!/Invalid|NaN/.test(new Date(value))) {
-                    return new Date(value) > new Date($(params).val());
-                }
-
-                return isNaN(value) && isNaN($(params).val())
-                    || (Number(value) > Number($(params).val()));
-            }, 'Must be greater than date from.');
 
         newForm.validate({
             errorClass: 'error',
@@ -348,8 +337,7 @@ $(function () {
                     required: true
                 },
                 'date_to': {
-                    required: true,
-                    greaterThan: "#date_from"
+                    required: true
                 },
                 'description': {
                     required: true

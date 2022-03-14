@@ -14,7 +14,7 @@ class RolesController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Roles"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Roles"]
         ];
 
         $roles = Role::all();

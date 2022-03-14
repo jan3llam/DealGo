@@ -21,7 +21,7 @@ class OffersResponsesController extends Controller
     public function list($id = null)
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"]
+            ['link' => "admin/home", 'name' => __('locale.Home')]
         ];
 
         $offer = Offer::withTrashed()->where('id', $id)->first();

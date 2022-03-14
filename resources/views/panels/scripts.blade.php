@@ -6,6 +6,9 @@
 @yield('vendor-script')
 <!-- END: Page Vendor JS-->
 <!-- BEGIN: Theme JS-->
+<script>
+    var LANG = {!! json_encode(\Illuminate\Support\Facades\Lang::get('locale')) !!};
+</script>
 <script src="{{ asset(mix('js/core/app-menu.js')) }}"></script>
 <script src="{{ asset(mix('js/core/app.js')) }}"></script>
 

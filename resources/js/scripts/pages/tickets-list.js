@@ -89,11 +89,11 @@ $(function () {
                     targets: 4,
                     render: function (data, type, full, meta) {
                         let string = data + '(';
-                        if (full['userable_type'] === 'App\\\\Models\\\\Tenant') {
+                        if (full['userable_type'] === "App\\Models\\Tenant") {
                             string += 'Charterer';
-                        } else if (full['userable_type'] === 'App\\\\Models\\\\Owner') {
+                        } else if (full['userable_type'] === 'App\\Models\\Owner') {
                             string += 'Shipowner';
-                        } else if (full['userable_type'] === 'App\\\\Models\\\\Office') {
+                        } else if (full['userable_type'] === 'App\\Models\\Office') {
                             string += 'Shipping Agent';
                         }
                         return string + ')';
@@ -163,11 +163,7 @@ $(function () {
                 '<"col-sm-12 col-md-6"i>' +
                 '<"col-sm-12 col-md-6"p>' +
                 '>',
-            language: {
-                sLengthMenu: 'Showing _MENU_',
-                search: 'Search',
-                searchPlaceholder: 'Search..'
-            },
+
             createdRow: function (row, data, index) {
                 if (data.deleted_at) {
                     $(row).addClass('table-secondary');
@@ -275,6 +271,9 @@ $(function () {
                     }
                 }
             ],
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/' + $('html').attr('lang') + '.json'
+            },
         })
     }
 

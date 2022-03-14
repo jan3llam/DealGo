@@ -16,7 +16,7 @@ class CategoriesController extends Controller
         }
 
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"],
+            ['link' => "admin/home", 'name' => __('locale.Home')],
         ];
 
         if ($category) {

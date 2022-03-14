@@ -17,7 +17,7 @@ class ClassificationsController extends Controller
         }
 
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Content"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Content"]
         ];
 
         if ($classification) {

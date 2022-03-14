@@ -14,7 +14,7 @@ class AboutController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Content"], ['name' => "About"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Content"], ['name' => "About"]
         ];
 
         $languages = Language::withoutTrashed()->get();

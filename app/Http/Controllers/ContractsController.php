@@ -11,7 +11,7 @@ class ContractsController extends Controller
     public function list($id = null)
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Contracts"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Contracts"]
         ];
 
         return view('content.contracts-list', ['breadcrumbs' => $breadcrumbs]);

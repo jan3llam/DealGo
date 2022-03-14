@@ -218,11 +218,7 @@ $(function () {
                 '<"col-sm-12 col-md-6"i>' +
                 '<"col-sm-12 col-md-6"p>' +
                 '>',
-            language: {
-                sLengthMenu: 'Showing _MENU_',
-                search: 'Search',
-                searchPlaceholder: 'Search..'
-            },
+
             createdRow: function (row, data, index) {
                 if (data.deleted_at) {
                     $(row).addClass('table-secondary');
@@ -230,6 +226,9 @@ $(function () {
             },
             // Buttons with Dropdown
             buttons: btn,
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/' + $('html').attr('lang') + '.json'
+            },
         })
     }
 
@@ -331,34 +330,19 @@ $(function () {
 
     $(document).on('click', '.item-delete', function () {
         var element = $(this);
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete this item!',
-            customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn btn-outline-danger ms-1'
-            },
-            buttonsStyling: false
-        }).then(function (result) {
-            if (result.value) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: assetPath + 'api/admin/requests_responses/' + element.data('id'),
-                    dataType: 'json',
-                    success: function (response) {
-                        if (parseInt(response.code) === 1) {
-                            dtTable.DataTable().ajax.reload();
-                            toastr['success'](response.message);
-                        } else {
-                            toastr['error'](response.message);
-                        }
-                    }
-                })
+        $.ajax({
+            type: 'DELETE',
+            url: assetPath + 'api/admin/requests_responses/' + element.data('id'),
+            dataType: 'json',
+            success: function (response) {
+                if (parseInt(response.code) === 1) {
+                    dtTable.DataTable().ajax.reload();
+                    toastr['success'](response.message);
+                } else {
+                    toastr['error'](response.message);
+                }
             }
-        });
+        })
     })
 
     $(document).on('click', '.status-switcher', function () {

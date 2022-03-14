@@ -11,7 +11,7 @@ class LanguagesController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"], ['name' => "Languages"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Languages"]
         ];
 
         return view('content.languages-list', ['breadcrumbs' => $breadcrumbs]);

@@ -19,14 +19,13 @@ class CrewsController extends Controller
             $vessel = Vessel::withTrashed()->where('id', $id)->first();
         }
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => "Home"],
+            ['link' => "admin/home", 'name' => __('locale.Home')],
         ];
 
         if ($vessel) {
             array_push($breadcrumbs, ['name' => $vessel->name]);
         }
-        array_push($breadcrumbs, ['name' => 'Vessel crew']);
-
+        array_push($breadcrumbs, ['name' => __('locale.Crews')]);
         $countries = Country::all();
         $vessels = Vessel::all();
 
