@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'About')
+@section('title', __('locale.About'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -29,7 +29,7 @@
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
-                <h4 class="card-title">Search & Filter</h4>
+                <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
@@ -39,9 +39,9 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Image</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Name')}}</th>
+                        <th>{{__('locale.Image')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -54,7 +54,7 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Edit about</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Edit')}} {{__('locale.About')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -73,9 +73,10 @@
                                         <div class="tab-pane @if($loop->first) active @else hidden @endif"
                                              id="name-tab-{{$language->code}}"
                                              aria-labelledby="language-{{$language->code}}" role="tabpanel">
-                                            <label class="form-label" for="name">Name</label>
+                                            <label class="form-label" for="name">{{__('locale.Name')}}</label>
                                             <input type="text" class="form-control dt-full-name"
-                                                   placeholder="Name" name="name[{{$language->code}}]"/>
+                                                   placeholder="{{__('locale.Name')}}"
+                                                   name="name[{{$language->code}}]"/>
                                         </div>
                                     @endforeach
                                 </div>
@@ -85,22 +86,22 @@
                                     <div class="tab-pane @if($loop->first) active @else hidden @endif"
                                          id="description-tab-{{$language->code}}"
                                          aria-labelledby="language-{{$language->code}}" role="tabpanel">
-                                        <label class="form-label" for="description">Description</label>
+                                        <label class="form-label" for="description">{{__('locale.Description')}}</label>
                                         <textarea class="form-control dt-full-name"
-                                                  placeholder="Description"
+                                                  placeholder="{{__('locale.Description')}}"
                                                   name="description[{{$language->code}}]"></textarea>
                                     </div>
                                 @endforeach
                             </div>
                             <div class="mb-1">
-                                <label for="image" class="form-label">Image</label>
+                                <label for="image" class="form-label">{{__('locale.Image')}}</label>
                                 <input type="file" name="file" id="file" accept="image/*"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
-                                Submit
+                                {{__('locale.Submit')}}
                             </button>
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancel
+                                {{__('locale.Cancel')}}
                             </button>
                         </div>
                     </form>
@@ -112,27 +113,27 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View about</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.About')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Name:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Name')}}:</span>
                                         <span id="view-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Description:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Image:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Image')}}:</span>
                                         <span id="view-image"></span>
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

@@ -5,6 +5,8 @@
 @section('vendor-style')
     {{-- Page Css files --}}
     <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('vendors/css/animate/animate.min.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/sweetalert2.min.css')) }}">
 @endsection
 
 @section('page-style')
@@ -72,6 +74,8 @@
     <script src="{{ asset(mix('vendors/js/forms/validation/jquery.validate.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/moment.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/sweetalert2.all.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/extensions/polyfill.min.js')) }}"></script>
 @endsection
 
 @section('page-script')

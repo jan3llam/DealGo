@@ -100,7 +100,7 @@
                                 Submit
                             </button>
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancel
+                                {{__('locale.Cancel')}}
                             </button>
                         </div>
                     </form>
@@ -132,7 +132,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

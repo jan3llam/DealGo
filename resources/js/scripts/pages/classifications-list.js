@@ -46,7 +46,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'name_translation'},
-                {data: 'parent'},
+                {data: 'parent.name_translation'},
                 {data: ''}
             ],
             columnDefs: [

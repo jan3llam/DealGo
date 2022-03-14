@@ -432,9 +432,6 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        for (const [key, value] of Object.entries(data.name)) {
-            $('[name="name[' + key + ']"]').val(data.name[key]);
-        }
         $('#city_id').val(data.city.id);
         $('#longitude').val(data.longitude);
         $('#latitude').val(data.latitude);
@@ -444,6 +441,9 @@ $(function () {
         var latlng = new google.maps.LatLng(data.latitude, data.longitude);
         marker.setMap(map);
         marker.setPosition(latlng);
+        for (const [key, value] of Object.entries(data.name)) {
+            $('[name="name[' + key + ']"]').val(data.name[key]);
+        }
     });
 
     $(document).on('click', '.add-port', function () {

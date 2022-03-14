@@ -152,6 +152,17 @@ class SliderController extends Controller
         return response()->success();
     }
 
+    public function bulk_delete(Request $request)
+    {
+        foreach ($request->input('ids', []) as $id) {
+            $item = Slider::withTrashed()->where('id', $id)->first();
+            if ($item) {
+                $item->delete();
+            }
+        }
+        return response()->success();
+    }
+
     public function delete($id)
     {
 

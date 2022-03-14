@@ -10,7 +10,7 @@
             ]
         },
         {
-            "url": "/admin/users",
+            "url": "#",
             "name": "Users",
             "icon": "users",
             "slug": "admin.users",
@@ -179,7 +179,7 @@
             ]
         },
         {
-            "url": "/admin/help",
+            "url": "#",
             "name": "Help",
             "icon": "life-buoy",
             "slug": "admin.help",
@@ -223,7 +223,7 @@
             ]
         },
         {
-            "url": "/admin/content",
+            "url": "#",
             "name": "Content",
             "icon": "monitor",
             "slug": "admin.content",
@@ -268,7 +268,7 @@
                     "permission": 73
                 },
                 {
-                    "url": "/admin/blog",
+                    "url": "#",
                     "name": "Blog",
                     "icon": "align-justify",
                     "slug": "admin.blog",

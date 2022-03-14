@@ -130,7 +130,7 @@
                                 Submit
                             </button>
                             <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Cancel
+                                {{__('locale.Cancel')}}
                             </button>
                         </div>
                     </form>
