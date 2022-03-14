@@ -28,6 +28,7 @@ use App\Http\Controllers\ShipmentsController as ShipmentsAPI;
 use App\Http\Controllers\SliderController as SliderAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
 use App\Http\Controllers\TicketsController as TicketsAPI;
+use App\Http\Controllers\UsersController as UsersAPI;
 use App\Http\Controllers\VesselsController as VesselsAPI;
 use App\Http\Controllers\VesselsTypesController as VesselsTypesAPI;
 use Illuminate\Support\Facades\Route;
@@ -373,5 +374,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update', [ClassificationsAPI::class, 'update']);
         Route::delete('/bulk', [ClassificationsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [ClassificationsAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'users'], function () {
+        Route::post('/check_field', [UsersAPI::class, 'check_field']);
     });
 });
