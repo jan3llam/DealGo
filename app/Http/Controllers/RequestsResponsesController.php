@@ -59,7 +59,9 @@ class RequestsResponsesController extends Controller
                 $query->sum('value');
             },
             'owner' => function ($q) {
-                $q->withTrashed()->with('user');
+                $q->withTrashed()->with('user', function ($qu) {
+                    $qu->withTrashed();
+                });
             },
         ]);
 
