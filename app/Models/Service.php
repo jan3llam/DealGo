@@ -27,11 +27,11 @@ class Service extends Model
 
     public function getNameTranslationAttribute()
     {
-        return $this->name;
+        return $this->getTranslation('name', app()->getLocale());
     }
 
     public function getSlugTranslationAttribute()
     {
-        return $this->slug;
+        return $this->getTranslation('slug', app()->getLocale());
     }
 }

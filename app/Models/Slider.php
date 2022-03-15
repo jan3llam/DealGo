@@ -17,6 +17,6 @@ class Slider extends Model
 
     public function getNameTranslationAttribute()
     {
-        return $this->name;
+        return $this->getTranslation('name', app()->getLocale());
     }
 }

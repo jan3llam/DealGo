@@ -88,12 +88,13 @@ $(function () {
                 {
                     targets: 4,
                     render: function (data, type, full, meta) {
+                        console.log(full['user']['userable_type']);
                         let string = data + '(';
-                        if (full['userable_type'] === "App\\Models\\Tenant") {
+                        if (full['user']['userable_type'] === "App\\Models\\Tenant") {
                             string += 'Charterer';
-                        } else if (full['userable_type'] === 'App\\Models\\Owner') {
+                        } else if (full['user']['userable_type'] === 'App\\Models\\Owner') {
                             string += 'Shipowner';
-                        } else if (full['userable_type'] === 'App\\Models\\Office') {
+                        } else if (full['user']['userable_type'] === 'App\\Models\\Office') {
                             string += 'Shipping Agent';
                         }
                         return string + ')';
