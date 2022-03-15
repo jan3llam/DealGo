@@ -69,7 +69,7 @@
                                 <label class="form-label" for="owner">Owner</label>
                                 <select type="text" class="form-control dt-full-name select2" id="owner"
                                         name="owner">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($owners as $owner)
                                         <option
                                             value="{{$owner->userable->id}}">{{$owner->contact_name}}</option>
@@ -90,7 +90,8 @@
                                             <div class="input-group">
                                                 <select class="form-control dt-full-name routes-select2"
                                                         name="route">
-                                                    <option value="" disabled selected>Kindly choose</option>
+                                                    <option value="" disabled
+                                                            selected>{{__('locale.KindlyChoose')}}</option>
                                                     @foreach($ports as $port)
                                                         <option value="{{$port->id}}">{{$port->name}}</option>
                                                     @endforeach
@@ -129,7 +130,7 @@
                                         <select type="text" class="form-control dt-full-name vessels-select2"
                                                 id="vessel"
                                                 name="vessel">
-                                            <option value="" disabled selected>Kindly choose</option>
+                                            <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                             @foreach($vessels->whereIn('type_id',$item->vessels_types->pluck('id')) as $vessel)
                                                 <option value="{{$vessel->id}}">{{$vessel->name}}</option>
                                             @endforeach

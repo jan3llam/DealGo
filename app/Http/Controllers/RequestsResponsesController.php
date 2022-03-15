@@ -27,7 +27,7 @@ class RequestsResponsesController extends Controller
         if ($request) {
             array_push($breadcrumbs, ['name' => $request->name . ' (#' . $request->id . ')']);
         }
-        array_push($breadcrumbs, ['name' => 'Responses']);
+        array_push($breadcrumbs, ['name' => __('locale.Requests Responses')]);
 
         $requests = ShipmentRequest::all();
         $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();

@@ -12,7 +12,7 @@ class VesselsTypesController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Vessels Types"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Vessels types')]
         ];
 
         $types = vType::all();

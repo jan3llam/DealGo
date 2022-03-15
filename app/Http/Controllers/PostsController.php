@@ -21,13 +21,13 @@ class PostsController extends Controller
         }
 
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Content"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Content')]
         ];
 
         if ($classification) {
             array_push($breadcrumbs, ['name' => $classification->name]);
         }
-        array_push($breadcrumbs, ['name' => 'Blog posts']);
+        array_push($breadcrumbs, ['name' => __('locale.Posts')]);
 
         $classifications = Classification::withoutTrashed()->get();
         $posts = Post::withoutTrashed()->get();

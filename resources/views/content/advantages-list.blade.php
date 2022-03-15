@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Advantages')
+@section('title', __('locale.Advantages'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -40,8 +40,8 @@
                         <th></th>
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
-                        <th>Image</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Image')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -54,7 +54,8 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add advantage</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.Add')}} {{__('locale.Advantage')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -73,9 +74,10 @@
                                         <div class="tab-pane @if($loop->first) active @else hidden @endif"
                                              id="name-tab-{{$language->code}}"
                                              aria-labelledby="language-{{$language->code}}" role="tabpanel">
-                                            <label class="form-label" for="name">Name</label>
+                                            <label class="form-label" for="name">{{__('locale.Name')}}</label>
                                             <input type="text" class="form-control dt-full-name"
-                                                   placeholder="Name" name="name[{{$language->code}}]"/>
+                                                   placeholder="{{__('locale.Name')}}"
+                                                   name="name[{{$language->code}}]"/>
                                         </div>
                                     @endforeach
                                 </div>
@@ -93,7 +95,7 @@
                                 @endforeach
                             </div>
                             <div class="mb-1">
-                                <label for="image" class="form-label">Image</label>
+                                <label for="image" class="form-label">{{__('locale.Image')}}</label>
                                 <input type="file" name="file" id="file" accept="image/*"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -112,7 +114,8 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View advantage</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.View')}} {{__('locale.Advantage')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
@@ -126,7 +129,7 @@
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Image:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Image')}}:</span>
                                         <span id="view-image"></span>
                                     </li>
                                 </ul>

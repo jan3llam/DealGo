@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Vessels Types')
+@section('title', __('locale.Vessels types'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -38,14 +38,14 @@
                         <th></th>
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
-                        <th>Parent</th>
-                        <th>DWT</th>
-                        <th>Draught,m</th>
-                        <th>Loa,m</th>
-                        <th>Geared</th>
-                        <th>Holds number</th>
-                        <th>Vessels count</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Parent')}}</th>
+                        <th>{{__('locale.DWT')}}</th>
+                        <th>{{__('locale.Draught')}}</th>
+                        <th>{{__('locale.LOA')}}</th>
+                        <th>{{__('locale.Geared')}}</th>
+                        <th>{{__('locale.Holds')}}</th>
+                        <th>{{__('locale.VesselsCount')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -58,7 +58,8 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add vessels type</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.Add')}} {{__('locale.VesselTtype')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -87,40 +88,40 @@
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="parent_id">
-                                <label class="form-label" for="parent">Parent type</label>
+                                <label class="form-label" for="parent">{{__('locale.Parent')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="parent"
                                         name="parent">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($types as $type)
                                         <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="dwt">DWT</label>
+                                <label class="form-label" for="dwt">{{__('locale.DWT')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="dwt"
-                                       placeholder="DWT" name="dwt"/>
+                                       placeholder="{{__('locale.DWT')}}" name="dwt"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="draught">Draught,m</label>
+                                <label class="form-label" for="draught">{{__('locale.Draught')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="draught"
-                                       placeholder="Draught,m" name="draught"/>
+                                       placeholder="{{__('locale.Draught')}}" name="draught"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="loa">Loa,m</label>
+                                <label class="form-label" for="loa">{{__('locale.LOA')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="loa"
-                                       placeholder="Loa,m" name="loa"/>
+                                       placeholder="{{__('locale.LOA')}}" name="loa"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="holds">Holds number</label>
+                                <label class="form-label" for="holds">{{__('locale.Holds')}}</label>
                                 <input type="number" class="form-control dt-full-name" id="holds"
-                                       placeholder="Holds number" name="holds"/>
+                                       placeholder="{{__('locale.Holds')}}" name="holds"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="geared">Geared</label>
+                                <label class="form-label" for="geared">{{__('locale.Geared')}}</label>
                                 <select class="form-control dt-full-name" id="geared" name="geared">
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
+                                    <option value="0">{{__('locale.No')}}</option>
+                                    <option value="1">{{__('locale.Yes')}}</option>
                                 </select>
                             </div>
                             <div class="mb-1">

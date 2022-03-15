@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Tickets')
+@section('title', __('locale.Tickets'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -35,12 +35,12 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Subject</th>
-                        <th>Username</th>
-                        <th>Category</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Subject')}}</th>
+                        <th>{{__('locale.ContactName')}}</th>
+                        <th>{{__('locale.Category')}}</th>
+                        <th>{{__('locale.Date')}}</th>
+                        <th>{{__('locale.Status')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>

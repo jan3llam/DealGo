@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Administrators')
+@section('title', __('locale.Administrators'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -39,12 +39,12 @@
                         <th></th>
                         <th>#</th>
                         <th>DealGo ID</th>
-                        <th>Contact name</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.ContactName')}}</th>
+                        <th>{{__('locale.Phone')}}</th>
+                        <th>{{__('locale.Email')}}</th>
+                        <th>{{__('locale.Role')}}</th>
+                        <th>{{__('locale.Status')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -57,11 +57,12 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add administrator</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.Add')}} {{__('locale.Administrator')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="role">Role</label>
+                                <label class="form-label" for="role">{{__('locale.Role')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="role"
                                         name="role">
                                     <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
@@ -71,9 +72,9 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="name">Contact name</label>
+                                <label class="form-label" for="name">{{__('locale.ContactName')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="name"
-                                       placeholder="Contact name" name="name"/>
+                                       placeholder="{{__('locale.ContactName')}}" name="name"/>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="dealgo_id">DealGo ID</label>
@@ -81,19 +82,19 @@
                                        placeholder="DealGo ID" name="dealgo_id"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="name">Email</label>
+                                <label class="form-label" for="name">{{__('locale.Email')}}</label>
                                 <input type="email" class="form-control dt-full-name" id="email"
-                                       placeholder="Email" name="email"/>
+                                       placeholder="{{__('locale.Email')}}" name="email"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="phone">Phone</label>
+                                <label class="form-label" for="phone">{{__('locale.Phone')}}</label>
                                 <input type="tel" class="form-control dt-full-name" id="phone"
-                                       placeholder="Phone" name="phone"/>
+                                       placeholder="{{__('locale.Phone')}}" name="phone"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="password">Password</label>
+                                <label class="form-label" for="password">{{__('locale.Password')}}</label>
                                 <input type="password" class="form-control dt-full-name" id="password"
-                                       placeholder="Password" name="password"/>
+                                       placeholder="{{__('locale.Password')}}" name="password"/>
                             </div>
 
                             <div class="mb-1">
@@ -115,12 +116,12 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="address">Address</label>
+                                <label class="form-label" for="address">{{__('locale.Address')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="address"
-                                       placeholder="Address" name="address"/>
+                                       placeholder="{{__('locale.Address')}}" name="address"/>
                             </div>
                             <div class="mb-1">
-                                <label for="files" class="form-label">Attachments</label>
+                                <label for="files" class="form-label">{{__('locale.Attachments')}}</label>
                                 <input type="file" name="files" id="files"/>
                             </div>
 

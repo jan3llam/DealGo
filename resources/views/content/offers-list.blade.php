@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Shipping offers')
+@section('title', __('locale.Offers'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -45,12 +45,12 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Vessel</th>
-                        <th>Shipowner</th>
-                        <th>Date</th>
-                        <th>Origin of shipment</th>
-                        <th>Destination of shipment</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Vessel')}}</th>
+                        <th>{{__('locale.Owner')}}</th>
+                        <th>{{__('locale.Date')}}</th>
+                        <th>{{__('locale.ShipmentOrigin')}}</th>
+                        <th>{{__('locale.ShipmentDestination')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -63,14 +63,14 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add request</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Offer')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="owner">Shipowner</label>
+                                <label class="form-label" for="owner">{{__('locale.Owner')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="owner"
                                         name="owner">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($owners as $owner)
                                         <option
                                             value="{{$owner->userable->id}}">{{$owner->contact_name}}</option>
@@ -78,29 +78,29 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="vessel">Vessel</label>
+                                <label class="form-label" for="vessel">{{__('locale.Vessel')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="vessel"
                                         name="vessel">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($vessels as $item)
                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="weight">Max weight</label>
+                                <label class="form-label" for="weight">{{__('locale.MaxWeight')}}</label>
                                 <input type="number" class="form-control dt-full-name" id="weight"
-                                       placeholder="Max weight" name="weight"/>
+                                       placeholder="{{__('locale.MaxWeight')}}" name="weight"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="date_from">From date</label>
+                                <label class="form-label" for="date_from">{{__('locale.FromDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="date_from"
-                                       placeholder="From date" name="date_from"/>
+                                       placeholder="{{__('locale.FromDate')}}" name="date_from"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="date_to">To date</label>
+                                <label class="form-label" for="date_to">{{__('locale.ToDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="date_to"
-                                       placeholder="To date" name="date_to"/>
+                                       placeholder="{{__('locale.ToDate')}}" name="date_to"/>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="description">{{__('locale.Description')}}</label>
@@ -108,7 +108,7 @@
                                           placeholder="{{__('locale.Description')}}" name="description"></textarea>
                             </div>
                             <div class="mb-1">
-                                <label for="files" class="form-label">Attachments</label>
+                                <label for="files" class="form-label">{{__('locale.Attachments')}}</label>
                                 <input type="file" name="files" id="files"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -127,33 +127,33 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View request</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Offer')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Title:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Title')}}:</span>
                                         <span id="view-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Shipowner:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Owner')}}:</span>
                                         <span id="view-tenant"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Origin of shipment:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.ShipmentOrigin')}}:</span>
                                         <span id="view-origin"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Destination of shipment:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.ShipmentDestination')}}:</span>
                                         <span id="view-destination"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Date to:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.FromDate')}}:</span>
                                         <span id="view-date-to"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Date from:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.ToDate')}}:</span>
                                         <span id="view-date-from"></span>
                                     </li>
                                     <li class="mb-75">
@@ -161,14 +161,14 @@
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Attachments:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Attachments')}}:</span>
                                         <span id="view-files"></span>
                                     </li>
 
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

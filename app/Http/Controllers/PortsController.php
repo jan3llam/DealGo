@@ -13,7 +13,7 @@ class PortsController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Ports"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Ports')]
         ];
 
         $countries = Country::all();

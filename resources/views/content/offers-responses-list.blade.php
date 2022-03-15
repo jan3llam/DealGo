@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Offers Responses')
+@section('title', __('locale.OffersResponses'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -42,12 +42,12 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Charterer</th>
-                        <th>Origin of shipment</th>
-                        <th>Destination of shipment</th>
-                        <th>Date</th>
-                        <th>Value</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Tenants')}}</th>
+                        <th>{{__('locale.ShipmentOrigin')}}</th>
+                        <th>{{__('locale.ShipmentDestination')}}</th>
+                        <th>{{__('locale.Date')}}</th>
+                        <th>{{__('locale.Value')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -64,63 +64,65 @@
                         @endif
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add response</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.Add')}} {{__('locale.OfferResponse')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="name">Title</label>
+                                <label class="form-label" for="name">{{__('locale.Title')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="name"
-                                       placeholder="Title" name="name"/>
+                                       placeholder="{{__('locale.Title')}}" name="name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="tenant">Charterer</label>
+                                <label class="form-label" for="tenant">{{__('locale.Tenant')}}</label>
                                 <select class="form-control dt-full-name select2" id="tenant"
                                         name="tenant">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($tenants as $tenant)
                                         <option value="{{$tenant->userable->id}}">{{$tenant->contact_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="port_from">Origin of shipment</label>
+                                <label class="form-label" for="port_from">{{__('locale.ShipmentOrigin')}}</label>
                                 <select class="form-control dt-full-name select2" id="port_from"
                                         name="port_from">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($ports as $port)
                                         <option value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="port_to">Destination of shipment</label>
+                                <label class="form-label" for="port_to">{{__('locale.ShipmentDestination')}}</label>
                                 <select class="form-control dt-full-name select2" id="port_to"
                                         name="port_to">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($ports as $port)
                                         <option value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="contract">Contract type</label>
+                                <label class="form-label" for="contract">{{__('locale.Type')}}</label>
                                 <select class="form-control dt-full-name select2" id="contract" name="contract">
-                                    <option value="" disabled selected>Kindly choose</option>
-                                    <option value="1">Voyage</option>
-                                    <option value="2">Time</option>
-                                    <option value="3">Bareboat</option>
-                                    <option value="4">COA</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
+                                    <option value="1">{{__('locale.Voyage')}}</option>
+                                    <option value="2">{{__('locale.Time')}}</option>
+                                    <option value="3">{{__('locale.Bareboat')}}</option>
+                                    <option value="4">{{__('locale.COA')}}</option>
                                 </select>
                             </div>
                             <div id="routes_container" style="display: none">
                                 <div data-repeater-list="routes">
-                                    <label class="form-label" for="route">Routes</label>
+                                    <label class="form-label" for="route">{{__('locale.Routes')}}</label>
                                     <div data-repeater-item>
                                         <div class="mb-1">
                                             <div class="input-group">
                                                 <select class="form-control dt-full-name routes-select2"
                                                         name="route">
-                                                    <option value="" disabled selected>Kindly choose</option>
+                                                    <option value="" disabled
+                                                            selected>{{__('locale.KindlyChoose')}}</option>
                                                     @foreach($ports as $port)
                                                         <option value="{{$port->id}}">{{$port->name}}</option>
                                                     @endforeach
@@ -137,25 +139,25 @@
                                 </div>
                                 <button class="btn btn-icon btn-success" type="button" data-repeater-create>
                                     <i data-feather="plus" class="me-25"></i>
-                                    <span>Add Route</span>
+                                    <span>{{__('locale.Add')}} {{__('locale.Route')}}</span>
                                 </button>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="date_from">From date</label>
+                                <label class="form-label" for="date_from">{{__('locale.FromDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="date_from"
-                                       placeholder="From date" name="date_from"/>
+                                       placeholder="{{__('locale.FromDate')}}" name="date_from"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="date_to">To date</label>
+                                <label class="form-label" for="date_to">{{__('locale.ToDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="date_to"
-                                       placeholder="To date" name="date_to"/>
+                                       placeholder="{{__('locale.ToDate')}}" name="date_to"/>
                             </div>
                             <div id="goods_container">
                                 <div data-repeater-list="goods">
-                                    <label class="form-label" for="route">Loads</label>
+                                    <label class="form-label" for="route">{{__('locale.Loads')}}</label>
                                     <div data-repeater-item>
                                         <div class="mb-1">
-                                            <label class="form-label" for="gtype">Goods type</label>
+                                            <label class="form-label" for="gtype">{{__('locale.Goods types')}}</label>
                                             <select type="text" class="form-control dt-full-name goods-select2"
                                                     name="gtype">
                                                 @foreach($types as $type)
@@ -164,10 +166,10 @@
                                             </select>
                                         </div>
                                         <div class="mb-1">
-                                            <label class="form-label" for="weight">Gross weight, kg</label>
+                                            <label class="form-label" for="weight">{{__('locale.GrossWeight')}}</label>
                                             <div class="input-group">
                                                 <input type="number" class="form-control dt-full-name"
-                                                       placeholder="Gross weight, kg" name="weight"/>
+                                                       placeholder="{{__('locale.GrossWeight')}}" name="weight"/>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-icon btn-danger" type="button"
                                                             data-repeater-delete>
@@ -179,20 +181,24 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-icon btn-success" type="button" data-repeater-create>
-                                    <i data-feather="plus" class="me-25"></i><span>Add another load</span>
+                                    <i data-feather="plus"
+                                       class="me-25"></i><span>{{__('locale.Add')}} {{__('locale.AnotherLoad')}}</span>
                                 </button>
                             </div>
-                            <label class="form-label">Payments</label>
+                            <label class="form-label">{{__('locale.Payments')}}</label>
                             <div class="mb-1 row">
                                 <div class="col-6">
-                                    <label class="form-label" for="down_value">Down payment value</label>
+                                    <label class="form-label"
+                                           for="down_value">{{__('locale.DownPayment')}} {{__('locale.Value')}}</label>
                                     <input type="number" class="form-control dt-full-name"
-                                           placeholder="Down payment value" name="down_value"/>
+                                           placeholder="{{__('locale.DownPayment')}} {{__('locale.Value')}}"
+                                           name="down_value"/>
                                 </div>
                                 <div class="col-6">
-                                    <label class="form-label" for="down_description">Details</label>
+                                    <label class="form-label"
+                                           for="down_description">{{__('locale.Description')}}</label>
                                     <input type="text" class="form-control dt-full-name"
-                                           placeholder="Details" name="down_description"/>
+                                           placeholder="{{__('locale.Description')}}" name="down_description"/>
                                 </div>
                             </div>
                             <div id="payments_container"
@@ -201,24 +207,26 @@
                                     <div data-repeater-item>
                                         <div class="mb-1 row">
                                             <div class="col-6">
-                                                <label class="form-label" for="value">Value</label>
+                                                <label class="form-label" for="value">{{__('locale.Value')}}</label>
                                                 <input type="number" class="form-control dt-full-name"
-                                                       placeholder="Value" name="value"/>
+                                                       placeholder="{{__('locale.Value')}}" name="value"/>
                                             </div>
                                             <div class="col-6">
-                                                <label class="form-label" for="date">Next payment</label>
+                                                <label class="form-label"
+                                                       for="date">{{__('locale.NextPaymentDate')}}</label>
                                                 <input type="date" class="form-control dt-full-name"
-                                                       placeholder="Date" name="date"/>
+                                                       placeholder="{{__('locale.NextPaymentDate')}}" name="date"/>
                                             </div>
                                         </div>
                                         <div class="mb-1 row">
                                             <div class="col-6">
-                                                <label class="form-label" for="description">Details</label>
+                                                <label class="form-label"
+                                                       for="description">{{__('locale.Description')}}</label>
                                                 <input type="text" class="form-control dt-full-name"
-                                                       placeholder="Details" name="description"/>
+                                                       placeholder="{{__('locale.Description')}}" name="description"/>
                                             </div>
                                             <div class="col-6">
-                                                <label for="formFile" class="form-label">File</label>
+                                                <label for="formFile" class="form-label">{{__('locale.File')}}</label>
                                                 <input class="form-control" type="file" name="file"/>
                                             </div>
                                         </div>
@@ -226,7 +234,7 @@
                                 </div>
                                 <button class="btn btn-icon btn-success" type="button" data-repeater-create>
                                     <i data-feather="plus" class="me-25"></i>
-                                    <span>Add New</span>
+                                    <span>{{__('locale.AddNew')}}</span>
                                 </button>
                             </div>
                             <div class="mb-1">
@@ -235,7 +243,7 @@
                                           placeholder="{{__('locale.Description')}}" name="description"></textarea>
                             </div>
                             <div class="mb-1">
-                                <label for="files" class="form-label">Attachments</label>
+                                <label for="files" class="form-label">{{__('locale.Attachments')}}</label>
                                 <input type="file" name="files" id="files"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -254,13 +262,14 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View response</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.View')}} {{__('locale.OfferResponse')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Type:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Type')}}:</span>
                                         <span id="view-type"></span>
                                     </li>
                                 </ul>

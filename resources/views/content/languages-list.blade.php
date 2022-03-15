@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Languages')
+@section('title', __('locale.Languages'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -38,9 +38,8 @@
                         <th></th>
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
-                        <th>ISO code</th>
-                        <th>Country</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.ISOCode')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -53,7 +52,7 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add language</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Language')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
@@ -62,16 +61,9 @@
                                        placeholder="{{__('locale.Name')}}" name="name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="code">ISO code</label>
+                                <label class="form-label" for="code">{{__('locale.ISOCode')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="code"
-                                       placeholder="ISO code" name="code" maxlength="2"/>
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="country">Country</label>
-                                <select class="form-control dt-full-name" id="country" name="country">
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
-                                </select>
+                                       placeholder="{{__('locale.ISOCode')}}" name="code" maxlength="2"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 {{__('locale.Submit')}}

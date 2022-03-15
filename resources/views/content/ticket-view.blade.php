@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Ticket details')
+@section('title', __('locale.TicketDetails'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -30,15 +30,15 @@
                         <div class="d-flex">
                             <i style="width: 24px;height: 24px" data-feather="user"></i>
                             <div class="author-info">
-                                <small class="text-muted me-25">by</small>
+                                <small class="text-muted me-25">{{__('locale.By')}}</small>
                                 <small>
                                     <a href="#" class="text-body">{{$ticket->user->contact_name}}
                                         @if($ticket->user->userable instanceof \App\Models\Owner)
-                                            (Owner)
+                                            ({{__('locale.Owner')}})
                                         @elseif($ticket->user->userable instanceof \App\Models\Tenant)
-                                            (Charterer)
+                                            ({{__('locale.Tenant')}})
                                         @elseif($ticket->user->userable instanceof \App\Models\Office)
-                                            (Office)
+                                            ({{__('locale.Office')}})
                                         @endif
 
                                     </a>
@@ -50,15 +50,15 @@
                         <div class="my-1 py-25">
                             @php
                                 $status = [
-                                    1=> ['title'=> 'New', 'class'=> 'badge-light-warning status-switcher'],
-                                    2=> ['title'=> 'Open', 'class'=> 'badge-light-info status-switcher'],
-                                    3=> ['title'=> 'Closed', 'class'=> 'badge-light-secondary status-switcher']
+                                    1=> ['title'=> __('locale.New'), 'class'=> 'badge-light-warning status-switcher'],
+                                    2=> ['title'=> __('locale.Open'), 'class'=> 'badge-light-info status-switcher'],
+                                    3=> ['title'=> __('locale.Closed'), 'class'=> 'badge-light-secondary status-switcher']
                                 ];
 
                             $category = [
-                                    1=> ['title'=> 'Payment'],
-                                    2=> ['title'=> 'Shipment'],
-                                    3=> ['title'=> 'Other']
+                                    1=> ['title'=> __('locale.Payment')],
+                                    2=> ['title'=> __('locale.Shipment')],
+                                    3=> ['title'=> __('locale.Other')]
                                 ];
                             @endphp
 
@@ -90,7 +90,7 @@
                                 @else
                                     <div class="d-flex align-items-center">
                                         <div class="author-info">
-                                            <h6 class="fw-bolder">Not assigned yet</h6>
+                                            <h6 class="fw-bolder">{{__('locale.NotAssignedYet')}}</h6>
                                         </div>
                                     </div>
                                 @endif
@@ -111,7 +111,7 @@
         @if ($ticket->replies->count() > 0)
             <!-- Ticket Replies -->
                 <div class="col-12 mt-1" id="blogComment">
-                    <h6 class="section-label mt-25">All replies</h6>
+                    <h6 class="section-label mt-25">{{__('locale.AllReplies')}}</h6>
                     @foreach($ticket->replies as $reply)
                         <div class="card">
                             <div class="card-body">
@@ -126,11 +126,11 @@
                                         @else
                                             <h6 class="fw-bolder mb-25">{{$reply->author->contact_name}}
                                                 @if($reply->author->userable instanceof \App\Models\Owner)
-                                                    (Owner)
+                                                    ({{__('locale.Owner')}})
                                                 @elseif($reply->author->userable instanceof \App\Models\Tenant)
-                                                    (Charterer)
+                                                    ({{__('locale.Tenant')}})
                                                 @elseif($reply->author->userable instanceof \App\Models\Office)
-                                                    (Office)
+                                                    ({{__('locale.Office')}})
                                                 @endif
                                             </h6>
                                         @endif
@@ -145,7 +145,7 @@
                                             <a href="#reply-form">
                                                 <div class="d-inline-flex align-items-center">
                                                     <i data-feather="corner-up-left" class="font-medium-3 me-50"></i>
-                                                    <span>Reply</span>
+                                                    <span>{{__('locale.Reply')}}</span>
                                                 </div>
                                             </a>
                                         @endif
@@ -160,7 +160,7 @@
         <!-- Leave a reply -->
             @if($ticket->status === 1 || ($ticket->admin->id === auth('admins')->user()->id && $ticket->status === 2 ))
                 <div class="col-12 mt-1">
-                    <h6 class="section-label mt-25">Reply</h6>
+                    <h6 class="section-label mt-25">{{__('locale.Reply')}}</h6>
                     <div class="card">
                         <form action="{{route('admin.reply',[$ticket->id])}}" id="reply-form" class="form add-new-reply"
                               method="POST">
@@ -178,7 +178,7 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">{{__('locale.Submit')}}</button>
                                     </div>
                                 </div>
                             </div>

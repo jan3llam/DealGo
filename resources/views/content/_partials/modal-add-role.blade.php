@@ -7,8 +7,8 @@
             </div>
             <div class="modal-body px-5 pb-5">
                 <div class="text-center mb-4">
-                    <h1 class="role-title">Add New Role</h1>
-                    <p>Set role permissions</p>
+                    <h1 class="role-title">{{__('locale.AddNew')}} {{__('locale.Role')}}</h1>
+                    <p>{{__('locale.SetRolePermissions')}}</p>
                 </div>
                 <!-- Add role form -->
                 <form id="addRoleForm" class="row" action="{{route('admin.roles.add')}}" method="post">
@@ -16,32 +16,33 @@
                     <div class="col-12">
                         <label class="form-label" for="modalRoleName">{{__('locale.Name')}}</label>
                         <input type="text" id="modalRoleName" name="name" class="form-control"
-                               placeholder="{{__('locale.Name')}}" tabindex="-1" data-msg="Please enter role name"/>
+                               placeholder="{{__('locale.Name')}}" tabindex="-1" data-msg="{{__('locale.FillField')}}"/>
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="modalRoleName">{{__('locale.Description')}}</label>
                         <input type="text" id="modalRoleName" name="description" class="form-control"
                                placeholder="{{__('locale.Description')}}" tabindex="-1"
-                               data-msg="Please enter description name"/>
+                               data-msg="{{__('locale.FillField')}}"/>
                     </div>
                     <div class="col-12">
-                        <h4 class="mt-2 pt-50">Role Permissions</h4>
+                        <h4 class="mt-2 pt-50">{{__('locale.Role')}} {{__('locale.Permissions')}}</h4>
                         <!-- Permission table -->
                         <div class="table-responsive">
                             <table class="table table-flush-spacing">
                                 <tbody>
                                 <tr>
                                     <td class="text-nowrap fw-bolder">
-                                        Administrator Access
+                                        {{__('locale.AdministratorAccess')}}
                                         <span data-bs-toggle="tooltip" data-bs-placement="top"
-                                              title="Allows a full access to the system">
+                                              title="{{__('locale.AdministratorAccessMsg')}}">
                                                 <i data-feather="info"></i>
                                         </span>
                                     </td>
                                     <td>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="all" id="selectAll"/>
-                                            <label class="form-check-label" for="selectAll"> Select All </label>
+                                            <label class="form-check-label"
+                                                   for="selectAll">{{__('locale.SelectAll')}}</label>
                                         </div>
                                     </td>
                                 </tr>
@@ -73,11 +74,11 @@
                     </div>
                     <div class="col-12 text-center mt-2">
                         <button type="submit" class="btn btn-primary me-1">
-                            Submit
+                            {{__('locale.Submit')}}
                         </button>
                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
                                 aria-label="Close">
-                            Discard
+                            {{__('locale.Cancel')}}
                         </button>
                     </div>
                 </form>

@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Roles')
+@section('title', __('locale.Roles'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -41,25 +41,17 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="d-flex align-items-end justify-content-center h-100">
-                            <img
-                                src="{{asset('images/illustration/faq-illustrations.svg')}}"
-                                class="img-fluid mt-2"
-                                alt="Image"
-                                width="85"
-                            />
+                            <img src="{{asset('images/illustration/faq-illustrations.svg')}}"
+                                 class="img-fluid mt-2" alt="Image" width="85"/>
                         </div>
                     </div>
                     <div class="col-sm-7">
                         <div class="card-body text-sm-end text-center ps-sm-0">
-                            <a
-                                href="javascript:void(0)"
-                                data-bs-target="#addRoleModal"
-                                data-bs-toggle="modal"
-                                class="stretched-link text-nowrap add-new-role"
-                            >
-                                <span class="btn btn-primary mb-1">Add New Role</span>
+                            <a href="javascript:void(0)" data-bs-target="#addRoleModal" data-bs-toggle="modal"
+                               class="stretched-link text-nowrap add-new-role">
+                                <span class="btn btn-primary mb-1">{{__('locale.AddNew')}} {{__('locale.Role')}}</span>
                             </a>
-                            <p class="mb-0">Add role, if it does not exist</p>
+                            <p class="mb-0">{{__('locale.AddNewRoleMsg')}}</p>
                         </div>
                     </div>
                 </div>

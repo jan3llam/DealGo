@@ -13,7 +13,7 @@ class TicketsController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Tickets"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Tickets')]
         ];
 
         return view('content.tickets-list', ['breadcrumbs' => $breadcrumbs]);

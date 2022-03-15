@@ -29,7 +29,7 @@ class OffersResponsesController extends Controller
         if ($offer) {
             array_push($breadcrumbs, ['name' => $offer->name . ' (#' . $offer->id . ')']);
         }
-        array_push($breadcrumbs, ['name' => 'Responses']);
+        array_push($breadcrumbs, ['name' => __('locale.OffersResponses')]);
 
         $offers = Offer::all();
         $tenants = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->get();

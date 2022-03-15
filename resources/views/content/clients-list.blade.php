@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Clients')
+@section('title', __('locale.Clients'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -39,8 +39,8 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Image</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Image')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -53,16 +53,16 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add client</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Client')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="url">URL</label>
-                                <input type="text" class="form-control dt-full-name" id="url"
-                                       placeholder="URL" name="url"/>
+                                <label class="form-label" for="url">{{__('locale.URL')}}</label>
+                                <input type="url" class="form-control dt-full-name" id="url"
+                                       placeholder="{{__('locale.URL')}}" name="url"/>
                             </div>
                             <div class="mb-1">
-                                <label for="image" class="form-label">Image</label>
+                                <label for="image" class="form-label">{{__('locale.Image')}}</label>
                                 <input type="file" name="file" id="file" accept="image/*"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -81,23 +81,23 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View client</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Client')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">URL:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.URL')}}:</span>
                                         <span id="view-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Image:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Image')}}:</span>
                                         <span id="view-image"></span>
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

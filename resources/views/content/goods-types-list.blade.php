@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Goods Types')
+@section('title', __('locale.Goods types'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -38,9 +38,9 @@
                         <th></th>
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
-                        <th>Parent</th>
-                        <th>Vessels Types</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Parent')}}</th>
+                        <th>{{__('locale.Vessels types')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -53,7 +53,7 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add goods type</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.GoodType')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -82,17 +82,18 @@
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="parent_id">
-                                <label class="form-label" for="parent">Parent type</label>
+                                <label class="form-label" for="parent">{{__('locale.Parent')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="parent"
                                         name="parent">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($gTypes as $type)
                                         <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="vtype">Supported vessels types</label>
+                                <label class="form-label"
+                                       for="vtype">{{__('locale.Supported')}} {{__('locale.Vessels types')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="vtype"
                                         name="vtype">
                                     @foreach($vTypes as $type)

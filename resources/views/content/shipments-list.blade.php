@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Shipments')
+@section('title', __('locale.Shipments'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -30,14 +30,14 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Contract ID</th>
-                        <th>Charterer</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Shipowner</th>
-                        <th>Vessel</th>
-                        <th>Arriving @</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Contract')}} ID</th>
+                        <th>{{__('locale.Tenant')}}</th>
+                        <th>{{__('locale.From')}}</th>
+                        <th>{{__('locale.To')}}</th>
+                        <th>{{__('locale.Owner')}}</th>
+                        <th>{{__('locale.Vessel')}}</th>
+                        <th>{{__('locale.ArrivingAt')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>

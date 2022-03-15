@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Helpdesk articles')
+@section('title', __('locale.Articles'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -39,10 +39,10 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Created @</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Title')}}</th>
+                        <th>{{__('locale.Category')}}</th>
+                        <th>{{__('locale.CreatedAt')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -55,14 +55,14 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add article</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Article')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="category">Category</label>
+                                <label class="form-label" for="category">{{__('locale.Category')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="category"
                                         name="category">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($categories as $item)
                                         <option @if($category && $category->id === $item->id) selected
                                                 @endif value="{{$item->id}}">{{$item->name}}</option>
@@ -70,26 +70,26 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="name">Title</label>
+                                <label class="form-label" for="name">{{__('locale.Title')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="name"
-                                       placeholder="Title" name="name"/>
+                                       placeholder="{{__('locale.Title')}}" name="name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="created_at">Date</label>
+                                <label class="form-label" for="created_at">{{__('locale.Date')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="created_at"
-                                       placeholder="Date" name="created_at"/>
+                                       placeholder="{{__('locale.Date')}}" name="created_at"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="updated_at">Update date</label>
+                                <label class="form-label" for="updated_at">{{__('locale.UpdateDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="updated_at"
-                                       placeholder="Update date" name="updated_at"/>
+                                       placeholder="{{__('locale.UpdateDate')}}" name="updated_at"/>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="description">{{__('locale.Description')}}</label>
                                 <div class="editor"></div>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="related">Related articles</label>
+                                <label class="form-label" for="related">{{__('locale.RelatedArticles')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="related"
                                         name="related">
                                     @foreach($articles as $article)
@@ -113,25 +113,25 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View article</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Article')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Title:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Title')}}:</span>
                                         <span id="view-title"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Category:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Category')}}:</span>
                                         <span id="view-category"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Created @:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.CreatedAt')}}:</span>
                                         <span id="view-created"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Updated @:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.UpdatedAt')}}:</span>
                                         <span id="view-updated"></span>
                                     </li>
                                     <li class="mb-75">
@@ -141,7 +141,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

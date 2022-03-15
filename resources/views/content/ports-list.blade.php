@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Ports')
+@section('title', __('locale.Ports'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -38,11 +38,11 @@
                         <th></th>
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th>UN/Locode</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Country')}}</th>
+                        <th>{{__('locale.City')}}</th>
+                        <th>{{__('locale.UNLocode')}}</th>
+                        <th>{{__('locale.Status')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -55,7 +55,7 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add port</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Port')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -83,10 +83,10 @@
                                 </div>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="country">Country</label>
+                                <label class="form-label" for="country">{{__('locale.Country')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="country"
                                         name="country">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($countries as $country)
                                         <option value="{{$country->id}}">{{$country->name}}</option>
                                     @endforeach
@@ -94,22 +94,22 @@
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="city_id">
-                                <label class="form-label" for="city">Cities</label>
+                                <label class="form-label" for="city">{{__('locale.City')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="city"
                                         name="city">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                 </select>
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" name="longitude" id="longitude">
                                 <input type="hidden" name="latitude" id="latitude">
-                                <label class="form-label" for="map">Location on map</label>
+                                <label class="form-label" for="map">{{__('locale.LocationOnMap')}}</label>
                                 <div id="map" style="min-height: 350px"></div>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="unlocode">UN/Locode</label>
+                                <label class="form-label" for="unlocode">{{__('locale.UNLocode')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="unlocode"
-                                       placeholder="UN/Locode" name="unlocode"/>
+                                       placeholder="{{__('locale.UNLocode')}}" name="unlocode"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 {{__('locale.Submit')}}

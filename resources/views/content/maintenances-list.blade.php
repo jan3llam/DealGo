@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Maintenance')
+@section('title', __('locale.Maintenances'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -40,11 +40,11 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Title</th>
-                        <th>Start @</th>
-                        <th>End @</th>
+                        <th>{{__('locale.Title')}}</th>
+                        <th>{{__('locale.StartAt')}}</th>
+                        <th>{{__('locale.EndAt')}}</th>
                         <th>{{__('locale.Description')}}</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -57,14 +57,15 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add maintenance</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.Add')}} {{__('locale.Maintenance')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="vessel">Vessel</label>
+                                <label class="form-label" for="vessel">{{__('locale.Vessel')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="vessel"
                                         name="vessel">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($vessels as $item)
                                         <option value="{{$item->id}}"
                                                 @if($vessel && $vessel->id === $item->id) selected @endif>{{$item->name}}</option>
@@ -72,20 +73,20 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="name">Title</label>
+                                <label class="form-label" for="name">{{__('locale.Title')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="name"
-                                       placeholder="Title" name="name"/>
+                                       placeholder="{{__('locale.Title')}}" name="name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="start">Start date</label>
+                                <label class="form-label" for="start">{{__('locale.StartDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="start"
-                                       placeholder="Start date" name="start"
+                                       placeholder="{{__('locale.StartDate')}}" name="start"
                                        min="{{\Carbon\Carbon::now()->subMonth()->format('Y-m-d')}}"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="end">End date</label>
+                                <label class="form-label" for="end">{{__('locale.EndDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="end"
-                                       placeholder="End date" name="end"/>
+                                       placeholder="{{__('locale.EndDate')}}" name="end"/>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="description">{{__('locale.Description')}}</label>
@@ -93,7 +94,7 @@
                                           placeholder="{{__('locale.Description')}}" name="description"></textarea>
                             </div>
                             <div class="mb-1">
-                                <label for="files" class="form-label">Attachments</label>
+                                <label for="files" class="form-label">{{__('locale.Attachments')}}</label>
                                 <input type="file" name="files" id="files"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -112,13 +113,14 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View maintenance</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.View')}} {{__('locale.Maintenance')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Vessel:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Vessel')}}:</span>
                                         <span id="view-vessel"></span>
                                     </li>
                                     <li class="mb-75">
@@ -126,11 +128,11 @@
                                         <span id="view-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Start @:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.StartAt')}}:</span>
                                         <span id="view-start"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">End @:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.EndAt')}}:</span>
                                         <span id="view-end"></span>
                                     </li>
                                     <li class="mb-75">
@@ -138,13 +140,13 @@
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Attachments:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Attachments')}}:</span>
                                         <span id="view-files"></span>
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

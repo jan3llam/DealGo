@@ -14,7 +14,7 @@ class SliderController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Content"], ['name' => "Slider"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Content')], ['name' => __('locale.Slider')]
         ];
 
         $languages = Language::withoutTrashed()->get();

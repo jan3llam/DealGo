@@ -1,6 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Home')
+@section('title', __('locale.Home'))
 
 @section('content')
     <!-- Kick start -->

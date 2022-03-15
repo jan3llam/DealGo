@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Blog classifications')
+@section('title', __('locale.Classifications'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -39,9 +39,9 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Title</th>
-                        <th>Parent classification</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Title')}}</th>
+                        <th>{{__('locale.Parent')}} {{__('locale.Classification')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -54,7 +54,8 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add classification</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.Add')}} {{__('locale.Classification')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -72,17 +73,18 @@
                                     <div class="tab-pane @if($loop->first) active @else hidden @endif"
                                          id="name-tab-{{$language->code}}"
                                          aria-labelledby="language-{{$language->code}}" role="tabpanel">
-                                        <label class="form-label" for="name">Title</label>
+                                        <label class="form-label" for="name">{{__('locale.Title')}}</label>
                                         <input type="text" class="form-control dt-full-name"
-                                               placeholder="Title" name="name[{{$language->code}}]"/>
+                                               placeholder="{{__('locale.Title')}}" name="name[{{$language->code}}]"/>
                                     </div>
                                 @endforeach
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="classification">Parent classification</label>
+                                <label class="form-label"
+                                       for="classification">{{__('locale.Parent')}} {{__('locale.Classification')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="classification"
                                         name="classification">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($classifications as $item)
                                         <option @if($classification && $classification->id === $item->id) selected
                                                 @endif value="{{$item->id}}">{{$item->name}}</option>
@@ -110,17 +112,19 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View classification</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.View')}} {{__('locale.Classification')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Title:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Title')}}:</span>
                                         <span id="view-title"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Parent Classification:</span>
+                                        <span
+                                            class="fw-bolder me-25">{{__('locale.Parent')}} {{__('locale.Classification')}}</span>
                                         <span id="view-classification"></span>
                                     </li>
                                     <li class="mb-75">
@@ -130,7 +134,7 @@
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

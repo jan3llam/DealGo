@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Charterers')
+@section('title', __('locale.Tenants'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -40,13 +40,13 @@
                         <th></th>
                         <th></th>
                         <th>#</th>
-                        <th>Business legal name</th>
-                        <th>City</th>
-                        <th>Contact name</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.BusinessLegalName')}}</th>
+                        <th>{{__('locale.City')}}</th>
+                        <th>{{__('locale.ContactName')}}</th>
+                        <th>{{__('locale.Phone')}}</th>
+                        <th>{{__('locale.Email')}}</th>
+                        <th>{{__('locale.Status')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -59,73 +59,74 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add charterer</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Tenant')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="type">Type</label>
+                                <label class="form-label" for="type">{{__('locale.Type')}}</label>
                                 <select type="text" class="form-control dt-full-name" id="type"
                                         name="type">
-                                    <option value="" disabled selected>Kindly choose</option>
-                                    <option value="1">Company</option>
-                                    <option value="2">Individual</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
+                                    <option value="1">{{__('locale.Company')}}</option>
+                                    <option value="2">{{__('locale.Individual')}}</option>
                                 </select>
                             </div>
                             <div id="company-container" style="display: none">
                                 <div class="mb-1">
-                                    <label class="form-label" for="name">Business legal name</label>
+                                    <label class="form-label" for="name">{{__('locale.BusinessLegalName')}}</label>
                                     <input type="text" class="form-control dt-full-name" id="name"
-                                           placeholder="Full name" name="name"/>
+                                           placeholder="{{__('locale.BusinessLegalName')}}" name="name"/>
                                 </div>
                                 <div class="mb-1">
-                                    <label class="form-label" for="commercial">Commercial #</label>
+                                    <label class="form-label" for="commercial">{{__('locale.Commercial')}} #</label>
                                     <input type="text" class="form-control dt-full-name" id="commercial"
-                                           placeholder="Commercial #" name="commercial"/>
+                                           placeholder="{{__('locale.Commercial')}} #" name="commercial"/>
                                 </div>
                                 <div class=mb-1>
-                                    <label for="license" class="form-label">License file</label>
+                                    <label for="license" class="form-label">{{__('locale.BusinessLicense')}}')}}</label>
                                     <input type="file" name="license" id="license">
                                 </div>
                                 <div class=mb-1>
-                                    <label for="company" class="form-label">Company file</label>
+                                    <label for="company" class="form-label">{{__('locale.CompanyFile')}}</label>
                                     <input type="file" name="company" id="company">
                                 </div>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="contact">Contact name</label>
+                                <label class="form-label" for="contact">{{__('locale.ContactName')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="contact"
-                                       placeholder="Contact name" name="contact"/>
+                                       placeholder="{{__('locale.ContactName')}}" name="contact"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="email">Email</label>
+                                <label class="form-label" for="email">{{__('locale.Email')}}</label>
                                 <input type="email" class="form-control dt-full-name" id="email"
-                                       placeholder="Email" name="email"/>
+                                       placeholder="{{__('locale.Email')}}" name="email"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="phone">Phone</label>
+                                <label class="form-label" for="phone">{{__('locale.Phone')}}</label>
                                 <input type="tel" class="form-control dt-full-name" id="phone"
-                                       placeholder="Phone" name="phone"/>
+                                       placeholder="{{__('locale.Phone')}}" name="phone"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="zip">Zip code</label>
+                                <label class="form-label" for="zip">{{__('locale.Zipcode')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="zip"
-                                       placeholder="Zip code" name="zip"/>
+                                       placeholder="{{__('locale.Zipcode')}}" name="zip"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="pass">Password</label>
+                                <label class="form-label" for="pass">{{__('locale.Password')}}</label>
                                 <input type="password" class="form-control dt-full-name" id="pass"
-                                       placeholder="Password" name="password"/>
+                                       placeholder="{{__('locale.Password')}}" name="password"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="confirm_password">Confirm password</label>
+                                <label class="form-label"
+                                       for="confirm_password">{{__('locale.PasswordConfirmation')}}</label>
                                 <input type="password" class="form-control dt-full-name" id="confirm_password"
-                                       equalTo="#pass" placeholder="Confirm password"/>
+                                       equalTo="#pass" placeholder="{{__('locale.PasswordConfirmation')}}"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="country">Country</label>
+                                <label class="form-label" for="country">{{__('locale.Country')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="country"
                                         name="country">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($countries as $country)
                                         <option value="{{$country->id}}">{{$country->name}}</option>
                                     @endforeach
@@ -133,39 +134,39 @@
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="city_id">
-                                <label class="form-label" for="city">Cities</label>
+                                <label class="form-label" for="city">{{__('locale.City')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="city"
                                         name="city">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="province">Province</label>
+                                <label class="form-label" for="province">{{__('locale.Province')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="province"
-                                       placeholder="Province" name="province"/>
+                                       placeholder="{{__('locale.Province')}}" name="province"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="address_1">Address line 1</label>
+                                <label class="form-label" for="address_1">{{__('locale.Address')}} 1</label>
                                 <input type="text" class="form-control dt-full-name" id="address_1"
-                                       placeholder="Address 1" name="address_1"/>
+                                       placeholder="{{__('locale.Address')}} 1" name="address_1"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="address_2">Address line 2</label>
+                                <label class="form-label" for="address_2">{{__('locale.Address')}} 2</label>
                                 <input type="text" class="form-control dt-full-name" id="address_2"
-                                       placeholder="Address 2" name="address_2"/>
-                            </div>
-                            <div class=mb-1>
-                                <label for="legal" class="form-label">Legal file (ID, Passport)</label>
-                                <input type="file" name="legal" id="legal"/>
+                                       placeholder="{{__('locale.Address')}} 2" name="address_2"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="gtype">Goods types</label>
+                                <label class="form-label" for="gtype">{{__('locale.Goods types')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="gtype"
                                         name="gtype" multiple="multiple">
                                     @foreach($types as $type)
                                         <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class=mb-1>
+                                <label for="legal" class="form-label">{{__('locale.LegalFile')}}</label>
+                                <input type="file" name="legal" id="legal"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 {{__('locale.Submit')}}
@@ -183,13 +184,13 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View charterer</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Tenant')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Type:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Type')}}:</span>
                                         <span id="view-type"></span>
                                     </li>
                                 </ul>
@@ -198,19 +199,19 @@
                                 <div class="info-container">
                                     <ul class="list-unstyled">
                                         <li class="mb-75">
-                                            <span class="fw-bolder me-25">Full name:</span>
+                                            <span class="fw-bolder me-25">{{__('locale.BusinessLegalName')}}:</span>
                                             <span id="view-name"></span>
                                         </li>
                                         <li class="mb-75">
-                                            <span class="fw-bolder me-25">Commercial #:</span>
+                                            <span class="fw-bolder me-25">{{__('locale.Commercial')}} #:</span>
                                             <span id="view-commercial"></span>
                                         </li>
                                         <li class="mb-75">
-                                            <span class="fw-bolder me-25">License file:</span>
+                                            <span class="fw-bolder me-25">{{__('locale.BusinessLicense')}}:</span>
                                             <span id="view-license"></span>
                                         </li>
                                         <li class="mb-75">
-                                            <span class="fw-bolder me-25">Company file:</span>
+                                            <span class="fw-bolder me-25">{{__('locale.CompanyFile')}}:</span>
                                             <span id="view-company"></span>
                                         </li>
                                     </ul>
@@ -219,39 +220,43 @@
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Contact name:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.ContactName')}}:</span>
                                         <span id="view-contact"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Email:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Email')}}:</span>
                                         <span id="view-email"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Phone:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Phone')}}:</span>
                                         <span id="view-phone"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Zip code:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Zipcode')}}:</span>
                                         <span id="view-zip"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Country:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Country')}}:</span>
                                         <span id="view-country"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">City:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.City')}}:</span>
                                         <span id="view-city"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 1:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Province')}}:</span>
+                                        <span id="view-province"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Address')}} 1:</span>
                                         <span id="view-address-1"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 2:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Address')}} 2:</span>
                                         <span id="view-address-2"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Legal file (ID, Passport):</span>
+                                        <span class="fw-bolder me-25">{{__('locale.LegalFile')}}:</span>
                                         <span id="view-legal"></span>
                                     </li>
 

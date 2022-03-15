@@ -18,7 +18,7 @@ class VesselsController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Vessels"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Vessels')]
         ];
 
         $countries = Country::all();
@@ -35,7 +35,7 @@ class VesselsController extends Controller
     public function track()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Track Vessels"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Track vessels')]
         ];
 
         $vessels = Vessel::where('status', 1)->get();

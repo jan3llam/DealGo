@@ -15,7 +15,7 @@ class AdminsController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "home", 'name' => __('locale.Home')], ['name' => "Administrators"]
+            ['link' => "home", 'name' => __('locale.Home')], ['name' => __('locale.Administrators')]
         ];
 
         $countries = Country::all();

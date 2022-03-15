@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Services')
+@section('title', __('locale.Services'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -40,8 +40,8 @@
                         <th></th>
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
-                        <th>Image</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Image')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -54,7 +54,7 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add service</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Service')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -94,21 +94,23 @@
                                 @endforeach
                             </div>
                             <div class="mb-1">
-                                <label for="image" class="form-label">Image</label>
+                                <label for="image" class="form-label">{{__('locale.Image')}}</label>
                                 <input type="file" name="file" id="file" accept="image/*"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="meta_name">Meta title</label>
+                                <label class="form-label" for="meta_name">{{__('locale.MetaTitle')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="meta_name"
-                                       placeholder="Meta title" name="meta_name"/>
+                                       placeholder="{{__('locale.MetaTitle')}}" name="meta_name"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="meta_description">Meta description</label>
+                                <label class="form-label"
+                                       for="meta_description">{{__('locale.MetaDescription')}}</label>
                                 <textarea name="meta_description" class="form-control dt-full-name"
-                                          placeholder="Meta description" id="meta_description"></textarea>
+                                          placeholder="{{__('locale.MetaDescription')}}"
+                                          id="meta_description"></textarea>
                             </div>
                             <div class=mb-1>
-                                <label for="meta_file" class="form-label">Meta image</label>
+                                <label for="meta_file" class="form-label">{{__('locale.MetaImage')}}</label>
                                 <input type="file" name="meta_file" id="meta_file"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -127,7 +129,7 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View service</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Service')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
@@ -141,29 +143,29 @@
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Image:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Image')}}:</span>
                                         <span id="view-image"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Slug:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Slug')}}:</span>
                                         <span id="view-slug"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Meta title:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.MetaTitle')}}:</span>
                                         <span id="view-meta-title"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Meta description:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.MetaDescription')}}:</span>
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Meta image:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.MetaImage')}}:</span>
                                         <span id="view-image"></span>
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

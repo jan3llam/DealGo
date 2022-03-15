@@ -26,7 +26,7 @@ class MaintenancesController extends Controller
         if ($vessel) {
             array_push($breadcrumbs, ['name' => $vessel->name]);
         }
-        array_push($breadcrumbs, ['name' => 'Vessel maintenances']);
+        array_push($breadcrumbs, ['name' => __('locale.Maintenances')]);
 
         $vessels = Vessel::all();
 

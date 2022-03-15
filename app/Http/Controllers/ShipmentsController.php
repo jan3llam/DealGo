@@ -11,7 +11,7 @@ class ShipmentsController extends Controller
     public function list($id = null)
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Ports"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Shipments')]
         ];
 
         return view('content.shipments-list', ['breadcrumbs' => $breadcrumbs]);

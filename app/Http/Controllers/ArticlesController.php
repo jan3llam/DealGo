@@ -24,7 +24,7 @@ class ArticlesController extends Controller
         if ($category) {
             array_push($breadcrumbs, ['name' => $category->name]);
         }
-        array_push($breadcrumbs, ['name' => 'Helpdesk articles']);
+        array_push($breadcrumbs, ['name' => __('locale.Articles')]);
 
         $categories = Category::withoutTrashed()->get();
         $articles = Article::withoutTrashed()->get();

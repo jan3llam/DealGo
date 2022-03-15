@@ -20,10 +20,10 @@ class CategoriesController extends Controller
         ];
 
         if ($category) {
-            array_push($breadcrumbs, ['link' => "admin/categories", 'name' => 'Helpdesk categories']);
+            array_push($breadcrumbs, ['link' => "admin/categories", 'name' => __('locale.Categories')]);
             array_push($breadcrumbs, ['name' => $category->name]);
         } else {
-            array_push($breadcrumbs, ['name' => 'Helpdesk categories']);
+            array_push($breadcrumbs, ['name' => __('locale.Categories')]);
         }
 
         $categories = Category::withoutTrashed()->get();

@@ -17,14 +17,14 @@ class ClassificationsController extends Controller
         }
 
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => "Content"]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Content')]
         ];
 
         if ($classification) {
-            array_push($breadcrumbs, ['link' => "admin/classifications", 'name' => 'Blog classifications']);
+            array_push($breadcrumbs, ['link' => "admin/classifications", 'name' => __('locale.Classifications')]);
             array_push($breadcrumbs, ['name' => $classification->name]);
         } else {
-            array_push($breadcrumbs, ['name' => 'Blog classifications']);
+            array_push($breadcrumbs, ['name' => __('locale.Classifications')]);
         }
 
         $classifications = Classification::withoutTrashed()->get();

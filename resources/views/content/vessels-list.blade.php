@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Vessels')
+@section('title', __('locale.Vessels'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -41,10 +41,10 @@
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
                         <th>IMO</th>
-                        <th>Ship owner</th>
-                        <th>Country</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Owner')}}</th>
+                        <th>{{__('locale.Country')}}</th>
+                        <th>{{__('locale.Status')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -57,7 +57,7 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add vessel</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Vessel')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
@@ -67,10 +67,10 @@
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="type_id">
-                                <label class="form-label" for="type">Type</label>
+                                <label class="form-label" for="type">{{__('locale.Type')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="type"
                                         name="type">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($types as $type)
                                         <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
@@ -78,10 +78,10 @@
                             </div>
                             <div class="mb-1">
                                 <input type="hidden" value="" id="owner_id">
-                                <label class="form-label" for="owner">Owner</label>
+                                <label class="form-label" for="owner">{{__('locale.Owner')}}</label>
                                 <select type="text" class="form-control dt-full-name  select2" id="owner"
                                         name="owner">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($owners as $owner)
                                         <option
                                             value="{{$owner->userable->id}}">{{$owner->contact_name}}</option>
@@ -99,31 +99,31 @@
                                        placeholder="MMSI" name="mmsi"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="capacity">Capacity TEU</label>
+                                <label class="form-label" for="capacity">{{__('locale.Capacity')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="capacity"
-                                       placeholder="Capacity TEU" name="capacity"/>
+                                       placeholder="{{__('locale.Capacity')}}" name="capacity"/>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="build">Build year</label>
+                                <label class="form-label" for="build">{{__('locale.BuildYear')}}</label>
                                 <select type="text" class="form-control dt-full-name" id="build" name="build">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @for($i = 1910; $i<=intval(date('Y'));$i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="country">Country</label>
+                                <label class="form-label" for="country">{{__('locale.Country')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="country"
                                         name="country">
-                                    <option value="" disabled selected>Kindly choose</option>
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                                     @foreach($countries as $country)
                                         <option value="{{$country->id}}">{{$country->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label for="image" class="form-label">Attachments:</label>
+                                <label for="image" class="form-label">{{__('locale.Attachments')}}</label>
                                 <input type="file" name="image" id="image"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">

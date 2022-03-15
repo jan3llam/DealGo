@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Track vessels')
+@section('title', __('locale.Track vessels'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -22,7 +22,7 @@
                 <div class="mb-1">
                     <div class="input-group">
                         <select class="form-control dt-full-name vessels-select2">
-                            <option value="" disabled selected>Kindly choose</option>
+                            <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                             @foreach($vessels as $vessel)
                                 <option value="{{$vessel->id}}">{{$vessel->name}}</option>
                             @endforeach
@@ -31,7 +31,7 @@
                 </div>
                 <input type="hidden" name="longitude" id="longitude">
                 <input type="hidden" name="latitude" id="latitude">
-                <label class="form-label" for="map">Location on map</label>
+                <label class="form-label" for="map">{{__('locale.LocationOnMap')}}</label>
                 <div id="map" style="min-height: 350px"></div>
             </div>
         </div>

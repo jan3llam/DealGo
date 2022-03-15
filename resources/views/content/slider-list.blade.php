@@ -1,6 +1,6 @@
 @extends('layouts.contentLayoutMaster')
 
-@section('title', 'Slider')
+@section('title', __('locale.Slider'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -40,8 +40,8 @@
                         <th></th>
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
-                        <th>Image</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Image')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -54,7 +54,7 @@
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add slider</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Slider')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -94,12 +94,12 @@
                                 @endforeach
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="url">URL</label>
+                                <label class="form-label" for="url">{{__('locale.URL')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="url"
-                                       placeholder="URL" name="url"/>
+                                       placeholder="{{__('locale.URL')}}" name="url"/>
                             </div>
                             <div class="mb-1">
-                                <label for="image" class="form-label">Image</label>
+                                <label for="image" class="form-label">{{__('locale.Image')}}</label>
                                 <input type="file" name="file" id="file" accept="image/*"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -118,7 +118,7 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View slider</h5>
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Slider')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
@@ -128,7 +128,7 @@
                                         <span id="view-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">URL:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.URL')}}:</span>
                                         <span id="view-url"></span>
                                     </li>
                                     <li class="mb-75">
@@ -136,7 +136,7 @@
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Image:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Image')}}:</span>
                                         <span id="view-image"></span>
                                     </li>
                                 </ul>
