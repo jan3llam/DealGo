@@ -224,6 +224,9 @@ $(function () {
             },
             // Buttons with Dropdown
             buttons: btn,
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/' + $('html').attr('lang') + '.json'
+            },
         })
     }
 

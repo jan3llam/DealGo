@@ -55,6 +55,7 @@ class VesselsController extends Controller
             'v' => 5,
             'mmsi' => $mmsi,
             'protocol' => 'json',
+            'timespan' => '2000'
         ]);
         if ($response->successful()) {
             if ($data = json_decode($response->getBody()->getContents())) {

@@ -82,7 +82,7 @@ mix
 
 mix.then(() => {
     if (process.env.MIX_CONTENT_DIRECTION === 'rtl') {
-        let command = `node ${path.resolve('node_modules/rtlcss/bin/rtlcss.js')} -d -e ".css" ./public/css/ ./public/css/`
+        let command = `node ${path.resolve('node_modules/rtlcss/bin/rtlcss.js')} -d -e ".css" ./public/css/ ./public/css-rtl/`
         exec(command, function (err, stdout, stderr) {
             if (err !== null) {
                 console.log(err)
