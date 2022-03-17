@@ -19,8 +19,6 @@ $(function () {
     });
     roleEdit.on('click', function () {
         roleTitle.text('Edit Role');
-        $('#name').val(data.name);
-        $('#contact').val(data.description);
     });
 
     var assetPath = '../../../app-assets/';
