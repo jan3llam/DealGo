@@ -25,6 +25,10 @@
                             <div class="role-heading">
                                 <h4 class="fw-bolder">{{$role->name}}</h4>
                                 <p class="lead">{{$role->description}}</p>
+                                <a href="javascript:;" data-permissions="{{$role->permissions->pluck('id')}}"
+                                   class="role-edit-modal" data-bs-toggle="modal" data-bs-target="#addRoleModal">
+                                    <small class="fw-bolder">{{__('Edit')}} {{__('Role')}}</small>
+                                </a>
                             </div>
                             @if ($role->id !== 1)
                                 <a href="javascript:void(0);" class="text-body item-delete" data-id="{{$role->id}}">

@@ -33,6 +33,23 @@
         $(this).find('form')[0].reset();
     });
 
+    $(document).on('click', '.role-edit-modal', function () {
+        var permissions = $(this).data('permissions');
+        var name = $(this).data('name');
+        var description = $(this).data('description');
+        permissions.forEach(item => {
+            $('[name=permissions\\[\\]\\[' + item + '\\]]').prop('checked', true);
+        });
+        $('#modalRoleName').val(name);
+        $('#modalRoleDescription').val(description);
+    });
+
+    $(document).on('click', '.add-new-role', function () {
+        $('[name^=permissions\\[\\]]').prop('checked', false);
+        $('#modalRoleName').val('');
+        $('#modalRoleDescription').val('');
+    });
+
     // Select All checkbox click
     const selectAll = document.querySelector('#selectAll'),
         checkboxList = document.querySelectorAll('[type="checkbox"]');

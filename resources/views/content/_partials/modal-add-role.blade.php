@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-12">
                         <label class="form-label" for="modalRoleName">{{__('locale.Description')}}</label>
-                        <input type="text" id="modalRoleName" name="description" class="form-control"
+                        <input type="text" id="modalRoleDescription" name="description" class="form-control"
                                placeholder="{{__('locale.Description')}}" tabindex="-1"
                                data-msg="{{__('locale.FillField')}}"/>
                     </div>
