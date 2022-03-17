@@ -12,13 +12,17 @@ $(function () {
 
     var roleEdit = $('.role-edit-modal'),
         roleAdd = $('.add-new-role'),
-        roleTitle = $('.role-title');
-
+        roleTitle = $('.role-title'),
+        addRoleForm = $('#addRoleForm');
     roleAdd.on('click', function () {
         roleTitle.text('Add New Role'); // reset text
+        addRoleForm.attr('action', 'http://dealgo.site/api/admin/roles/add');
+        $('#object_id').val('');
     });
     roleEdit.on('click', function () {
         roleTitle.text('Edit Role');
+        addRoleForm.attr('action', 'http://dealgo.site/api/admin/roles/update');
+        $('#object_id').val($(this).data('id'));
     });
 
     var assetPath = '../../../app-assets/';
