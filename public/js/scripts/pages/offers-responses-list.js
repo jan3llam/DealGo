@@ -296,7 +296,7 @@ $(function () {
                                 data = data.data.data.map(function (item) {
                                     return {
                                         id: item.id,
-                                        text: item.name,
+                                        text: item.name_translation,
                                     };
                                 });
                                 return {results: data};
