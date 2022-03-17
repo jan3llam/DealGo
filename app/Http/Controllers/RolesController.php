@@ -77,7 +77,6 @@ class RolesController extends Controller
 
         $item = Role::findById($id);
         if ($item) {
-
             $item->name = $params['name'];
             $item->description = $params['description'];
             $item->syncPermissions($perms);
