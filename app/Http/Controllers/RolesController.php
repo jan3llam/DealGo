@@ -84,7 +84,7 @@ class RolesController extends Controller
             $item->save();
         }
 
-        return response()->success();
+        return redirect()->route('admin.roles')->with('success', 'Success');
     }
 
 
