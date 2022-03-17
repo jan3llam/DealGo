@@ -68,13 +68,18 @@ class RolesController extends Controller
         if ($validator->fails()) {
             return response()->error('missingParameters');
         }
-        dd($request);
+
+        $permissions = $request->input('permissions');
+        $perms = [];
+        foreach (array_values($permissions) as $index => $item) {
+            array_push($perms, array_keys($item)[0]);
+        }
 
         $item = Role::findById($id);
         if ($item) {
             $item->name = $params['name'];
             $item->description = $params['description'];
-            $item->syncPermissions($params['permissions']);
+            $item->syncPermissions($perms);
             $item->save();
         }
 
