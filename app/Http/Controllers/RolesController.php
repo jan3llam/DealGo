@@ -75,6 +75,7 @@ class RolesController extends Controller
             $item->description = $params['description'];
             $item->syncPermissions($params['permissions']);
             $item->save();
+            dd($item);
         }
 
         return response()->success();
