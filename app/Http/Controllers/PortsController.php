@@ -160,6 +160,17 @@ class PortsController extends Controller
     }
 
 
+    public function bulk_delete(Request $request)
+    {
+        foreach ($request->input('ids', []) as $id) {
+            $item = Port::withTrashed()->where('id', $id)->first();
+            if ($item) {
+                $item->delete();
+            }
+        }
+        return response()->success();
+    }
+
     public function status($id)
     {
         $item = Port::withTrashed()->where('id', $id)->first();
