@@ -228,8 +228,13 @@
             "icon": "monitor",
             "slug": "admin.content",
             "permissions": [
-                69,
-                73
+                85,
+                89,
+                93,
+                97,
+                101,
+                105,
+                109
             ],
             "submenu": [
                 {
@@ -237,56 +242,56 @@
                     "name": "Slider",
                     "icon": "image",
                     "slug": "admin.slider",
-                    "permission": 69
+                    "permission": 85
                 },
                 {
                     "url": "/admin/services",
                     "name": "Services",
                     "icon": "server",
                     "slug": "admin.services",
-                    "permission": 73
+                    "permission": 89
                 },
                 {
                     "url": "/admin/about",
                     "name": "About",
                     "icon": "info",
                     "slug": "admin.about",
-                    "permission": 73
+                    "permission": 93
                 },
                 {
                     "url": "/admin/clients",
                     "name": "Clients",
                     "icon": "users",
                     "slug": "admin.clients",
-                    "permission": 73
+                    "permission": 97
                 },
                 {
                     "url": "/admin/advantages",
                     "name": "Advantages",
                     "icon": "plus-square",
                     "slug": "admin.advantages",
-                    "permission": 73
+                    "permission": 101
                 },
                 {
                     "url": "#",
                     "name": "Blog",
                     "icon": "align-justify",
                     "slug": "admin.blog",
-                    "permission": 73,
+                    "permission": 105,
                     "submenu": [
                         {
                             "url": "/admin/classifications",
                             "name": "Classifications",
                             "icon": "grid",
                             "slug": "admin.classifications",
-                            "permission": 69
+                            "permission": 105
                         },
                         {
                             "url": "/admin/posts",
                             "name": "Posts",
                             "icon": "align-justify",
                             "slug": "admin.posts",
-                            "permission": 69
+                            "permission": 109
                         }
                     ]
                 }
