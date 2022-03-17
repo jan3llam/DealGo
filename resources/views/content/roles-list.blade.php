@@ -26,6 +26,7 @@
                                 <h4 class="fw-bolder">{{$role->name}}</h4>
                                 <p class="lead">{{$role->description}}</p>
                                 <a href="javascript:;" data-permissions="{{$role->permissions->pluck('id')}}"
+                                   data-name="{{$role->name}}" data-description="{{$role->description}}"
                                    class="role-edit-modal" data-bs-toggle="modal" data-bs-target="#addRoleModal">
                                     <small class="fw-bolder">{{__('Edit')}} {{__('Role')}}</small>
                                 </a>
