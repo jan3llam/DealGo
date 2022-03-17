@@ -17,7 +17,7 @@ class RolesController extends Controller
             ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Roles')]
         ];
 
-        $roles = Role::all();
+        $roles = Role::with('users')->withCount('users')->get();
         $permissions = Permission::all();
         return view('content.roles-list', ['breadcrumbs' => $breadcrumbs, 'roles' => $roles, 'permissions' => $permissions]);
     }

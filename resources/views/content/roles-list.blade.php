@@ -21,6 +21,18 @@
             <div class="col-xl-4 col-lg-6 col-md-6">
                 <div class="card">
                     <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <span>{{__('locale.Total')}} {{$role->users_count}} {{__('locale.Administrators')}}</span>
+                            <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                                @foreach($role->users->take(5) as $admin)
+                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                        title="{{$admin->name}}" class="avatar avatar-sm pull-up">
+                                        <img class="rounded-circle" src="{{asset('images/avatars/blank.png')}}"
+                                             alt="Avatar"/>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                         <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
                             <div class="role-heading">
                                 <h4 class="fw-bolder">{{$role->name}}</h4>

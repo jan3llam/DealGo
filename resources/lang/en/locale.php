@@ -165,6 +165,7 @@ return [
     "Title" => "Title",
     "To" => "To",
     "ToDate" => "To date",
+    "Total" => "Total",
     "Track vessels" => "Track vessels",
     "Trashed" => "Trashed",
     "Type" => "Type",
