@@ -68,6 +68,7 @@ class RolesController extends Controller
         if ($validator->fails()) {
             return response()->error('missingParameters');
         }
+        dd($request);
 
         $item = Role::findById($id);
         if ($item) {
@@ -75,7 +76,6 @@ class RolesController extends Controller
             $item->description = $params['description'];
             $item->syncPermissions($params['permissions']);
             $item->save();
-            dd($item);
         }
 
         return response()->success();
