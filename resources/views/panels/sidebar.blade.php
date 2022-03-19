@@ -29,7 +29,6 @@
             {{-- Foreach menu item starts --}}
             @if(isset($menuData[0]))
                 @foreach($menuData[0]->menu as $menu)
-                    @dd(Auth::user()->hasAnyPermission([35],'admins'))
                     @if(Auth::user()->hasAnyPermission($menu->permissions,'admins'))
                         @if(isset($menu->navheader))
                             <li class="navigation-header">
