@@ -48,7 +48,7 @@
                     "name": "Administrators",
                     "icon": "lock",
                     "slug": "admin.admins",
-                    "permission": 200
+                    "permission": 20
                 },
                 {
                     "url": "/admin/roles",
