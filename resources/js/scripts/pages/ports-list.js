@@ -6,8 +6,8 @@ $(function () {
         viewSidebar = $('.view-port-modal'),
         newForm = $('.add-new-port'),
         statusObj = {
-            1: {title: 'Active', class: 'badge-light-success status-switcher'},
-            0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
+            1: {title: LANG.Active, class: 'badge-light-success status-switcher'},
+            0: {title: LANG.Inactive, class: 'badge-light-secondary status-switcher'}
         }
 
     var assetPath = '../../../app-assets/';
@@ -97,7 +97,7 @@ $(function () {
                 {
                     // Actions
                     targets: -1,
-                    title: 'Actions',
+                    title: LANG.Actions,
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return (
@@ -108,10 +108,10 @@ $(function () {
                             '<div class="dropdown-menu dropdown-menu-end">' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Edit</a>' +
+                            LANG.Edit + '</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Delete</a></div>' +
+                            LANG.Delete + '</a></div>' +
                             '</div>' +
                             '</div>'
                         )
@@ -145,11 +145,11 @@ $(function () {
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
+                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + LANG.Export,
                     buttons: [
                         {
                             extend: 'print',
-                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
+                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + LANG.Print,
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         },
@@ -173,7 +173,7 @@ $(function () {
                         },
                         {
                             extend: 'copy',
-                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
+                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + LANG.Copy,
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         }
@@ -189,10 +189,10 @@ $(function () {
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: 'Status',
+                    text: LANG.Status,
                     buttons: [
                         {
-                            text: 'Active',
+                            text: LANG.Active,
                             attr: {
                                 "data-status": 1
                             },
@@ -206,7 +206,7 @@ $(function () {
                             className: 'status-item dropdown-item',
                         },
                         {
-                            text: 'Trashed',
+                            text: LANG.Trashed,
                             attr: {
                                 "data-status": 2
                             },
@@ -229,7 +229,7 @@ $(function () {
                     }
                 },
                 {
-                    text: 'Add new',
+                    text: LANG.AddNew,
                     className: 'add-port btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
@@ -314,11 +314,12 @@ $(function () {
         var ids = dtTable.api().columns().checkboxes.selected()[1];
         if (ids.length) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: LANG.AreYouSure,
+                text: LANG.DeleteMsg,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete those (' + ids.length + ') rows!',
+                cancelButtonText: LANG.Cancel,
+                confirmButtonText: $.validator.format(LANG.ConfirmBulkDelete, [ids.length]),
                 customClass: {
                     confirmButton: 'btn btn-primary',
                     cancelButton: 'btn btn-outline-danger ms-1'
@@ -344,9 +345,10 @@ $(function () {
             })
         } else {
             Swal.fire({
-                title: 'Error!',
-                text: 'Choose rows to delete',
+                title: LANG.Error,
+                text: LANG.ChooseErrorMsg,
                 icon: 'error',
+                confirmButtonText: LANG.Ok,
                 customClass: {
                     confirmButton: 'btn btn-primary'
                 },
@@ -358,11 +360,12 @@ $(function () {
     $(document).on('click', '.item-delete', function () {
         var element = $(this);
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: LANG.AreYouSure,
+            text: LANG.DeleteMsg,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes, delete this item!',
+            cancelButtonText: LANG.Cancel,
+            confirmButtonText: LANG.ConfirmSingleDelete,
             customClass: {
                 confirmButton: 'btn btn-primary',
                 cancelButton: 'btn btn-outline-danger ms-1'
@@ -394,6 +397,7 @@ $(function () {
             text: "Do you want to change status for this item?",
             icon: 'warning',
             showCancelButton: true,
+            cancelButtonText: LANG.Cancel,
             confirmButtonText: 'Yes',
             customClass: {
                 confirmButton: 'btn btn-primary',

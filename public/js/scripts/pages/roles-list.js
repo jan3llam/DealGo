@@ -34,11 +34,12 @@ $(function () {
     $(document).on('click', '.item-delete', function () {
         var element = $(this);
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: LANG.AreYouSure,
+            text: LANG.DeleteMsg,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Yes, delete this item!',
+            cancelButtonText: LANG.Cancel,
+            confirmButtonText: LANG.ConfirmSingleDelete,
             customClass: {
                 confirmButton: 'btn btn-primary',
                 cancelButton: 'btn btn-outline-danger ms-1'

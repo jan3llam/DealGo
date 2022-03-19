@@ -88,6 +88,7 @@ $(function () {
             text: "Do you want to change status for this item?",
             icon: 'warning',
             showCancelButton: true,
+            cancelButtonText: LANG.Cancel,
             confirmButtonText: 'Yes',
             customClass: {
                 confirmButton: 'btn btn-primary',

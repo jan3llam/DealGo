@@ -365,8 +365,8 @@ $(function () {
                 title: LANG.AreYouSure,
                 text: LANG.DeleteMsg,
                 icon: 'warning',
-                showCancelButton: true,
                 confirmButtonText: $.validator.format(LANG.ConfirmBulkDelete, [ids.length]),
+                showCancelButton: true,
                 cancelButtonText: LANG.Cancel,
                 customClass: {
                     confirmButton: 'btn btn-primary',

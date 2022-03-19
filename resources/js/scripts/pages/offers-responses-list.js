@@ -5,8 +5,8 @@ $(function () {
         newSidebar = $('.new-response-modal'),
         newForm = $('.add-new-response'),
         statusObj = {
-            1: {title: 'Active', class: 'badge-light-success status-switcher'},
-            0: {title: 'Inactive', class: 'badge-light-secondary status-switcher'}
+            1: {title: LANG.Active, class: 'badge-light-success status-switcher'},
+            0: {title: LANG.Inactive, class: 'badge-light-secondary status-switcher'}
         }
 
 
@@ -21,11 +21,11 @@ $(function () {
             {
                 extend: 'collection',
                 className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
+                text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + LANG.Export,
                 buttons: [
                     {
                         extend: 'print',
-                        text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
+                        text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + LANG.Print,
                         className: 'dropdown-item',
                         exportOptions: {columns: [1, 2, 3, 4, 5]}
                     },
@@ -49,7 +49,7 @@ $(function () {
                     },
                     {
                         extend: 'copy',
-                        text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
+                        text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + LANG.Copy,
                         className: 'dropdown-item',
                         exportOptions: {columns: [1, 2, 3, 4, 5]}
                     }
@@ -63,7 +63,7 @@ $(function () {
                 }
             },
             {
-                text: 'Add new',
+                text: LANG.AddNew,
                 className: 'add-response btn btn-primary',
                 attr: {
                     'data-bs-toggle': 'modal',
@@ -80,11 +80,11 @@ $(function () {
             {
                 extend: 'collection',
                 className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
+                text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + LANG.Export,
                 buttons: [
                     {
                         extend: 'print',
-                        text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
+                        text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + LANG.Print,
                         className: 'dropdown-item',
                         exportOptions: {columns: [1, 2, 3, 4, 5]}
                     },
@@ -108,7 +108,7 @@ $(function () {
                     },
                     {
                         extend: 'copy',
-                        text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
+                        text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + LANG.Copy,
                         className: 'dropdown-item',
                         exportOptions: {columns: [1, 2, 3, 4, 5]}
                     }
@@ -188,7 +188,7 @@ $(function () {
                 {
                     // Actions
                     targets: -1,
-                    title: 'Actions',
+                    title: LANG.Actions,
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return (
@@ -199,7 +199,7 @@ $(function () {
                             '<div class="dropdown-menu dropdown-menu-end">' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Delete</a></div>' +
+                            LANG.Delete + '</a></div>' +
                             '</div>' +
                             '</div>'
                         )
@@ -420,6 +420,7 @@ $(function () {
             text: "Do you want to change status for this item?",
             icon: 'warning',
             showCancelButton: true,
+            cancelButtonText: LANG.Cancel,
             confirmButtonText: 'Yes',
             customClass: {
                 confirmButton: 'btn btn-primary',

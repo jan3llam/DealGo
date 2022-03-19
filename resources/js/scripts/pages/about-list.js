@@ -85,7 +85,7 @@ $(function () {
                 {
                     // Actions
                     targets: -1,
-                    title: 'Actions',
+                    title: LANG.Actions,
                     orderable: false,
                     render: function (data, type, full, meta) {
                         return (
@@ -96,7 +96,7 @@ $(function () {
                             '<div class="dropdown-menu dropdown-menu-end">' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Edit</a>' +
+                            LANG.Edit + '</a>' +
                             '</div>' +
                             '</div>'
                         )
@@ -118,11 +118,11 @@ $(function () {
                 {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + 'Export',
+                    text: feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + LANG.Export,
                     buttons: [
                         {
                             extend: 'print',
-                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + 'Print',
+                            text: feather.icons['printer'].toSvg({class: 'font-small-4 me-50'}) + LANG.Print,
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         },
@@ -146,7 +146,7 @@ $(function () {
                         },
                         {
                             extend: 'copy',
-                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + 'Copy',
+                            text: feather.icons['copy'].toSvg({class: 'font-small-4 me-50'}) + LANG.Copy,
                             className: 'dropdown-item',
                             exportOptions: {columns: [1, 2, 3, 4, 5]}
                         }
