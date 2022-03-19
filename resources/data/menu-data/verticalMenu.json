@@ -126,7 +126,7 @@
                     "name": "Shipments",
                     "icon": "file-text",
                     "slug": "admin.shipments",
-                    "permission": 16
+                    "permission": 32
                 },
                 {
                     "url": "/admin/requests",
