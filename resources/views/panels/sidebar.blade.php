@@ -8,9 +8,9 @@
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item me-auto">
                 <a class="navbar-brand" href="{{route('admin.home')}}">
-          <span class="brand-logo">
-            <img src="{{asset('images/logo/logo.png')}}" alt="logo">
-          </span>
+                      <span class="brand-logo">
+                        <img src="{{asset('images/logo/logo.png')}}" alt="logo">
+                      </span>
                     <h2 class="brand-text">{{env('APP_NAME')}}</h2>
                 </a>
             </li>
