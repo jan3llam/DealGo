@@ -205,7 +205,7 @@ $(function () {
                 },
                 {
                     className: 'items-delete btn btn-danger me-2',
-                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Delete',
+                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + LANG.Delete,
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
                         if (!$('#vessel_id').val()) {

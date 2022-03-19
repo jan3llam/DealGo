@@ -1,4 +1,7 @@
 @extends('layouts.contentLayoutMaster')
+@php
+    $css_path = app()->getLocale()==='ar' ? 'css-rtl' : 'css';
+@endphp
 
 @section('title', __('locale.TicketDetails'))
 
@@ -12,11 +15,11 @@
 
 @section('page-style')
     {{-- Page Css files --}}
-    <link rel="stylesheet" href="{{ asset('css/base/pages/page-blog.css') }}"/>
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-quill-editor.css')) }}">
-    <link rel="stylesheet" href="{{asset(mix('css/base/plugins/extensions/ext-component-sweet-alerts.css'))}}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
+    <link rel="stylesheet" href="{{ asset($css_path . '/base/pages/page-blog.css') }}"/>
+    <link rel="stylesheet" href="{{ asset(mix($css_path . '/base/plugins/forms/form-validation.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix($css_path . '/base/plugins/forms/form-quill-editor.css')) }}">
+    <link rel="stylesheet" href="{{asset(mix($css_path . '/base/plugins/extensions/ext-component-sweet-alerts.css'))}}">
+    <link rel="stylesheet" href="{{ asset(mix($css_path . '/base/plugins/extensions/ext-component-toastr.css')) }}">
 @endsection
 @section('content')
     <!-- users list start -->

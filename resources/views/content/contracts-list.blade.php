@@ -1,4 +1,7 @@
 @extends('layouts.contentLayoutMaster')
+@php
+    $css_path = app()->getLocale()==='ar' ? 'css-rtl' : 'css';
+@endphp
 
 @section('title', __('locale.Contracts'))
 
@@ -13,7 +16,7 @@
 
 @section('page-style')
     {{-- Page Css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix($css_path . '/base/plugins/extensions/ext-component-toastr.css')) }}">
 @endsection
 @section('content')
     <!-- users list start -->

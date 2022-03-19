@@ -154,6 +154,7 @@ return [
     "StartAt" => "Start @",
     "StartDate" => "Start date",
     "Status" => "Status",
+    "Sub_" => "Sub-",
     "Subject" => "Subject",
     "Submit" => "Submit",
     "Supported" => "Supported",

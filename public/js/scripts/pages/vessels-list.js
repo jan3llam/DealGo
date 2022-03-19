@@ -109,10 +109,10 @@ $(function () {
                             '<div class="dropdown-menu dropdown-menu-end">' +
                             '<a href="/admin/crews/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
                             feather.icons['users'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Crew</a>' +
+                            LANG.Crew + '</a>' +
                             '<a href="/admin/maintenances/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
                             feather.icons['tool'].toSvg({class: 'font-small-4 me-50'}) +
-                            'Maintenance</a>' +
+                            LANG.Maintenance + '</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Edit + '</a>' +
@@ -206,7 +206,7 @@ $(function () {
                             className: 'status-item dropdown-item',
                         },
                         {
-                            text: 'Inactive',
+                            text: LANG.Inactive,
                             attr: {
                                 "data-status": 0
                             },
@@ -230,7 +230,7 @@ $(function () {
                 },
                 {
                     className: 'items-delete btn btn-danger me-2',
-                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Delete',
+                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + LANG.Delete,
                     init: function (api, node, config) {
                         $(node).removeClass('btn-secondary')
                     }

@@ -81,15 +81,13 @@ mix
     .sass('resources/assets/scss/style.scss', 'public/css', {sassOptions})
 
 mix.then(() => {
-    if (process.env.MIX_CONTENT_DIRECTION === 'rtl') {
-        let command = `node ${path.resolve('node_modules/rtlcss/bin/rtlcss.js')} -d -e ".css" ./public/css/ ./public/css-rtl/`
-        exec(command, function (err, stdout, stderr) {
-            if (err !== null) {
-                console.log(err)
-            }
-        })
-    }
-})
+    let command = `node ${path.resolve('node_modules/rtlcss/bin/rtlcss.js')} -d -e ".css" ./public/css/ ./public/css-rtl/`
+    exec(command, function (err, stdout, stderr) {
+        if (err !== null) {
+            console.log(err)
+        }
+    })
+}).version(['public/css-rtl/']);
 
 // if (mix.inProduction()) {
 //   mix.version()

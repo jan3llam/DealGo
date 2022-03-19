@@ -5,6 +5,7 @@
     <!DOCTYPE html>
 @php
     $configData = Helper::applClasses();
+    $css_path = app()->getLocale()==='ar' ? 'css-rtl' : 'css';
 @endphp
 
 <html class="loading {{ ($configData['theme'] === 'light') ? '' : $configData['layoutTheme']}}"

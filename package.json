@@ -15,6 +15,7 @@
         "cross-env": "^5.2.1",
         "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
+        "laravel-mix-merge-manifest": "^2.0.0",
         "lodash": "^4.17.19",
         "popper.js": "^1.16.1",
         "postcss": "^8.1.14",

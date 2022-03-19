@@ -9,9 +9,9 @@
 
 @section('page-style')
     {{-- Page Css files --}}
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-validation.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
-    <link rel="stylesheet" href="{{ asset(mix('css/base/pages/authentication.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix($css_path . '/base/plugins/forms/form-validation.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix($css_path . '/base/plugins/extensions/ext-component-toastr.css')) }}">
+    <link rel="stylesheet" href="{{ asset(mix($css_path . '/base/pages/authentication.css')) }}">
 @endsection
 
 @section('content')
