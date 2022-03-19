@@ -15,11 +15,11 @@
             "icon": "users",
             "slug": "admin.users",
             "permissions": [
-                8,
-                12,
-                16,
-                20,
-                40
+                7,
+                11,
+                15,
+                19,
+                39
             ],
             "submenu": [
                 {
@@ -27,35 +27,35 @@
                     "name": "Owners",
                     "icon": "user-check",
                     "slug": "admin.owners",
-                    "permission": 8
+                    "permission": 7
                 },
                 {
                     "url": "/admin/tenants",
                     "name": "Tenants",
                     "icon": "user-plus",
                     "slug": "admin.tenants",
-                    "permission": 12
+                    "permission": 11
                 },
                 {
                     "url": "/admin/offices",
                     "name": "Offices",
                     "icon": "briefcase",
                     "slug": "admin.offices",
-                    "permission": 40
+                    "permission": 39
                 },
                 {
                     "url": "/admin/admins",
                     "name": "Administrators",
                     "icon": "lock",
                     "slug": "admin.admins",
-                    "permission": 20
+                    "permission": 19
                 },
                 {
                     "url": "/admin/roles",
                     "name": "Roles",
                     "icon": "shield",
                     "slug": "admin.roles",
-                    "permission": 16
+                    "permission": 15
                 }
             ]
         },
@@ -65,10 +65,10 @@
             "icon": "anchor",
             "slug": "admin.vessels",
             "permissions": [
-                24,
-                28,
-                44,
-                48,
+                23,
+                27,
+                43,
+                47,
                 65
             ],
             "submenu": [
@@ -77,7 +77,7 @@
                     "name": "Vessels",
                     "icon": "anchor",
                     "slug": "admin.vessels",
-                    "permission": 24
+                    "permission": 23
                 },
                 {
                     "url": "/admin/track",
@@ -91,21 +91,21 @@
                     "name": "Crews",
                     "icon": "users",
                     "slug": "admin.crews",
-                    "permission": 48
+                    "permission": 47
                 },
                 {
                     "url": "/admin/vtypes",
                     "name": "Vessels types",
                     "icon": "tool",
                     "slug": "admin.vtypes",
-                    "permission": 28
+                    "permission": 27
                 },
                 {
                     "url": "/admin/maintenances",
                     "name": "Maintenances",
                     "icon": "file-text",
                     "slug": "admin.maintenances",
-                    "permission": 44
+                    "permission": 43
                 }
             ]
         },
@@ -115,8 +115,8 @@
             "icon": "file-text",
             "slug": "admin.shipments",
             "permissions": [
-                32,
-                52,
+                31,
+                51,
                 59,
                 64
             ],
@@ -126,14 +126,14 @@
                     "name": "Shipments",
                     "icon": "file-text",
                     "slug": "admin.shipments",
-                    "permission": 32
+                    "permission": 64
                 },
                 {
                     "url": "/admin/requests",
                     "name": "Requests",
                     "icon": "file-text",
                     "slug": "admin.requests",
-                    "permission": 52
+                    "permission": 51
                 },
                 {
                     "url": "/admin/requests_responses",
@@ -147,7 +147,7 @@
                     "name": "Goods types",
                     "icon": "package",
                     "slug": "admin.gtypes",
-                    "permission": 32
+                    "permission": 31
                 }
             ]
         },
@@ -157,7 +157,7 @@
             "icon": "file-plus",
             "slug": "admin.offers",
             "permissions": [
-                56
+                55
             ]
         },
         {
@@ -175,7 +175,7 @@
             "icon": "flag",
             "slug": "admin.ports",
             "permissions": [
-                36
+                35
             ]
         },
         {
