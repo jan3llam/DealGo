@@ -48,7 +48,7 @@ class RequestsController extends Controller
     {
 
         $data = [];
-        $search_clm = ['port_from.name', 'port_to.name', 'port.city.name', 'port.city.country.name', 'tenant.name'];
+        $search_clm = ['port_from.name', 'port_to.name', 'port.city.name', 'port.city.country.name', 'tenant.user.contact_name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
@@ -107,20 +107,20 @@ class RequestsController extends Controller
         $data['data'] = $query->skip(($page) * $per_page)
             ->take($per_page)->orderBy($order_field, $order_sort)
             ->with([
-                'tenant' => function ($q) {
-                    $q->withTrashed()->with('user');
-                },
-                'port_from' => function ($q) {
-                    $q->withTrashed();
-                },
-                'port_to' => function ($q) {
-                    $q->withTrashed();
-                },
-                'owner' => function ($q) {
-                    $q->withTrashed()->with('user');
-                }])->withCount('responses')->get();
-
-
+                    'tenant' => function ($q) {
+                        $q->withTrashed()->with('user');
+                    },
+                    'port_from' => function ($q) {
+                        $q->withTrashed();
+                    },
+                    'port_to' => function ($q) {
+                        $q->withTrashed();
+                    },
+                    'owner' => function ($q) {
+                        $q->withTrashed()->with('user');
+                    }]
+            )->withCount('responses')->get();
+        
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $data['data']->count();

@@ -57,13 +57,13 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'contract.id'},
-                {data: 'tenant.name'},
-                {data: 'port_from.name'},
-                {data: 'port_to.name'},
-                {data: 'owner.name'},
-                {data: 'vessel.name'},
-                {data: 'end_at'},
+                {data: 'contract_id'},
+                {data: 'tenant.user.contact_name'},
+                {data: 'port_from'},
+                {data: 'port_to'},
+                {data: 'vessel.owner.user.contact_name'},
+                {data: 'vessel'},
+                {data: 'date'},
                 {data: ''}
             ],
             columnDefs: [
@@ -75,6 +75,18 @@ $(function () {
                     targets: 0,
                     render: function (data, type, full, meta) {
                         return ''
+                    }
+                },
+                {
+                    targets: [4, 5],
+                    render: function (data, type, full, meta) {
+                        return data ? data.name_translation : '-';
+                    }
+                },
+                {
+                    targets: 7,
+                    render: function (data, type, full, meta) {
+                        return data.name + "<a href='" + assetPath + "/admin/track/" + data.id + "'>" + feather.icons['map-pin'].toSvg({class: 'font-small-4 me-50'}) + "</a>";
                     }
                 },
                 {
@@ -91,10 +103,7 @@ $(function () {
                             '<div class="dropdown-menu dropdown-menu-end">' +
                             '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
                             feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
-                            LANG.View + '</a>' +
-                            '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
-                            feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
-                            LANG.Delete + '</a></div>' +
+                            LANG.View + '</a></div>' +
                             '</div>' +
                             '</div>'
                         )
@@ -168,36 +177,7 @@ $(function () {
                             $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
                         }, 50)
                     }
-                },
-                {
-                    extend: 'collection',
-                    className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Trashed',
-                    buttons: [
-                        {
-                            text: 'Yes',
-                            attr: {
-                                "data-trashed": 1
-                            },
-                            className: 'trashed-item dropdown-item',
-                        },
-                        {
-                            text: 'No',
-                            attr: {
-                                "data-trashed": 0
-                            },
-                            className: 'trashed-item dropdown-item',
-                        }
-                    ],
-                    init: function (api, node, config) {
-                        $(node).removeClass('btn-secondary')
-                        $(node).parent().removeClass('btn-group')
-                        setTimeout(function () {
-                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
-                        }, 50)
-                    }
-                }
-            ],
+                }],
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/' + $('html').attr('lang') + '.json'
             },

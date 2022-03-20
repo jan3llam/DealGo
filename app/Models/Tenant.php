@@ -10,7 +10,6 @@ class Tenant extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     public function city()
     {
         return $this->belongsTo(City::class);

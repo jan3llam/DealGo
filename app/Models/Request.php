@@ -45,4 +45,9 @@ class Request extends Model
     {
         return $this->belongsToMany(gType::class, 'requests_goods_types', 'request_id', 'good_id')->withPivot('weight');
     }
+
+    public function origin()
+    {
+        return $this->morphOne(Contract::class, 'origin');
+    }
 }

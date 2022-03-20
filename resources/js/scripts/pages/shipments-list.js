@@ -59,8 +59,8 @@ $(function () {
                 {data: 'id'},
                 {data: 'contract.id'},
                 {data: 'tenant.name'},
-                {data: 'port_from.name'},
-                {data: 'port_to.name'},
+                {data: 'port_from'},
+                {data: 'port_to'},
                 {data: 'owner.name'},
                 {data: 'vessel.name'},
                 {data: 'end_at'},
@@ -75,6 +75,12 @@ $(function () {
                     targets: 0,
                     render: function (data, type, full, meta) {
                         return ''
+                    }
+                },
+                {
+                    targets: [4, 5],
+                    render: function (data, type, full, meta) {
+                        return data ? data.name_translation : '-';
                     }
                 },
                 {

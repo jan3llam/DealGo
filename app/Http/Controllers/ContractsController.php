@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Offer;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -24,26 +24,19 @@ class ContractsController extends Controller
 
     public function list_api(Request $request)
     {
-
         $data = [];
-        $search_clm = ['user.name', 'user.username', 'user.gsm', 'user.email'];
+        $search_clm = ['tenant.user.contact_name', 'owner.user.contact_name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
-        $offer_id = $request->input('offer_id', null);
         $params = $request->all();
-        $query = Offer::with([
-            'payments' => function ($query) {
-                $query->sum('value');
+        $query = Contract::withCount('shipments')->with([
+            'tenant' => function ($q) {
+                $q->withTrashed()->with('user');
             },
             'owner' => function ($q) {
                 $q->withTrashed()->with('user');
             },
         ]);
-
-        if ($offer_id) {
-            $query->where('offer_id', $offer_id);
-        }
-
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
         $page = isset($params['start']) ? $params['start'] : 0;
@@ -53,11 +46,21 @@ class ContractsController extends Controller
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
-//                    $item = explode('.', $item);
-//                    $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
-//                        $qu->where($item[1], 'like', '%' . $search_val . '%');
-//                    })->get();
-                    $q->orWhere($item[1], 'like', '%' . $search_val . '%');
+                    $item = explode('.', $item);
+                    if (sizeof($item) == 3) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
+                                $que->where($item[2], 'like', '%' . $search_val . '%');
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 2) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->where($item[1], 'like', '%' . $search_val . '%');
+                        })->get();
+                    } elseif (sizeof($item) == 1) {
+                        $q->orWhere($item[0], 'like', '%' . $search_val . '%');
+                    }
+
                 }
             });
         }

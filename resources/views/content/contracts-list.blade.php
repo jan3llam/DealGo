@@ -28,7 +28,7 @@
                 <input type="hidden" id="trashed" value="0">
             </div>
             <div class="card-datatable table-responsive pt-0">
-                <table class="ports-list-table table">
+                <table class="contracts-list-table table">
                     <thead class="table-light">
                     <tr>
                         <th></th>

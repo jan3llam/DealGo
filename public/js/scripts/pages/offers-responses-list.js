@@ -172,8 +172,8 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'tenant.user'},
-                {data: 'port_from.name'},
-                {data: 'port_to.name'},
+                {data: 'port_from'},
+                {data: 'port_to'},
                 {data: 'date_from'},
                 {data: 'total'},
                 {data: ''}
@@ -193,6 +193,12 @@ $(function () {
                     targets: 2,
                     render: function (data, type, full, meta) {
                         return data ? data.contact_name : '-';
+                    }
+                },
+                {
+                    targets: [3, 4],
+                    render: function (data, type, full, meta) {
+                        return data ? data.name_translation : '-';
                     }
                 },
                 {

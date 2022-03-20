@@ -1,3 +1,5 @@
+@extends('layouts.contentLayoutMaster')
+
 @php
     $css_path = app()->getLocale()==='ar' ? 'css-rtl' : 'css';
 @endphp

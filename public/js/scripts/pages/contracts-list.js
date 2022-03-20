@@ -2,8 +2,13 @@ $(function () {
     ;('use strict')
 
     var dtTable = $('.contracts-list-table'),
-        viewSidebar = $('.view-contract-modal');
-
+        viewSidebar = $('.view-contract-modal'),
+        typeObj = {
+            1: {title: LANG.Voyage},
+            2: {title: LANG.Time},
+            3: {title: LANG.Bareboat},
+            4: {title: LANG.COA}
+        }
 
     var assetPath = '../../../app-assets/';
 
@@ -57,13 +62,13 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'tenant.name'},
-                {data: 'owner.name'},
+                {data: 'tenant.user.contact_name'},
+                {data: 'owner.user.contact_name'},
                 {data: 'type'},
-                {data: 'start_at'},
-                {data: 'end_at'},
+                {data: 'date_from'},
+                {data: 'date_to'},
                 {data: 'shipments_count'},
-                {data: 'value'},
+                {data: 'total'},
                 {data: ''}
             ],
             columnDefs: [
@@ -75,6 +80,23 @@ $(function () {
                     targets: 0,
                     render: function (data, type, full, meta) {
                         return ''
+                    }
+                },
+                {
+                    targets: 4,
+                    render: function (data, type, full, meta) {
+                        console.log(data);
+                        return (
+                            '<span class="rounded-pill" text-capitalized>' +
+                            typeObj[data].title +
+                            '</span>'
+                        )
+                    }
+                },
+                {
+                    targets: 8,
+                    render: function (data, type, full, meta) {
+                        return data.toLocaleString(undefined, {minimumFractionDigits: 0});
                     }
                 },
                 {
@@ -91,10 +113,7 @@ $(function () {
                             '<div class="dropdown-menu dropdown-menu-end">' +
                             '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
                             feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
-                            LANG.View + '</a>' +
-                            '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
-                            feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
-                            LANG.Delete + '</a></div>' +
+                            LANG.View + '</a></div>' +
                             '</div>' +
                             '</div>'
                         )
@@ -169,34 +188,6 @@ $(function () {
                         }, 50)
                     }
                 },
-                {
-                    extend: 'collection',
-                    className: 'btn btn-outline-secondary dropdown-toggle me-2',
-                    text: feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + 'Trashed',
-                    buttons: [
-                        {
-                            text: 'Yes',
-                            attr: {
-                                "data-trashed": 1
-                            },
-                            className: 'trashed-item dropdown-item',
-                        },
-                        {
-                            text: 'No',
-                            attr: {
-                                "data-trashed": 0
-                            },
-                            className: 'trashed-item dropdown-item',
-                        }
-                    ],
-                    init: function (api, node, config) {
-                        $(node).removeClass('btn-secondary')
-                        $(node).parent().removeClass('btn-group')
-                        setTimeout(function () {
-                            $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex mt-50')
-                        }, 50)
-                    }
-                }
             ],
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/' + $('html').attr('lang') + '.json'

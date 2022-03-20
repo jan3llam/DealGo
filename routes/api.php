@@ -309,8 +309,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
 
     Route::group(['prefix' => 'contracts'], function () {
         Route::get('/list', [ContractsAPI::class, 'list_api']);
-        Route::delete('/bulk', [ContractsAPI::class, 'bulk_delete']);
-        Route::delete('/{id}', [ContractsAPI::class, 'delete']);
     });
 
     Route::group(['prefix' => 'shipments'], function () {

@@ -105,7 +105,7 @@ $(function () {
                 {
                     targets: [6, 7],
                     render: function (data, type, full, meta) {
-                        return data ? data : '-';
+                        return data ? data.name_translation : '-';
                     }
                 },
                 {

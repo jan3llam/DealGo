@@ -38,6 +38,10 @@ $(function () {
             cache: false,
             contentType: 'application/json',
             dataType: "json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+            },
             success: function (result) {
                 if (parseInt(result.code) === 1) {
                     var latlng = new google.maps.LatLng(result.data.latitude, result.data.longitude);
