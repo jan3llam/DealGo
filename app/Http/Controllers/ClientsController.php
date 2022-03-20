@@ -11,6 +11,14 @@ use Validator;
 
 class ClientsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:97', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:95', ['only' => ['add']]);
+        $this->middleware('permission:96', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:98', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

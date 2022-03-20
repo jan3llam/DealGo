@@ -10,6 +10,14 @@ use Validator;
 
 class ArticlesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:73', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:71', ['only' => ['add']]);
+        $this->middleware('permission:72', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:74', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list($id = null)
     {
         $category = null;

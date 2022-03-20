@@ -9,6 +9,14 @@ use Validator;
 
 class RolesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:15', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:13', ['only' => ['add']]);
+        $this->middleware('permission:14', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:16', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     private $guard_name = 'admins';
 
     public function list()

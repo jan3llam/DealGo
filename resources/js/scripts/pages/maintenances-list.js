@@ -21,22 +21,41 @@ $(function () {
         dtTable.dataTable({
             ajax: function (data, callback, settings) {
                 // make a regular ajax request using data.start and data.length
-                $.get(link, {
-                    length: data.length,
-                    lang: $('html').attr('lang'),
-                    start: data.start,
-                    draw: data.draw,
-                    search: data.search.value,
-                    status: $('#status_filter').val(),
-                    direction: data.order[0].dir,
-                    order: data.columns[data.order[0].column].data.replace(/\./g, "__"),
-                }, function (res) {
-                    callback({
-                        draw: res.data.meta.draw,
-                        recordsTotal: res.data.meta.total,
-                        recordsFiltered: res.data.meta.count,
-                        data: res.data.data
-                    });
+                $.ajax({
+                    url: link,
+                    data: {
+                        length: data.length,
+                        lang: $('html').attr('lang'),
+                        start: data.start,
+                        draw: data.draw,
+                        search: data.search.value,
+                        status: $('#status_filter').val(),
+                        direction: data.order[0].dir,
+                        order: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                    },
+                    success: function (res) {
+                        if (parseInt(res.code) === 1) {
+                            callback({
+                                draw: res.data.meta.draw,
+                                recordsTotal: res.data.meta.total,
+                                recordsFiltered: res.data.meta.count,
+                                data: res.data.data
+                            });
+                        } else {
+                            toastr['error'](res.message);
+                        }
+                    },
+                    error: function (response) {
+                        if (parseInt(response.status) === 403) {
+                            toastr['error'](LANG[response.status]);
+                        } else {
+                            toastr['error'](response.statusText)
+                        }
+                    }
                 });
             },
             processing: true,
@@ -285,6 +304,10 @@ $(function () {
                     type: 'POST',
                     url: assetPath + 'api/admin/maintenances/' + type,
                     dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                    },
                     processData: false,
                     contentType: false,
                     data: data,
@@ -294,6 +317,13 @@ $(function () {
                             toastr['success'](response.message);
                         } else {
                             toastr['error'](response.message);
+                        }
+                    },
+                    error: function (response) {
+                        if (parseInt(response.status) === 403) {
+                            toastr['error'](LANG[response.status]);
+                        } else {
+                            toastr['error'](response.statusText)
                         }
                     }
                 })
@@ -325,12 +355,23 @@ $(function () {
                         url: assetPath + 'api/admin/maintenances/bulk',
                         data: {ids: ids},
                         dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                        },
                         success: function (response) {
                             if (parseInt(response.code) === 1) {
                                 dtTable.DataTable().ajax.reload();
                                 toastr['success'](response.message);
                             } else {
                                 toastr['error'](response.message);
+                            }
+                        },
+                        error: function (response) {
+                            if (parseInt(response.status) === 403) {
+                                toastr['error'](LANG[response.status]);
+                            } else {
+                                toastr['error'](response.statusText)
                             }
                         }
                     })
@@ -370,12 +411,23 @@ $(function () {
                     type: 'DELETE',
                     url: assetPath + 'api/admin/maintenances/' + element.data('id'),
                     dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                    },
                     success: function (response) {
                         if (parseInt(response.code) === 1) {
                             dtTable.DataTable().ajax.reload();
                             toastr['success'](response.message);
                         } else {
                             toastr['error'](response.message);
+                        }
+                    },
+                    error: function (response) {
+                        if (parseInt(response.status) === 403) {
+                            toastr['error'](LANG[response.status]);
+                        } else {
+                            toastr['error'](response.statusText)
                         }
                     }
                 })

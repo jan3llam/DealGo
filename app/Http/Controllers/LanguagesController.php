@@ -8,6 +8,14 @@ use Validator;
 
 class LanguagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:80', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:78', ['only' => ['add']]);
+        $this->middleware('permission:79', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:81', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

@@ -12,6 +12,14 @@ use Validator;
 
 class OfficesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:39', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:37', ['only' => ['add']]);
+        $this->middleware('permission:38', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:40', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

@@ -8,6 +8,11 @@ use Validator;
 
 class ContractsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:66', ['only' => ['list', 'list_api']]);
+    }
+
     public function list($id = null)
     {
         $breadcrumbs = [
@@ -80,32 +85,4 @@ class ContractsController extends Controller
         return response()->success($data);
     }
 
-    public function delete($id)
-    {
-
-        $item = Contract::withTrashed()->where('id', $id)->first();
-
-        if ($item) {
-
-            $item->delete();
-        }
-
-        return response()->success();
-    }
-
-
-    public function status($id)
-    {
-        $item = Contract::withTrashed()->where('id', $id)->first();
-        if ($item) {
-
-            if ($item->status === 0 && $item->deleted_at !== null) {
-                $item->restore();
-            }
-            $item->status = $item->status == 1 ? 0 : 1;
-            $item->save();
-        }
-
-        return response()->success();
-    }
 }

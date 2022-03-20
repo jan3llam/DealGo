@@ -16,6 +16,14 @@ use Validator;
 
 class RequestsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:51', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:49', ['only' => ['add']]);
+        $this->middleware('permission:50', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:52', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

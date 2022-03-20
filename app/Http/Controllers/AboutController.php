@@ -11,6 +11,14 @@ use Validator;
 
 class AboutController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:93', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:91', ['only' => ['add']]);
+        $this->middleware('permission:92', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:94', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

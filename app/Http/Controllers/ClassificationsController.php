@@ -9,6 +9,14 @@ use Validator;
 
 class ClassificationsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:105', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:103', ['only' => ['add']]);
+        $this->middleware('permission:104', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:106', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list($id = null)
     {
         $classification = null;

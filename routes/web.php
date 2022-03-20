@@ -57,10 +57,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/', [DashboardController::class, 'home'])->name('home');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('home', [DashboardController::class, 'home'])->name('home');
-        Route::get('settings', [SettingsController::class, 'view'])->name('settings');
-        Route::post('settings', [SettingsController::class, 'submit']);
-        Route::get('notification', [NotificationsController::class, 'list'])->name('notification');
-        Route::post('notification', [NotificationsController::class, 'send']);
         Route::get('admins', [AdminsController::class, 'list'])->name('admins');
         Route::get('owners', [OwnersController::class, 'list'])->name('owners');
         Route::get('tenants', [TenantsController::class, 'list'])->name('tenants');

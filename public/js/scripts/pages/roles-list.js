@@ -51,12 +51,23 @@ $(function () {
                     type: 'DELETE',
                     url: assetPath + 'api/admin/roles/' + element.data('id'),
                     dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                    },
                     success: function (response) {
                         if (parseInt(response.code) === 1) {
                             toastr['success'](response.message);
                             window.location.reload();
                         } else {
                             toastr['error'](response.message);
+                        }
+                    },
+                    error: function (response) {
+                        if (parseInt(response.status) === 403) {
+                            toastr['error'](LANG[response.status]);
+                        } else {
+                            toastr['error'](response.statusText)
                         }
                     }
                 })

@@ -10,6 +10,14 @@ use Validator;
 
 class GoodsTypesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:31', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:29', ['only' => ['add']]);
+        $this->middleware('permission:30', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:32', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

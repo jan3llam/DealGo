@@ -8,6 +8,14 @@ use Validator;
 
 class CategoriesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:69', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:67', ['only' => ['add']]);
+        $this->middleware('permission:68', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:70', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list($id = null)
     {
         $category = null;

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -21,9 +20,6 @@ class AuthController extends Controller
 
     public function login()
     {
-        $admin = Admin::find(2);
-        $admin->password = bcrypt('test123');
-        $admin->save();
         return view('content.login');
     }
 
@@ -38,6 +34,8 @@ class AuthController extends Controller
         ];
 
         if ($this->guard()->attempt($credentials, $request->filled('remember'))) {
+            $token = auth('api_admins')->attempt($credentials);
+            session()->put('api_token', $token);
             return redirect()
                 ->intended(route('admin.home'));
         }
@@ -77,6 +75,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        session()->forget('api_token');
         $this->guard()->logout();
 
         $request->session()->invalidate();

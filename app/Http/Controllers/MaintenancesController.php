@@ -12,6 +12,14 @@ use Validator;
 
 class MaintenancesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:43', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:41', ['only' => ['add']]);
+        $this->middleware('permission:42', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:44', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list($id = null)
     {
         $vessel = null;

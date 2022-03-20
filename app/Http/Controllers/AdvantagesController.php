@@ -11,6 +11,14 @@ use Validator;
 
 class AdvantagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:101', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:99', ['only' => ['add']]);
+        $this->middleware('permission:100', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:102', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

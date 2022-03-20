@@ -15,6 +15,15 @@ use Validator;
 
 class VesselsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:23', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:21', ['only' => ['add']]);
+        $this->middleware('permission:22', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:24', ['only' => ['bulk_delete', 'delete']]);
+        $this->middleware('permission:65', ['only' => ['track', 'check_ps07']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

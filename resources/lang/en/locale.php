@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "403" => "Insufficient permission",
     "About" => "About",
     "Actions" => "Actions",
     "Active" => "Active",

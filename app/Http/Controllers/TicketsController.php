@@ -10,6 +10,13 @@ use Validator;
 
 class TicketsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:75', ['only' => ['list', 'list_api', 'view']]);
+        $this->middleware('permission:76', ['only' => ['reply']]);
+        $this->middleware('permission:77', ['only' => ['bulk_delete', 'delete', 'status']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

@@ -12,6 +12,14 @@ use Validator;
 
 class OwnersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:7', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:5', ['only' => ['add']]);
+        $this->middleware('permission:6', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:8', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

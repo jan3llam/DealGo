@@ -12,6 +12,15 @@ use Validator;
 
 class CrewsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:47', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:45', ['only' => ['add']]);
+        $this->middleware('permission:46', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:48', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list($id = null)
     {
         $vessel = null;

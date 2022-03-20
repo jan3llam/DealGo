@@ -10,6 +10,14 @@ use Validator;
 
 class PortsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:35', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:33', ['only' => ['add']]);
+        $this->middleware('permission:34', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:36', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [

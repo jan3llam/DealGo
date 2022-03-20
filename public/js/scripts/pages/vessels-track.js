@@ -11,6 +11,10 @@ $(function () {
         ajax: {
             url: assetPath + 'api/admin/vessels/list',
             dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+            },
             data: function (params) {
                 return {
                     search: params.term,

@@ -13,6 +13,14 @@ use Validator;
 
 class TenantsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:11', ['only' => ['list', 'list_api']]);
+        $this->middleware('permission:9', ['only' => ['add']]);
+        $this->middleware('permission:10', ['only' => ['edit', 'status']]);
+        $this->middleware('permission:12', ['only' => ['bulk_delete', 'delete']]);
+    }
+
     public function list()
     {
         $breadcrumbs = [
