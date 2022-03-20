@@ -99,7 +99,7 @@ $(function () {
                 {
                     targets: 4,
                     render: function (data, type, full, meta) {
-                        return `<img height="30" src="${assetPath + 'images/' + data}"/>`;
+                        return `<a data-fancybox="single" href="${assetPath + 'images/' + data}"><img height="30" src="${assetPath + 'images/' + data}"/></a>`;
                     }
                 },
                 {
@@ -134,6 +134,12 @@ $(function () {
                 '<"col-sm-12 col-md-6"p>' +
                 '>',
             // Buttons with Dropdown
+
+            initComplete: function () {
+                Fancybox.bind('[data-fancybox="single"]', {
+                    groupAttr: false,
+                });
+            },
             buttons: [
                 {
                     extend: 'collection',
