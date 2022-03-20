@@ -1,5 +1,9 @@
 @extends('layouts/fullLayoutMaster')
 
+@php
+    $css_path = app()->getLocale()==='ar' ? 'css-rtl' : 'css';
+@endphp
+
 @section('title', 'Login')
 
 @section('vendor-style')
