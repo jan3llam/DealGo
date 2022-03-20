@@ -22,6 +22,7 @@ $(function () {
                 // make a regular ajax request using data.start and data.length
                 $.get(assetPath + 'api/admin/owners/list', {
                     length: data.length,
+                    lang: $('html').attr('lang'),
                     start: data.start,
                     draw: data.draw,
                     search: data.search.value,

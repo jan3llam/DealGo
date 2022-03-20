@@ -130,6 +130,7 @@ $(function () {
                 // make a regular ajax request using data.start and data.length
                 $.get(assetPath + 'api/admin/requests_responses/list', {
                     length: data.length,
+                    lang: $('html').attr('lang'),
                     start: data.start,
                     draw: data.draw,
                     request_id: $('#request_id').val(),

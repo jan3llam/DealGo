@@ -115,7 +115,7 @@ use Illuminate\Support\Facades\Route;
 //    });
 //});
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function () {
 
     Route::group(['prefix' => 'countries'], function () {
         Route::get('/list', [CountriesAPI::class, 'list_api']);
