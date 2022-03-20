@@ -116,14 +116,20 @@
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="pass">{{__('locale.Password')}}</label>
-                                <input type="password" class="form-control dt-full-name" id="pass"
-                                       placeholder="{{__('locale.Password')}}" name="password"/>
+                                <div class="input-group input-group-merge form-password-toggle">
+                                    <input type="password" class="form-control dt-full-name" id="pass"
+                                           placeholder="{{__('locale.Password')}}" name="password"/>
+                                    <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                </div>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label"
                                        for="confirm_password">{{__('locale.PasswordConfirmation')}}</label>
-                                <input type="password" class="form-control dt-full-name" id="confirm_password"
-                                       equalTo="#pass" placeholder="{{__('locale.PasswordConfirmation')}}"/>
+                                <div class="input-group input-group-merge form-password-toggle">
+                                    <input type="password" class="form-control dt-full-name" id="confirm_password"
+                                           equalTo="#pass" placeholder="{{__('locale.PasswordConfirmation')}}"/>
+                                    <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                </div>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="country">{{__('locale.Country')}}</label>
