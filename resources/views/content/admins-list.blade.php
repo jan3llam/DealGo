@@ -65,6 +65,10 @@
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
+                                <label for="image" class="form-label">{{__('locale.Image')}}</label>
+                                <input type="file" name="image" id="image" accept="image/*"/>
+                            </div>
+                            <div class="mb-1">
                                 <label class="form-label" for="role">{{__('locale.Role')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="role"
                                         name="role">

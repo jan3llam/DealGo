@@ -30,8 +30,13 @@
                                 @foreach($role->users->take(5) as $admin)
                                     <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                         title="{{$admin->name}}" class="avatar avatar-sm pull-up">
-                                        <img class="rounded-circle" src="{{asset('images/avatars/blank.png')}}"
-                                             alt="Avatar"/>
+                                        @if($admin->image)
+                                            <img class="rounded-circle" src="{{asset('images/'.$admin->image)}}"
+                                                 alt="Avatar"/>
+                                        @else
+                                            <img class="rounded-circle" src="{{asset('images/avatars/blank.png')}}"
+                                                 alt="Avatar"/>
+                                        @endif
                                     </li>
                                 @endforeach
                             </ul>

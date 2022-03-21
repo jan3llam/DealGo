@@ -316,6 +316,7 @@ $(function () {
         })
 
         $("#files").fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#image").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
         $('#country,#city,#role').select2({dropdownParent: newSidebar});
 
@@ -526,6 +527,11 @@ $(function () {
             showUpload: false,
             initialPreviewAsData: true,
         });
+        $("#image").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.image],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
         $('#email').val(data.email);
         $('#city_id').val(data.city.id);
         $('#country').val(data.city.country.id).trigger('change.select2');
@@ -542,5 +548,6 @@ $(function () {
             $(this).val('');
         });
         $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#image").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });
 })

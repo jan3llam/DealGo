@@ -67,9 +67,15 @@
                                     <span class="user-status">{{Auth::user()->getRoleNames()->first()}}</span>
                                 </div>
                                 <span class="avatar">
-                                  <img class="round"
-                                       src="{{ asset('images/avatars/blank.png') }}"
-                                       alt="avatar" height="40" width="40">
+                                    @if(Auth::user()->image)
+                                        <img class="round"
+                                             src="{{ asset('images/'.Auth::user()->image) }}"
+                                             alt="avatar" height="40" width="40">
+                                    @else
+                                        <img class="round"
+                                             src="{{ asset('images/avatars/blank.png') }}"
+                                             alt="avatar" height="40" width="40">
+                                    @endif
                                   <span class="avatar-status-online"></span>
                                 </span>
                             </a>

@@ -142,6 +142,14 @@ class AdminsController extends Controller
         $item->password = bcrypt($params['password']);
         $item->status = 1;
 
+
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileName = Str::random(18) . '.' . $extension;
+            Storage::disk('public_images')->putFileAs('', $request->file('image'), $fileName);
+            $item->image = $fileName;
+        }
+
 //        Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
         $files = $request->file('files', []);
         $filesArr = [];
