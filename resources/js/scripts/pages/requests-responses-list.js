@@ -129,7 +129,7 @@ $(function () {
             ajax: function (data, callback, settings) {
                 // make a regular ajax request using data.start and data.length
                 $.ajax({
-                    url: assetPath + 'api/admin/admins/list',
+                    url: assetPath + 'api/admin/requests_responses/list',
                     data: {
                         length: data.length,
                         lang: $('html').attr('lang'),
