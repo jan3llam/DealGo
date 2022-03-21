@@ -51,82 +51,44 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">View ship owner</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.View')}} {{__('locale.Shipment')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Type:</span>
-                                        <span id="view-type"></span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div id="view-company-container" style="display: none">
-                                <div class="info-container">
-                                    <ul class="list-unstyled">
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Full name:</span>
-                                            <span id="view-name"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Commercial #:</span>
-                                            <span id="view-commercial"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">License file:</span>
-                                            <span id="view-license"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Company file:</span>
-                                            <span id="view-company"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="info-container">
-                                <ul class="list-unstyled">
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Contact name:</span>
-                                        <span id="view-contact"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Contract')}} #:</span>
+                                        <span id="view-contract"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Email:</span>
-                                        <span id="view-email"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Tenant')}}:</span>
+                                        <span id="view-tenant"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Phone:</span>
-                                        <span id="view-phone"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Vessel')}}:</span>
+                                        <span id="view-vessel"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Zip code:</span>
-                                        <span id="view-zip"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Owner')}}:</span>
+                                        <span id="view-owner"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Country:</span>
-                                        <span id="view-country"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.ShipmentOrigin')}}:</span>
+                                        <span id="view-origin"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">City:</span>
-                                        <span id="view-city"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.ShipmentDestination')}}:</span>
+                                        <span id="view-destination"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 1:</span>
-                                        <span id="view-address-1"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Date')}}:</span>
+                                        <span id="view-date"></span>
                                     </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 2:</span>
-                                        <span id="view-address-2"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Legal file (ID, Passport):</span>
-                                        <span id="view-legal"></span>
-                                    </li>
-
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

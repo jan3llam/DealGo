@@ -51,39 +51,40 @@
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">{{__('View')}} {{__('Contract')}}</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.View')}} {{__('locale.Contract')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('Type')}}:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Type')}}:</span>
                                         <span id="view-type"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('Tenant')}}:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Tenant')}}:</span>
                                         <span id="view-tenant"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('Owner')}}:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Owner')}}:</span>
                                         <span id="view-owner"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('StartAt')}}:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.StartAt')}}:</span>
                                         <span id="view-start"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('EndAt')}}:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.EndAt')}}:</span>
                                         <span id="view-end"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('Value')}}:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Value')}}:</span>
                                         <span id="view-value"></span>
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

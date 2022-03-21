@@ -57,13 +57,13 @@ $(function () {
                 // columns according to JSON
                 {data: ''},
                 {data: 'id'},
-                {data: 'contract.id'},
-                {data: 'tenant.name'},
+                {data: 'contract_id'},
+                {data: 'tenant.user.contact_name'},
                 {data: 'port_from'},
                 {data: 'port_to'},
-                {data: 'owner.name'},
-                {data: 'vessel.name'},
-                {data: 'end_at'},
+                {data: 'vessel.owner.user.contact_name'},
+                {data: 'vessel'},
+                {data: 'date'},
                 {data: ''}
             ],
             columnDefs: [
@@ -81,6 +81,12 @@ $(function () {
                     targets: [4, 5],
                     render: function (data, type, full, meta) {
                         return data ? data.name_translation : '-';
+                    }
+                },
+                {
+                    targets: 7,
+                    render: function (data, type, full, meta) {
+                        return data.name + "<a href='" + assetPath + "admin/track/" + data.id + "'>" + feather.icons['map-pin'].toSvg({class: 'font-small-4 me-50'}) + "</a>";
                     }
                 },
                 {
@@ -275,29 +281,18 @@ $(function () {
         })
     });
 
+
     $(document).on('click', '.item-view', function () {
         var element = $(this);
-        let data = dtTable.api().row(element.parents('tr')).data().user;
+        let data = dtTable.api().row(element.parents('tr')).data();
+        $('#view-contract').html(data.contract_id);
+        $('#view-tenant').html(data.tenant.user.contact_name);
+        $('#view-owner').html(data.vessel.owner.user.contact_name);
+        $('#view-vessel').html(data.vessel.name);
+        $('#view-origin').html(data.port_from.name_translation);
+        $('#view-destination').html(data.port_to.name_translation);
+        $('#view-date').html(data.date);
         viewSidebar.modal('show');
-        $('#view-type').html(data.type);
-        if (data.type == 1) {
-            $('#view-company-container').show();
-        }
-
-        $('#view-legal').html('<a href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-license').html('<a href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-company').html('<a href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-
-        $('#view-name').html(data.full_name);
-        $('#view-contact').html(data.contact_name);
-        $('#view-commercial').html(data.commercial_number);
-        $('#view-email').html(data.email);
-        $('#view-phone').html(data.phone);
-        $('#view-country').html(data.city.country.name).trigger('change.select2');
-        $('#view-city').html(data.city.name);
-        $('#view-address-1').html(data.address_1);
-        $('#view-address-2').html(data.address_2);
-        $('#view-zip').html(data.zip_code);
-
     });
+
 })
