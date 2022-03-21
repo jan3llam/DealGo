@@ -41,7 +41,7 @@ class VesselsController extends Controller
         ]);
     }
 
-    public function track()
+    public function track($id = null)
     {
         $breadcrumbs = [
             ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Track vessels')]
@@ -49,9 +49,15 @@ class VesselsController extends Controller
 
         $vessels = Vessel::where('status', 1)->get();
 
+        $vessel = null;
+        if ($id) {
+            $vessel = $id;
+        }
+
         return view('content.vessels-track', [
             'breadcrumbs' => $breadcrumbs,
             'vessels' => $vessels,
+            'vessel_id' => $vessel,
         ]);
     }
 

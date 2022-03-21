@@ -71,7 +71,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('tickets', [TicketsController::class, 'list'])->name('tickets');
         Route::get('ticket/{id}', [TicketsController::class, 'view'])->name('ticket');
         Route::post('ticket/{id}', [TicketsController::class, 'reply'])->name('reply');
-        Route::get('track', [VesselsController::class, 'track'])->name('vessels.track');
+        Route::get('track/{id?}', [VesselsController::class, 'track'])->name('vessels.track');
         Route::get('contracts', [ContractsController::class, 'list'])->name('contracts');
         Route::get('shipments', [ShipmentsController::class, 'list'])->name('shipments');
         Route::get('clients', [ClientsController::class, 'list'])->name('clients');

@@ -86,7 +86,7 @@ $(function () {
                 {
                     targets: 7,
                     render: function (data, type, full, meta) {
-                        return data.name + "<a href='" + assetPath + "/admin/track/" + data.id + "'>" + feather.icons['map-pin'].toSvg({class: 'font-small-4 me-50'}) + "</a>";
+                        return data.name + "<a href='" + assetPath + "admin/track/" + data.id + "'>" + feather.icons['map-pin'].toSvg({class: 'font-small-4 me-50'}) + "</a>";
                     }
                 },
                 {

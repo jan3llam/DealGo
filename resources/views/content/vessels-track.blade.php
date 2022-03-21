@@ -28,7 +28,8 @@
                         <select class="form-control dt-full-name vessels-select2">
                             <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
                             @foreach($vessels as $vessel)
-                                <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                <option @if($vessel_id && $vessel_id == $vessel->id) selected
+                                        @endif value="{{$vessel->id}}">{{$vessel->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -71,4 +72,9 @@
         src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&callback=initMap&libraries=&v=weekly"
         async></script>
     <script src="{{ asset(mix('js/scripts/pages/vessels-track.js')) }}"></script>
+    @if($vessel_id)
+        <script>
+            $('.vessels-select2').trigger('change.select2');
+        </script>
+    @endif
 @endsection

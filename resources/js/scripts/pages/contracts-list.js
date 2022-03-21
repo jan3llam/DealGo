@@ -218,28 +218,14 @@ $(function () {
 
     $(document).on('click', '.item-view', function () {
         var element = $(this);
-        let data = dtTable.api().row(element.parents('tr')).data().user;
+        let data = dtTable.api().row(element.parents('tr')).data();
+        $('#view-type').html(typeObj[data.type].title);
+        $('#view-tenant').html(data.tenant.user.contact_name);
+        $('#view-owner').html(data.owner.user.contact_name);
+        $('#view-start').html(data.date_from);
+        $('#view-end').html(data.date_to);
+        $('#view-value').html(data.total);
         viewSidebar.modal('show');
-        $('#view-type').html(data.type);
-        if (data.type == 1) {
-            $('#view-company-container').show();
-        }
-
-        $('#view-legal').html('<a href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-license').html('<a href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-company').html('<a href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-
-        $('#view-name').html(data.full_name);
-        $('#view-contact').html(data.contact_name);
-        $('#view-commercial').html(data.commercial_number);
-        $('#view-email').html(data.email);
-        $('#view-phone').html(data.phone);
-        $('#view-country').html(data.city.country.name).trigger('change.select2');
-        $('#view-city').html(data.city.name);
-        $('#view-address-1').html(data.address_1);
-        $('#view-address-2').html(data.address_2);
-        $('#view-zip').html(data.zip_code);
-
     });
 
 })
