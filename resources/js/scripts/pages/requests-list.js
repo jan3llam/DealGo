@@ -8,6 +8,12 @@ $(function () {
         statusObj = {
             1: {title: LANG.Active, class: 'badge-light-success status-switcher'},
             0: {title: LANG.Inactive, class: 'badge-light-secondary status-switcher'}
+        },
+        typeObj = {
+            1: {title: LANG.Voyage},
+            2: {title: LANG.Time},
+            3: {title: LANG.Bareboat},
+            4: {title: LANG.COA}
         }
 
 
@@ -123,6 +129,9 @@ $(function () {
                             '<a href="/admin/requests_responses/' + full['id'] + '" class="btn btn-light btn-sm" data-id="' + full['id'] + '">' +
                             feather.icons['thumbs-up'].toSvg({class: 'font-small-4 me-50'}) +
                             'Responses (' + full['responses_count'] + ')</a>' +
+                            '<a href="javascript:;" class="ms-2 item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.View + '</a>' +
                             '<a href="javascript:;" class="ms-2 item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
                         )
@@ -602,28 +611,15 @@ $(function () {
         })
     });
 
-    $(document).on('click', '.item-update', function () {
+    $(document).on('click', '.item-view', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
-        $('#modals-slide-in').modal('show')
-        $('#form_status').val(2);
-        $("#files").fileinput('destroy').fileinput({
-            initialPreview: [assetPath + 'images/' + data.files],
-            showUpload: false,
-            initialPreviewAsData: true,
-        });
-        $('#name').val(data.full_name);
-        $('#contact').val(data.contact_name);
-        $('#commercial').val(data.commercial_number);
-        $('#email').val(data.email);
-        $('#phone').val(data.phone);
-        $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id).trigger('change.select2');
-        $('#address_1').val(data.address_1);
-        $('#address_2').val(data.address_2);
-        $('#zip').val(data.zip_code);
-        $('#type').val(data.type);
-        $('#object_id').val(data.id);
+        viewSidebar.modal('show');
+        $('#view-name').val(data.name);
+        $('#view-tenant').val(data.tenant.user.contact_name);
+        $('#view-origin').val(data.port_from.name_translation);
+        $('#view-destination').val(data.port_to.name_translation);
+        $('#view-contract').val(typeObj[data.type].title);
     });
 
     $(document).on('click', '.add-request', function () {
