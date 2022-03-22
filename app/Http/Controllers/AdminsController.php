@@ -17,7 +17,7 @@ class AdminsController extends Controller
         $this->middleware('permission:19', ['only' => ['list', 'list_api']]);
         $this->middleware('permission:17', ['only' => ['add']]);
         $this->middleware('permission:18', ['only' => ['edit', 'status']]);
-        $this->middleware('permission:2088', ['only' => ['bulk_delete', 'delete']]);
+        $this->middleware('permission:20', ['only' => ['bulk_delete', 'delete']]);
     }
 
     public function list()
