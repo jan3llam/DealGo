@@ -129,11 +129,13 @@ $(function () {
                             '<a href="/admin/requests_responses/' + full['id'] + '" class="btn btn-light btn-sm" data-id="' + full['id'] + '">' +
                             feather.icons['thumbs-up'].toSvg({class: 'font-small-4 me-50'}) +
                             'Responses (' + full['responses_count'] + ')</a>' +
-                            '<a href="javascript:;" class="ms-2 item-view" data-id="' + full['id'] + '">' +
+                            '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
                             feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.View + '</a>' +
-                            '<a href="javascript:;" class="ms-2 item-delete" data-id="' + full['id'] + '">' +
-                            feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
+                            '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
+                            feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.Delete + '</a></div>'
                         )
                     }
                 }
