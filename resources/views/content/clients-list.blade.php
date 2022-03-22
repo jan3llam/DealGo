@@ -44,6 +44,7 @@
                         <th></th>
                         <th>#</th>
                         <th>{{__('locale.Image')}}</th>
+                        <th>{{__('locale.URL')}}</th>
                         <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>

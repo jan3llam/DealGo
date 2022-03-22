@@ -319,13 +319,13 @@ $(function () {
                     error: function (response) {
                         if (parseInt(response.status) === 403) {
                             toastr['error'](LANG[response.status]);
+                            newForm[0].reset();
+                            newSidebar.modal('hide')
                         } else {
                             toastr['error'](response.statusText)
                         }
                     }
                 })
-                newForm[0].reset();
-                newSidebar.modal('hide')
             }
         })
     }

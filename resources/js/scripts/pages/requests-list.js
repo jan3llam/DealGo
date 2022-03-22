@@ -453,6 +453,8 @@ $(function () {
                         if (parseInt(response.code) === 1) {
                             dtTable.DataTable().ajax.reload();
                             toastr['success'](response.message);
+                            newForm[0].reset();
+                            newSidebar.modal('hide')
                         } else {
                             toastr['error'](response.message);
                         }
@@ -465,8 +467,6 @@ $(function () {
                         }
                     }
                 })
-                newForm[0].reset();
-                newSidebar.modal('hide')
             }
         })
     }

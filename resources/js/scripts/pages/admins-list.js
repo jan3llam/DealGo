@@ -354,6 +354,8 @@ $(function () {
                         if (parseInt(response.code) === 1) {
                             dtTable.DataTable().ajax.reload();
                             toastr['success'](response.message);
+                            newForm[0].reset();
+                            newSidebar.modal('hide')
                         } else {
                             toastr['error'](response.message);
                         }
@@ -366,8 +368,6 @@ $(function () {
                         }
                     }
                 })
-                newForm[0].reset();
-                newSidebar.modal('hide')
             }
         })
     }
@@ -546,7 +546,7 @@ $(function () {
     $(document).on('click', '.item-view', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data().user;
-        viewSidebar.modal('show');
+        // viewSidebar.modal('show');
         $('#view-type').html(data.type);
         if (data.type == 1) {
             $('#view-company-container').show();
