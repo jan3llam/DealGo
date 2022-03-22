@@ -258,11 +258,13 @@
                                     </li>
                                     <div id="view-loads-container" style="display: none">
                                         <div class="info-container">
+                                            <span class="fw-bolder me-25">{{__('locale.Goods types')}}:</span>
                                             <table id="view-loads"></table>
                                         </div>
                                     </div>
                                     <div id="view-routes-container" style="display: none;">
                                         <div class="info-container">
+                                            <span class="fw-bolder me-25">{{__('locale.Routes')}}:</span>
                                             <table id="view-routes"></table>
                                         </div>
                                     </div>
