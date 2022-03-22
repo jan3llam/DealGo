@@ -249,23 +249,38 @@
                                         <span id="view-contract"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.ToDate')}}:</span>
-                                        <span id="view-date-to"></span>
-                                    </li>
-                                    <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.FromDate')}}:</span>
                                         <span id="view-date-from"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.ToDate')}}:</span>
+                                        <span id="view-date-to"></span>
                                     </li>
                                     <div id="view-loads-container" style="display: none">
                                         <div class="info-container">
                                             <span class="fw-bolder me-25">{{__('locale.Goods types')}}:</span>
-                                            <table id="view-loads"></table>
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{__('locale.GoodType')}}</th>
+                                                    <th>{{__('locale.GrossWeight')}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="view-loads"></tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <div id="view-routes-container" style="display: none;">
                                         <div class="info-container">
                                             <span class="fw-bolder me-25">{{__('locale.Routes')}}:</span>
-                                            <table id="view-routes"></table>
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{__('locale.Port')}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="view-routes"></tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <li class="mb-75" id="view-owner-container" style="display: none">
@@ -274,7 +289,7 @@
                                     </li>
                                     <li class="mb-75">
 
-                                    <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">

@@ -4,11 +4,7 @@ $(function () {
     var dtTable = $('.offers-list-table'),
         newSidebar = $('.new-offer-modal'),
         viewSidebar = $('.view-offer-modal'),
-        newForm = $('.add-new-offer'),
-        statusObj = {
-            1: {title: LANG.Active, class: 'badge-light-success status-switcher'},
-            0: {title: LANG.Inactive, class: 'badge-light-secondary status-switcher'}
-        }
+        newForm = $('.add-new-offer');
 
 
     var assetPath = '../../../app-assets/';
@@ -358,6 +354,13 @@ $(function () {
         })
     }
 
+    $(document).on('change', '.calculate-value', function () {
+        var sum = 0;
+        $('.calculate-value').each(function () {
+            sum += parseInt($(this).val());
+        });
+        $('#total').val(sum.toLocaleString(undefined, {minimumFractionDigits: 0}));
+    });
 
     $(document).on('click', '.item-delete', function () {
         var element = $(this);
@@ -427,11 +430,54 @@ $(function () {
 
     $(document).on('click', '.item-view', function () {
         var element = $(this);
-        let data = dtTable.api().row(element.parents('tr')).data().user;
-        viewSidebar.modal('show');
+        let data = dtTable.api().row(element.parents('tr')).data();
         $('#view-description').html(data.description);
         $('#view-date').html(data.date);
-        $('#view-owner').html(data.owner.contact_name);
+        $('#view-owner').html(data.owner.user.contact_name);
+
+        $('#view-payments').find('tr').remove();
+
+        data.payments.forEach(item => {
+            if (item.is_down) {
+                $('#view-down-value').html(item.value);
+                $('#view-down-description').html(item.description);
+            } else {
+                $('#view-payments-container').show();
+                $('#view-payments').append($('<tr>')
+                    .append($('<td>')
+                        .html(item.value)
+                    )
+                    .append($('<td>')
+                        .html(item.date)
+                    )
+                    .append($('<td>')
+                        .html(item.description)
+                    )
+                );
+            }
+        });
+
+        data.vessels.forEach(item => {
+            $('#view-vessels-container').show();
+
+            var good_type = $.grep(data.request_goods_types, function (v, i) {
+                return v.pivot.request_good_id === item.pivot.request_good_id;
+            });
+            console.log(good_type);
+            $('#view-vessels').append($('<tr>')
+                .append($('<td>')
+                    .html(good_type[0].good_type.name_translation)
+                )
+                .append($('<td>')
+                    .html(good_type[0].weight)
+                )
+                .append($('<td>')
+                    .html(item.name)
+                )
+            );
+        });
+
+        viewSidebar.modal('show');
 
     })
 

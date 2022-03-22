@@ -436,6 +436,13 @@ $(function () {
         })
     }
 
+    $(document).on('change', '.calculate-value', function () {
+        var sum = 0;
+        $('.calculate-value').each(function () {
+            sum += parseInt($(this).val());
+        });
+        $('#total').val(sum.toLocaleString(undefined, {minimumFractionDigits: 0}));
+    });
 
     $(document).on('click', '.item-delete', function () {
         var element = $(this);

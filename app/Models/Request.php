@@ -43,7 +43,7 @@ class Request extends Model
 
     public function goods_types()
     {
-        return $this->belongsToMany(gType::class, 'requests_goods_types', 'request_id', 'good_id')->withPivot('weight');
+        return $this->belongsToMany(gType::class, 'requests_goods_types', 'request_id', 'good_id')->withPivot('weight', 'id');
     }
 
     public function origin()

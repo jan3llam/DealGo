@@ -65,6 +65,7 @@ $(function () {
             },
             processing: true,
             serverSide: true,
+            autoWidth: true,
             columns: [
                 // columns according to JSON
                 {data: ''},
@@ -650,12 +651,13 @@ $(function () {
         }
         $('#view-loads').find('tr').remove();
         data.goods_types.forEach(item => {
+            $('#view-loads-container').show();
             $('#view-loads').append($('<tr>')
                 .append($('<td>')
-                    .html(item.good.name_translation)
+                    .html(item.name_translation)
                 )
                 .append($('<td>')
-                    .html(item.weight)
+                    .html(item.pivot.weight)
                 )
             );
         })

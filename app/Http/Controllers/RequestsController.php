@@ -178,13 +178,11 @@ class RequestsController extends Controller
 
         $item->save();
 
-        if ($request->contract == 1 || $request->contract == 3) {
-
-            $goods = $request->input('goods', []);
-            foreach ($goods as $index => $good) {
-                $item->goods_types()->attach($good['gtype'], ['weight' => $good['weight']]);
-            }
+        $goods = $request->input('goods', []);
+        foreach ($goods as $index => $good) {
+            $item->goods_types()->attach($good['gtype'], ['weight' => $good['weight']]);
         }
+
         if ($request->contract != 1) {
 
             $routes = $request->input('routes', []);

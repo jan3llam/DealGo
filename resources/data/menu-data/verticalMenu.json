@@ -117,7 +117,6 @@
             "permissions": [
                 31,
                 51,
-                59,
                 64
             ],
             "submenu": [
@@ -134,13 +133,6 @@
                     "icon": "file-text",
                     "slug": "admin.requests",
                     "permission": 51
-                },
-                {
-                    "url": "/admin/requests_responses",
-                    "name": "Requests Responses",
-                    "icon": "thumbs-up",
-                    "slug": "admin.requests_responses",
-                    "permission": 59
                 },
                 {
                     "url": "/admin/gtypes",

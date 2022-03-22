@@ -39,12 +39,12 @@ class RequestResponse extends Model
 
     public function vessels()
     {
-        return $this->belongsToMany(Vessel::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'vessel_id');
+        return $this->belongsToMany(Vessel::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'vessel_id')->withPivot('request_good_id');
     }
 
     public function request_goods_types()
     {
-        return $this->belongsToMany(RequestsGoodsType::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'request_good_id');
+        return $this->belongsToMany(RequestsGoodsType::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'request_good_id')->withPivot('vessel_id');
     }
 
     public function getFilesAttribute($value)

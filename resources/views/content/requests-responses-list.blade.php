@@ -3,7 +3,7 @@
     $css_path = app()->getLocale()==='ar' ? 'css-rtl' : 'css';
 @endphp
 
-@section('title', 'Requests Responses')
+@section('title', __('locale.Requests Responses'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -45,10 +45,10 @@
                     <tr>
                         <th></th>
                         <th>#</th>
-                        <th>Shipowner</th>
-                        <th>Value</th>
-                        <th>Date</th>
-                        <th>Actions</th>
+                        <th>{{__('locale.Owner')}}</th>
+                        <th>{{__('locale.Value')}}</th>
+                        <th>{{__('locale.Date')}}</th>
+                        <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -65,11 +65,12 @@
                         @endif
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">Add response</h5>
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.Add')}} {{__('locale.Requests Responses')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
-                                <label class="form-label" for="owner">Owner</label>
+                                <label class="form-label" for="owner">{{__('locale.Owner')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="owner"
                                         name="owner">
                                     <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
@@ -80,14 +81,17 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label class="form-label" for="date">Date</label>
+                                <label class="form-label" for="date">{{__('locale.Date')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="date"
-                                       placeholder="Date" name="date"/>
+                                       @if($request)
+                                       min="{{\Illuminate\Support\Carbon::parse($request->date_from)->toDateString()}}"
+                                       @endif
+                                       placeholder="{{__('locale.Date')}}" name="date"/>
                             </div>
                             <div id="routes_container"
                                  @isset($request) @if ($request->contract !== 1)style="display: none" @endif @endisset>
                                 <div data-repeater-list="routes">
-                                    <label class="form-label" for="route">Routes</label>
+                                    <label class="form-label" for="route">{{__('locale.Routes')}}</label>
                                     <div data-repeater-item>
                                         <div class="mb-1">
                                             <div class="input-group">
@@ -111,7 +115,7 @@
                                 </div>
                                 <button class="btn btn-icon btn-success" type="button" data-repeater-create>
                                     <i data-feather="plus" class="me-25"></i>
-                                    <span>Add New</span>
+                                    <span>{{__('locale.Add')}} {{__('locale.Route')}}</span>
                                 </button>
                             </div>
                             <hr>
@@ -119,47 +123,52 @@
                                 @foreach($request->goods_types as $index => $item)
                                     <div class="mb-1 row">
                                         <div class="col-7">
-                                            <label class="form-label">Goods type</label>
+                                            <label class="form-label">{{__('locale.GoodType')}}</label>
                                             <label class="form-label"><b>{{$item->name}}</b></label>
                                         </div>
                                         <div class="col-5">
-                                            <label class="form-label">Gross weight, kg</label>
-                                            <label
-                                                class="form-label"><b>{{$item->pivot->weight}}</b></label>
+                                            <label class="form-label">{{__('locale.GrossWeight')}}</label>
+                                            <label class="form-label">
+                                                <b>{{$item->pivot->weight}}</b>
+                                            </label>
                                         </div>
                                     </div>
-                                    <div class="mb-1">
-                                        <label class="form-label" for="vessel">Vessels</label>
-                                        <select type="text" class="form-control dt-full-name vessels-select2"
-                                                id="vessel"
-                                                name="vessel">
-                                            <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
-                                            @foreach($vessels->whereIn('type_id',$item->vessels_types->pluck('id')) as $vessel)
-                                                <option value="{{$vessel->id}}">{{$vessel->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    @foreach($request->goods_types as $gt)
+                                        <div class="mb-1">
+                                            <label class="form-label" for="vessel">{{__('locale.Vessel')}}</label>
+                                            <select type="text" class="form-control dt-full-name vessels-select2"
+                                                    name="vessel[{{$gt->pivot->id}}]">
+                                                <option value="" disabled
+                                                        selected>{{__('locale.KindlyChoose')}}</option>
+                                                @foreach($vessels->whereIn('type_id',$item->vessels_types->pluck('id')) as $vessel)
+                                                    <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endforeach
                                     <hr>
                                 @endforeach
                             @endisset
-                            <label class="form-label">Payments</label>
+                            <label class="form-label">{{__('locale.Payments')}}</label>
                             <div class="mb-1 row">
                                 <div class="col-12">
-                                    <label class="form-label" for="total">Total value</label>
+                                    <label class="form-label" for="total">{{__('locale.Total')}}</label>
                                     <input type="text" id="total" disabled readonly class="form-control dt-full-name"
-                                           placeholder="Total value"/>
+                                           placeholder="{{__('locale.Total')}}"/>
                                 </div>
                             </div>
                             <div class="mb-1 row">
                                 <div class="col-6">
-                                    <label class="form-label" for="down_value">Down payment value</label>
-                                    <input type="number" class="form-control calculate-value dt-full-name"
-                                           placeholder="Down payment value" name="down_value"/>
+                                    <label class="form-label" for="down_value">{{__('locale.DownPayment')}}</label>
+                                    <input type="number" id="down_value"
+                                           class="form-control calculate-value dt-full-name"
+                                           placeholder="{{__('locale.DownPayment')}}" name="down_value"/>
                                 </div>
                                 <div class="col-6">
-                                    <label class="form-label" for="down_description">Details</label>
-                                    <input type="text" class="form-control dt-full-name"
-                                           placeholder="Details" name="down_description"/>
+                                    <label class="form-label"
+                                           for="down_description">{{__('locale.Description')}}</label>
+                                    <input type="text" id="down_description" class="form-control dt-full-name"
+                                           placeholder="{{__('locale.Description')}}" name="down_description"/>
                                 </div>
                             </div>
                             <div id="payments_container"
@@ -168,24 +177,26 @@
                                     <div data-repeater-item>
                                         <div class="mb-1 row">
                                             <div class="col-6">
-                                                <label class="form-label" for="value">Value</label>
+                                                <label class="form-label" for="value">{{__('locale.Value')}}</label>
                                                 <input type="number" class="form-control calculate-value dt-full-name"
-                                                       placeholder="Value" name="value"/>
+                                                       placeholder="{{__('locale.Value')}}" name="value"/>
                                             </div>
                                             <div class="col-6">
-                                                <label class="form-label" for="date">Next payment</label>
+                                                <label class="form-label"
+                                                       for="date">{{__('locale.NextPaymentDate')}}</label>
                                                 <input type="date" class="form-control dt-full-name"
-                                                       placeholder="Date" name="date"/>
+                                                       placeholder="{{__('locale.NextPaymentDate')}}" name="date"/>
                                             </div>
                                         </div>
                                         <div class="mb-1 row">
                                             <div class="col-6">
-                                                <label class="form-label" for="description">Details</label>
+                                                <label class="form-label"
+                                                       for="description">{{__('locale.Description')}}</label>
                                                 <input type="text" class="form-control dt-full-name"
-                                                       placeholder="Details" name="description"/>
+                                                       placeholder="{{__('locale.Description')}}" name="description"/>
                                             </div>
                                             <div class="col-6">
-                                                <label for="formFile" class="form-label">File</label>
+                                                <label for="formFile" class="form-label">{{__('locale.File')}}</label>
                                                 <input class="form-control" type="file" name="file"/>
                                             </div>
                                         </div>
@@ -193,7 +204,7 @@
                                 </div>
                                 <button class="btn btn-icon btn-success" type="button" data-repeater-create>
                                     <i data-feather="plus" class="me-25"></i>
-                                    <span>Add New</span>
+                                    <span>{{__('locale.AddNew')}}</span>
                                 </button>
                             </div>
                             <div class="mb-1">
@@ -202,7 +213,7 @@
                                           placeholder="{{__('locale.Description')}}" name="description"></textarea>
                             </div>
                             <div class="mb-1">
-                                <label for="files" class="form-label">Attachments</label>
+                                <label for="files" class="form-label">{{__('locale.Attachments')}}</label>
                                 <input type="file" name="files" id="files"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
@@ -227,11 +238,11 @@
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Owner:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Owner')}}:</span>
                                         <span id="view-owner"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Date #:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Date')}} #:</span>
                                         <span id="view-date"></span>
                                     </li>
                                     <li class="mb-75">
@@ -239,11 +250,52 @@
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Payments total:</span>
+                                        <span
+                                            class="fw-bolder me-25">{{__('locale.Payments')}} {{__('locale.Total')}}:</span>
                                         <span id="view-total"></span>
                                     </li>
+                                    <div id="view-vessels-container" style="display: none">
+                                        <div class="info-container">
+                                            <span class="fw-bolder me-25">{{__('locale.Vessels')}}:</span>
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{__('locale.GoodType')}}</th>
+                                                    <th>{{__('locale.GrossWeight')}}</th>
+                                                    <th>{{__('locale.Vessel')}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="view-vessels"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="view-payments-container" style="display: none">
+                                        <div class="info-container">
+                                            <ul class="list-unstyled">
+                                                <li class="mb-75">
+                                                    <span class="fw-bolder me-25">{{__('locale.DownPayment')}}:</span>
+                                                    <span id="view-down-value"></span>
+                                                </li>
+                                                <li class="mb-75">
+                                                    <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
+                                                    <span id="view-down-description"></span>
+                                                </li>
+                                            </ul>
+                                            <span class="fw-bolder me-25">{{__('locale.Payments')}}:</span>
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{__('locale.Value')}}</th>
+                                                    <th>{{__('locale.Date')}}</th>
+                                                    <th>{{__('locale.Description')}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="view-payments"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Attachments:</span>
+                                        <span class="fw-bolder me-25">{{__('locale.Attachments')}}:</span>
                                         <span id="view-files"></span>
                                     </li>
                                 </ul>

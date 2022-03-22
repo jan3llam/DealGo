@@ -69,7 +69,7 @@ class RequestsResponsesController extends Controller
                 $q->withTrashed()->with('user', function ($qu) {
                     $qu->withTrashed();
                 });
-            },
+            }, 'vessels', 'request_goods_types.good_type'
         ]);
 
         if ($request_id) {
@@ -173,9 +173,10 @@ class RequestsResponsesController extends Controller
             }
         }
 
-        $vessels = $request->input('vessels', []);
-        foreach ($vessels as $vessel) {
-            $item->vessels()->attach($vessel->id, ['request_good_id' => $vessel->request_good_id]);
+        $vessels = $request->input('vessel', []);
+
+        foreach ($vessels as $index => $vessel) {
+            $item->vessels()->attach($vessel, ['request_good_id' => $index]);
         }
 
         $payments = $request->input('payments', []);
