@@ -73,7 +73,28 @@ $(function () {
                     render: function (data, type, full, meta) {
                         return ''
                     }
-                }, {
+                },
+                {
+                    // For Checkboxes
+                    targets: 1,
+                    orderable: false,
+                    responsivePriority: 3,
+                    render: function (data, type, full, meta) {
+                        return (
+                            '<div class="form-check"> <input class="form-check-input dt-checkboxes" type="checkbox" value="' + data + '" id="checkbox-' +
+                            data +
+                            '" /><label class="form-check-label" for="checkbox-' +
+                            data +
+                            '"></label></div>'
+                        );
+                    },
+                    checkboxes: {
+                        selectRow: true,
+                        selectAllRender:
+                            '<div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="checkboxSelectAll" /><label class="form-check-label" for="checkboxSelectAll"></label></div>'
+                    }
+                },
+                {
                     extend: 'collection',
                     className: 'btn btn-outline-secondary dropdown-toggle me-2',
                     text: LANG.Status,

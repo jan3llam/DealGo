@@ -273,7 +273,8 @@
                                         <span id="view-owner"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
+
+                                    <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
                                         <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
