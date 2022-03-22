@@ -38,9 +38,9 @@ $(function () {
                     success: function (res) {
                         if (parseInt(res.code) === 1) {
                             callback({
-                                draw: res.data.meta.draw,
-                                recordsTotal: res.data.meta.total,
-                                recordsFiltered: res.data.meta.count,
+                                draw: parseInt(res.data.meta.draw),
+                                recordsTotal: parseInt(res.data.meta.total),
+                                recordsFiltered: parseInt(res.data.meta.count),
                                 data: res.data.data
                             });
                         } else {
