@@ -74,7 +74,9 @@
     <script src="{{ asset(mix('js/scripts/pages/vessels-track.js')) }}"></script>
     @if($vessel_id)
         <script>
-            $('.vessels-select2').trigger('change.select2');
+            $(document).ready(function () {
+                $('.vessels-select2').trigger('change.select2');
+            })
         </script>
     @endif
 @endsection
