@@ -145,6 +145,75 @@
                     </form>
                 </div>
             </div>
+
+            <div class="modal modal-slide-in view-admin-modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content pt-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.View')}} {{__('locale.Administrator')}}</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <div class="info-container">
+                                <ul class="list-unstyled">
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Type')}}:</span>
+                                        <span id="view-type"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.ContactName')}}:</span>
+                                        <span id="view-contact"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Email')}}:</span>
+                                        <span id="view-email"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Phone')}}:</span>
+                                        <span id="view-phone"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Zipcode')}}:</span>
+                                        <span id="view-zip"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Country')}}:</span>
+                                        <span id="view-country"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.City')}}:</span>
+                                        <span id="view-city"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Province')}}:</span>
+                                        <span id="view-province"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Address')}} 1:</span>
+                                        <span id="view-address-1"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Address')}} 2:</span>
+                                        <span id="view-address-2"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.LegalFile')}}:</span>
+                                        <span id="view-legal"></span>
+                                    </li>
+
+                                </ul>
+                                <div class="d-flex justify-content-center pt-2">
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        {{__('locale.Cancel')}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal to view user Ends-->
+            </div>
         </div>
         <!-- list and filter end -->
     </section>

@@ -60,7 +60,6 @@ $(function () {
                 {data: 'id'},
                 {data: 'name'},
                 {data: 'code'},
-                {data: 'country'},
                 {data: ''}
             ],
             columnDefs: [

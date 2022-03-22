@@ -15,19 +15,19 @@ class UsersController extends Controller
         $phone = $request->input('phone', null);
         $zip = $request->input('zip', null);
         if ($email) {
-            $user = User::where('email', $email)->first();
+            $user = User::withTrashed()->where('email', $email)->first();
             if ($user) {
                 return response()->error('alreadyExist');
             }
             return response()->success();
         } elseif ($phone) {
-            $user = User::where('phone', $phone)->first();
+            $user = User::withTrashed()->where('phone', $phone)->first();
             if ($user) {
                 return response()->error('alreadyExist');
             }
             return response()->success();
         } elseif ($zip) {
-            $user = User::where('zip_code', $zip)->first();
+            $user = User::withTrashed()->where('zip_code', $zip)->first();
             if ($user) {
                 return response()->error('alreadyExist');
             }

@@ -133,6 +133,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.View + '</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Edit + '</a>' +
@@ -539,6 +542,32 @@ $(function () {
         $('#address').val(data.address);
         $('#object_id').val(data.id);
     });
+
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data().user;
+        viewSidebar.modal('show');
+        $('#view-type').html(data.type);
+        if (data.type == 1) {
+            $('#view-company-container').show();
+        }
+
+        $('#view-legal').html('<a href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-license').html('<a href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-company').html('<a href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+
+        $('#view-name').html(data.full_name);
+        $('#view-contact').html(data.contact_name);
+        $('#view-commercial').html(data.commercial_number);
+        $('#view-email').html(data.email);
+        $('#view-phone').html(data.phone);
+        $('#view-country').html(data.city.country.name).trigger('change.select2');
+        $('#view-city').html(data.city.name);
+        $('#view-address-1').html(data.address_1);
+        $('#view-address-2').html(data.address_2);
+        $('#view-zip').html(data.zip_code);
+
+    })
 
     $(document).on('click', '.add-admin', function () {
         $('#form_status').val(1);
