@@ -261,7 +261,7 @@
                                             <table id="view-loads"></table>
                                         </div>
                                     </div>
-                                    <div id="view-routes-container" style="display: none">
+                                    <div id="view-routes-container" style="display: none;">
                                         <div class="info-container">
                                             <table id="view-routes"></table>
                                         </div>
