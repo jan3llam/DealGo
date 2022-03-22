@@ -129,6 +129,10 @@ $(function () {
                             '<a href="/admin/requests_responses/' + full['id'] + '" class="btn btn-light btn-sm" data-id="' + full['id'] + '">' +
                             feather.icons['thumbs-up'].toSvg({class: 'font-small-4 me-50'}) +
                             'Responses (' + full['responses_count'] + ')</a>' +
+                            '<div class="btn-group">' +
+                            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
+                            feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
+                            '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
                             '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
                             feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
