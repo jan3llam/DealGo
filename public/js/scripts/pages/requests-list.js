@@ -614,11 +614,11 @@ $(function () {
     $(document).on('click', '.item-view', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
-        $('#view-name').val(data.name);
-        $('#view-tenant').val(data.tenant.user.contact_name);
-        $('#view-origin').val(data.port_from.name_translation);
-        $('#view-destination').val(data.port_to.name_translation);
-        $('#view-contract').val(typeObj[data.contract].title);
+        $('#view-name').html(data.name);
+        $('#view-tenant').html(data.tenant.user.contact_name);
+        $('#view-origin').html(data.port_from.name_translation);
+        $('#view-destination').html(data.port_to.name_translation);
+        $('#view-contract').html(typeObj[data.contract].title);
         $('#view-date-from').html(data.date_from);
         $('#view-date-to').html(data.date_to);
         $('#view-description').html(data.description);

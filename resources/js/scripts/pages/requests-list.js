@@ -614,7 +614,6 @@ $(function () {
     $(document).on('click', '.item-view', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
-        console.log(data);
         $('#view-name').html(data.name);
         $('#view-tenant').html(data.tenant.user.contact_name);
         $('#view-origin').html(data.port_from.name_translation);
