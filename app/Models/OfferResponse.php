@@ -57,4 +57,9 @@ class OfferResponse extends Model
         return json_decode($value);
     }
 
+    public function origin()
+    {
+        return $this->morphOne(Contract::class, 'origin');
+    }
+
 }

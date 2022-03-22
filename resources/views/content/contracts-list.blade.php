@@ -46,6 +46,59 @@
                 </table>
             </div>
             <!-- Modal to view user starts-->
+            <div class="modal modal-slide-in new-payment-modal fade" id="modals-slide-in">
+                <div class="modal-dialog" style="width: 50%">
+                    <form class="add-new-payment modal-content pt-0">
+                        <input type="hidden" value="1" id="form_status">
+                        <input type="hidden" value="" id="object_id">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Payment')}}</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <table class="table table-striped table-bordered mb-1">
+                                <thead>
+                                <tr>
+                                    <th>{{__('locale.DownPayment')}}</th>
+                                    <th>{{__('locale.Description')}}</th>
+                                    <th>{{__('locale.SubmittedDate')}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><span id="view-down-value"></span></td>
+                                    <td><span id="view-down-description"></span></td>
+                                    <td><input id="view-down-submit" type="date" class="form-control dt-full-name"
+                                               placeholder="{{__('locale.SubmittedDate')}} "
+                                               name="down_date"/>
+                                        <span id="view-down-text" style="display: none"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <span class="fw-bolder me-25">{{__('locale.Payments')}}:</span>
+                            <table class="table table-striped table-bordered mb-1">
+                                <thead>
+                                <tr>
+                                    <th>{{__('locale.Value')}}</th>
+                                    <th>{{__('locale.Date')}}</th>
+                                    <th>{{__('locale.Description')}}</th>
+                                    <th>{{__('locale.Payment')}}</th>
+                                    <th>{{__('locale.SubmittedDate')}}</th>
+                                </tr>
+                                </thead>
+                                <tbody id="view-payments"></tbody>
+                            </table>
+                            <button type="submit" class="btn btn-primary me-1 data-submit">
+                                {{__('locale.Submit')}}
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                {{__('locale.Cancel')}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="modal modal-slide-in view-contract-modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content pt-0">

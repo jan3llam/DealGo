@@ -309,6 +309,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
 
     Route::group(['prefix' => 'contracts'], function () {
         Route::get('/list', [ContractsAPI::class, 'list_api']);
+        Route::post('/payments', [ContractsAPI::class, 'payments']);
     });
 
     Route::group(['prefix' => 'shipments'], function () {

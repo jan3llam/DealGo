@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -35,7 +36,7 @@ class ContractsController extends Controller
             },
             'owner' => function ($q) {
                 $q->withTrashed()->with('user');
-            },
+            }, 'origin.payments'
         ]);
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
@@ -87,5 +88,31 @@ class ContractsController extends Controller
 
         return response()->success($data);
     }
+
+    public function payments(Request $request)
+    {
+        $id = $request->object_id;
+
+        $item = Contract::find($id);
+
+        $payments = $request->input('payment', []);
+        $original_payments = $item->origin->payments;
+
+        foreach ($payments as $index => $payment) {
+            $item = $original_payments->where('id', $index)->first();
+            if ($item->is_down) {
+                $item->paid = $item->value;
+            } else {
+                $item->paid = $payment['value'];
+            }
+            if ($payment['date']) {
+                $item->submit_date = Carbon::parse($payment['date'])->toDateTimeString();
+            }
+            $item->save();
+        }
+
+        return response()->success();
+    }
+
 
 }

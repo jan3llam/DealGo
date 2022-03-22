@@ -157,6 +157,7 @@ return [
     "Status" => "الحالة",
     "Subject" => "الموضوع",
     "Submit" => "إرسال",
+    "SubmittedDate" => "تاريخ التسديد",
     "Supported" => "المدعومة",
     "Tenant" => "المستأجر",
     "Tenants" => "المستأجرين",

@@ -158,6 +158,7 @@ return [
     "Sub_" => "Sub-",
     "Subject" => "Subject",
     "Submit" => "Submit",
+    "SubmittedDate" => "Submitted date",
     "Supported" => "Supported",
     "Tenant" => "Charterer",
     "Tenants" => "Charterers",
