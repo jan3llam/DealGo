@@ -614,12 +614,15 @@ $(function () {
     $(document).on('click', '.item-view', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
-        viewSidebar.modal('show');
         $('#view-name').val(data.name);
         $('#view-tenant').val(data.tenant.user.contact_name);
         $('#view-origin').val(data.port_from.name_translation);
         $('#view-destination').val(data.port_to.name_translation);
-        $('#view-contract').val(typeObj[data.type].title);
+        $('#view-contract').val(typeObj[data.contract].title);
+        $('#view-date-from').html(data.date_from);
+        $('#view-date-to').html(data.date_to);
+        $('#view-description').html(data.view - description);
+        viewSidebar.modal('show');
     });
 
     $(document).on('click', '.add-request', function () {
