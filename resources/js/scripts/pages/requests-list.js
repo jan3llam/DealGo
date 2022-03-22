@@ -621,7 +621,7 @@ $(function () {
         $('#view-contract').val(typeObj[data.contract].title);
         $('#view-date-from').html(data.date_from);
         $('#view-date-to').html(data.date_to);
-        $('#view-description').html(data.view - description);
+        $('#view-description').html(data.description);
         viewSidebar.modal('show');
     });
 
