@@ -26,10 +26,10 @@ $(function () {
                         lang: $('html').attr('lang'),
                         start: data.start,
                         draw: data.draw,
-                        // search: data.search.value,
+                        search: data.search.value,
                         status: $('#status_filter').val(),
-                        // direction: data.order[0].dir,
-                        // order: data.columns[data.order[0].column].data.replace(/\./g, "__"),
+                        direction: data.order[0].dir,
+                        order: data.columns[data.order[0].column].data.replace(/\./g, "__"),
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -57,6 +57,7 @@ $(function () {
                 });
             },
             processing: true,
+            serverSide: true,
             columns: [
                 // columns according to JSON
                 {data: ''},
