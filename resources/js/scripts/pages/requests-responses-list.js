@@ -427,7 +427,6 @@ $(function () {
         })
     });
 
-
     $(document).on('click', '.item-view', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
@@ -439,13 +438,13 @@ $(function () {
 
         data.payments.forEach(item => {
             if (item.is_down) {
-                $('#view-down-value').html(item.value);
+                $('#view-down-value').html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0}));
                 $('#view-down-description').html(item.description);
             } else {
                 $('#view-payments-container').show();
                 $('#view-payments').append($('<tr>')
                     .append($('<td>')
-                        .html(item.value)
+                        .html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0}))
                     )
                     .append($('<td>')
                         .html(item.date)

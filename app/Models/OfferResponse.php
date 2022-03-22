@@ -49,7 +49,7 @@ class OfferResponse extends Model
 
     public function goods_types()
     {
-        return $this->belongsToMany(OfferResponseGoodsType::class, 'offers_responses_goods_types', 'offer_id', 'good_id');
+        return $this->hasMany(OfferResponseGoodsType::class, 'offer_id');
     }
 
     public function getFilesAttribute($value)

@@ -272,76 +272,94 @@
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.Type')}}:</span>
-                                        <span id="view-type"></span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div id="view-company-container" style="display: none">
-                                <div class="info-container">
-                                    <ul class="list-unstyled">
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Full name:</span>
-                                            <span id="view-name"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Commercial #:</span>
-                                            <span id="view-commercial"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">License file:</span>
-                                            <span id="view-license"></span>
-                                        </li>
-                                        <li class="mb-75">
-                                            <span class="fw-bolder me-25">Company file:</span>
-                                            <span id="view-company"></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="info-container">
-                                <ul class="list-unstyled">
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Contact name:</span>
-                                        <span id="view-contact"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Title')}}:</span>
+                                        <span id="view-name"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Email:</span>
-                                        <span id="view-email"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Tenant')}}:</span>
+                                        <span id="view-tenant"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Phone:</span>
-                                        <span id="view-phone"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.ShipmentOrigin')}}:</span>
+                                        <span id="view-origin"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Zip code:</span>
-                                        <span id="view-zip"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.ShipmentDestination')}}:</span>
+                                        <span id="view-destination"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Country:</span>
-                                        <span id="view-country"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.FromDate')}}:</span>
+                                        <span id="view-date-from"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">City:</span>
-                                        <span id="view-city"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.ToDate')}}:</span>
+                                        <span id="view-date-to"></span>
+                                    </li>
+                                    <div id="view-loads-container" style="display: none">
+                                        <div class="info-container">
+                                            <span class="fw-bolder me-25">{{__('locale.Goods types')}}:</span>
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{__('locale.GoodType')}}</th>
+                                                    <th>{{__('locale.GrossWeight')}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="view-loads"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="view-routes-container" style="display: none;">
+                                        <div class="info-container">
+                                            <span class="fw-bolder me-25">{{__('locale.Routes')}}:</span>
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{__('locale.Port')}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="view-routes"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="view-payments-container" style="display: none">
+                                        <div class="info-container">
+                                            <ul class="list-unstyled">
+                                                <li class="mb-75">
+                                                    <span class="fw-bolder me-25">{{__('locale.DownPayment')}}:</span>
+                                                    <span id="view-down-value"></span>
+                                                </li>
+                                                <li class="mb-75">
+                                                    <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
+                                                    <span id="view-down-description"></span>
+                                                </li>
+                                            </ul>
+                                            <span class="fw-bolder me-25">{{__('locale.Payments')}}:</span>
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{__('locale.Value')}}</th>
+                                                    <th>{{__('locale.Date')}}</th>
+                                                    <th>{{__('locale.Description')}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="view-payments"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
+                                        <span id="view-description"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 1:</span>
-                                        <span id="view-address-1"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Address 2:</span>
-                                        <span id="view-address-2"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">Legal file (ID, Passport):</span>
-                                        <span id="view-legal"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Attachments')}}:</span>
+                                        <span id="view-files"></span>
                                     </li>
 
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Cancel
+                                        {{__('locale.Cancel')}}
                                     </button>
                                 </div>
                             </div>

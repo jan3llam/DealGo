@@ -77,7 +77,7 @@ class OffersResponsesController extends Controller
             },
             'port_to' => function ($q) {
                 $q->withTrashed();
-            },
+            }, 'routes', 'goods_types.good_type'
         ]);
 
         if ($offer_id) {

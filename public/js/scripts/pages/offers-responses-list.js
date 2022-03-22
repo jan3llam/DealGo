@@ -4,10 +4,7 @@ $(function () {
     var dtTable = $('.responses-list-table'),
         newSidebar = $('.new-response-modal'),
         newForm = $('.add-new-response'),
-        statusObj = {
-            1: {title: LANG.Active, class: 'badge-light-success status-switcher'},
-            0: {title: LANG.Inactive, class: 'badge-light-secondary status-switcher'}
-        }
+        viewSidebar = $('.view-offer-modal');
 
 
     var assetPath = '../../../app-assets/';
@@ -223,6 +220,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.View + '</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Delete + '</a></div>' +
@@ -346,7 +346,34 @@ $(function () {
             }
         });
 
-        $('#tenant,#contract,#owner').select2({dropdownParent: newSidebar});
+        $('#tenant,#contract').select2({dropdownParent: newSidebar});
+
+        $('#port_from,#port_to').select2({
+            dropdownParent: newSidebar,
+            ajax: {
+                url: assetPath + 'api/admin/ports/list',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                },
+                data: function (params) {
+                    return {
+                        search: params.term,
+                        start: params.page || 0
+                    }
+                },
+                processResults: function (data) {
+                    data = data.data.data.map(function (item) {
+                        return {
+                            id: item.id,
+                            text: item.name_translation,
+                        };
+                    });
+                    return {results: data};
+                }
+            }
+        })
 
         newForm.validate({
             errorClass: 'error',
@@ -509,21 +536,62 @@ $(function () {
         })
     });
 
-    $(document).on('click', '.item-update', function () {
+    $(document).on('click', '.item-view', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
-        $('#modals-slide-in').modal('show')
-        $('#form_status').val(2);
-        $('#name').val(data.full_name);
-
-        $('#contact').val(data.contact_name);
-        $('#commercial').val(data.commercial_number);
-        $('#email').val(data.email);
-        $('#phone').val(data.phone);
-        $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id).trigger('change.select2');
-        $('#type').val(data.type);
-        $('#object_id').val(data.id);
+        $('#view-name').html(data.name);
+        $('#view-tenant').html(data.tenant.user.contact_name);
+        $('#view-date-from').html(data.date_from);
+        $('#view-date-to').html(data.date_to);
+        $('#view-description').html(data.description);
+        $('#view-origin').html(data.port_from.name_translation);
+        $('#view-destination').html(data.port_to.name_translation);
+        if (parseInt(data.contract) === 1) {
+            $('#view-routes-container').hide();
+        } else {
+            $('#view-routes').find('tr').remove();
+            data.routes.forEach(item => {
+                $('#view-routes').append($('<tr>')
+                    .append($('<td>')
+                        .html(item.name_translation)
+                    )
+                );
+            })
+            $('#view-routes-container').show();
+        }
+        $('#view-loads').find('tr').remove();
+        data.goods_types.forEach(item => {
+            $('#view-loads-container').show();
+            $('#view-loads').append($('<tr>')
+                .append($('<td>')
+                    .html(item.good_type.name_translation)
+                )
+                .append($('<td>')
+                    .html(item.weight)
+                )
+            );
+        })
+        $('#view-payments').find('tr').remove();
+        data.payments.forEach(item => {
+            if (item.is_down) {
+                $('#view-down-value').html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0}));
+                $('#view-down-description').html(item.description);
+            } else {
+                $('#view-payments-container').show();
+                $('#view-payments').append($('<tr>')
+                    .append($('<td>')
+                        .html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0}))
+                    )
+                    .append($('<td>')
+                        .html(item.date)
+                    )
+                    .append($('<td>')
+                        .html(item.description)
+                    )
+                );
+            }
+        });
+        viewSidebar.modal('show');
     });
 
     $(document).on('click', '.add-response', function () {

@@ -118,8 +118,17 @@ $(function () {
                             '<a href="/admin/offers_responses/' + full['id'] + '" class="btn btn-light btn-sm" data-id="' + full['id'] + '">' +
                             feather.icons['thumbs-up'].toSvg({class: 'font-small-4 me-50'}) +
                             'Responses (' + full['responses_count'] + ')</a>' +
-                            '<a href="javascript:;" class="ms-2 item-delete" data-id="' + full['id'] + '">' +
-                            feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
+                            '<div class="btn-group">' +
+                            '<a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
+                            feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
+                            '</a>' +
+                            '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.View + '</a>' +
+                            '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
+                            feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.Delete + '</a></div>'
                         )
                     }
                 }
@@ -509,14 +518,17 @@ $(function () {
         $('#type').val(data.type);
         $('#object_id').val(data.id);
     });
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        $('#view-name').html(data.name);
+        $('#view-owner').html(data.vessel.owner.user.contact_name);
+        $('#view-date-from').html(data.date_from);
+        $('#view-date-to').html(data.date_to);
+        $('#view-description').html(data.description);
+        $('#view-weight').html(data.weight);
+        $('#view-vessel').html(data.vessel.name);
 
-    $(document).on('click', '.add-request', function () {
-        $('#form_status').val(1);
-        $('#image_container').attr('src', '');
-        $('#object_id').val('');
-        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
-            $(this).val('');
-        });
-        $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+        viewSidebar.modal('show');
     });
 })

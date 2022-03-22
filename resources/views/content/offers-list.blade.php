@@ -125,7 +125,7 @@
                 </div>
             </div>
             <!-- Modal to add new user Ends-->
-            <div class="modal modal-slide-in view-request-modal fade">
+            <div class="modal modal-slide-in view-offer-modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
@@ -136,28 +136,24 @@
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.Title')}}:</span>
-                                        <span id="view-name"></span>
-                                    </li>
-                                    <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.Owner')}}:</span>
-                                        <span id="view-tenant"></span>
+                                        <span id="view-owner"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.ShipmentOrigin')}}:</span>
-                                        <span id="view-origin"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Vessel')}}:</span>
+                                        <span id="view-vessel"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.ShipmentDestination')}}:</span>
-                                        <span id="view-destination"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.MaxWeight')}}:</span>
+                                        <span id="view-weight"></span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.FromDate')}}:</span>
-                                        <span id="view-date-to"></span>
+                                        <span id="view-date-from"></span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.ToDate')}}:</span>
-                                        <span id="view-date-from"></span>
+                                        <span id="view-date-to"></span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
