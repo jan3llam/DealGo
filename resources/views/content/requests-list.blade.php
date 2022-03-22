@@ -256,6 +256,20 @@
                                         <span class="fw-bolder me-25">{{__('locale.FromDate')}}:</span>
                                         <span id="view-date-from"></span>
                                     </li>
+                                    <div id="view-loads-container" style="display: none">
+                                        <div class="info-container">
+                                            <table id="view-loads"></table>
+                                        </div>
+                                    </div>
+                                    <div id="view-routes-container" style="display: none">
+                                        <div class="info-container">
+                                            <table id="view-routes"></table>
+                                        </div>
+                                    </div>
+                                    <li class="mb-75" id="view-owner-container" style="display: none">
+                                        <span class="fw-bolder me-25">{{__('locale.Owner')}}:</span>
+                                        <span id="view-owner"></span>
+                                    </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
                                         <span id="view-description"></span>

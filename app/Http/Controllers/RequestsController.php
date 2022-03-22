@@ -118,9 +118,10 @@ class RequestsController extends Controller
                     },
                     'owner' => function ($q) {
                         $q->withTrashed()->with('user');
-                    }]
+                    },
+                    'goods_types', 'routes']
             )->withCount('responses')->get();
-        
+
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $data['data']->count();

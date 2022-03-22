@@ -628,6 +628,38 @@ $(function () {
         $('#view-date-from').html(data.date_from);
         $('#view-date-to').html(data.date_to);
         $('#view-description').html(data.description);
+        if (parseInt(data.contract) === 1 || parseInt(data.contract) === 3) {
+            $('#view-owner').html(data.owner.user.contact_name);
+            $('#view-owner-container').show();
+        } else {
+            $('#view-owner-container').hide();
+        }
+
+        if (parseInt(data.contract) === 1) {
+            $('#view-routes-container').hide();
+        } else {
+            $('#view-routes').find('tr').remove();
+            data.routes.forEach(item => {
+                $('#view-routes').append($('<tr>')
+                    .append($('<td>')
+                        .html(item.name_translation)
+                    )
+                );
+            })
+            $('#view-routes-container').show();
+        }
+        $('#view-loads').find('tr').remove();
+        data.goods_types.forEach(item => {
+            $('#view-loads').append($('<tr>')
+                .append($('<td>')
+                    .html(item.good.name_translation)
+                )
+                .append($('<td>')
+                    .html(item.weight)
+                )
+            );
+        })
+
         viewSidebar.modal('show');
     });
 
