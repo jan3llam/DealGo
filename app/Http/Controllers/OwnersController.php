@@ -139,6 +139,7 @@ class OwnersController extends Controller
             'province' => 'required|string',
             'address_1' => 'required|string',
             'address_2' => 'nullable|string',
+            'address_4' => 'nullable|string',
             'city' => 'required|numeric',
             'password' => 'required',
             'email' => 'required|unique:users,email',
