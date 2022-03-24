@@ -157,18 +157,13 @@ class VesselsController extends Controller
         $total = $query->limit($per_page)->count();
 
         $data['data'] = $query->skip(($page) * $per_page)
-            ->with([
-                'country' => function ($q) {
-                    $q->withTrashed();
-                },
-                'owner' => function ($q) {
-                    $q->withTrashed()->with(['user' => function ($qu) {
-                        $qu->withTrashed();
-                    }]);
-                },
-                'type' => function ($q) {
-                    $q->withTrashed();
-                }])->take($per_page)->orderBy($order_field, $order_sort)->get();
+            ->with(['country', 'owner' => function ($q) {
+                $q->withTrashed()->with(['user' => function ($qu) {
+                    $qu->withTrashed();
+                }]);
+            }, 'type' => function ($q) {
+                $q->withTrashed();
+            }])->withCount(['crew', 'maintenance'])->take($per_page)->orderBy($order_field, $order_sort)->get();
 
 
         $data['meta']['draw'] = $request->input('draw');

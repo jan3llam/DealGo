@@ -30,8 +30,8 @@ class Vessel extends Model
         return $this->hasMany(Crew::class);
     }
 
-//    public function type()
-//    {
-//        return $this->belongsTo(User::class);
-//    }
+    public function maintenance()
+    {
+        return $this->hasMany(Maintenance::class);
+    }
 }
