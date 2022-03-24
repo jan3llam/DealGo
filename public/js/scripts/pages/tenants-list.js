@@ -335,7 +335,8 @@ $(function () {
                     equalTo: "#confirm_password",
                     required: function (element) {
                         return parseInt($("#form_status").val()) === 1;
-                    }
+                    },
+                    minlength: 8
                 },
                 'legal': {
                     required: function (element) {
@@ -454,6 +455,8 @@ $(function () {
                         if (parseInt(response.code) === 1) {
                             dtTable.DataTable().ajax.reload();
                             toastr['success'](response.message);
+                            newForm[0].reset();
+                            newSidebar.modal('hide')
                         } else {
                             toastr['error'](response.message);
                         }
@@ -466,8 +469,6 @@ $(function () {
                         }
                     }
                 })
-                newForm[0].reset();
-                newSidebar.modal('hide')
             }
         })
     }
