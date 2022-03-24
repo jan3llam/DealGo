@@ -108,6 +108,8 @@
                                 <input type="hidden" name="longitude" id="longitude">
                                 <input type="hidden" name="latitude" id="latitude">
                                 <label class="form-label" for="map">{{__('locale.LocationOnMap')}}</label>
+                                <input type="text" class="form-control dt-full-name" id="google-link"
+                                       placeholder="{{__('locale.GoogleLink')}}" name="google-link"/>
                                 <div id="map" style="min-height: 350px"></div>
                             </div>
                             <div class="mb-1">
@@ -123,6 +125,49 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <div class="modal modal-slide-in view-port-modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content pt-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Crew')}}</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <div class="info-container">
+                                <ul class="list-unstyled">
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Name')}}:</span>
+                                        <span id="view-name"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Country')}}:</span>
+                                        <span id="view-country"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.City')}}:</span>
+                                        <span id="view-city"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.LocationOnMap')}}:</span>
+                                        <div id="view-map" style="min-height: 350px"></div>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.UNLocode')}}:</span>
+                                        <span id="view-unlocode"></span>
+                                    </li>
+
+                                </ul>
+                                <div class="d-flex justify-content-center pt-2">
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        {{__('locale.Cancel')}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Modal to add new user Ends-->
@@ -196,7 +241,7 @@
         var latElement = $('#latitude').val() ? $('#latitude').val() : '24.7241504';
         var lngElement = $('#longitude').val() ? $('#longitude').val() : '46.2620616';
         const myLatLng = {lat: latElement, lng: lngElement};
-        let map, marker;
+        let map, marker, mapView, markerView;
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
@@ -216,7 +261,33 @@
                 document.getElementById("latitude").value = lat;
                 document.getElementById("longitude").value = lng;
             });
+            initMapView();
         }
+
+        function initMapView() {
+            mapView = new google.maps.Map(document.getElementById("view-map"), {
+                center: new google.maps.LatLng(latElement, lngElement),
+                zoom: 8,
+            });
+
+            markerView = new google.maps.Marker({
+                position: new google.maps.LatLng(latElement, lngElement),
+                map,
+                title: "Port",
+            });
+        }
+
+        $(document).on('change', '#google-link', function () {
+            var element = $(this);
+            var link = element.val();
+            var coordinates = (link.split('@'))[1].split(',');
+            var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
+            document.getElementById("latitude").value = coordinates[0];
+            document.getElementById("longitude").value = coordinates[1];
+            marker.setMap(map);
+            marker.setPosition(latlng);
+            map.setCenter(latlng);
+        });
     </script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&callback=initMap&libraries=&v=weekly"

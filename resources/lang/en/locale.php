@@ -78,6 +78,7 @@ return [
     "Geared" => "Geared",
     "GoodType" => "Good type",
     "Goods types" => "Goods Types",
+    "GoogleLink" => "or paste Google Maps link here",
     "GreaterThanMsg" => "Must be greater than date from",
     "GrossWeight" => "Gross weight, KG",
     "Help" => "Helpdesk",

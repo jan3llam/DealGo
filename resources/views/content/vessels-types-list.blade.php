@@ -151,6 +151,62 @@
                     </form>
                 </div>
             </div>
+
+            <div class="modal modal-slide-in view-vessels-type-modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content pt-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title"
+                                id="modal-label">{{__('locale.View')}} {{__('locale.VesselType')}}</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <div class="info-container">
+                                <ul class="list-unstyled">
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Name')}}:</span>
+                                        <span id="view-name"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Parent')}}:</span>
+                                        <span id="view-parent"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.DWT')}}:</span>
+                                        <span id="view-dwt"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Draught')}}:</span>
+                                        <span id="view-draught"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.LOA')}}:</span>
+                                        <span id="view-loa"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Holds')}}:</span>
+                                        <span id="view-holds"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Geared')}}:</span>
+                                        <span id="view-geared"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Description')}}:</span>
+                                        <span id="view-description"></span>
+                                    </li>
+
+                                </ul>
+                                <div class="d-flex justify-content-center pt-2">
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        {{__('locale.Cancel')}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Modal to add new user Ends-->
         </div>
         <!-- list and filter end -->

@@ -126,6 +126,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.View + '</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Edit + '</a>' +
@@ -494,6 +497,21 @@ $(function () {
         $('#name-tab-' + language).addClass('active').removeClass('hidden');
     })
 
+
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        viewSidebar.modal('show');
+        $('#view-name').html(data.name);
+        $('#view-country').html(data.city.country.name);
+        $('#view-city').html(data.city.name);
+        $('#view-unlocode').html(data.unlocode);
+        var latlng = new google.maps.LatLng(data.latitude, data.longitude);
+        markerView.setMap(mapView);
+        markerView.setPosition(latlng);
+        mapView.setCenter(latlng);
+    })
+
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
@@ -508,6 +526,7 @@ $(function () {
         var latlng = new google.maps.LatLng(data.latitude, data.longitude);
         marker.setMap(map);
         marker.setPosition(latlng);
+        map.setCenter(latlng);
         for (const [key, value] of Object.entries(data.name)) {
             $('[name="name[' + key + ']"]').val(data.name[key]);
         }

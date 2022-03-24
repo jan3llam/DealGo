@@ -3,6 +3,7 @@ $(function () {
 
     var dtTable = $('.vessels-types-list-table'),
         newSidebar = $('.new-vessels-type-modal'),
+        viewSidebar = $('.view-vessels-type-modal'),
         newForm = $('.add-new-vessels-type');
 
     var assetPath = '../../../app-assets/';
@@ -123,6 +124,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.View + '</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Edit + '</a>' +
@@ -463,6 +467,20 @@ $(function () {
         $('#parent').val(data.parent_id).trigger('change.select2');
         $('#object_id').val(data.id);
     });
+
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        viewSidebar.modal('show');
+        $('#view-name').html(data.name_translation);
+        $('#view-parent').html(data.parent ? data.parent.name_translation : '-');
+        $('#view-dwt').html(data.dwt);
+        $('#view-draught').html(data.draught);
+        $('#view-loa').html(data.loa);
+        $('#view-holds').html(data.holds);
+        $('#view-geared').html(data.geared ? LANG.Yes : LANG.No);
+        $('#view-description').html(data.description_translation);
+    })
 
     $(document).on('click', '.add-vessels-type', function () {
         $('#form_status').val(1);

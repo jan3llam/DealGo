@@ -13,7 +13,7 @@ class vType extends Model
 
     public $translatable = ['name', 'description'];
     protected $table = 'vessels_types';
-    protected $appends = ['name_translation'];
+    protected $appends = ['name_translation', 'description_translation'];
 
     public function parent()
     {
@@ -28,5 +28,10 @@ class vType extends Model
     public function getNameTranslationAttribute()
     {
         return $this->getTranslation('name', app()->getLocale());
+    }
+
+    public function getDescriptionTranslationAttribute()
+    {
+        return $this->getTranslation('description', app()->getLocale());
     }
 }
