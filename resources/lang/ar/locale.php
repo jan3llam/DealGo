@@ -78,6 +78,7 @@ return [
     "Geared" => "مجهزة",
     "GoodType" => "نوع البضاعة",
     "Goods types" => "أنواع البضائع",
+    "GreaterThanMsg" => "يجب أن يكون أكبر من تاريخ البدء",
     "GrossWeight" => "الوزن الكلي ،كغ",
     "Help" => "الدعم الفني",
     "Holds" => "الرقم",

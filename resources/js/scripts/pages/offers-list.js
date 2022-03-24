@@ -271,6 +271,14 @@ $(function () {
             }
         });
 
+        $.validator.addMethod("greaterThan", function (value, element, params) {
+
+            if (!/Invalid|NaN/.test(new Date(value))) {
+                return new Date(value) > new Date($(params).val());
+            }
+
+            return isNaN(value) && isNaN($(params).val()) || (Number(value) > Number($(params).val()));
+        }, LANG.GreaterThanMsg);
 
         newForm.validate({
             errorClass: 'error',
@@ -285,7 +293,8 @@ $(function () {
                     required: true
                 },
                 'date_to': {
-                    required: true
+                    required: true,
+                    greaterThan: "#date_from"
                 },
                 'weight': {
                     required: true

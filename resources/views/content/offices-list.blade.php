@@ -55,7 +55,8 @@
                 </table>
             </div>
             <!-- Modal to add new user starts-->
-            <div class="modal modal-slide-in new-office-modal fade" id="modals-slide-in">
+            <div class="modal modal-slide-in new-office-modal fade" data-keyboard="false" data-backdrop="static"
+                 id="modals-slide-in">
                 <div class="modal-dialog">
                     <form class="add-new-office modal-content pt-0">
                         <input type="hidden" value="1" id="form_status">
