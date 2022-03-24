@@ -127,6 +127,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.View + '</a>' +
                             '<a href="/admin/crews/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
                             feather.icons['users'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Crew + '</a>' +
@@ -537,6 +540,29 @@ $(function () {
         $('#mmsi').val(data.mmsi);
         $('#build').val(data.build_year);
         $('#object_id').val(data.id);
+    });
+
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        viewSidebar.modal('show');
+        $('#view-name').html(data.name);
+        $('#view-type').html(data.type.name_translation);
+        $('#view-owner').html(data.owner.user.contact_name);
+        $('#view-imo').html(data.imo);
+        $('#view-mmsi').html(data.mmsi);
+        $('#view-capacity').html(data.capacity);
+        $('#view-country').html(data.country.name);
+        $('#view-year').html(data.build_year);
+        $('#view-maintenances').html(data.maintenance_count);
+        $('#view-crews').html(data.crew_count);
+        var filesHtml = '';
+        data.forEach(item => {
+            filesHtml +=
+                '<a href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
+        })
+        $('#view-files').html(filesHtml);
+
     });
 
     $(document).on('click', '.add-vessel', function () {

@@ -579,28 +579,23 @@ $(function () {
 
     $(document).on('click', '.item-view', function () {
         var element = $(this);
-        let data = dtTable.api().row(element.parents('tr')).data().user;
-        // viewSidebar.modal('show');
-        $('#view-type').html(data.type);
-        if (data.type == 1) {
-            $('#view-company-container').show();
-        }
-
-        $('#view-legal').html('<a href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-license').html('<a href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-company').html('<a href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-
-        $('#view-name').html(data.full_name);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        viewSidebar.modal('show');
+        $('#view-role').html(data.roles[0].name);
         $('#view-contact').html(data.contact_name);
-        $('#view-commercial').html(data.commercial_number);
+        $('#view-id').html(data.dealgo_id);
         $('#view-email').html(data.email);
         $('#view-phone').html(data.phone);
-        $('#view-country').html(data.city.country.name).trigger('change.select2');
+        $('#view-country').html(data.city.country.name);
         $('#view-city').html(data.city.name);
-        $('#view-address-1').html(data.address_1);
-        $('#view-address-2').html(data.address_2);
-        $('#view-zip').html(data.zip_code);
-
+        $('#view-address').html(data.address);
+        var filesHtml = '';
+        data.forEach(item => {
+            filesHtml +=
+                '<a href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
+        })
+        $('#view-files').html(filesHtml);
+        $('#view-image').html('<a href="' + assetPath + 'images/' + data.image + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
     })
 
     $(document).on('click', '.add-admin', function () {

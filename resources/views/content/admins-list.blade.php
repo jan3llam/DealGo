@@ -159,12 +159,20 @@
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.Type')}}:</span>
-                                        <span id="view-type"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Image')}}:</span>
+                                        <span id="view-image"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Role')}}:</span>
+                                        <span id="view-role"></span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.ContactName')}}:</span>
                                         <span id="view-contact"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">DealGo ID:</span>
+                                        <span id="view-id"></span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.Email')}}:</span>
@@ -175,10 +183,6 @@
                                         <span id="view-phone"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.Zipcode')}}:</span>
-                                        <span id="view-zip"></span>
-                                    </li>
-                                    <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.Country')}}:</span>
                                         <span id="view-country"></span>
                                     </li>
@@ -187,20 +191,12 @@
                                         <span id="view-city"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.Province')}}:</span>
-                                        <span id="view-province"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Address')}}:</span>
+                                        <span id="view-address"></span>
                                     </li>
                                     <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.Address')}} 1:</span>
-                                        <span id="view-address-1"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.Address')}} 2:</span>
-                                        <span id="view-address-2"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.LegalFile')}}:</span>
-                                        <span id="view-legal"></span>
+                                        <span class="fw-bolder me-25">{{__('locale.Attachments')}}:</span>
+                                        <span id="view-files"></span>
                                     </li>
 
                                 </ul>

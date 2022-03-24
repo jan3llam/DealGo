@@ -114,6 +114,9 @@ $(function () {
                             feather.icons['more-vertical'].toSvg({class: 'font-small-4'}) +
                             '</a>' +
                             '<div class="dropdown-menu dropdown-menu-end">' +
+                            '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
+                            feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.View + '</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Edit + '</a>' +
@@ -452,6 +455,24 @@ $(function () {
         $('#description').val(data.description);
         $('#object_id').val(data.id);
     });
+
+    $(document).on('click', '.item-view', function () {
+        var element = $(this);
+        let data = dtTable.api().row(element.parents('tr')).data();
+        viewSidebar.modal('show');
+        $('#view-vessel').html(data.vessel.name);
+        $('#view-name').html(data.name);
+        $('#view-start').html(data.start_at);
+        $('#view-end').html(data.end_at);
+        $('#view-description').html(data.description);
+        var filesHtml = '';
+        data.forEach(item => {
+            filesHtml +=
+                '<a href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
+        })
+        $('#view-files').html(filesHtml);
+
+    })
 
     $(document).on('click', '.add-maintenance', function () {
         $('#form_status').val(1);

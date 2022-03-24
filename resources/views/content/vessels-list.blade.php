@@ -140,6 +140,73 @@
                     </form>
                 </div>
             </div>
+
+            <div class="modal modal-slide-in view-vessel-modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content pt-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
+                        <div class="modal-header mb-1">
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Vessel')}}</h5>
+                        </div>
+                        <div class="modal-body flex-grow-1">
+                            <div class="info-container">
+                                <ul class="list-unstyled">
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Name')}}:</span>
+                                        <span id="view-name"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Type')}}:</span>
+                                        <span id="view-type"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Owner')}}:</span>
+                                        <span id="view-owner"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">IMO:</span>
+                                        <span id="view-imo"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">MMSI:</span>
+                                        <span id="view-mmsi"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Capacity')}}:</span>
+                                        <span id="view-capacity"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Country')}}:</span>
+                                        <span id="view-country"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.BuildYear')}}:</span>
+                                        <span id="view-year"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Maintenances')}}:</span>
+                                        <span id="view-maintenances"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Crews')}}:</span>
+                                        <span id="view-crews"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Attachments')}}:</span>
+                                        <span id="view-files"></span>
+                                    </li>
+
+                                </ul>
+                                <div class="d-flex justify-content-center pt-2">
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        {{__('locale.Cancel')}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Modal to add new user Ends-->
         </div>
         <!-- list and filter end -->
