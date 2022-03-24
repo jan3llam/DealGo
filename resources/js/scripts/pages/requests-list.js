@@ -148,10 +148,6 @@ $(function () {
                         "data-status": 1
                     }, className: 'status-item dropdown-item',
                 }, {
-                    text: LANG.Inactive, attr: {
-                        "data-status": 0
-                    }, className: 'status-item dropdown-item',
-                }, {
                     text: LANG.Trashed, attr: {
                         "data-status": 2
                     }, className: 'status-item dropdown-item',

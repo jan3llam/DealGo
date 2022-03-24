@@ -79,7 +79,7 @@ class RequestsResponsesController extends Controller
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
         $page = isset($params['start']) ? $params['start'] : 0;
-        $filter_trashed = isset($params['trashed']) ? $params['trashed'] : 0;
+        $filter_status = isset($params['status']) ? $params['status'] : 1;
         $per_page = isset($params['length']) ? $params['length'] : 10;
 
         if ($search_val) {
@@ -108,8 +108,19 @@ class RequestsResponsesController extends Controller
             $order_sort = $params['direction'];
         }
 
-        if ($filter_trashed) {
-            $query->onlyTrashed();
+        if ($filter_status) {
+            switch ($filter_status) {
+                case 1:
+                {
+                    $query->withoutTrashed();
+                    break;
+                }
+                case 2:
+                {
+                    $query->onlyTrashed();
+                    break;
+                }
+            }
         }
 
         $total = $query->limit($per_page)->count();

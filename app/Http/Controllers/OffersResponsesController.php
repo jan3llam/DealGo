@@ -87,17 +87,26 @@ class OffersResponsesController extends Controller
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
         $page = isset($params['start']) ? $params['start'] : 0;
-        $filter_trashed = isset($params['trashed']) ? $params['trashed'] : 0;
+        $filter_status = isset($params['status']) ? $params['status'] : 1;
         $per_page = isset($params['length']) ? $params['length'] : 10;
 
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
-//                    $item = explode('.', $item);
-//                    $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
-//                        $qu->where($item[1], 'like', '%' . $search_val . '%');
-//                    })->get();
-                    $q->orWhere($item[1], 'like', '%' . $search_val . '%');
+                    $item = explode('.', $item);
+                    if (sizeof($item) == 3) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
+                                $que->where($item[2], 'like', '%' . $search_val . '%');
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 2) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->where($item[1], 'like', '%' . $search_val . '%');
+                        })->get();
+                    } elseif (sizeof($item) == 1) {
+                        $q->orWhere($item[0], 'like', '%' . $search_val . '%');
+                    }
                 }
             });
         }
@@ -107,8 +116,19 @@ class OffersResponsesController extends Controller
             $order_sort = $params['direction'];
         }
 
-        if ($filter_trashed) {
-            $query->onlyTrashed();
+        if ($filter_status !== null) {
+            switch ($filter_status) {
+                case 1:
+                {
+                    $query->withoutTrashed();
+                    break;
+                }
+                case 2:
+                {
+                    $query->onlyTrashed();
+                    break;
+                }
+            }
         }
 
         $total = $query->limit($per_page)->count();
