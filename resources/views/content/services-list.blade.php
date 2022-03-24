@@ -51,7 +51,7 @@
                 </table>
             </div>
             <!-- Modal to add new user starts-->
-            <div class="modal modal-slide-in new-service-modal fade" data-keyboard="false" data-backdrop="static"
+            <div class="modal modal-slide-in new-service-modal fade" data-bs-keyboard="false" data-bs-backdrop="static"
                  id="modals-slide-in">
                 <div class="modal-dialog">
                     <form class="add-new-service modal-content pt-0">

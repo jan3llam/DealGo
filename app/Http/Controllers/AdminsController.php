@@ -233,6 +233,26 @@ class AdminsController extends Controller
         return response()->success();
     }
 
+    public function check_field(Request $request)
+    {
+        $email = $request->input('email', null);
+        $phone = $request->input('phone', null);
+        if ($email) {
+            $user = Admin::withTrashed()->where('email', $email)->first();
+            if ($user) {
+                return response()->error('alreadyExist');
+            }
+            return response()->success();
+        } elseif ($phone) {
+            $user = Admin::withTrashed()->where('phone', $phone)->first();
+            if ($user) {
+                return response()->error('alreadyExist');
+            }
+            return response()->success();
+        }
+        return response()->error('alreadyExist');
+    }
+
     public function bulk_delete(Request $request)
     {
         foreach ($request->input('ids', []) as $id) {

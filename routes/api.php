@@ -207,6 +207,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
         Route::get('/list/{id?}', [CrewsAPI::class, 'list_api']);
         Route::post('/add', [CrewsAPI::class, 'add']);
         Route::post('/update', [CrewsAPI::class, 'update']);
+        Route::post('/check_field', [CrewsAPI::class, 'check_field']);
         Route::put('/status/{id}', [CrewsAPI::class, 'status']);
         Route::delete('/bulk', [CrewsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [CrewsAPI::class, 'delete']);
@@ -269,6 +270,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
         Route::get('/list', [AdminsAPI::class, 'list_api']);
         Route::post('/add', [AdminsAPI::class, 'add']);
         Route::post('/update', [AdminsAPI::class, 'update']);
+        Route::post('/check_field', [AdminsAPI::class, 'check_field']);
         Route::put('/status/{id}', [AdminsAPI::class, 'status']);
         Route::delete('/bulk', [AdminsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [AdminsAPI::class, 'delete']);

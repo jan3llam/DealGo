@@ -40,7 +40,7 @@
         <div class="card">
             <div class="card-body border-bottom">
                 <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
-                <input type="hidden" id="trashed" value="0">
+                <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
                 <table class="offers-list-table table">
@@ -59,7 +59,7 @@
             </div>
 
             <!-- Modal to add new user starts-->
-            <div class="modal modal-slide-in new-offer-modal fade" data-keyboard="false" data-backdrop="static"
+            <div class="modal modal-slide-in new-offer-modal fade" data-bs-keyboard="false" data-bs-backdrop="static"
                  id="modals-slide-in">
                 <div class="modal-dialog">
                     <form class="add-new-offer modal-content pt-0">

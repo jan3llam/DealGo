@@ -53,7 +53,7 @@
                 </table>
             </div>
 
-            <div class="modal modal-slide-in new-admin-modal fade" data-keyboard="false" data-backdrop="static"
+            <div class="modal modal-slide-in new-admin-modal fade" data-bs-keyboard="false" data-bs-backdrop="static"
                  id="modals-slide-in">
                 <div class="modal-dialog">
                     <form class="add-new-admin modal-content pt-0">

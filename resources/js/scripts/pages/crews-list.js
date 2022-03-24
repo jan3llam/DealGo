@@ -319,10 +319,44 @@ $(function () {
                     }
                 },
                 'email': {
-                    required: true
+                    required: true,
+                    email: true,
+                    remote: {
+                        url: assetPath + 'api/admin/crews/check_field',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            email: function () {
+                                return $("#email").val();
+                            }
+                        },
+                        dataFilter: function (response) {
+                            if (parseInt($("#form_status").val()) === 1) {
+                                return parseInt(JSON.parse(response).code) === 1;
+                            }
+                            return true;
+                        }
+                    }
                 },
                 'phone': {
-                    required: true
+                    required: true,
+                    remote: {
+                        url: assetPath + 'api/admin/crews/check_field',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            phone: function () {
+                                return $("#phone").val();
+                            }
+                        },
+                        dataFilter: function (response) {
+                            if (parseInt($("#form_status").val()) === 1) {
+                                return parseInt(JSON.parse(response).code) === 1;
+                            }
+                            return true;
+                        }
+                    }
+
                 },
                 'city': {
                     required: true

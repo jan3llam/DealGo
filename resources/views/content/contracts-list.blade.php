@@ -46,7 +46,7 @@
                 </table>
             </div>
             <!-- Modal to view user starts-->
-            <div class="modal modal-slide-in new-payment-modal fade" data-keyboard="false" data-backdrop="static"
+            <div class="modal modal-slide-in new-payment-modal fade" data-bs-keyboard="false" data-bs-backdrop="static"
                  id="modals-slide-in">
                 <div class="modal-dialog" style="width: 50%">
                     <form class="add-new-payment modal-content pt-0">
