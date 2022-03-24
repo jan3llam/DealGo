@@ -181,6 +181,7 @@ return [
     "Value" => "Value",
     "Vessel" => "Vessel",
     "Vessels types" => "Vessels Types",
+    "VesselType" => "Vessel type",
     "Vessels" => "Vessels",
     "VesselsCount" => "Vessels count",
     "View" => "View",

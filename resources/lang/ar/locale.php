@@ -180,6 +180,7 @@ return [
     "Value" => "القيمة",
     "Vessel" => "السفينة",
     "Vessels types" => "أنواع السفن",
+    "VesselType" => "نوع السفينة",
     "Vessels" => "السفن",
     "VesselsCount" => "عدد السفن",
     "View" => "مشاهدة",

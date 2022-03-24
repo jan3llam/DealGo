@@ -64,7 +64,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
                             <h5 class="modal-title"
-                                id="modal-label">{{__('locale.Add')}} {{__('locale.VesselTtype')}}</h5>
+                                id="modal-label">{{__('locale.Add')}} {{__('locale.VesselType')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
