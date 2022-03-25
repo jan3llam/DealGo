@@ -105,7 +105,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 8,
+                    targets: 9,
                     orderable: false,
                     render: function (data, type, full, meta) {
                         var $status = data
