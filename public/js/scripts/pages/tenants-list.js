@@ -682,6 +682,7 @@ $(function () {
         $('#view-phone').html(data.phone);
         $('#view-country').html(data.city.country.name).trigger('change.select2');
         $('#view-city').html(data.city.name);
+        $('#view-province').html(data.province);
         $('#view-address-1').html(data.address_1);
         $('#view-address-2').html(data.address_2);
         $('#view-zip').html(data.zip_code);

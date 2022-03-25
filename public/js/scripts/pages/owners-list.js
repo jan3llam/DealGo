@@ -65,10 +65,11 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'user.full_name'},
-                {data: 'vessels_count'},
+                {data: 'user.city.name'},
                 {data: 'user.contact_name'},
                 {data: 'user.phone'},
                 {data: 'user.email'},
+                {data: 'vessels_count'},
                 {data: 'user.status'},
                 {data: ''}
             ],
@@ -104,7 +105,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 8,
+                    targets: 9,
                     orderable: false,
                     render: function (data, type, full, meta) {
                         var $status = data
@@ -667,6 +668,7 @@ $(function () {
         $('#view-phone').html(data.phone);
         $('#view-country').html(data.city.country.name).trigger('change.select2');
         $('#view-city').html(data.city.name);
+        $('#view-province').html(data.province);
         $('#view-address-1').html(data.address_1);
         $('#view-address-2').html(data.address_2);
         $('#view-zip').html(data.zip_code);

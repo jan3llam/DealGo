@@ -1,11 +1,11 @@
 .audio-player:focus {
-    outline: 0;
+  outline: 0;
 }
 
 .plyr__controls {
-    justify-content: flex-start;
+  justify-content: flex-start;
 }
 
 .plyr__progress {
-    flex-grow: 1;
+  flex-grow: 1;
 }
