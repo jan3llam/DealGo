@@ -65,10 +65,11 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'user.full_name'},
-                {data: 'vessels_count'},
+                {data: 'user.city.name'},
                 {data: 'user.contact_name'},
                 {data: 'user.phone'},
                 {data: 'user.email'},
+                {data: 'vessels_count'},
                 {data: 'user.status'},
                 {data: ''}
             ],

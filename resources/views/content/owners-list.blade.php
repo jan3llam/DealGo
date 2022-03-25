@@ -48,6 +48,7 @@
                         <th>{{__('locale.ContactName')}}</th>
                         <th>{{__('locale.Phone')}}</th>
                         <th>{{__('locale.Email')}}</th>
+                        <th>{{__('locale.VesselsCount')}}</th>
                         <th>{{__('locale.Status')}}</th>
                         <th>{{__('locale.Actions')}}</th>
                     </tr>
