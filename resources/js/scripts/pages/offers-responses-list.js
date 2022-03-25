@@ -303,6 +303,9 @@ $(function () {
                             '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
                             feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.View + '</a>' +
+                            '<a href="javascript:;" class="dropdown-item item-approve" data-id="' + full['id'] + '">' +
+                            feather.icons['check'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.Approve + '</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Delete + '</a></div>' +
@@ -645,15 +648,15 @@ $(function () {
         })
     })
 
-    $(document).on('click', '.status-switcher', function () {
+    $(document).on('click', '.item-approve', function () {
         let element = $(this);
         Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to change status for this item?",
+            title: LANG.AreYouSure,
+            text: LANG.ApproveMsg,
             icon: 'warning',
             showCancelButton: true,
             cancelButtonText: LANG.Cancel,
-            confirmButtonText: 'Yes',
+            confirmButtonText: LANG.Yes,
             customClass: {
                 confirmButton: 'btn btn-primary',
                 cancelButton: 'btn btn-outline-danger ms-1'
@@ -663,7 +666,7 @@ $(function () {
             if (result.value) {
                 $.ajax({
                     type: 'PUT',
-                    url: assetPath + 'api/admin/offers_responses/status/' + element.data('id'),
+                    url: assetPath + 'api/admin/offers_responses/approve/' + element.data('id'),
                     dataType: 'json',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),

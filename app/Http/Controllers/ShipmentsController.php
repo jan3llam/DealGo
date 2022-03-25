@@ -36,7 +36,7 @@ class ShipmentsController extends Controller
                     $q->withTrashed()->with('user');
                 });
             },
-            'tenant' => function ($q) {
+            'contract.tenant' => function ($q) {
                 $q->withTrashed()->with('user');
             },
             'port_from' => function ($q) {

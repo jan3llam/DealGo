@@ -21,6 +21,8 @@ return [
     "ArrivingAt" => "تصل @",
     "Article" => "الموضوع",
     "Articles" => "المواضيع",
+    "Approve" => "موافقة",
+    "ApproveMsg" => "هل تريد الموافقة على هذا العنصر ؟",
     "Attachments" => "مرفقات",
     "Bareboat" => "خالي",
     "Blog" => "مدونة",

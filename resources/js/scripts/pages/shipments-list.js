@@ -58,7 +58,7 @@ $(function () {
                 {data: ''},
                 {data: 'id'},
                 {data: 'contract_id'},
-                {data: 'tenant.user.contact_name'},
+                {data: 'contract.tenant.user.contact_name'},
                 {data: 'port_from'},
                 {data: 'port_to'},
                 {data: 'vessel.owner.user.contact_name'},

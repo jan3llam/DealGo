@@ -14,6 +14,11 @@ class Contract extends Model
         return $this->hasMany(Shipment::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(ContractPayment::class);
+    }
+
     public function owner()
     {
         return $this->belongsTo(Owner::class);

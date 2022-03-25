@@ -304,6 +304,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
         Route::get('/list', [OffersResponsesAPI::class, 'list_api']);
         Route::post('/add', [OffersResponsesAPI::class, 'add']);
         Route::post('/update', [OffersResponsesAPI::class, 'update']);
+        Route::put('/approve/{id}', [OffersResponsesAPI::class, 'approve']);
         Route::put('/status/{id}', [OffersResponsesAPI::class, 'status']);
         Route::delete('/bulk', [OffersResponsesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [OffersResponsesAPI::class, 'delete']);

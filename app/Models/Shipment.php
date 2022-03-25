@@ -19,11 +19,6 @@ class Shipment extends Model
         return $this->belongsTo(Contract::class);
     }
 
-    public function tenant()
-    {
-        return $this->belongsTo(Tenant::class);
-    }
-
     public function port_from()
     {
         return $this->belongsTo(Port::class, 'port_from');

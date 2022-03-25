@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contract;
 use App\Models\gType;
 use App\Models\Offer;
 use App\Models\OfferResponse;
 use App\Models\OfferResponsePayment;
 use App\Models\Port;
+use App\Models\Shipment;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Models\Vessel;
@@ -242,6 +244,44 @@ class OffersResponsesController extends Controller
         if ($item) {
 
             $item->delete();
+        }
+
+        return response()->success();
+    }
+
+    public function approve($id)
+    {
+
+        $item = OfferResponse::withTrashed()->where('id', $id)->first();
+
+        if ($item) {
+            $contract = new Contract;
+            $contract->owner_id = $item->offer->vessel->owner->id;
+            $contract->tenant_id = $item->tenant->id;
+            $contract->type = $item->contract;
+            $contract->date_from = $item->date_from;
+            $contract->date_to = $item->date_to;
+            $contract->total = $item->total;
+            $contract->origin_id = $item->id;
+            $contract->origin_type = OfferResponse::class;
+
+            $contract->save();
+
+            $shipment = new Shipment;
+            $shipment->contract_id = $contract->id;
+            $shipment->vessel_id = $item->offer->vessel->id;
+            $shipment->port_from = $item->port_from;
+            $shipment->port_to = $item->port_to;
+            $shipment->date = $item->date_to;
+            $shipment->save();
+
+            $item->status = 1;
+            $item->save();
+
+            $item->offer->responses->where('id', '!=', $item->id)->all()->each(function ($i) {
+                $i->status = 2;
+                $i->save();
+            });;
         }
 
         return response()->success();

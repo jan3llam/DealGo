@@ -21,6 +21,8 @@ return [
     "ArrivingAt" => "Arriving @",
     "Article" => "Article",
     "Articles" => "Articles",
+    "Approve" => "Approve",
+    "ApproveMsg" => "Do you want to approve this item ?",
     "Attachments" => "Attachments",
     "Bareboat" => "Bareboat",
     "Blog" => "Blog",
