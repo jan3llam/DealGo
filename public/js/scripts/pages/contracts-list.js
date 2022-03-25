@@ -51,7 +51,10 @@ $(function () {
             processing: true,
             serverSide: true,
             columns: [// columns according to JSON
-                {data: ''}, {data: 'id'}, {data: 'tenant.user.contact_name'}, {data: 'owner.user.contact_name'}, {data: 'type'}, {data: 'date_from'}, {data: 'date_to'}, {data: 'shipments_count'}, {data: 'total'}, {data: ''}],
+                {data: ''}, {data: 'id'},
+                {data: 'tenant.user.contact_name'},
+                {data: 'owner.user.contact_name'},
+                {data: 'type'}, {data: 'date_from'}, {data: 'date_to'}, {data: 'shipments_count'}, {data: 'total'}, {data: ''}],
             columnDefs: [{
                 // For Responsive
                 className: 'control',
@@ -204,7 +207,7 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#object_id').val(data.id);
         $('#view-payments').find('tr').remove();
-        data.origin.payments.forEach(item => {
+        data.payments.forEach(item => {
             if (item.is_down) {
                 $('#view-down-value').html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0}));
                 $('#view-down-description').html(item.description);
@@ -217,31 +220,17 @@ $(function () {
                 }
             } else {
                 $('#view-payments-container').show();
-                if (!item.submit_date) {
-                    $('#view-payments').append($('<tr>')
-                        .append($('<td>')
-                            .html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0})))
-                        .append($('<td>')
-                            .html(item.date))
-                        .append($('<td>')
-                            .html(item.description))
-                        .append($('<td>')
-                            .append($('<input class="form-control" type="number" name="payment[' + item.id + '][value]">')))
-                        .append($('<td>')
-                            .append($('<input class="form-control" type="date" name="payment[' + item.id + '][date]">'))))
-                } else {
-                    $('#view-payments').append($('<tr>')
-                        .append($('<td>')
-                            .html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0})))
-                        .append($('<td>')
-                            .html(item.date))
-                        .append($('<td>')
-                            .html(item.description))
-                        .append($('<td>')
-                            .html(item.paid.toLocaleString(undefined, {minimumFractionDigits: 0})))
-                        .append($('<td>')
-                            .html(item.submit_date)))
-                }
+                $('#view-payments').append($('<tr>')
+                    .append($('<td>')
+                        .html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0})))
+                    .append($('<td>')
+                        .append($('<input class="form-control" type="number" name="payment[' + item.id + '][value]">')))
+                    .append($('<td>')
+                        .append($('<input class="form-control" type="date" name="payment[' + item.id + '][date]">')))
+                    .append($('<td>')
+                        .append($('<input class="form-control" type="date" value="' + item.date + '" name="payment[' + item.id + '][next]">')))
+                    .append($('<td>')
+                        .html(item.description)))
             }
         })
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {

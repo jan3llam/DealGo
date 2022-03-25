@@ -81,11 +81,11 @@
                             <table class="table table-striped table-bordered mb-1">
                                 <thead>
                                 <tr>
-                                    <th>{{__('locale.Value')}}</th>
-                                    <th>{{__('locale.Date')}}</th>
-                                    <th>{{__('locale.Description')}}</th>
+                                    <th>{{__('locale.PaymentDue')}}</th>
                                     <th>{{__('locale.Payment')}}</th>
                                     <th>{{__('locale.SubmittedDate')}}</th>
+                                    <th>{{__('locale.NextPaymentDate')}}</th>
+                                    <th>{{__('locale.Description')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody id="view-payments"></tbody>

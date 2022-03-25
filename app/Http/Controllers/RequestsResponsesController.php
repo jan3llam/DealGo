@@ -110,12 +110,22 @@ class RequestsResponsesController extends Controller
 
         if ($filter_status) {
             switch ($filter_status) {
+                case 0:
+                {
+                    $query->where('status', 0);
+                    break;
+                }
                 case 1:
                 {
-                    $query->withoutTrashed();
+                    $query->where('status', 1);
                     break;
                 }
                 case 2:
+                {
+                    $query->where('status', 2);
+                    break;
+                }
+                case 3:
                 {
                     $query->onlyTrashed();
                     break;

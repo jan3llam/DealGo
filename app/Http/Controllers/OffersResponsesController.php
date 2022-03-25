@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use App\Models\ContractPayment;
 use App\Models\gType;
 use App\Models\Offer;
 use App\Models\OfferResponse;
@@ -120,12 +121,22 @@ class OffersResponsesController extends Controller
 
         if ($filter_status !== null) {
             switch ($filter_status) {
+                case 0:
+                {
+                    $query->where('status', 0);
+                    break;
+                }
                 case 1:
                 {
-                    $query->withoutTrashed();
+                    $query->where('status', 1);
                     break;
                 }
                 case 2:
+                {
+                    $query->where('status', 2);
+                    break;
+                }
+                case 3:
                 {
                     $query->onlyTrashed();
                     break;
@@ -261,24 +272,39 @@ class OffersResponsesController extends Controller
             $contract->type = $item->contract;
             $contract->date_from = $item->date_from;
             $contract->date_to = $item->date_to;
-            $contract->total = $item->total;
+            $contract->total = $item->total();
             $contract->origin_id = $item->id;
             $contract->origin_type = OfferResponse::class;
 
             $contract->save();
 
             $shipment = new Shipment;
-            $shipment->contract_id = $contract->id;
             $shipment->vessel_id = $item->offer->vessel->id;
             $shipment->port_from = $item->port_from;
             $shipment->port_to = $item->port_to;
             $shipment->date = $item->date_to;
-            $shipment->save();
+
+            $contract->shipments()->saveMany([$shipment]);
+
+            $cPayments = [];
+
+            foreach ($item->payments as $originPayment) {
+
+                $payment = new ContractPayment;
+                $payment->value = $originPayment->value;
+                $payment->date = $originPayment->date;
+                $payment->is_down = $originPayment->is_down;
+                $payment->description = $originPayment->description;
+                $payment->file = $originPayment->file;
+
+                array_push($cPayments, $payment);
+            }
+            $contract->payments()->saveMany($cPayments);
 
             $item->status = 1;
             $item->save();
 
-            $item->offer->responses->where('id', '!=', $item->id)->all()->each(function ($i) {
+            $item->offer->responses->where('id', '!=', $item->id)->each(function ($i) {
                 $i->status = 2;
                 $i->save();
             });;

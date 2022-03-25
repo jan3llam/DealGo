@@ -36,7 +36,7 @@ class ContractsController extends Controller
             },
             'owner' => function ($q) {
                 $q->withTrashed()->with('user');
-            }, 'origin.payments'
+            }, 'payments'
         ]);
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
@@ -96,7 +96,7 @@ class ContractsController extends Controller
         $item = Contract::find($id);
 
         $payments = $request->input('payment', []);
-        $original_payments = $item->origin->payments;
+        $original_payments = $item->payments;
 
         foreach ($payments as $index => $payment) {
             $item = $original_payments->where('id', $index)->first();
@@ -105,8 +105,11 @@ class ContractsController extends Controller
             } else {
                 $item->paid = $payment['value'];
             }
-            if ($payment['date']) {
+            if (isset($payment['date'])) {
                 $item->submit_date = Carbon::parse($payment['date'])->toDateTimeString();
+            }
+            if (isset($payment['next'])) {
+                $item->date = Carbon::parse($payment['next'])->toDateTimeString();
             }
             $item->save();
         }
