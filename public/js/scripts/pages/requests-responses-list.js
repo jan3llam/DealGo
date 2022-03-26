@@ -62,15 +62,27 @@ $(function () {
             extend: 'collection',
             className: 'btn btn-outline-secondary dropdown-toggle me-2',
             text: LANG.Status,
-            buttons: [{
-                text: LANG.Active, attr: {
-                    "data-status": 1
-                }, className: 'status-item dropdown-item',
-            }, {
-                text: LANG.Trashed, attr: {
-                    "data-status": 2
-                }, className: 'status-item dropdown-item',
-            }],
+            buttons: [
+                {
+                    text: LANG.Pending, attr: {
+                        "data-status": 0
+                    }, className: 'status-item dropdown-item',
+                },
+                {
+                    text: LANG.Approved, attr: {
+                        "data-status": 1
+                    }, className: 'status-item dropdown-item',
+                },
+                {
+                    text: LANG.Rejected, attr: {
+                        "data-status": 2
+                    }, className: 'status-item dropdown-item',
+                },
+                {
+                    text: LANG.Trashed, attr: {
+                        "data-status": 3
+                    }, className: 'status-item dropdown-item',
+                }],
             init: function (api, node, config) {
                 $(node).removeClass('btn-secondary')
                 $(node).parent().removeClass('btn-group')
@@ -151,15 +163,27 @@ $(function () {
                 extend: 'collection',
                 className: 'btn btn-outline-secondary dropdown-toggle me-2',
                 text: LANG.Status,
-                buttons: [{
-                    text: LANG.Active, attr: {
-                        "data-status": 1
-                    }, className: 'status-item dropdown-item',
-                }, {
-                    text: LANG.Trashed, attr: {
-                        "data-status": 2
-                    }, className: 'status-item dropdown-item',
-                }],
+                buttons: [
+                    {
+                        text: LANG.Pending, attr: {
+                            "data-status": 0
+                        }, className: 'status-item dropdown-item',
+                    },
+                    {
+                        text: LANG.Approved, attr: {
+                            "data-status": 1
+                        }, className: 'status-item dropdown-item',
+                    },
+                    {
+                        text: LANG.Rejected, attr: {
+                            "data-status": 2
+                        }, className: 'status-item dropdown-item',
+                    },
+                    {
+                        text: LANG.Trashed, attr: {
+                            "data-status": 3
+                        }, className: 'status-item dropdown-item',
+                    }],
                 init: function (api, node, config) {
                     $(node).removeClass('btn-secondary')
                     $(node).parent().removeClass('btn-group')

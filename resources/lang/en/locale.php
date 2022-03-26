@@ -139,6 +139,7 @@ return [
     "Province" => "Province",
     "RelatedArticles" => "Related articles",
     "Rejected" => "Rejected",
+    "Remaining" => "Remaining",
     "Reply" => "Reply",
     "Request" => "Request",
     "Requests Responses" => "Requests Responses",

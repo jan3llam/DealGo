@@ -42,14 +42,15 @@
                 <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <input type="hidden" id="status_filter" value="0">
             </div>
-            <div class="card-datatable table-responsive pt-0">
-                <table class="responses-list-table table">
-                    <thead class="table-light">
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th>#</th>
-                        <th>{{__('locale.Tenants')}}</th>
+        </div>
+        <div class="card-datatable table-responsive pt-0">
+            <table class="responses-list-table table">
+                <thead class="table-light">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>#</th>
+                    <th>{{__('locale.Tenants')}}</th>
                         <th>{{__('locale.ShipmentOrigin')}}</th>
                         <th>{{__('locale.ShipmentDestination')}}</th>
                         <th>{{__('locale.Date')}}</th>

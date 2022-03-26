@@ -48,7 +48,7 @@
             <!-- Modal to view user starts-->
             <div class="modal modal-slide-in new-payment-modal fade" data-bs-keyboard="false" data-bs-backdrop="static"
                  id="modals-slide-in">
-                <div class="modal-dialog" style="width: 50%">
+                <div class="modal-dialog" style="width: 60%">
                     <form class="add-new-payment modal-content pt-0">
                         <input type="hidden" value="1" id="form_status">
                         <input type="hidden" value="" id="object_id">
@@ -78,18 +78,76 @@
                                 </tbody>
                             </table>
                             <span class="fw-bolder me-25">{{__('locale.Payments')}}:</span>
-                            <table class="table table-striped table-bordered mb-1">
-                                <thead>
-                                <tr>
-                                    <th>{{__('locale.PaymentDue')}}</th>
-                                    <th>{{__('locale.Payment')}}</th>
-                                    <th>{{__('locale.SubmittedDate')}}</th>
-                                    <th>{{__('locale.NextPaymentDate')}}</th>
-                                    <th>{{__('locale.Description')}}</th>
-                                </tr>
-                                </thead>
-                                <tbody id="view-payments"></tbody>
-                            </table>
+                            <span class="fw-bolder me-25" id="view-remaining">{{__('locale.Remaining')}}:</span>
+                            {{--                            <div id="payments-container">--}}
+
+                            {{--                                <table class="table table-striped table-bordered mb-1">--}}
+                            {{--                                    <thead>--}}
+                            {{--                                    <tr>--}}
+                            {{--                                        <th>{{__('locale.PaymentDue')}}</th>--}}
+                            {{--                                        <th>{{__('locale.Payment')}}</th>--}}
+                            {{--                                        <th>{{__('locale.SubmittedDate')}}</th>--}}
+                            {{--                                        <th>{{__('locale.NextPaymentDate')}}</th>--}}
+                            {{--                                        <th>{{__('locale.Description')}}</th>--}}
+                            {{--                                    </tr>--}}
+                            {{--                                    </thead>--}}
+                            {{--                                    <tbody id="view-payments" data-repeater-list="payment">--}}
+                            {{--                                    <tr data-repeater-item>--}}
+                            {{--                                        <td><input class="form-control" type="number" name="value"></td>--}}
+                            {{--                                        <td><input class="form-control" type="number" name="paid"></td>--}}
+                            {{--                                        <td><input class="form-control" type="date" name="date"></td>--}}
+                            {{--                                        <td><input class="form-control" type="date" name="next"></td>--}}
+                            {{--                                        <td><input class="form-control" type="text" name="description"></td>--}}
+                            {{--                                    </tr>--}}
+                            {{--                                    </tbody>--}}
+                            {{--                                </table>--}}
+                            {{--                                <button class="btn btn-icon btn-success mb-1" type="button" data-repeater-create>--}}
+                            {{--                                    <i data-feather="plus" class="me-25"></i>--}}
+                            {{--                                    <span>{{__('locale.Add')}} {{__('locale.Payment')}}</span>--}}
+                            {{--                                </button>--}}
+                            {{--                            </div>--}}
+
+                            <div id="payments-container" class="mb-1">
+                                <div data-repeater-list="payments">
+                                    <div data-repeater-item>
+                                        <div class="mb-1 row">
+                                            <div class="col">
+                                                <label class="form-label"
+                                                       for="value">{{__('locale.PaymentDue')}}</label>
+                                                <input type="number" class="form-control dt-full-name"
+                                                       placeholder="{{__('locale.PaymentDue')}}" name="value"/>
+                                            </div>
+                                            <div class="col">
+                                                <label class="form-label" for="value">{{__('locale.Payment')}}</label>
+                                                <input type="number" class="form-control dt-full-name"
+                                                       placeholder="{{__('locale.Payment')}}" name="paid"/>
+                                            </div>
+                                            <div class="col">
+                                                <label class="form-label"
+                                                       for="date">{{__('locale.NextPaymentDate')}}</label>
+                                                <input type="date" class="form-control dt-full-name"
+                                                       placeholder="{{__('locale.NextPaymentDate')}}" name="next"/>
+                                            </div>
+                                            <div class="col">
+                                                <label class="form-label"
+                                                       for="date">{{__('locale.SubmittedDate')}}</label>
+                                                <input type="date" class="form-control dt-full-name"
+                                                       placeholder="{{__('locale.SubmittedDate')}}" name="date"/>
+                                            </div>
+                                            <div class="col">
+                                                <label class="form-label"
+                                                       for="description">{{__('locale.Description')}}</label>
+                                                <input type="text" class="form-control dt-full-name"
+                                                       placeholder="{{__('locale.Description')}}" name="description"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-icon btn-success" type="button" data-repeater-create>
+                                    <i data-feather="plus" class="me-25"></i>
+                                    <span>{{__('locale.AddNew')}}</span>
+                                </button>
+                            </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 {{__('locale.Submit')}}
                             </button>
@@ -168,6 +226,7 @@
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.rowGroup.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/moment.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/forms/repeater/jquery.repeater.min.js')) }}"></script>
 @endsection
 
 @section('page-script')

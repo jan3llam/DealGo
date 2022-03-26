@@ -139,6 +139,7 @@ return [
     "Province" => "المحافظة",
     "RelatedArticles" => "المواضيع المرتبطة",
     "Rejected" => "مرفوض",
+    "Remaining" => "المتبقي",
     "Reply" => "رد",
     "Request" => "طلب",
     "Requests Responses" => "ردود الطلبات",

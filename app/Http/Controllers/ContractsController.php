@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use App\Models\ContractPayment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
@@ -93,10 +94,11 @@ class ContractsController extends Controller
     {
         $id = $request->object_id;
 
-        $item = Contract::find($id);
+        $contract = Contract::find($id);
 
         $payments = $request->input('payment', []);
-        $original_payments = $item->payments;
+        $new_payments = $request->input('payments', []);
+        $original_payments = $contract->payments;
 
         foreach ($payments as $index => $payment) {
             $item = $original_payments->where('id', $index)->first();
@@ -112,6 +114,19 @@ class ContractsController extends Controller
                 $item->date = Carbon::parse($payment['next'])->toDateTimeString();
             }
             $item->save();
+        }
+
+        foreach ($new_payments as $payment) {
+
+            $item = new ContractPayment;
+
+            $item->value = $payment->value;
+            $item->paid = $payment->paid;
+            $item->description = $payment->description;
+            $item->submit_date = Carbon::parse($payment['date'])->toDateTimeString();
+            $item->date = Carbon::parse($payment['next'])->toDateTimeString();
+
+            $contract->payments()->save($item);
         }
 
         return response()->success();

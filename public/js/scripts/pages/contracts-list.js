@@ -188,6 +188,17 @@ $(function () {
         })
     }
 
+    $('#payments-container').repeater({
+        initEmpty: true,
+        show: function () {
+            $(this).slideDown();
+            // Feather Icons
+            if (feather) {
+                feather.replace({width: 14, height: 14});
+            }
+        }
+    });
+
     $(document).on('click', '.item-view', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
@@ -207,35 +218,46 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#object_id').val(data.id);
         $('#view-payments').find('tr').remove();
+
+        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+            $(this).val('');
+        });
+
         data.payments.forEach(item => {
             if (item.is_down) {
                 $('#view-down-value').html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0}));
                 $('#view-down-description').html(item.description);
                 if (!item.submit_date) {
-                    $('#view-down-submit').show().attr('name', 'payment[' + item.id + '][date]');
+                    $('#view-down-submit').show().attr('name', 'payment[' + item.id + '][date]').data('paid', 1);
                     $('#view-down-text').hide();
                 } else {
                     $('#view-down-text').show().html(item.submit_date);
-                    $('#view-down-submit').hide();
+                    $('#view-down-submit').data('paid', 0).hide();
                 }
             } else {
-                $('#view-payments-container').show();
-                $('#view-payments').append($('<tr>')
-                    .append($('<td>')
-                        .html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0})))
-                    .append($('<td>')
-                        .append($('<input class="form-control" type="number" name="payment[' + item.id + '][value]">')))
-                    .append($('<td>')
-                        .append($('<input class="form-control" type="date" name="payment[' + item.id + '][date]">')))
-                    .append($('<td>')
-                        .append($('<input class="form-control" type="date" value="' + item.date + '" name="payment[' + item.id + '][next]">')))
-                    .append($('<td>')
-                        .html(item.description)))
+                $('#payments-container').prepend($('<div>')
+                    .append($('<div class="mb-1 row">')
+                        .append($('<div class="col">')
+                            .append($('<label class="form-label" for="value">').html(LANG.PaymentDue))
+                            .append($(`<input type="number" class="form-control dt-full-name" placeholder="${LANG.PaymentDue}" name="payment[${item.id}][value]">`).val(item.value)))
+                        .append($('<div class="col">')
+                            .append($('<label class="form-label" for="paid">').html(LANG.Payment))
+                            .append($(`<input type="number" class="form-control dt-full-name" placeholder="${LANG.Payment}" name="payment[${item.id}][paid]">`).val(item.paid)))
+                        .append($('<div class="col">')
+                            .append($('<label class="form-label" for="next">').html(LANG.NextPaymentDate))
+                            .append($(`<input type="date" class="form-control dt-full-name" placeholder="${LANG.NextPaymentDate}" name="payment[${item.id}][next]">`).val(item.date)))
+                        .append($('<div class="col">')
+                            .append($('<label class="form-label" for="date">').html(LANG.SubmittedDate))
+                            .append($(`<input type="date" class="form-control dt-full-name" placeholder="${LANG.SubmittedDate}" name="payment[${item.id}][date]">`).val(item.submit_date)))
+                        .append($('<div class="col">')
+                            .append($('<label class="form-label" for="description">').html(LANG.Description))
+                            .append($(`<input type="text" class="form-control dt-full-name" placeholder="${LANG.Description}" name="payment[${item.id}][date]">`).val(item.description))))
+                )
             }
         })
-        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
-            $(this).val('');
-        });
+
+        $('[data-repeater-list]').empty();
+
         newSidebar.modal('show');
     });
 })
