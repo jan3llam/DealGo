@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contract;
+use App\Models\ContractPayment;
 use App\Models\Owner;
 use App\Models\Port;
 use App\Models\Request as ShipmentRequest;
 use App\Models\RequestResponse;
 use App\Models\RequestResponsePayment;
+use App\Models\Shipment;
 use App\Models\User;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
@@ -222,6 +225,65 @@ class RequestsResponsesController extends Controller
         array_push($paymentsArr, $paymentItem);
 
         $item->payments()->saveMany($paymentsArr);
+
+        return response()->success();
+    }
+
+
+    public function approve($id)
+    {
+
+        $item = RequestResponse::withTrashed()->where('id', $id)->first();
+
+        if ($item) {
+            $contract = new Contract;
+            $contract->owner_id = $item->owner->id;
+            $contract->tenant_id = $item->request->tenant->id;
+            $contract->type = $item->request->contract;
+            $contract->date_from = $item->request->date_from;
+            $contract->date_to = $item->request->date_to;
+            $contract->total = $item->total();
+            $contract->origin_id = $item->id;
+            $contract->origin_type = RequestResponse::class;
+
+            $contract->save();
+
+            $cVessels = [];
+
+            foreach ($item->vessels as $vessel) {
+                $shipment = new Shipment;
+                $shipment->vessel_id = $vessel->id;
+                $shipment->port_from = $item->request->port_from;
+                $shipment->port_to = $item->request->port_to;
+                $shipment->date = $item->date;
+                array_push($cVessels, $shipment);
+            }
+
+            $contract->shipments()->saveMany($cVessels);
+
+            $cPayments = [];
+
+            foreach ($item->payments as $originPayment) {
+
+                $payment = new ContractPayment;
+                $payment->value = $originPayment->value;
+                $payment->date = $originPayment->date;
+                $payment->is_down = $originPayment->is_down;
+                $payment->description = $originPayment->description;
+                $payment->file = $originPayment->file;
+
+                array_push($cPayments, $payment);
+            }
+            $contract->payments()->saveMany($cPayments);
+
+            $item->status = 1;
+            $item->save();
+
+            $item->request->responses->where('id', '!=', $item->id)->each(function ($i) {
+                $i->status = 2;
+                $i->save();
+            });;
+        }
 
         return response()->success();
     }

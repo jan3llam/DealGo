@@ -319,6 +319,9 @@ $(function () {
                             '<a href="javascript:;" class="dropdown-item item-view" data-id="' + full['id'] + '">' +
                             feather.icons['eye'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.View + '</a>' +
+                            '<a href="javascript:;" class="dropdown-item item-approve" data-id="' + full['id'] + '">' +
+                            feather.icons['check'].toSvg({class: 'font-small-4 me-50'}) +
+                            LANG.Approve + '</a>' +
                             '<a href="javascript:;" class="dropdown-item item-delete" data-id="' + full['id'] + '">' +
                             feather.icons['trash'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Delete + '</a></div>' +
@@ -471,6 +474,50 @@ $(function () {
         });
         $('#total').val(sum.toLocaleString(undefined, {minimumFractionDigits: 0}));
     });
+
+    $(document).on('click', '.item-approve', function () {
+        let element = $(this);
+        Swal.fire({
+            title: LANG.AreYouSure,
+            text: LANG.ApproveMsg,
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: LANG.Cancel,
+            confirmButtonText: LANG.Yes,
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-outline-danger ms-1'
+            },
+            buttonsStyling: false
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type: 'PUT',
+                    url: assetPath + 'api/admin/offers_responses/approve/' + element.data('id'),
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        if (parseInt(response.code) === 1) {
+                            dtTable.DataTable().ajax.reload();
+                            toastr['success'](response.message);
+                        } else {
+                            toastr['error'](response.message);
+                        }
+                    },
+                    error: function (response) {
+                        if (parseInt(response.status) === 403) {
+                            toastr['error'](LANG[response.status]);
+                        } else {
+                            toastr['error'](response.statusText)
+                        }
+                    }
+                })
+            }
+        })
+    })
 
     $(document).on('click', '.item-delete', function () {
         var element = $(this);
