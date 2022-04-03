@@ -34,9 +34,9 @@ return [
             'code' => "-14",
             'message' => 'الرمز غير صالح'
         ],
-        'accountNotVerified' => [
+        'accountNotActive' => [
             'code' => "-15",
-            'message' => 'الحساب غير موثق'
+            'message' => 'الحساب غير فعال'
         ],
         'objectNotFound' => [
             'code' => "-16",

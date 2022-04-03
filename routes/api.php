@@ -3,6 +3,10 @@
 use App\Http\Controllers\AboutController as AboutAPI;
 use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CitiesController;
+use App\Http\Controllers\Api\CountriesController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
 use App\Http\Controllers\CategoriesController as CategoriesAPI;
 use App\Http\Controllers\CitiesController as CitiesAPI;
@@ -44,30 +48,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 //
-//    Route::group(['prefix' => 'authentication'], function () {
-//        Route::post('/signIn', [AuthController::class, 'signIn']);
-//        Route::post('/signUp', [AuthController::class, 'signUp']);
-//        Route::post('/resendCode', [AuthController::class, 'sendCode']);
-//        Route::post('/forgetPassword', [AuthController::class, 'sendCode']);
-//        Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
-//        Route::post('/refreshToken', [AuthController::class, 'refresh']);
-//        Route::group(['middleware' => ['auth:sanctum']], function () {
-//            Route::post('/signOut', [AuthController::class, 'signOut']);
-//        });
-//    });
+    Route::group(['prefix' => 'authentication'], function () {
+        Route::post('/signIn', [AuthController::class, 'signIn']);
+        Route::post('/signUp', [AuthController::class, 'signUp']);
+        Route::post('/resendCode', [AuthController::class, 'sendCode']);
+        Route::post('/forgetPassword', [AuthController::class, 'sendCode']);
+        Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
+        Route::post('/refreshToken', [AuthController::class, 'refresh']);
+        Route::post('/checkField', [UsersAPI::class, 'check_field']);
+        Route::group(['middleware' => ['auth:api']], function () {
+            Route::post('/signOut', [AuthController::class, 'signOut']);
+        });
+    });
 //
-//    Route::group(['prefix' => 'profile', 'middleware' => 'auth:sanctum'], function () {
-//        Route::get('/get', [ProfileController::class, 'getProfile']);
-//        Route::post('/registerFCMToken', [ProfileController::class, 'registerFCMToken']);
-//        Route::put('/updateProfile', [ProfileController::class, 'updateProfile']);
-//        Route::put('/uploadImage', [ProfileController::class, 'uploadImage']);
-//        Route::put('/changePassword', [ProfileController::class, 'changePassword']);
-//        Route::get('/get/{id}', [ProfileController::class, 'getProfile']);
-//        Route::get('/getNotifications', [ProfileController::class, 'getNotifications']);
-//        Route::put('/notification/{id}', [ProfileController::class, 'getNotification']);
-//    });
+    Route::group(['prefix' => 'profile', 'middleware' => 'auth:api'], function () {
+        Route::get('/get', [ProfileController::class, 'getProfile']);
+        Route::get('/get/{id}', [ProfileController::class, 'getProfile']);
+        Route::get('/getNotifications', [ProfileController::class, 'getNotifications']);
+        Route::post('/registerFCMToken', [ProfileController::class, 'registerFCMToken']);
+        Route::put('/updateProfile', [ProfileController::class, 'updateProfile']);
+        Route::put('/notification/{id}', [ProfileController::class, 'getNotification']);
+        Route::put('/uploadImage', [ProfileController::class, 'uploadImage']);
+        Route::put('/changePassword', [ProfileController::class, 'changePassword']);
+    });
 //
 //    Route::group(['prefix' => 'invite', 'middleware' => ['auth:sanctum']], function () {
 //        Route::post('/inviteEmail', [InviteController::class, 'inviteByEmail']);
@@ -77,14 +82,11 @@ use Illuminate\Support\Facades\Route;
 //        Route::get('/provider', [SearchController::class, 'searchProviders']);
 //    });
 //
-//    Route::group(['prefix' => 'content'], function () {
+    Route::group(['prefix' => 'content'], function () {
 //        Route::get('/get/{key}', [ContentController::class, 'getContent']);
-//        Route::get('/getCities/{id?}', [CitiesController::class, 'getCities']);
-//        Route::get('/getRegions', [RegionsController::class, 'getRegions']);
-//        Route::get('/getSpecifications', [SpecificationsController::class, 'getSpecifications']);
-//        Route::get('/getSlider', [ContentController::class, 'getSlider']);
-//        Route::get('/getSettings', [ContentController::class, 'getSettings']);
-//    });
+        Route::get('/cities/{id?}', [CitiesController::class, 'getCities']);
+        Route::get('/countries', [CountriesController::class, 'getCountries']);
+    });
 //
 //    Route::group(['prefix' => 'tickets', 'middleware' => ['auth:sanctum']], function () {
 //        Route::post('/add', [TicketsController::class, 'add']);
@@ -113,7 +115,7 @@ use Illuminate\Support\Facades\Route;
 //        Route::get('/list', [PackagesController::class, 'list']);
 //        Route::get('/{id}', [PackagesController::class, 'get']);
 //    });
-//});
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function () {
 

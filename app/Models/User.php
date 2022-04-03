@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasChat;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +12,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory;
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, HasChat;
 
     /**
      * The attributes that are mass assignable.
