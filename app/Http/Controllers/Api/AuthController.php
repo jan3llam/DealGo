@@ -217,12 +217,8 @@ class AuthController extends Controller
                 'identifier' => Rule::requiredIf(function () use ($request, $user) {
                     return !$user;
                 }),
-                'type' => 'required|numeric',
                 'password' => 'required',
-
             ]);
-
-        $type = $request->input('type');
 
         if ($validator->fails()) {
 
