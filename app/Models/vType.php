@@ -25,6 +25,11 @@ class vType extends Model
         return $this->hasMany(Vessel::class, 'type_id');
     }
 
+    public function goods_types()
+    {
+        return $this->belongsToMany(gType::class, 'vessels_goods_types', 'type_id', 'good_id');
+    }
+
     public function getNameTranslationAttribute()
     {
         return $this->getTranslation('name', app()->getLocale());

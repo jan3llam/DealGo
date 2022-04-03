@@ -6,8 +6,10 @@ use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CitiesController;
 use App\Http\Controllers\Api\CountriesController;
+use App\Http\Controllers\Api\GoodsTypesController;
 use App\Http\Controllers\Api\HomepageController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\VesselsTypesController;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
 use App\Http\Controllers\CategoriesController as CategoriesAPI;
 use App\Http\Controllers\CitiesController as CitiesAPI;
@@ -50,7 +52,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
-//
+
     Route::group(['prefix' => 'authentication'], function () {
         Route::post('/signIn', [AuthController::class, 'signIn']);
         Route::post('/signUp', [AuthController::class, 'signUp']);
@@ -63,7 +65,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
             Route::post('/signOut', [AuthController::class, 'signOut']);
         });
     });
-//
+
     Route::group(['prefix' => 'profile', 'middleware' => 'auth:api'], function () {
         Route::get('/get', [ProfileController::class, 'getProfile']);
         Route::get('/get/{id}', [ProfileController::class, 'getProfile']);
@@ -74,46 +76,33 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::put('/uploadImage', [ProfileController::class, 'uploadImage']);
         Route::put('/changePassword', [ProfileController::class, 'changePassword']);
     });
-//
-//
+
+
 //    Route::group(['prefix' => 'search'], function () {
 //        Route::get('/provider', [SearchController::class, 'searchProviders']);
 //    });
-//
+
+    Route::group(['prefix' => 'vesselsTypes'], function () {
+        Route::get('/list', [VesselsTypesController::class, 'list']);
+    });
+
+    Route::group(['prefix' => 'goodsTypes'], function () {
+        Route::get('/list', [GoodsTypesController::class, 'list']);
+    });
+
     Route::group(['prefix' => 'content'], function () {
-//        Route::get('/get/{key}', [ContentController::class, 'getContent']);
         Route::get('/cities/{id?}', [CitiesController::class, 'getCities']);
         Route::get('/countries', [CountriesController::class, 'getCountries']);
         Route::get('/homepage', [HomepageController::class, 'get']);
     });
-//
-//    Route::group(['prefix' => 'tickets', 'middleware' => ['auth:sanctum']], function () {
-//        Route::post('/add', [TicketsController::class, 'add']);
-//        Route::get('/list', [TicketsController::class, 'list']);
-//        Route::get('/{id}', [TicketsController::class, 'get']);
-//        Route::delete('/{id}', [TicketsController::class, 'delete']);
-//    });
-//
-//    Route::group(['prefix' => 'relations', 'middleware' => ['auth:sanctum']], function () {
-//        Route::post('/like/{id}', [RelationsController::class, 'like']);
-//        Route::put('/dislike/{id}', [RelationsController::class, 'dislike']);
-//        Route::get('/getMyLikes', [RelationsController::class, 'getMyLikes']);
-//    });
-//
-//    Route::group(['prefix' => 'coupons'], function () {
-//        Route::get('/list', [CouponsController::class, 'list']);
-//        Route::get('/{id}', [CouponsController::class, 'get']);
-//    });
-//
-//    Route::group(['prefix' => 'providers',], function () {
-//        Route::get('/list', [ProvidersController::class, 'list']);
-//        Route::get('/{id}', [ProvidersController::class, 'get']);
-//    });
-//
-//    Route::group(['prefix' => 'packages',], function () {
-//        Route::get('/list', [PackagesController::class, 'list']);
-//        Route::get('/{id}', [PackagesController::class, 'get']);
-//    });
+
+    Route::group(['prefix' => 'tickets', 'middleware' => ['auth:sanctum']], function () {
+        Route::post('/add', [TicketsController::class, 'add']);
+        Route::get('/list', [TicketsController::class, 'list']);
+        Route::get('/{id}', [TicketsController::class, 'get']);
+        Route::delete('/{id}', [TicketsController::class, 'delete']);
+    });
+
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function () {
