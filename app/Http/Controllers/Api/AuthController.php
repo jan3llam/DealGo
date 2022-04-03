@@ -27,6 +27,7 @@ class AuthController extends Controller
 
     public function signUp(Request $request)
     {
+        $fileName = null;
         $validator = Validator::make($request->all(),
             [
                 'business_name' => 'required_if:type,1',
