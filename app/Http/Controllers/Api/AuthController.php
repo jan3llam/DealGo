@@ -8,8 +8,6 @@ use App\Models\Owner;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -70,12 +68,6 @@ class AuthController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
-        if ($request->hasFile('legal')) {
-            $extension = $request->file('legal')->getClientOriginalExtension();
-            $fileName = Str::random(18) . '.' . $extension;
-            Storage::disk('public_images')->putFileAs('', $request->file('legal'), $fileName);
-        }
-
         $user_type = intval($request->user_type);
         $class = null;
 
@@ -88,27 +80,13 @@ class AuthController extends Controller
             $class = new Tenant;
             $class->save();
         }
-        $item->legal_file = $fileName;
+
+        $item->legal_file = $params['legal'];
 
         if ($request->type == 1) {
 
-            if ($request->hasFile('company')) {
-                $fileName = null;
-                $extension = $request->file('company')->getClientOriginalExtension();
-                $fileName = Str::random(18) . '.' . $extension;
-                Storage::disk('public_images')->putFileAs('', $request->file('company'), $fileName);
-                $item->company_file = $fileName;
-            }
-
-            if ($request->hasFile('license')) {
-                $fileName = null;
-                $extension = $request->file('license')->getClientOriginalExtension();
-                $fileName = Str::random(18) . '.' . $extension;
-                Storage::disk('public_images')->putFileAs('', $request->file('license'), $fileName);
-                $item->license_file = $fileName;
-            }
-
-
+            $item->company_file = $params['company'];
+            $item->license_file = $params['license'];
             $item->full_name = $params['business_name'];
             $item->commercial_number = $params['commercial'];
 
