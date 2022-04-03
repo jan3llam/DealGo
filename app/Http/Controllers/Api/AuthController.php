@@ -101,6 +101,7 @@ class AuthController extends Controller
         $item->province = $params['province'];
         $item->address_1 = $params['address_1'];
         $item->address_2 = $params['address_2'];
+        $item->files = json_encode([]);
 
         $item->userable_id = $class->id;
         $item->userable_type = $user_type === 1 ? Owner::class : Tenant::class;
