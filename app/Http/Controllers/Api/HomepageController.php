@@ -12,7 +12,7 @@ class HomepageController extends Controller
 {
     public function get()
     {
-        $data = [];
+        $data = [];;
 
         $data['advantages'] = Advantage::withoutTrashed()->get();
         $data['services'] = Service::withoutTrashed()->get();
