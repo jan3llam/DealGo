@@ -35,7 +35,7 @@ class AuthController extends Controller
                 'license' => 'required_if:type,1',
                 'user_type' => 'required|numeric',
                 'type' => 'required|numeric',
-                'contact' => 'required|string',
+                'contact_name' => 'required|string',
                 'zip' => 'required|string',
                 'province' => 'required|string',
                 'address_1' => 'required|string',
@@ -44,7 +44,7 @@ class AuthController extends Controller
                 'password' => 'required',
                 'email' => 'required|unique:users,email',
                 'phone' => 'required',
-                'legal' => 'required|file',
+                'legal' => 'required',
             ]);
 
         if ($validator->fails()) {
