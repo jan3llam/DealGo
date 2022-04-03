@@ -11,16 +11,21 @@ class About extends Model
 {
     use HasFactory, SoftDeletes, HasTranslations;
 
-    protected $primaryKey = 'id';
     public $incrementing = false;
-    protected $keyType = 'string';
-
     public $translatable = ['name', 'description'];
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
     protected $table = 'about';
     protected $appends = ['name_translation'];
 
     public function getNameTranslationAttribute()
     {
         return $this->getTranslation('name', app()->getLocale());
+    }
+
+    public function getDescriptionHtmlTranslationAttribute()
+    {
+        $quill = new \DBlackborough\Quill\Render($this->getTranslation('name', app()->getLocale()));
+        return $quill->render();
     }
 }

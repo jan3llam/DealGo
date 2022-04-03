@@ -6,6 +6,7 @@ use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CitiesController;
 use App\Http\Controllers\Api\CountriesController;
+use App\Http\Controllers\Api\HomepageController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
 use App\Http\Controllers\CategoriesController as CategoriesAPI;
@@ -74,9 +75,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::put('/changePassword', [ProfileController::class, 'changePassword']);
     });
 //
-//    Route::group(['prefix' => 'invite', 'middleware' => ['auth:sanctum']], function () {
-//        Route::post('/inviteEmail', [InviteController::class, 'inviteByEmail']);
-//    });
 //
 //    Route::group(['prefix' => 'search'], function () {
 //        Route::get('/provider', [SearchController::class, 'searchProviders']);
@@ -86,6 +84,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 //        Route::get('/get/{key}', [ContentController::class, 'getContent']);
         Route::get('/cities/{id?}', [CitiesController::class, 'getCities']);
         Route::get('/countries', [CountriesController::class, 'getCountries']);
+        Route::get('/homepage', [HomepageController::class, 'get']);
     });
 //
 //    Route::group(['prefix' => 'tickets', 'middleware' => ['auth:sanctum']], function () {
