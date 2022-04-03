@@ -23,7 +23,7 @@ class About extends Model
         return $this->getTranslation('name', app()->getLocale());
     }
 
-    public function getDescriptionHtmlTranslationAttribute()
+    public function getDescriptionHtmlAttribute()
     {
         $quill = new \DBlackborough\Quill\Render($this->getTranslation('name', app()->getLocale()));
         return $quill->render();
