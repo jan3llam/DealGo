@@ -11,18 +11,30 @@ class GoodsTypesController extends Controller
 {
     public function list(Request $request)
     {
-        $data = gType::withoutTrashed();
+        $query = gType::withoutTrashed();
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
         $vessel_id = $request->input('vessel', null);
+        $order_field = 'created_at';
+        $order_sort = 'desc';
 
         if ($vessel_id) {
             $vessel = Vessel::find($vessel_id);
             if ($vessel) {
-                $data->whereIn('id', $vessel->type->goods_types->pluck('id'));
+                $query->whereIn('id', $vessel->type->goods_types->pluck('id'));
             }
         }
 
-        return response()->success($data->skip(($page_number - 1) * $page_size)->take($page_size)->get());
+        $total = $query->limit($page_size)->count();
+
+        $data['data'] = $query->skip(($page_number - 1) * $page_size)
+            ->take($page_size)->orderBy($order_field, $order_sort)->get();
+
+        $data['meta']['total'] = $total;
+        $data['meta']['count'] = $data['data']->count();
+        $data['data'] = $data['data']->toArray();
+
+
+        return response()->success($data);
     }
 }
