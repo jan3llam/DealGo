@@ -42,7 +42,7 @@ class AuthController extends Controller
                 'city' => 'required|numeric',
                 'password' => 'required',
                 'email' => 'required|unique:users,email',
-                'phone' => 'required',
+                'phone' => 'required|unique:users,phone',
                 'legal' => 'required',
             ]);
 
@@ -50,11 +50,9 @@ class AuthController extends Controller
 
             $failedRules = $validator->failed();
 
-            if (isset($failedRules['username']['Unique']) || isset($failedRules['gsm']['Unique']) || isset($failedRules['email']['Unique'])) {
-                $field = isset($failedRules['username']['Unique']) ? 'Username' : (isset($failedRules['gsm']['Unique']) ? 'GSM' : 'Email');
+            if (isset($failedRules['phone']['Unique']) || isset($failedRules['email']['Unique'])) {
+                $field = isset($failedRules['phone']['Unique']) ? 'Phone' : 'Email';
                 return response()->error('alreadyExist' . $field);
-            } elseif (isset($failedRules['gsm']['Regex'])) {
-                return response()->error('gsmNotMatch');
             }
             return response()->error('missingParameters', $validator->failed());
         }

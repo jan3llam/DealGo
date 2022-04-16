@@ -18,9 +18,13 @@ return [
             'code' => "1",
             'message' => 'نجاح'
         ],
-        'alreadyExist' => [
+        'alreadyExistEmail' => [
             'code' => "-11",
-            'message' => 'اسم المستخدم، البريد الالكتروني أو رقم الموبايل مستعمل سابقاً'
+            'message' => 'البريد الالكتروني مستعمل سابقاً'
+        ],
+        'alreadyExistPhone' => [
+            'code' => "-20",
+            'message' => 'رقم الموبايل مستعمل سابقاً'
         ],
         'missingParameters' => [
             'code' => "-12",

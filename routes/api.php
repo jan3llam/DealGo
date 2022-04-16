@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CountriesController;
 use App\Http\Controllers\Api\GoodsTypesController;
 use App\Http\Controllers\Api\HomepageController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\VesselsController;
 use App\Http\Controllers\Api\VesselsTypesController;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
 use App\Http\Controllers\CategoriesController as CategoriesAPI;
@@ -66,15 +67,18 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         });
     });
 
-    Route::group(['prefix' => 'profile', 'middleware' => 'auth:api'], function () {
-        Route::get('/get', [ProfileController::class, 'getProfile']);
-        Route::get('/get/{id}', [ProfileController::class, 'getProfile']);
-        Route::get('/getNotifications', [ProfileController::class, 'getNotifications']);
-        Route::post('/registerFCMToken', [ProfileController::class, 'registerFCMToken']);
-        Route::put('/updateProfile', [ProfileController::class, 'updateProfile']);
-        Route::put('/notification/{id}', [ProfileController::class, 'getNotification']);
-        Route::put('/uploadImage', [ProfileController::class, 'uploadImage']);
-        Route::put('/changePassword', [ProfileController::class, 'changePassword']);
+    Route::group(['prefix' => 'profile'], function () {
+        Route::post('/uploadFile', [ProfileController::class, 'uploadFile']);
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::get('/get', [ProfileController::class, 'getProfile']);
+            Route::get('/get/{id}', [ProfileController::class, 'getProfile']);
+            Route::get('/getNotifications', [ProfileController::class, 'getNotifications']);
+            Route::post('/registerFCMToken', [ProfileController::class, 'registerFCMToken']);
+            Route::put('/updateProfile', [ProfileController::class, 'updateProfile']);
+            Route::put('/notification/{id}', [ProfileController::class, 'getNotification']);
+            Route::put('/uploadImage', [ProfileController::class, 'uploadImage']);
+            Route::put('/changePassword', [ProfileController::class, 'changePassword']);
+        });
     });
 
 
@@ -88,6 +92,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'goodsTypes'], function () {
         Route::get('/list', [GoodsTypesController::class, 'list']);
+    });
+
+    Route::group(['prefix' => 'vessels'], function () {
+        Route::get('/list', [VesselsController::class, 'list']);
     });
 
     Route::group(['prefix' => 'content'], function () {

@@ -21,29 +21,12 @@ class ProfileController extends Controller
             $id = auth('api')->user()->id;
         }
 
-        $user = User::find($id);
+        $user = User::with('userable')->find($id);
         if (!$user) {
             return response()->error('objectNotFound');
         }
-        $results = $user;
-        switch ($user->type) {
-            case 2:
-            {
-                $results = User::find($id);
-                break;
-            }
-            case 3:
-            {
-                $results = User::find($id);
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
 
-        return response()->success($results);
+        return response()->success($user);
     }
 
     public function registerFCMToken(Request $request)
@@ -121,7 +104,6 @@ class ProfileController extends Controller
 
             return response()->error('missingParameters', $validator->failed());
         }
-
 
         $user_id = auth('api')->user()->id;
 
@@ -287,33 +269,32 @@ class ProfileController extends Controller
         }
     }
 
-    public function uploadVideo(Request $request)
+    public function uploadFile(Request $request)
     {
         $validator = Validator::make($request->all(),
             [
-                'video' => 'required|file|mimes:mp4,mov,ogg,m4a,3gp|max:10240',
+                'file' => 'required|file|mimetypes:image/jpeg,image/png,video/avi,video/mpeg,video/mp4,video/ogg,video/webm,application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation|max:10240',
             ]);
 
         if ($validator->fails()) {
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $videoName = null;
+        $fileName = null;
 
-        if ($request->hasFile('video')) {
-            $extension = $request->file('video')->getClientOriginalExtension();
-            $videoName = Str::random(10) . '.' . $extension;
-            Storage::disk('public_images')->putFileAs('', $request->file('video'), $videoName);
+        if ($request->hasFile('file')) {
+            $extension = $request->file('file')->getClientOriginalExtension();
+            $fileName = Str::random(18) . '.' . $extension;
+            Storage::disk('public_images')->putFileAs('', $request->file('file'), $fileName);
         }
 
-        return response()->success(['name' => $videoName]);
+        return response()->success(['name' => $fileName]);
     }
 
     public function uploadAudio(Request $request)
     {
         $validator = Validator::make($request->all(),
             [
-                'audio' => 'required|file|mimes:mp3,aac|max:5120',
             ]);
 
         if ($validator->fails()) {
