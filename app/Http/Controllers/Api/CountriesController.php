@@ -11,15 +11,13 @@ class CountriesController extends Controller
     {
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
-        $order_field = 'created_at';
-        $order_sort = 'desc';
 
         $query = Country::query();
 
         $total = $query->limit($page_size)->count();
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
-            ->take($page_size)->orderBy($order_field, $order_sort)->get();
+            ->take($page_size)->get();
 
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $data['data']->count();
