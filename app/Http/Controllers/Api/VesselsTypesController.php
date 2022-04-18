@@ -10,10 +10,22 @@ class VesselsTypesController extends Controller
 {
     public function list(Request $request)
     {
-        $data = vType::withoutTrashed();
+        $query = vType::withoutTrashed();
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
+        $order_field = 'created_at';
+        $order_sort = 'desc';
 
-        return response()->success($data->skip(($page_number - 1) * $page_size)->take($page_size)->get());
+        $total = $query->limit($page_size)->count();
+
+        $data['data'] = $query->skip(($page_number - 1) * $page_size)
+            ->take($page_size)->orderBy($order_field, $order_sort)->get();
+
+        $data['meta']['total'] = $total;
+        $data['meta']['count'] = $data['data']->count();
+        $data['meta']['page_number'] = $page_number;
+        $data['data'] = $data['data']->toArray();
+
+        return response()->success($data);
     }
 }

@@ -21,6 +21,7 @@ class CountriesController extends Controller
 
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $data['data']->count();
+        $data['meta']['page_number'] = $page_number;
         $data['data'] = $data['data']->toArray();
 
         return response()->success($data);

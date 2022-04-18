@@ -96,6 +96,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'vessels'], function () {
         Route::get('/list', [VesselsController::class, 'list']);
+        Route::get('/check/{id}', [VesselsController::class, 'check_ps07']);
+        Route::post('/add', [VesselsController::class, 'add']);
+        Route::put('/update/{id}', [VesselsController::class, 'update']);
+        Route::put('/status/{id}', [VesselsController::class, 'status']);
+        Route::delete('/{id}', [VesselsController::class, 'delete']);
     });
 
     Route::group(['prefix' => 'content'], function () {
