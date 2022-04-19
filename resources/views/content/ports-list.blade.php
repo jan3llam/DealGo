@@ -272,7 +272,7 @@
 
             markerView = new google.maps.Marker({
                 position: new google.maps.LatLng(latElement, lngElement),
-                map,
+                mapView,
                 title: "Port",
             });
         }
