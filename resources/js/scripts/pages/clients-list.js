@@ -208,7 +208,7 @@ $(function () {
                 if (type === 'update') {
                     data.append('object_id', $('#object_id').val());
                 }
-                newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
+                newForm.find('input[type=text],input[type=date],input[type=url],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
                 });
                 newForm.find('input[type=file]').each(function () {
