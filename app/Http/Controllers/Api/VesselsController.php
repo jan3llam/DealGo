@@ -118,6 +118,35 @@ class VesselsController extends Controller
 
     }
 
+    public function check_ps07($id, Request $request)
+    {
+        $vessel = Vessel::withTrashed()->where('id', $id)->first();
+        $mmsi = $vessel->mmsi;
+
+        $response = Http::get('https://services.marinetraffic.com/api/exportvessel/' . env('MARINETRAFFIC_API_KEY_PS07'), [
+            'v' => 5,
+            'mmsi' => $mmsi,
+            'protocol' => 'json',
+            'timespan' => '1200'
+        ]);
+        if ($response->successful()) {
+            if ($data = json_decode($response->getBody()->getContents())) {
+                return response()->success([
+                    'name' => $vessel->name,
+                    'rotation' => $data[0][4],
+                    'latitude' => $data[0][1],
+                    'longitude' => $data[0][2]
+                ]);
+            } else {
+                return response()->error('objectNotFound');
+            }
+        }
+        $data = json_decode($response->getBody()->getContents())->errors[0];
+        return response()->customError($data->code, $data->detail);
+
+    }
+
+
     public function add(Request $request)
     {
         $params = $request->all();
