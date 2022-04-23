@@ -34,4 +34,9 @@ class Vessel extends Model
     {
         return $this->hasMany(Maintenance::class);
     }
+
+    public function shipments()
+    {
+        return $this->hasMany(Shipment::class);
+    }
 }
