@@ -133,6 +133,7 @@ class VesselsController extends Controller
         if ($response->successful()) {
             if ($data = json_decode($response->getBody()->getContents())) {
                 return response()->success([
+                    'id' => $vessel->id,
                     'name' => $vessel->name,
                     'rotation' => $data[0][4],
                     'latitude' => $data[0][1],
