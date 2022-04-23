@@ -106,7 +106,7 @@ class VesselsController extends Controller
             ->whereHas('country')->whereHas('type')
             ->whereHas('owner', function ($q) {
                 $q->whereHas('user');
-            })->with(['country', 'type', 'owner.user', 'shipments.contract', 'shipments.port_from', 'shipments.port_to'])
+            })->with(['country', 'type.goods_types', 'owner.user', 'shipments.contract', 'shipments.port_from', 'shipments.port_to'])
             ->withCount(['crew', 'maintenance'])
             ->take($page_size)->orderBy($order_field, $order_sort)->get();
 
