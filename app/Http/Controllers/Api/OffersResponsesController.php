@@ -1,97 +1,52 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Contract;
 use App\Models\ContractPayment;
-use App\Models\gType;
 use App\Models\Offer;
 use App\Models\OfferResponse;
 use App\Models\OfferResponsePayment;
-use App\Models\Port;
+use App\Models\Owner;
 use App\Models\Shipment;
 use App\Models\Tenant;
 use App\Models\User;
-use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Validator;
 
 class OffersResponsesController extends Controller
 {
-    public function __construct()
+    public function list($id, Request $request)
     {
-        $this->middleware('permission:62', ['only' => ['list', 'list_api']]);
-        $this->middleware('permission:61', ['only' => ['add']]);
-        $this->middleware('permission:63', ['only' => ['bulk_delete', 'delete']]);
-    }
+        $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-    public function list($id = null)
-    {
-        $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')]
-        ];
-
-        $offer = Offer::withTrashed()->where('id', $id)->first();
-
-        if ($offer) {
-            array_push($breadcrumbs, ['name' => $offer->name . ' (#' . $offer->id . ')']);
+        if (!$user) {
+            return response()->error('notAuthorized');
         }
-        array_push($breadcrumbs, ['name' => __('locale.OffersResponses')]);
 
-        $offers = Offer::all();
-        $tenants = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->get();
-
-        $vessels = Vessel::all();
-        $ports = Port::all();
-        $types = gType::all();
-
-        return view('content.offers-responses-list', [
-            'breadcrumbs' => $breadcrumbs,
-            'offers' => $offers,
-            'offer' => $offer,
-            'tenants' => $tenants,
-            'ports' => $ports,
-            'types' => $types,
-            'vessels' => $vessels,
-        ]);
-    }
-
-    public function list_api(Request $request)
-    {
+        $offer = Offer::find($id);
+        if (!$offer || $offer->vessel->owner->id !== $user->owner->id) {
+            return response()->error('objectNotFound');
+        }
 
         $data = [];
-        $search_clm = ['user.name', 'user.username', 'user.gsm', 'user.email'];
+        $search_clm = [];
         $order_field = 'created_at';
         $order_sort = 'desc';
-        $offer_id = $request->input('offer_id', null);
-        $params = $request->all();
-        $query = OfferResponse::with([
-            'payments' => function ($query) {
-                $query->sum('value');
-            },
-            'tenant' => function ($q) {
-                $q->withTrashed()->with('user');
-            },
-            'offer.port_from' => function ($q) {
-                $q->withTrashed();
-            },
-            'port_to' => function ($q) {
-                $q->withTrashed();
-            }, 'routes', 'goods_types.good_type'
-        ]);
+        $query = OfferResponse::with(['tenant', 'port_to',])
+            ->whereHas('port_to')
+            ->whereHas('goods_types');
 
-        if ($offer_id) {
-            $query->where('offer_id', $offer_id);
+        if ($id) {
+            $query->where('offer_id', $id);
         }
 
-        $search_val = isset($params['search']) ? $params['search'] : null;
-        $sort_field = isset($params['order']) ? $params['order'] : null;
-        $page = isset($params['start']) ? $params['start'] : 0;
-        $filter_status = isset($params['status']) ? $params['status'] : 1;
-        $per_page = isset($params['length']) ? $params['length'] : 10;
+        $search_val = $request->input('keyword', null);
+        $page_size = $request->input('page_size', 10);
+        $page_number = $request->input('page_number', 1);
+        $filter_status = $request->input('status', 1);
+        $port_to = $request->input('port_to', null);
 
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
@@ -112,11 +67,6 @@ class OffersResponsesController extends Controller
                     }
                 }
             });
-        }
-
-        if ($sort_field) {
-            $order_field = $sort_field;
-            $order_sort = $params['direction'];
         }
 
         if ($filter_status !== null) {
@@ -144,11 +94,14 @@ class OffersResponsesController extends Controller
             }
         }
 
-        $total = $query->limit($per_page)->count();
+        if ($port_to) {
+            $query->where('port_to', $port_to);
+        }
 
-        $data['data'] = $query->skip(($page) * $per_page)
-            ->take($per_page)->orderBy($order_field, $order_sort)->get();
+        $total = $query->limit($page_size)->count();
 
+        $data['data'] = $query->skip(($page_number - 1) * $page_size)
+            ->take($page_size)->orderBy($order_field, $order_sort)->get();
 
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
@@ -158,19 +111,51 @@ class OffersResponsesController extends Controller
         return response()->success($data);
     }
 
+    public function get($id, Request $request)
+    {
+
+        if (auth('api')->check()) {
+            $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+            $user_id = isset($user->owner) ? $user->owner->id : null;
+        }
+
+        $data['offer'] = Offer::where('id', $id)
+            ->whereHas('vessel')->whereHas('port_from')
+            ->whereHas('vessel', function ($q) {
+                $q->whereHas('owner');
+            })->with(['vessel.owner.user', 'port_from'])
+            ->withCount(['responses'])
+            ->first();
+
+        if ($data['offer']->vessel->owner->id === $user_id) {
+            $data['responses'] = OfferResponse::where('offer_id', $data['offer']->id)
+                ->whereHas('tenant')
+                ->whereHas('port_to')
+                ->with(['payments', 'port_to', 'routes', 'goods_types'])->get();
+        }
+
+        return response()->success($data);
+    }
 
     public function add(Request $request)
     {
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
         $params = $request->all();
         $validator = Validator::make($params, [
             'contract' => 'required|string',
             'routes' => 'required_if:contract,2,3,4',
             'goods' => 'required_if:contract,1,3',
+            'payments' => 'required',
             'description' => 'required|string',
             'date_from' => 'required|string',
             'date_to' => 'required|string',
             'port_to' => 'required',
-            'tenant' => 'required|numeric',
             'offer' => 'required|numeric',
             'name' => 'required|string',
         ]);
@@ -183,25 +168,13 @@ class OffersResponsesController extends Controller
 
         $item->name = $params['name'];
         $item->offer_id = $params['offer'];
-        $item->tenant_id = $params['tenant'];
+        $item->tenant_id = $user->tenant->id;
         $item->port_to = $params['port_to'];
         $item->date_from = Carbon::parse($params['date_from'])->toDateString();
         $item->date_to = Carbon::parse($params['date_to'])->toDateString();
         $item->description = $params['description'];
         $item->contract = $params['contract'];
-
-        $files = $request->file('files', []);
-        $filesArr = [];
-        if ($files) {
-            foreach ($files as $file) {
-                $extension = $file->getClientOriginalExtension();
-                $fileName = Str::random(18) . '.' . $extension;
-                Storage::disk('public_images')->putFileAs('', $file, $fileName);
-                $filesArr[] = $fileName;
-            }
-        }
-
-        $item->files = json_encode($filesArr);
+        $item->files = json_encode($request->input('files', []));
 
         $item->save();
 
@@ -247,8 +220,13 @@ class OffersResponsesController extends Controller
 
     public function delete($id)
     {
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-        $item = OfferResponse::withTrashed()->where('id', $id)->first();
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
+        $item = OfferResponse::where('id', $id)->first();
 
         if ($item) {
 
@@ -260,8 +238,17 @@ class OffersResponsesController extends Controller
 
     public function approve($id)
     {
+        $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-        $item = OfferResponse::withTrashed()->where('id', $id)->first();
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
+        $item = OfferResponse::where('id', $id)->first();
+
+        if ($item->offer->vessel->owner->id !== $user->owner->id) {
+            return response()->error('objectNotFound');
+        }
 
         if ($item) {
             $contract = new Contract;

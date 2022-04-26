@@ -16,6 +16,11 @@ class Offer extends Model
         return $this->hasMany(OfferResponse::class);
     }
 
+    public function port_from()
+    {
+        return $this->belongsTo(Port::class, 'port_from');
+    }
+
     public function vessel()
     {
         return $this->belongsTo(Vessel::class);

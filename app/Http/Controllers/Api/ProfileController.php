@@ -179,43 +179,6 @@ class ProfileController extends Controller
         return response()->success();
     }
 
-    public function settings(Request $request)
-    {
-
-        $validator = Validator::make($request->all(),
-            [
-                'preferred_gender' => 'required|numeric',
-                'preferred_age' => 'required|string|regex:/^\d{1,2}(,\d{1,2})$/i',
-
-            ]);
-
-        if ($validator->fails()) {
-
-            return response()->error('missingParameters', $validator->failed());
-        }
-
-        $user = auth('api')->user();
-        $gender = $request->input('preferred_gender', null);
-        if ($gender !== null) {
-            $user->preferred_gender = $request->preferred_gender == 0 ? null : $request->preferred_gender;
-        }
-
-        if ($request->input('preferred_age', null)) {
-            $preferred_age = explode(",", $request->preferred_age);
-
-            if ($preferred_age[0] > $preferred_age[1]) {
-                return response()->error('missingParameters');
-            }
-
-            $user->preferred_age_from = $preferred_age[0];
-            $user->preferred_age_to = $preferred_age[1];
-        }
-
-        $user->save();
-
-        return response()->success();
-    }
-
     public function changePassword(Request $request)
     {
 
@@ -290,26 +253,4 @@ class ProfileController extends Controller
 
         return response()->success(['name' => $fileName]);
     }
-
-    public function uploadAudio(Request $request)
-    {
-        $validator = Validator::make($request->all(),
-            [
-            ]);
-
-        if ($validator->fails()) {
-            return response()->error('missingParameters', $validator->failed());
-        }
-
-        $videoName = null;
-
-        if ($request->hasFile('audio')) {
-            $extension = $request->file('audio')->getClientOriginalExtension();
-            $videoName = Str::random(10) . '.' . $extension;
-            Storage::disk('public_images')->putFileAs('', $request->file('audio'), $videoName);
-        }
-
-        return response()->success(['name' => $videoName]);
-    }
-
 }

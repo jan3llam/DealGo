@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Owner;
+use App\Models\User;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -15,7 +17,8 @@ class VesselsController extends Controller
         $user_id = null;
 
         if (auth('api')->check()) {
-            $user_id = auth('api')->user()->id;
+            $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+            $user_id = isset($user->owner) ? $user->owner->id : null;
         }
 
         $data = [];
@@ -81,7 +84,6 @@ class VesselsController extends Controller
                     case 1:
                     {
                         $query->where('status', 1)->withoutTrashed();
-
                         break;
                     }
                     case 2:
@@ -151,6 +153,12 @@ class VesselsController extends Controller
 
     public function add(Request $request)
     {
+        $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => 'required|string',
@@ -172,7 +180,7 @@ class VesselsController extends Controller
 
         $item->name = $params['name'];
         $item->type_id = $params['type'];
-        $item->owner_id = auth('api')->user()->id;
+        $item->owner_id = $user->owner->id;
         $item->image = $params['image'];
         $item->country_id = $params['country'];
         $item->imo = $params['imo'];
@@ -188,6 +196,12 @@ class VesselsController extends Controller
 
     public function update($id, Request $request)
     {
+        $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => 'required|string',
@@ -203,7 +217,7 @@ class VesselsController extends Controller
             return response()->error('missingParameters');
         }
 
-        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', auth('api')->user()->id)->first();
+        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->owner->id)->first();
 
         if (!$item) {
             return response()->error('objectNotFound');
@@ -225,8 +239,9 @@ class VesselsController extends Controller
 
     public function delete($id)
     {
+        $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', auth('api')->user()->id)->first();
+        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->owner->id)->first();
 
         if (!$item) {
             return response()->error('objectNotFound');
@@ -243,8 +258,9 @@ class VesselsController extends Controller
 
     public function status($id)
     {
+        $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', auth('api')->user()->id)->first();
+        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->owner->id)->first();
 
         if (!$item) {
             return response()->error('objectNotFound');

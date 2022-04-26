@@ -8,7 +8,11 @@ use App\Http\Controllers\Api\CitiesController;
 use App\Http\Controllers\Api\CountriesController;
 use App\Http\Controllers\Api\GoodsTypesController;
 use App\Http\Controllers\Api\HomepageController;
+use App\Http\Controllers\Api\OffersController;
+use App\Http\Controllers\Api\OffersResponsesController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\RequestsController;
+use App\Http\Controllers\Api\RequestsResponsesController;
 use App\Http\Controllers\Api\VesselsController;
 use App\Http\Controllers\Api\VesselsTypesController;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
@@ -97,10 +101,46 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
     Route::group(['prefix' => 'vessels'], function () {
         Route::get('/list', [VesselsController::class, 'list']);
         Route::get('/check/{id}', [VesselsController::class, 'check_ps07']);
-        Route::post('/add', [VesselsController::class, 'add']);
-        Route::put('/update/{id}', [VesselsController::class, 'update']);
-        Route::put('/status/{id}', [VesselsController::class, 'status']);
-        Route::delete('/{id}', [VesselsController::class, 'delete']);
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('/add', [VesselsController::class, 'add']);
+            Route::put('/update/{id}', [VesselsController::class, 'update']);
+            Route::put('/status/{id}', [VesselsController::class, 'status']);
+            Route::delete('/{id}', [VesselsController::class, 'delete']);
+        });
+    });
+
+    Route::group(['prefix' => 'offers'], function () {
+        Route::get('/list', [OffersController::class, 'list']);
+        Route::get('/get/{id}', [OffersController::class, 'get']);
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('/add', [OffersController::class, 'add']);
+            Route::delete('/{id}', [OffersController::class, 'delete']);
+        });
+    });
+
+    Route::group(['prefix' => 'offers_responses', 'middleware' => 'auth:api'], function () {
+        Route::get('/list', [OffersResponsesController::class, 'list']);
+        Route::get('/get/{id}', [OffersResponsesController::class, 'get']);
+        Route::post('/add', [OffersResponsesController::class, 'add']);
+        Route::post('/approve/{id}', [OffersResponsesController::class, 'approve']);
+        Route::delete('/{id}', [OffersResponsesController::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'requests'], function () {
+        Route::get('/list', [RequestsController::class, 'list']);
+        Route::get('/get/{id}', [RequestsController::class, 'get']);
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('/add', [RequestsController::class, 'add']);
+            Route::delete('/{id}', [RequestsController::class, 'delete']);
+        });
+    });
+
+    Route::group(['prefix' => 'requests_responses', 'middleware' => 'auth:api'], function () {
+        Route::get('/list', [RequestsResponsesController::class, 'list']);
+        Route::get('/get/{id}', [RequestsResponsesController::class, 'get']);
+        Route::post('/add', [RequestsResponsesController::class, 'add']);
+        Route::post('/approve/{id}', [RequestsResponsesController::class, 'approve']);
+        Route::delete('/{id}', [RequestsResponsesController::class, 'delete']);
     });
 
     Route::group(['prefix' => 'content'], function () {

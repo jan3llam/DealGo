@@ -253,7 +253,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'tenant.user'},
-                {data: 'port_from'},
+                {data: 'offer.port_from'},
                 {data: 'port_to'},
                 {data: 'date_from'},
                 {data: 'total'},

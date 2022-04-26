@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classification;
 use App\Models\Language;
 use App\Models\Post;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Validator;
 
 class PostsController extends Controller
@@ -127,110 +124,5 @@ class PostsController extends Controller
         $data['data'] = $data['data']->toArray();
 
         return response()->success($data);
-    }
-
-    public function add(Request $request)
-    {
-        $fileName = null;
-        $params = $request->all();
-        $validator = Validator::make($params, [
-            'name' => 'required|array',
-            'created_at' => 'required|string',
-            'updated_at' => 'required|string',
-            'description' => 'required|array',
-            'meta_name' => 'required|string',
-            'meta_description' => 'required|string',
-            'meta_image' => 'required|file',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->error('missingParameters', $validator->failed());
-        }
-
-        if ($request->hasFile('meta_image')) {
-            $extension = $request->file('meta_image')->getClientOriginalExtension();
-            $fileName = Str::random(18) . '.' . $extension;
-            Storage::disk('public_images')->putFileAs('', $request->file('meta_image'), $fileName);
-        }
-
-        $item = new Post;
-
-        $item->classification_id = $request->input('classification', null) === 'null' ? null : $request->input('classification', null);
-        $item->name = $params['name'];
-        $item->meta_name = $params['meta_name'];
-        $item->meta_description = $params['meta_description'];
-        $item->meta_file = $fileName;
-        $item->description = $params['description'];
-        $item->created_at = Carbon::parse($params['created_at'])->toDateTimeString();
-        $item->updated_at = Carbon::parse($params['updated_at'])->toDateTimeString();
-
-        $item->save();
-
-        return response()->success();
-    }
-
-    public function update(Request $request)
-    {
-        $id = $request->object_id;
-
-        $fileName = null;
-        $params = $request->all();
-        $validator = Validator::make($params, [
-            'name' => 'required|array',
-            'created_at' => 'required|string',
-            'updated_at' => 'required|string',
-            'description' => 'required|array',
-            'meta_name' => 'required|string',
-            'meta_description' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->error('missingParameters');
-        }
-
-        $item = Post::withTrashed()->where('id', $id)->first();
-
-        if ($request->hasFile('meta_image')) {
-            $extension = $request->file('meta_image')->getClientOriginalExtension();
-            $fileName = Str::random(18) . '.' . $extension;
-            Storage::disk('public_images')->putFileAs('', $request->file('meta_image'), $fileName);
-            $item->meta_file = $fileName;
-        }
-
-
-        $item->classification_id = $request->input('classification', null) === 'null' ? null : $request->input('classification', null);
-        $item->name = $params['name'];
-        $item->meta_name = $params['meta_name'];
-        $item->meta_description = $params['meta_description'];
-        $item->description = $params['description'];
-        $item->created_at = Carbon::parse($params['created_at'])->toDateTimeString();
-        $item->updated_at = Carbon::parse($params['updated_at'])->toDateTimeString();
-
-        $item->save();
-
-        return response()->success();
-    }
-
-    public function bulk_delete(Request $request)
-    {
-        foreach ($request->input('ids', []) as $id) {
-            $item = Post::withTrashed()->where('id', $id)->first();
-            if ($item) {
-                $item->delete();
-            }
-        }
-        return response()->success();
-    }
-
-    public function delete($id)
-    {
-
-        $item = Post::withTrashed()->where('id', $id)->first();
-
-        if ($item) {
-            $item->delete();
-        }
-
-        return response()->success();
     }
 }
