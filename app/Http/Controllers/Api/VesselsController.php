@@ -220,7 +220,7 @@ class VesselsController extends Controller
             return response()->error('missingParameters');
         }
 
-        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->owner->id)->first();
+        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->userable->id)->first();
 
         if (!$item) {
             return response()->error('objectNotFound');
@@ -244,7 +244,7 @@ class VesselsController extends Controller
     {
         $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->owner->id)->first();
+        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->userable->id)->first();
 
         if (!$item) {
             return response()->error('objectNotFound');
@@ -263,7 +263,7 @@ class VesselsController extends Controller
     {
         $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->owner->id)->first();
+        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->userable->id)->first();
 
         if (!$item) {
             return response()->error('objectNotFound');
