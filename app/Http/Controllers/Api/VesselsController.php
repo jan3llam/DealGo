@@ -168,7 +168,7 @@ class VesselsController extends Controller
             'mmsi' => 'required|string',
             'capacity' => 'required',
             'build' => 'required',
-            'image' => 'required|file',
+            'image' => 'required',
         ]);
 
         if ($validator->fails()) {
