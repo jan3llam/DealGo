@@ -180,7 +180,7 @@ class VesselsController extends Controller
 
         $item->name = $params['name'];
         $item->type_id = $params['type'];
-        $item->owner_id = $user->owner->id;
+        $item->owner_id = $user->userable->id;
         $item->image = $params['image'];
         $item->country_id = $params['country'];
         $item->imo = $params['imo'];
