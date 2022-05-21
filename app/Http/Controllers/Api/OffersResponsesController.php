@@ -117,7 +117,7 @@ class OffersResponsesController extends Controller
         if (auth('api')->check()) {
             $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-            $user_id = isset($user->owner) ? $user->owner->id : null;
+            $user_id = isset($user->userable) ? $user->userable->id : null;
         }
 
         $data['offer'] = Offer::where('id', $id)
