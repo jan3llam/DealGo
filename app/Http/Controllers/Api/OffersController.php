@@ -91,16 +91,17 @@ class OffersController extends Controller
             });
         }
 
+        $query->whereHas('vessel', function ($q) {
+            $q->whereHas('owner', function ($qu) {
+                $qu->whereHas('user');
+            });
+        })->whereHas('port_from')
+            ->with(['vessel', 'port_from'])
+            ->withCount(['responses']);
+
         $total = $query->count();
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
-            ->whereHas('vessel', function ($q) {
-                $q->whereHas('owner', function ($qu) {
-                    $qu->whereHas('user');
-                });
-            })->whereHas('port_from')
-            ->with(['vessel', 'port_from'])
-            ->withCount(['responses'])
             ->take($page_size)->orderBy($order_field, $order_sort)->get();
 
         $data['meta']['total'] = $total;
