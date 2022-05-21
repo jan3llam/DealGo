@@ -162,7 +162,7 @@ class OffersController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $vessel = Vessel::withTrashed()->where('id', $params['vessel'])->where('owner_id', $user->owner->id)->first();
+        $vessel = Vessel::withTrashed()->where('id', $params['vessel'])->where('owner_id', $user->userable->id)->first();
         $port = Port::where('id', $params['port_from'])->first();
 
         if (!$vessel || !$port) {
