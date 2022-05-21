@@ -123,14 +123,14 @@ class OffersController extends Controller
         }
 
         $data['offer'] = Offer::where('id', $id)
-            ->whereHas('vessel')->whereHas('port_from')
+            ->whereHas('port_from')
             ->whereHas('vessel', function ($q) {
                 $q->whereHas('owner');
             })->with(['vessel.owner.user', 'port_from'])
             ->withCount(['responses'])
             ->first();
 
-        if ($data['offer']->vessel->owner->id === $user_id) {
+        if ($data['offer'] && $data['offer']->vessel->owner->id === $user_id) {
             $data['responses'] = OfferResponse::where('offer_id', $data['offer']->id)
                 ->whereHas('tenant')
                 ->whereHas('port_to')
