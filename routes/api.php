@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\GoodsTypesController;
 use App\Http\Controllers\Api\HomepageController;
 use App\Http\Controllers\Api\OffersController;
 use App\Http\Controllers\Api\OffersResponsesController;
+use App\Http\Controllers\Api\PortsController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RequestsController;
 use App\Http\Controllers\Api\RequestsResponsesController;
@@ -96,6 +97,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'goodsTypes'], function () {
         Route::get('/list', [GoodsTypesController::class, 'list']);
+    });
+
+    Route::group(['prefix' => 'ports'], function () {
+        Route::get('/list', [PortsController::class, 'list']);
     });
 
     Route::group(['prefix' => 'vessels'], function () {
