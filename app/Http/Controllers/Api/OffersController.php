@@ -127,7 +127,7 @@ class OffersController extends Controller
             ->whereHas('port_from')
             ->whereHas('vessel', function ($q) {
                 $q->whereHas('owner');
-            })->with(['vessel.owner.user', 'port_from'])
+            })->with(['vessel.owner.user', 'vessel.type.goods_types', 'port_from'])
             ->withCount(['responses'])
             ->first();
 
