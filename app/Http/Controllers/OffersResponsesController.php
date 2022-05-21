@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Validator;
@@ -209,6 +210,9 @@ class OffersResponsesController extends Controller
 
             $goods = $request->input('goods', []);
             foreach ($goods as $index => $good) {
+                if (!Route::find($good['gtype'])) {
+                    return response()->error('objectNotFound');
+                }
                 $item->goods_types()->attach($good['gtype'], ['weight' => $good['weight']]);
             }
         }
@@ -216,6 +220,9 @@ class OffersResponsesController extends Controller
 
             $routes = $request->input('routes', []);
             foreach ($routes as $index => $route) {
+                if (!Route::find($route)) {
+                    return response()->error('objectNotFound');
+                }
                 $item->routes()->attach($route, ['order' => $index]);
             }
         }
