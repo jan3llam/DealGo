@@ -96,7 +96,7 @@ class OffersController extends Controller
                 $qu->whereHas('user');
             });
         })->whereHas('port_from')
-            ->with(['vessel', 'port_from'])
+            ->with(['vessel.type.goods_types', 'port_from'])
             ->withCount(['responses']);
 
         $total = $query->count();
