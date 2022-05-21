@@ -84,18 +84,22 @@ class OffersController extends Controller
 
 
         if ($is_mine && auth('api')->check()) {
-            $query->whereHas('owner', function ($q) use ($user_id) {
-                $q->where('id', $user_id);
+            $query->whereHas('vessel', function ($q) use ($owner) {
+                $q->whereHas('owner', function ($qu) use ($owner) {
+                    $qu->whereHas('id', $owner);
+                });
             });
         }
 
         $total = $query->count();
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
-            ->whereHas('vessel')->whereHas('port_from')
-            ->whereHas('owner', function ($q) {
-                $q->whereHas('user');
-            })->with(['vessel', 'port_from'])
+            ->whereHas('vessel', function ($q) {
+                $q->whereHas('owner', function ($qu) {
+                    $qu->whereHas('user');
+                });
+            })->whereHas('port_from')
+            ->with(['vessel', 'port_from'])
             ->withCount(['responses'])
             ->take($page_size)->orderBy($order_field, $order_sort)->get();
 
