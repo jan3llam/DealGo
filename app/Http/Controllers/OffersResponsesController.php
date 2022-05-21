@@ -234,7 +234,7 @@ class OffersResponsesController extends Controller
 
             $paymentItem = new OfferResponsePayment;
             $paymentItem->value = $payment['value'];
-
+            dd(Carbon::parse($payment['date']));
             $paymentItem->date = Carbon::parse($payment['date'])->toDateString();
             $paymentItem->description = $payment['description'];
             $paymentItem->file = $fileName;
