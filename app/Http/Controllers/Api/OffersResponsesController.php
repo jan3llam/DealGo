@@ -168,7 +168,7 @@ class OffersResponsesController extends Controller
 
         $item->name = $params['name'];
         $item->offer_id = $params['offer'];
-        $item->tenant_id = $user->tenant->id;
+        $item->tenant_id = $user->userable->id;
         $item->port_to = $params['port_to'];
         $item->date_from = Carbon::parse($params['date_from'])->toDateString();
         $item->date_to = Carbon::parse($params['date_to'])->toDateString();
@@ -253,7 +253,7 @@ class OffersResponsesController extends Controller
         if ($item) {
             $contract = new Contract;
             $contract->owner_id = $item->offer->vessel->owner->id;
-            $contract->tenant_id = $item->tenant->id;
+            $contract->tenant_id = $item->userable->id;
             $contract->type = $item->contract;
             $contract->date_from = $item->date_from;
             $contract->date_to = $item->date_to;
