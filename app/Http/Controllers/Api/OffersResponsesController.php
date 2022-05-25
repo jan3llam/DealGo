@@ -132,8 +132,8 @@ class OffersResponsesController extends Controller
             $data['responses'] = OfferResponse::whereHas('offer', function ($q) use ($id) {
                 $q->where('id', $id);
             })
-                ->whereHas('tenant')
-                ->whereHas('port_to')
+//                ->whereHas('tenant')
+//                ->whereHas('port_to')
                 ->with(['payments', 'port_to', 'routes', 'goods_types'])->get();
         }
 
