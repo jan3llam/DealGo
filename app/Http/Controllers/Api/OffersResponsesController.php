@@ -145,7 +145,7 @@ class OffersResponsesController extends Controller
             $data['meta']['total'] = OfferResponse::whereHas('offer', function ($q) use ($id) {
                 $q->where('id', $id);
             })->whereHas('tenant')->whereHas('port_to')->count();
-            $data['meta']['count'] = $data['data']->count();
+            $data['meta']['count'] = $data['responses']->count();
             $data['meta']['page_number'] = $page_number;
 
         }
