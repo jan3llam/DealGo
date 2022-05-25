@@ -128,7 +128,7 @@ class OffersResponsesController extends Controller
             ->withCount(['responses'])
             ->first();
 
-        if ($data['offer']->vessel->owner->id === $user_id) {
+        if ($data['offer']->vessel->owner->user->id === $user_id) {
             $data['responses'] = OfferResponse::where('offer_id', $data['offer']->id)
                 ->whereHas('tenant')
                 ->whereHas('port_to')
