@@ -123,6 +123,10 @@ class OffersController extends Controller
             $user_id = isset($user->userable) ? $user->userable->id : null;
         }
 
+        $page_size = $request->input('page_size', 10);
+        $page_number = $request->input('page_number', 1);
+
+
         $data['offer'] = Offer::where('id', $id)
             ->whereHas('port_from')
             ->whereHas('vessel', function ($q) {
@@ -132,9 +136,14 @@ class OffersController extends Controller
             ->first();
 
         if ($data['offer'] && $data['offer']->vessel->owner->id === $user_id) {
-            $data['responses'] = OfferResponse::where('offer_id', $data['offer']->id)
+            $data['responses'] = OfferResponse::whereHas('offer', function ($q) use ($id) {
+                $q->where('id', $id);
+            })
                 ->whereHas('tenant')
                 ->whereHas('port_to')
+                ->skip(($page_number - 1) * $page_size)
+                ->take($page_size)
+                ->orderBy('created_at')
                 ->with(['payments', 'port_to', 'routes', 'goods_types'])->get();
         }
 

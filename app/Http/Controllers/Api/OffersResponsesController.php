@@ -120,6 +120,9 @@ class OffersResponsesController extends Controller
             $user_id = isset($user->userable) ? $user->userable->id : null;
         }
 
+        $page_size = $request->input('page_size', 10);
+        $page_number = $request->input('page_number', 1);
+
         $data['offer'] = Offer::where('id', $id)
             ->whereHas('vessel')->whereHas('port_from')
             ->whereHas('vessel', function ($q) {
@@ -135,6 +138,9 @@ class OffersResponsesController extends Controller
                 ->whereHas('tenant')
                 ->whereHas('port_to')
                 ->with(['payments', 'port_to', 'routes', 'goods_types'])
+                ->skip(($page_number - 1) * $page_size)
+                ->take($page_size)
+                ->orderBy('created_at')
                 ->get();
         }
 
