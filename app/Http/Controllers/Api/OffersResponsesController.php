@@ -129,7 +129,9 @@ class OffersResponsesController extends Controller
             ->first();
 
         if ($data['offer']->vessel->owner->id === $user_id) {
-            $data['responses'] = OfferResponse::where('offer_id', $data['offer']->id)
+            $data['responses'] = OfferResponse::whereHas('offer', function ($q) use ($id) {
+                $q->where('id', $id);
+            })
                 ->whereHas('tenant')
                 ->whereHas('port_to')
                 ->with(['payments', 'port_to', 'routes', 'goods_types'])->get();
