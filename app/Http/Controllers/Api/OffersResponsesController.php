@@ -134,7 +134,8 @@ class OffersResponsesController extends Controller
             })
 //                ->whereHas('tenant')
 //                ->whereHas('port_to')
-                ->with(['payments', 'port_to', 'routes', 'goods_types'])->get();
+//                ->with(['payments', 'port_to', 'routes', 'goods_types'])
+                ->get();
         }
 
         return response()->success($data);
