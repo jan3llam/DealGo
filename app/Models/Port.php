@@ -12,6 +12,7 @@ class Port extends Model
     use HasFactory, SoftDeletes, HasTranslations;
 
     public $translatable = ['name'];
+    protected $with = ['city.country'];
     protected $appends = ['name_translation'];
 
     public function city()
