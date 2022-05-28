@@ -33,7 +33,7 @@ class ApiLogger
             $params = $request->all();
             $method = $request->method();
             $url = $request->url();
-            $user = auth('api')->user() ? auth('api')->user() : null;
+            $user = auth('api')->user() ? auth('api')->user()->userable : null;
 
             $log = new Log;
 
