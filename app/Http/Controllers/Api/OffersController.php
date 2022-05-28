@@ -28,7 +28,7 @@ class OffersController extends Controller
         $order_sort = 'desc';
 
         $query = Offer::query();
-
+        dd(auth('api')->user()->userable);
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
