@@ -85,7 +85,7 @@ class OffersController extends Controller
         if ($is_mine && auth('api')->check()) {
             $query->whereHas('vessel', function ($q) use ($owner) {
                 $q->whereHas('owner', function ($qu) use ($owner) {
-                    $qu->whereHas('id', auth('api')->user()->userable->id);
+                    $qu->where('id', auth('api')->user()->userable->id);
                 });
             });
         }
