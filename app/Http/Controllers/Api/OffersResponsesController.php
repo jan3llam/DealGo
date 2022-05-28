@@ -113,42 +113,24 @@ class OffersResponsesController extends Controller
 
     public function get($id, Request $request)
     {
-
+        $user_id = null;
         if (auth('api')->check()) {
             $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
             $user_id = isset($user->userable) ? $user->userable->id : null;
         }
 
-        $page_size = $request->input('page_size', 10);
-        $page_number = $request->input('page_number', 1);
-
-        $data['offer'] = Offer::where('id', $id)
-            ->whereHas('vessel')->whereHas('port_from')
-            ->whereHas('vessel', function ($q) {
-                $q->whereHas('owner');
-            })->with(['vessel.owner.user', 'port_from'])
-            ->withCount(['responses'])
+        $data['data'] = OfferResponse::where('id', $id)->whereHas('offer', function ($q) use ($user_id) {
+            $q->whereHas('vessel', function ($qu) use ($user_id) {
+                $qu->whereHas('owner', function ($que) use ($user_id) {
+                    $que->where('id', $user_id);
+                });
+            });
+        })
+            ->whereHas('tenant')
+            ->whereHas('port_to')
+            ->with(['payments', 'port_to', 'routes', 'goods_types', 'offer'])
             ->first();
-
-        if ($data['offer']->vessel->owner->id === $user_id) {
-            $data['responses'] = OfferResponse::whereHas('offer', function ($q) use ($id) {
-                $q->where('id', $id);
-            })
-                ->whereHas('tenant')
-                ->whereHas('port_to')
-                ->with(['payments', 'port_to', 'routes', 'goods_types'])
-                ->skip(($page_number - 1) * $page_size)
-                ->take($page_size)
-                ->orderBy('created_at')
-                ->get();
-            $data['meta']['total'] = OfferResponse::whereHas('offer', function ($q) use ($id) {
-                $q->where('id', $id);
-            })->whereHas('tenant')->whereHas('port_to')->count();
-            $data['meta']['count'] = $data['responses']->count();
-            $data['meta']['page_number'] = $page_number;
-
-        }
 
         return response()->success($data);
     }
