@@ -28,7 +28,6 @@ class OffersController extends Controller
         $order_sort = 'desc';
 
         $query = Offer::query();
-        dd(auth('api')->user()->userable);
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
@@ -84,8 +83,6 @@ class OffersController extends Controller
 
 
         if ($is_mine && auth('api')->check()) {
-            $owner = auth('api')->user()->userable;
-            dd($owner);
             $query->whereHas('vessel', function ($q) use ($owner) {
                 $q->whereHas('owner', function ($qu) use ($owner) {
                     $qu->whereHas('id', auth('api')->user()->userable->id);
