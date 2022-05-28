@@ -77,7 +77,7 @@ class OffersController extends Controller
         if ($owner) {
             $query->whereHas('vessel', function ($q) use ($owner) {
                 $q->whereHas('owner', function ($qu) use ($owner) {
-                    $qu->whereHas('id', $owner);
+                    $qu->whereHas('id', auth('api')->user()->userable->id);
                 });
             });
         }
