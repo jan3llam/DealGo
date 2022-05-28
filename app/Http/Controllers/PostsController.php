@@ -140,7 +140,7 @@ class PostsController extends Controller
             'updated_at' => 'required|string',
             'meta_name' => 'required|string',
             'meta_description' => 'required|string',
-            'meta_description' => 'required|file',
+            'meta_image' => 'required|file',
         ]);
 
         if ($validator->fails()) {
