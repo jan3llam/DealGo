@@ -173,7 +173,7 @@ class VesselsController extends Controller
 
         if ($validator->fails()) {
             if (isset($validator->failed()['imo']['Unique']) || isset($validator->failed()['mmsi']['Unique'])) {
-                return response()->error('alreadyExist');
+                return response()->error('alreadyExistVessel');
             }
             return response()->error('missingParameters', $validator->failed());
         }

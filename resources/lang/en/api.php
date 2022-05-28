@@ -78,6 +78,10 @@ return [
             'code' => "-25",
             'message' => 'File not valid'
         ],
+        'alreadyExistVessel' => [
+            'code' => "-28",
+            'message' => 'Vessel already exist'
+        ],
         'notAuthorized' => [
             'code' => "-26",
             'message' => 'You\'re not authorized to do this action'
