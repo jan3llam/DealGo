@@ -121,6 +121,19 @@ class VesselsController extends Controller
 
     }
 
+    public function get($id)
+    {
+        $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->userable->id)->first();
+
+        if (!$item) {
+            return response()->error('objectNotFound');
+        }
+
+        return response()->success($item);
+    }
+
     public function check_ps07($id, Request $request)
     {
         $vessel = Vessel::withTrashed()->where('id', $id)->first();
@@ -149,7 +162,6 @@ class VesselsController extends Controller
         return response()->customError($data->code, $data->detail);
 
     }
-
 
     public function add(Request $request)
     {

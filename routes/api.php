@@ -107,6 +107,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/list', [VesselsController::class, 'list']);
         Route::get('/check/{id}', [VesselsController::class, 'check_ps07']);
         Route::group(['middleware' => 'auth:api'], function () {
+            Route::get('/get/{id}', [VesselsController::class, 'get']);
             Route::post('/add', [VesselsController::class, 'add']);
             Route::put('/update/{id}', [VesselsController::class, 'update']);
             Route::put('/status/{id}', [VesselsController::class, 'status']);
