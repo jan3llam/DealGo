@@ -197,4 +197,21 @@ class CrewsController extends Controller
 
         return response()->success();
     }
+
+    public function get($id)
+    {
+        $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        $item = Crew::withTrashed()->where('id', $id)->whereHas('vessel', function ($q) use ($user) {
+            $q->whereHas('owner', function ($qu) use ($user) {
+                $qu->where('id', $user->userable->id);
+            });
+        })->first();
+
+        if (!$item) {
+            return response()->error('objectNotFound');
+        }
+
+        return response()->success($item);
+    }
 }
