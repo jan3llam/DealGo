@@ -125,7 +125,7 @@ class VesselsController extends Controller
     {
         $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->userable->id)->first();
+        $item = Vessel::withTrashed()->where('id', $id)->where('owner_id', $user->userable->id)->with(['country', 'type'])->first();
 
         if (!$item) {
             return response()->error('objectNotFound');
