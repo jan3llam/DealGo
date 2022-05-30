@@ -6,8 +6,10 @@ use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CitiesController;
 use App\Http\Controllers\Api\CountriesController;
+use App\Http\Controllers\Api\CrewsController;
 use App\Http\Controllers\Api\GoodsTypesController;
 use App\Http\Controllers\Api\HomepageController;
+use App\Http\Controllers\Api\MaintenancesController;
 use App\Http\Controllers\Api\OffersController;
 use App\Http\Controllers\Api\OffersResponsesController;
 use App\Http\Controllers\Api\PortsController;
@@ -116,19 +118,19 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
     });
 
     Route::group(['prefix' => 'crews', 'middleware' => 'auth:api'], function () {
-        Route::get('/list', [VesselsController::class, 'list']);
-        Route::get('/get/{id}', [VesselsController::class, 'get']);
-        Route::post('/add', [VesselsController::class, 'add']);
-        Route::put('/update/{id}', [VesselsController::class, 'update']);
-        Route::delete('/{id}', [VesselsController::class, 'delete']);
+        Route::get('/list/{id}', [CrewsController::class, 'list']);
+        Route::get('/get/{id}', [CrewsController::class, 'get']);
+        Route::post('/add', [CrewsController::class, 'add']);
+        Route::put('/update/{id}', [CrewsController::class, 'update']);
+        Route::delete('/{id}', [CrewsController::class, 'delete']);
     });
 
     Route::group(['prefix' => 'maintenances', 'middleware' => 'auth:api'], function () {
-        Route::get('/list', [VesselsController::class, 'list']);
-        Route::get('/get/{id}', [VesselsController::class, 'get']);
-        Route::post('/add', [VesselsController::class, 'add']);
-        Route::put('/update/{id}', [VesselsController::class, 'update']);
-        Route::delete('/{id}', [VesselsController::class, 'delete']);
+        Route::get('/list/{id}', [MaintenancesController::class, 'list']);
+        Route::get('/get/{id}', [MaintenancesController::class, 'get']);
+        Route::post('/add', [MaintenancesController::class, 'add']);
+        Route::put('/update/{id}', [MaintenancesController::class, 'update']);
+        Route::delete('/{id}', [MaintenancesController::class, 'delete']);
     });
 
     Route::group(['prefix' => 'offers'], function () {
