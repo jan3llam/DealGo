@@ -6,6 +6,7 @@ use App\Models\Contract;
 use App\Models\ContractPayment;
 use App\Models\Offer;
 use App\Models\OfferResponse;
+use App\Models\OfferResponseGoodsType;
 use App\Models\OfferResponsePayment;
 use App\Models\Owner;
 use App\Models\Shipment;
@@ -179,7 +180,10 @@ class OffersResponsesController extends Controller
 
             $goods = $request->input('goods', []);
             foreach ($goods as $index => $good) {
-                $item->goods_types()->attach($good['gtype'], ['weight' => $good['weight']]);
+                $good_item = new OfferResponseGoodsType;
+                $good_item->good_id = $good['gtype'];
+                $good_item->weight = $good['weight'];
+                $item->goods_types()->save($good_item);
             }
         }
         if ($request->contract != 1) {
