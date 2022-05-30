@@ -115,6 +115,22 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         });
     });
 
+    Route::group(['prefix' => 'crews', 'middleware' => 'auth:api'], function () {
+        Route::get('/list', [VesselsController::class, 'list']);
+        Route::get('/get/{id}', [VesselsController::class, 'get']);
+        Route::post('/add', [VesselsController::class, 'add']);
+        Route::put('/update/{id}', [VesselsController::class, 'update']);
+        Route::delete('/{id}', [VesselsController::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'maintenances', 'middleware' => 'auth:api'], function () {
+        Route::get('/list', [VesselsController::class, 'list']);
+        Route::get('/get/{id}', [VesselsController::class, 'get']);
+        Route::post('/add', [VesselsController::class, 'add']);
+        Route::put('/update/{id}', [VesselsController::class, 'update']);
+        Route::delete('/{id}', [VesselsController::class, 'delete']);
+    });
+
     Route::group(['prefix' => 'offers'], function () {
         Route::get('/list', [OffersController::class, 'list']);
         Route::get('/get/{id}', [OffersController::class, 'get']);
