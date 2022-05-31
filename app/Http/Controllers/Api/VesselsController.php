@@ -203,6 +203,7 @@ class VesselsController extends Controller
         $item->capacity = $params['capacity'];
         $item->build_year = $params['build'];
         $item->status = $request->input('status', 1);
+        $item->files = json_encode($request->input('files', []));
 
         $item->save();
 
@@ -246,6 +247,7 @@ class VesselsController extends Controller
         $item->mmsi = $params['mmsi'];
         $item->capacity = $params['capacity'];
         $item->build_year = $params['build'];
+        $item->files = json_encode($request->input('files', []));
 
         $item->save();
 

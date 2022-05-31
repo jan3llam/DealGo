@@ -39,4 +39,9 @@ class Vessel extends Model
     {
         return $this->hasMany(Shipment::class);
     }
+
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

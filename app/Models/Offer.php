@@ -25,4 +25,9 @@ class Offer extends Model
     {
         return $this->belongsTo(Vessel::class);
     }
+
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

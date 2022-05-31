@@ -214,6 +214,19 @@ class VesselsController extends Controller
         $item->build_year = $params['build'];
         $item->status = 1;
 
+        $files = $request->file('files', []);
+        $filesArr = [];
+        if ($files) {
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+                $fileName = Str::random(18) . '.' . $extension;
+                Storage::disk('public_images')->putFileAs('', $file, $fileName);
+                $filesArr[] = $fileName;
+            }
+        }
+
+        $item->files = json_encode($filesArr);
+
         $item->save();
 
         return response()->success();
@@ -263,6 +276,18 @@ class VesselsController extends Controller
 
         $item->status = 1;
 
+        $files = $request->file('files', []);
+        $filesArr = [];
+        if ($files) {
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+                $fileName = Str::random(18) . '.' . $extension;
+                Storage::disk('public_images')->putFileAs('', $file, $fileName);
+                $filesArr[] = $fileName;
+            }
+        }
+
+        $item->files = json_encode($filesArr);
         $item->save();
 
         return response()->success();
