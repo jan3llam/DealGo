@@ -11,6 +11,7 @@ class OfferResponse extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'offers_responses';
+    protected $with = ['tenant.user'];
 
     public function offer()
     {
