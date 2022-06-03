@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\MessageSent;
 use App\Helpers\Helpers;
 use App\Models\Participant;
 use App\Models\Thread;
@@ -76,7 +77,9 @@ class ChatController extends Controller
             ->to($request->user_id)
             ->send();
 
-        Helpers::sendNotification('new_chat', ['username' => auth('api')->user()->name], $request->user_id);
+        broadcast(new MessageSent(auth('api')->user(), $request->text))->toOthers();
+
+//        Helpers::sendNotification('new_chat', ['username' => auth('api')->user()->name], $request->user_id);
 
         return response()->success(["thread_id" => $thread->id]);
     }
@@ -146,6 +149,8 @@ class ChatController extends Controller
         $message = $user
             ->writes($request->text, $request->input('media', 0))
             ->reply($thread);
+
+        broadcast(new MessageSent($user, $request->text))->toOthers();
 
         return response()->success();
     }
