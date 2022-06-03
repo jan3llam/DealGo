@@ -146,6 +146,10 @@ class MaintenancesController extends Controller
             $q->where('id', $vessel->id);
         })->first();
 
+        if (!$item) {
+            return response()->error('objectNotFound');
+        }
+
         $item->vessel_id = $vessel->id;
         $item->name = $params['name'];
         $item->start_at = Carbon::parse($params['start']);

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CitiesController;
+use App\Http\Controllers\Api\ContractsController;
 use App\Http\Controllers\Api\CountriesController;
 use App\Http\Controllers\Api\CrewsController;
 use App\Http\Controllers\Api\GoodsTypesController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Api\PortsController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RequestsController;
 use App\Http\Controllers\Api\RequestsResponsesController;
+use App\Http\Controllers\Api\ShipmentsController;
 use App\Http\Controllers\Api\VesselsController;
 use App\Http\Controllers\Api\VesselsTypesController;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
@@ -103,6 +105,15 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'ports'], function () {
         Route::get('/list', [PortsController::class, 'list']);
+    });
+
+    Route::group(['prefix' => 'shipments'], function () {
+        Route::get('/list', [ShipmentsController::class, 'list']);
+    });
+
+    Route::group(['prefix' => 'contracts'], function () {
+        Route::get('/list', [ContractsController::class, 'list']);
+        Route::post('/payments/{id}', [ContractsController::class, 'payments']);
     });
 
     Route::group(['prefix' => 'vessels'], function () {
