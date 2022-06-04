@@ -262,7 +262,7 @@ class OffersResponsesController extends Controller
             $contract->origin_id = $item->id;
             $contract->origin_type = OfferResponse::class;
 
-            $contract->save();
+//            $contract->save();
 
             $shipment = new Shipment;
             $shipment->vessel_id = $item->offer->vessel->id;
@@ -270,7 +270,7 @@ class OffersResponsesController extends Controller
             $shipment->port_to = $item->port_to;
             $shipment->date = $item->date_to;
 
-            $contract->shipments()->saveMany([$shipment]);
+//            $contract->shipments()->saveMany([$shipment]);
 
             $cPayments = [];
 
@@ -285,14 +285,14 @@ class OffersResponsesController extends Controller
 
                 array_push($cPayments, $payment);
             }
-            $contract->payments()->saveMany($cPayments);
+//            $contract->payments()->saveMany($cPayments);
 
             $item->status = 1;
-            $item->save();
+//            $item->save();
 
             $item->offer->responses->where('id', '!=', $item->id)->each(function ($i) {
                 $i->status = 2;
-                $i->save();
+//                $i->save();
             });;
         }
 
