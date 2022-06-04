@@ -153,7 +153,7 @@ class OffersController extends Controller
                 ->with(['payments', 'port_to', 'routes', 'goods_types'])->get();
             $data['meta']['total'] = OfferResponse::whereHas('offer', function ($q) use ($id) {
                 $q->where('id', $id);
-            })->whereHas('tenant')->whereHas('port_to')->count();
+            })->whereHas('goods_types')->whereHas('tenant')->whereHas('port_to')->where('status', 0)->count();
             $data['meta']['count'] = $data['responses']->count();
             $data['meta']['page_number'] = $page_number;
         }
