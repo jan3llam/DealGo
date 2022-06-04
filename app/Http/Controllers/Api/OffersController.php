@@ -9,6 +9,7 @@ use App\Models\Port;
 use App\Models\User;
 use App\Models\Vessel;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -96,9 +97,8 @@ class OffersController extends Controller
             });
         })->whereHas('port_from')
             ->with(['vessel.type.goods_types', 'port_from'])
-            ->withCount(['responses' => function ($q) {
-                $q->whereHas('port_to')
-                    ->whereHas('goods_types');
+            ->withCount(['responses' => function (Builder $q) {
+                $q->whereHas('port_to')->whereHas('goods_types')->where('status', 1);
             }]);
 
         $total = $query->count();
