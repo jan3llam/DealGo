@@ -113,15 +113,13 @@ class MaintenancesController extends Controller
         return response()->success();
     }
 
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
         $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
         if (!$user) {
             return response()->error('notAuthorized');
         }
-
-        $id = $request->object_id;
 
         $params = $request->all();
         $validator = Validator::make($params, [
@@ -145,7 +143,7 @@ class MaintenancesController extends Controller
         $item = Maintenance::withTrashed()->where('id', $id)->whereHas('vessel', function ($q) use ($vessel) {
             $q->where('id', $vessel->id);
         })->first();
-        dd($item);
+
         if (!$item) {
             return response()->error('objectNotFound');
         }
