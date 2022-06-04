@@ -145,7 +145,7 @@ class MaintenancesController extends Controller
         $item = Maintenance::withTrashed()->where('id', $id)->whereHas('vessel', function ($q) use ($vessel) {
             $q->where('id', $vessel->id);
         })->first();
-
+        dd($item);
         if (!$item) {
             return response()->error('objectNotFound');
         }
