@@ -130,7 +130,7 @@ class OffersResponsesController extends Controller
         })
             ->whereHas('tenant')
             ->whereHas('port_to')
-            ->with(['payments', 'port_to', 'routes', 'goods_types', 'offer'])
+            ->with(['payments', 'port_to', 'routes', 'goods_types.good_type', 'offer.port_from'])
             ->first();
 
         return response()->success($data);

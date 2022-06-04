@@ -114,7 +114,8 @@ class CrewsController extends Controller
         $item->job_title = $params['job'];
         $item->dob = $params['birth'];
         $item->address = $params['address'];
-        $item->files = json_encode($params['file']);
+        $item->file = $params['file'];
+        $item->files = json_encode($request->input('files', []));
         $item->status = 1;
 
         $item->save();
@@ -170,7 +171,8 @@ class CrewsController extends Controller
         $item->dob = $params['birth'];
         $item->address = $params['address'];
         $item->status = 1;
-        $item->files = json_encode($params['files']);
+        $item->file = $params['file'];
+        $item->files = json_encode($request->input('files', []));
 
         $item->save();
 
