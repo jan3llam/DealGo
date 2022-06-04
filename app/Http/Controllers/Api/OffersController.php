@@ -134,7 +134,9 @@ class OffersController extends Controller
             ->whereHas('vessel', function ($q) {
                 $q->whereHas('owner');
             })->with(['vessel.owner.user', 'vessel.type.goods_types', 'port_from'])
-            ->withCount(['responses'])
+            ->withCount(['responses' => function (Builder $q) {
+                $q->whereHas('port_to')->whereHas('goods_types')->where('status', 0);
+            }])
             ->first();
 
         if ($data['offer'] && $data['offer']->vessel->owner->id === $user_id) {
@@ -143,6 +145,8 @@ class OffersController extends Controller
             })
                 ->whereHas('tenant')
                 ->whereHas('port_to')
+                ->whereHas('goods_types')
+                ->where('status', 0)
                 ->skip(($page_number - 1) * $page_size)
                 ->take($page_size)
                 ->orderBy('created_at')
