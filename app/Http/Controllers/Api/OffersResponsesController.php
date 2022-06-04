@@ -246,7 +246,7 @@ class OffersResponsesController extends Controller
         }
 
         $item = OfferResponse::where('id', $id)->first();
-
+        dd($item->offer->vessel->owner->id, $user->userable->id);
         if ($item->offer->vessel->owner->id !== $user->userable->id) {
             return response()->error('objectNotFound');
         }
