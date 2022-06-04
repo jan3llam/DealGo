@@ -27,7 +27,7 @@ class OffersResponsesController extends Controller
         }
 
         $offer = Offer::find($id);
-        if (!$offer || $offer->vessel->owner->id !== $user->owner->id) {
+        if (!$offer || $offer->vessel->owner->id !== $user->userable->id) {
             return response()->error('objectNotFound');
         }
 
