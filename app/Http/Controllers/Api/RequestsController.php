@@ -165,7 +165,7 @@ class RequestsController extends Controller
         $item = new ShippingRequest;
 
         $item->name = $params['name'];
-        $item->tenant_id = $user->tenant->id;
+        $item->tenant_id = $user->userable->id;
         $item->owner_id = null;
         $item->port_from = $params['port_from'];
         $item->port_to = $params['port_to'];
@@ -201,8 +201,8 @@ class RequestsController extends Controller
             return response()->error('notAuthorized');
         }
 
-        $item = ShippingRequest::withTrashed()->where('id', $id)->whereHas('vessel.owner', function ($q) use ($user) {
-            $q->where('id', $user->owner->id);
+        $item = ShippingRequest::where('id', $id)->whereHas('vessel.owner', function ($q) use ($user) {
+            $q->where('id', $user->userable->id);
         })->first();
 
         if (!$item) {
