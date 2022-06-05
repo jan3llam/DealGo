@@ -107,11 +107,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/list', [PortsController::class, 'list']);
     });
 
-    Route::group(['prefix' => 'shipments'], function () {
+    Route::group(['prefix' => 'shipments', 'middleware' => 'auth:api'], function () {
         Route::get('/list', [ShipmentsController::class, 'list']);
     });
 
-    Route::group(['prefix' => 'contracts'], function () {
+    Route::group(['prefix' => 'contracts', 'middleware' => 'auth:api'], function () {
         Route::get('/list', [ContractsController::class, 'list']);
         Route::post('/payments/{id}', [ContractsController::class, 'payments']);
     });
