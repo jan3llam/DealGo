@@ -254,7 +254,7 @@ class OffersResponsesController extends Controller
         if ($item) {
             $contract = new Contract;
             $contract->owner_id = $item->offer->vessel->owner->id;
-            $contract->tenant_id = $item->userable->id;
+            $contract->tenant_id = $item->tenant_id;
             $contract->type = $item->contract;
             $contract->date_from = $item->date_from;
             $contract->date_to = $item->date_to;
