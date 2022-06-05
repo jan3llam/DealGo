@@ -7,6 +7,7 @@ use App\Models\RequestResponse;
 use App\Models\Tenant;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -25,7 +26,13 @@ class RequestsController extends Controller
         $order_field = 'created_at';
         $order_sort = 'desc';
 
-        $query = ShippingRequest::query();
+        $query = ShippingRequest::whereHas('port_to')->whereHas('port_from')
+            ->whereHas('tenant', function ($q) {
+                $q->whereHas('user');
+            })->with(['port_to', 'port_from', 'tenant.user'])
+            ->withCount(['responses' => function (Builder $q) {
+                $q->whereHas('vessels')->whereHas('request_goods_types')->where('status', 0);
+            }]);
 
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
@@ -87,18 +94,13 @@ class RequestsController extends Controller
 
         if ($is_mine && auth('api')->check()) {
             $query->whereHas('tenant', function ($q) use ($user_id) {
-                $q->where('id', $user_id);
+                $q->where('id', auth('api')->user()->userable->id);
             });
         }
 
         $total = $query->count();
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
-            ->whereHas('port_to')->whereHas('port_from')
-            ->whereHas('tenant', function ($q) {
-                $q->whereHas('user');
-            })->with(['port_to', 'port_from', 'tenant.user'])
-            ->withCount(['responses'])
             ->take($page_size)->orderBy($order_field, $order_sort)->get();
 
         $data['meta']['total'] = $total;
