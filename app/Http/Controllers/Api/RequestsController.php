@@ -127,7 +127,9 @@ class RequestsController extends Controller
             ->whereHas('tenant', function ($q) {
                 $q->whereHas('user');
             })->with(['tenant.user', 'port_from', 'port_to'])
-            ->withCount(['responses'])
+            ->withCount(['responses' => function (Builder $q) {
+                $q->whereHas('vessels')->whereHas('request_goods_types')->where('status', 0);
+            }])
             ->first();
 
         if ($data['request']->tenant->id === $user_id) {
