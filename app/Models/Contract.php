@@ -29,12 +29,12 @@ class Contract extends Model
         return $this->morphTo();
     }
 
-    public function remaining_value()
+    public function getRemainingValueAttribute()
     {
         return ($this->full_value() - $this->payments()->where('paid', 0)->sum('value'));
     }
 
-    public function full_value()
+    public function getFullValueAttribute()
     {
         return $this->payments()->sum('value');
     }
