@@ -14,11 +14,6 @@ class Contract extends Model
         return $this->hasMany(Shipment::class);
     }
 
-    public function payments()
-    {
-        return $this->hasMany(ContractPayment::class);
-    }
-
     public function owner()
     {
         return $this->belongsTo(Owner::class);
@@ -32,5 +27,20 @@ class Contract extends Model
     public function origin()
     {
         return $this->morphTo();
+    }
+
+    public function remaining_value()
+    {
+        return ($this->full_value() - $this->payments()->where('paid', 0)->sum('value'));
+    }
+
+    public function full_value()
+    {
+        return $this->payments()->sum('value');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(ContractPayment::class);
     }
 }
