@@ -47,7 +47,9 @@ class Contract extends Model
     public function getGoodsTypesAttribute()
     {
         if ($this->origin instanceof OfferResponse) {
-            return $this->origin->goods_types->good_type;
+            return $this->origin->goods_types->each(function ($item) {
+                return $item->good_type;
+            });
         } elseif ($this->origin instanceof RequestResponse) {
             return $this->origin->request->goods_types->good_type;
         }
