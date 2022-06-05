@@ -51,7 +51,9 @@ class Contract extends Model
                 return $item->good_type;
             });
         } elseif ($this->origin instanceof RequestResponse) {
-            return $this->origin->request->goods_types->good_type;
+            return $this->origin->request->goods_types->each(function ($item) {
+                return $item->good_type;
+            });
         }
     }
 }
