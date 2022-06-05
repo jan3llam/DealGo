@@ -24,7 +24,7 @@ class ContractsController extends Controller
             },
             'owner' => function ($q) {
                 $q->with('user');
-            }, 'payments'
+            }, 'payments', 'origin'
         ])->whereHas('owner', function ($q) use ($user_id) {
             $q->whereHas('user', function ($qu) use ($user_id) {
                 $qu->where('id', $user_id);
