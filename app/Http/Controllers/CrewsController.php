@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Crew;
 use App\Models\Vessel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -166,7 +167,7 @@ class CrewsController extends Controller
         $item->last_name = $params['last_name'];
         $item->city_id = $params['city'];
         $item->job_title = $params['job'];
-        $item->dob = $params['birth'];
+        $item->dob = Carbon::parse($params['birth'])->toDateTimeString();
         $item->address = $params['address'];
 
         $files = $request->file('files', []);
@@ -233,7 +234,7 @@ class CrewsController extends Controller
         $item->last_name = $params['last_name'];
         $item->city_id = $params['city'];
         $item->job_title = $params['job'];
-        $item->dob = $params['birth'];
+        $item->dob = Carbon::parse($params['birth'])->toDateTimeString();
         $item->address = $params['address'];
 
         $files = $request->file('files', []);
