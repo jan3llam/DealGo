@@ -22,6 +22,11 @@ class RequestResponse extends Model
         return $this->belongsTo(Owner::class);
     }
 
+    public function parent()
+    {
+        return $this->offer();
+    }
+
     public function total()
     {
         return $this->payments()->sum('value');

@@ -18,6 +18,11 @@ class OfferResponse extends Model
         return $this->belongsTo(Offer::class);
     }
 
+    public function parent()
+    {
+        return $this->offer();
+    }
+
     public function tenant()
     {
         return $this->belongsTo(Tenant::class);
