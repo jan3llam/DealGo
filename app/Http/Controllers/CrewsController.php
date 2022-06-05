@@ -166,7 +166,7 @@ class CrewsController extends Controller
         $item->first_name = $params['first_name'];
         $item->last_name = $params['last_name'];
         $item->city_id = $params['city'];
-        $item->job_title = $params['job'];
+        $item->job_title = $params['job'];;
         $item->dob = Carbon::parse($params['birth'])->toDateTimeString();
         $item->address = $params['address'];
 
