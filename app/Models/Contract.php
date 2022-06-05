@@ -43,4 +43,13 @@ class Contract extends Model
     {
         return $this->hasMany(ContractPayment::class);
     }
+
+    public function getGoodsTypesAttribute()
+    {
+        if ($this->origin instanceof OfferResponse) {
+            return $this->origin->goods_types->good_type;
+        } elseif ($this->origin instanceof RequestResponse) {
+            return $this->origin->request->goods_types->good_type;
+        }
+    }
 }
