@@ -108,7 +108,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
     });
 
     Route::group(['prefix' => 'shipments', 'middleware' => 'auth:api'], function () {
-        Route::get('/list', [ShipmentsController::class, 'list']);
+        Route::get('/list/{id?}', [ShipmentsController::class, 'list']);
     });
 
     Route::group(['prefix' => 'contracts', 'middleware' => 'auth:api'], function () {

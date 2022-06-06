@@ -29,4 +29,16 @@ class Shipment extends Model
         return $this->belongsTo(Port::class, 'port_to');
     }
 
+    public function getGoodsTypesAttribute()
+    {
+        if ($this->cotract->origin instanceof OfferResponse) {
+            return $this->contract->origin->goods_types->each(function ($item) {
+                return $item->good_type;
+            });
+        } elseif ($this->contract->origin instanceof RequestResponse) {
+            return $this->origin->request->request_goods_types->whereHas('')->each(function ($item) {
+                return $item->good_type;
+            });
+        }
+    }
 }

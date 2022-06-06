@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Contract;
 use App\Models\Shipment;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
@@ -9,7 +10,7 @@ use Validator;
 
 class ShipmentsController extends Controller
 {
-    public function list(Request $request)
+    public function list($id, Request $request)
     {
         $user_id = null;
 
@@ -73,14 +74,22 @@ class ShipmentsController extends Controller
         if ($vessel_id) {
             $vessel = Vessel::find($vessel_id);
             if ($vessel) {
-                $query->whereIn('id', $vessel->id);
+                $query->where('vessel_id', $vessel->id);
+            }
+        }
+        if ($id) {
+            $contract = Contract::find($id);
+            if ($contract) {
+                $query->whereIn('id', $contract->id);
             }
         }
 
         $total = $query->limit($page_size)->count();
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
-            ->take($page_size)->orderBy($order_field, $order_sort)->get();
+            ->take($page_size)->orderBy($order_field, $order_sort)->get()->each(function ($items) {
+                $items->append(['goods_types']);
+            });;
 
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $data['data']->count();

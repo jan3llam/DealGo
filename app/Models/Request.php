@@ -21,6 +21,11 @@ class Request extends Model
         return $this->hasMany(RequestResponse::class);
     }
 
+    public function request_goods_types()
+    {
+        return $this->hasMany(RequestsGoodsType::class);
+    }
+
     public function port_from()
     {
         return $this->belongsTo(Port::class, 'port_from');
