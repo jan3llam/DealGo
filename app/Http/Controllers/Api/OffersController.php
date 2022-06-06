@@ -145,7 +145,7 @@ class OffersController extends Controller
             })
                 ->whereHas('tenant')
                 ->whereHas('port_to')
-                ->whereHas('goods_types')
+//                ->whereHas('goods_types')
                 ->where('status', 0)
                 ->skip(($page_number - 1) * $page_size)
                 ->take($page_size)
