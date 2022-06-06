@@ -126,7 +126,7 @@ class RequestsController extends Controller
             ->whereHas('port_to')->whereHas('port_from')
             ->whereHas('tenant', function ($q) {
                 $q->whereHas('user');
-            })->with(['tenant.user', 'port_from', 'port_to'])
+            })->with(['tenant.user', 'port_from', 'port_to', 'request_goods_types'])
             ->withCount(['responses' => function (Builder $q) {
                 $q->whereHas('vessels')->whereHas('request_goods_types')->where('status', 0);
             }])
