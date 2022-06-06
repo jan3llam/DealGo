@@ -35,10 +35,10 @@ class Shipment extends Model
             return $this->contract->origin->goods_types->each(function ($item) {
                 return $item->good_type;
             });
-        } elseif ($this->contract->origin instanceof RequestResponse) {
-            return $this->origin->request->request_goods_types->whereHas('')->each(function ($item) {
-                return $item->good_type;
-            });
+//        } elseif ($this->contract->origin instanceof RequestResponse) {
+//            return $this->contract->origin->request->request_goods_types->whereHas('')->each(function ($item) {
+//                return $item->good_type;
+//            });
         }
     }
 }
