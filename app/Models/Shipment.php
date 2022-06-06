@@ -31,7 +31,7 @@ class Shipment extends Model
 
     public function getGoodsTypesAttribute()
     {
-        if ($this->cotract->origin instanceof OfferResponse) {
+        if ($this->contract->origin instanceof OfferResponse) {
             return $this->contract->origin->goods_types->each(function ($item) {
                 return $item->good_type;
             });
