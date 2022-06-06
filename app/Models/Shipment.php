@@ -33,7 +33,7 @@ class Shipment extends Model
     {
         if ($this->contract->origin instanceof OfferResponse) {
             return $this->contract->origin->goods_types->each(function ($item) {
-                $item->with('good_type');
+                return $item->good_type;
             });
 //        } elseif ($this->contract->origin instanceof RequestResponse) {
 //            return $this->contract->origin->request->request_goods_types->whereHas('')->each(function ($item) {
