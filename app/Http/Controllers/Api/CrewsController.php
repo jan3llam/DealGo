@@ -208,7 +208,7 @@ class CrewsController extends Controller
             $q->whereHas('owner', function ($qu) use ($user) {
                 $qu->where('id', $user->userable->id);
             });
-        })->first();
+        })->with('city.country')->first();
 
         if (!$item) {
             return response()->error('objectNotFound');
