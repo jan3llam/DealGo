@@ -109,10 +109,12 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'shipments', 'middleware' => 'auth:api'], function () {
         Route::get('/list/{id?}', [ShipmentsController::class, 'list']);
+        Route::get('/get/{id}', [ShipmentsController::class, 'get']);
     });
 
     Route::group(['prefix' => 'contracts', 'middleware' => 'auth:api'], function () {
         Route::get('/list', [ContractsController::class, 'list']);
+        Route::get('/get/{id}', [ContractsController::class, 'get']);
         Route::post('/payments/{id}', [ContractsController::class, 'payments']);
     });
 

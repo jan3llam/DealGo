@@ -80,6 +80,40 @@ class ContractsController extends Controller
         return response()->success($data);
     }
 
+    public function get($id, Request $request)
+    {
+        $user_id = null;
+
+        if (auth('api')->check()) {
+            $user_id = auth('api')->user()->id;
+        }
+
+        $query = Contract::withCount('shipments')->with([
+            'tenant' => function ($q) {
+                $q->with('user');
+            },
+            'owner' => function ($q) {
+                $q->with('user');
+            }, 'shipments.vessel', 'shipments.port_from', 'shipments.port_to', 'origin.parent'
+        ])->whereHas('owner', function ($q) use ($user_id) {
+            $q->whereHas('user', function ($qu) use ($user_id) {
+                $qu->where('id', $user_id);
+            });
+        })->orWhereHas('tenant', function ($q) use ($user_id) {
+            $q->whereHas('user', function ($qu) use ($user_id) {
+                $qu->where('id', $user_id);
+            });
+        });
+
+        $query->where('id', $id);
+
+        $data = $query->first()->each(function ($items) {
+            $items->append(['full_value', 'remaining_value', 'goods_types']);
+        });
+
+        return response()->success($data);
+    }
+
     public function payments($id, Request $request)
     {
         $user_id = null;

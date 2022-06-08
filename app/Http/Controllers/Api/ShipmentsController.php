@@ -80,7 +80,7 @@ class ShipmentsController extends Controller
         if ($id) {
             $contract = Contract::find($id);
             if ($contract) {
-                $query->whereIn('id', $contract->id);
+                $query->where('contract_id', $contract->id);
             }
         }
 
@@ -96,6 +96,48 @@ class ShipmentsController extends Controller
         $data['meta']['page_number'] = $page_number;
         $data['data'] = $data['data']->toArray();
 
+
+        return response()->success($data);
+    }
+
+    public function get($id, Request $request)
+    {
+        $user_id = null;
+
+        if (auth('api')->check()) {
+            $user_id = auth('api')->user()->id;
+        }
+
+        $query = Shipment::with([
+            'vessel' => function ($q) {
+                $q->with('owner', function ($qu) {
+                    $qu->with('user');
+                });
+            },
+            'contract.tenant' => function ($q) {
+                $q->with('user');
+            },
+            'port_from', 'port_to',
+        ])->whereHas('vessel', function ($q) use ($user_id) {
+            $q->whereHas('owner', function ($qu) use ($user_id) {
+                $qu->whereHas('user', function ($que) use ($user_id) {
+                    $que->where('id', $user_id);
+                });
+            });
+        })->orWhereHas('contract', function ($q) use ($user_id) {
+            $q->whereHas('tenant', function ($qu) use ($user_id) {
+                $qu->whereHas('user', function ($que) use ($user_id) {
+                    $que->where('id', $user_id);
+                });
+            });
+        })->whereHas('port_from')->whereHas('port_to');
+
+
+        $query->where('id', $id);
+
+        $data = $query->first()->each(function ($items) {
+            $items->append(['goods_types']);
+        });
 
         return response()->success($data);
     }
