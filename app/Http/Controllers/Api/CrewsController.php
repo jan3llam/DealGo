@@ -148,7 +148,7 @@ class CrewsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->error('missingParameters');
+            return response()->error('missingParameters', $validator->failed());
         }
 
         $vessel = Vessel::withTrashed()->where('id', $params['vessel'])->where('owner_id', $user->userable->id)->first();
