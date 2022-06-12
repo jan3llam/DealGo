@@ -135,9 +135,7 @@ class ShipmentsController extends Controller
 
         $query->where('id', $id);
 
-        $data = $query->first()->each(function ($items) {
-            $items->append(['goods_types']);
-        });
+        $data = $query->first()->append(['goods_types']);
 
         return response()->success($data);
     }

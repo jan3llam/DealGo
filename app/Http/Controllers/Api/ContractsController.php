@@ -107,9 +107,7 @@ class ContractsController extends Controller
 
         $query->where('id', $id);
 
-        $data = $query->first()->each(function ($items) {
-            $items->append(['full_value', 'remaining_value', 'goods_types']);
-        });
+        $data = $query->first()->append(['full_value', 'remaining_value', 'goods_types']);
 
         return response()->success($data);
     }
