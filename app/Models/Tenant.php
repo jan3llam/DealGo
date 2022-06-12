@@ -29,4 +29,10 @@ class Tenant extends Model
     {
         return json_decode($value);
     }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
+    }
+
 }
