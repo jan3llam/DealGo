@@ -101,7 +101,7 @@ class User extends Authenticatable implements JWTSubject
     public function getUserPaymentsSumAttribute()
     {
         return $this->userable->contracts->reduce(function ($sum, $item) {
-            return $sum + $item->payments->sum();
+            return $sum + $item->payments->sum('value');
         }, 0);
     }
 
