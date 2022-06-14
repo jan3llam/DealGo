@@ -93,5 +93,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->morphTo();
     }
 
+    public function getUserContractsCountAttribute()
+    {
+        return $this->userable->contracts->count();
+    }
+
+    public function getUserShipmentsCountAttribute()
+    {
+        return $this->userable->contracts->reduce(function ($count, $item) {
+            return $count + $item->shipments->count();
+        }, 0);
+    }
+
 
 }
