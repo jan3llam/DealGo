@@ -54,7 +54,7 @@ class RequestsResponsesController extends Controller
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
-        $filter_status = $request->input('status', 1);
+        $filter_status = $request->input('status', 0);
 
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
