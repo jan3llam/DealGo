@@ -112,7 +112,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getUserNextPaymentAttribute()
     {
-        return $this->userable->with('contacts.payments')->orderBy('order.payments')->where('paid', 0)->limit(1);
+        return $this->with('userable.contacts.payments')->orderBy('userable.contacts.payments')->where('paid', 0)->limit(1);
     }
 
     public function getUserShipmentsCountAttribute()
