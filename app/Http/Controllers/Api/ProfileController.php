@@ -26,8 +26,8 @@ class ProfileController extends Controller
             return response()->error('objectNotFound');
         }
 
-        $user['statistics']['contracts'] = $user->userable->contracts;
-        $user['statistics']['shipments'] = $user->userable->contracts->shipments;
+        $user['statistics']['contracts'] = $user['user']->userable->contracts;
+        $user['statistics']['shipments'] = $user['user']->userable->contracts->shipments;
 
         return response()->success($user);
     }
