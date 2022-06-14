@@ -116,7 +116,7 @@ class User extends Authenticatable implements JWTSubject
             $q->with('payments', function ($qu) {
                 $qu->where('paid', 0)->orderBy('date');
             });
-        })->limit(1);;
+        });;
     }
 
     public function getUserShipmentsCountAttribute()
