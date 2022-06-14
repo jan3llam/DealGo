@@ -16,7 +16,7 @@ use Validator;
 class RequestsResponsesController extends Controller
 {
 
-    public function list_api(Request $request)
+    public function list(Request $request)
     {
 
         $data = [];
