@@ -160,7 +160,7 @@ class RequestsResponsesController extends Controller
         $item = new RequestResponse;
 
         $item->request_id = $params['request'];
-        $item->owner_id = $user->owner->id;
+        $item->owner_id = $user->userable->id;
         $item->date = $params['date'];
         $item->description = $params['description'];
         $item->files = json_encode($request->input('files', []));
