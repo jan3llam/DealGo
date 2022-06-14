@@ -21,17 +21,17 @@ class ProfileController extends Controller
             $id = auth('api')->user()->id;
         }
 
-        $user['user'] = User::with('userable')->find($id);
+        $user = User::with('userable')->find($id);
         if (!$user) {
             return response()->error('objectNotFound');
         }
 
-        $user['statistics']['contracts'] = $user['user']->userable->contracts->count();
-        $user['statistics']['shipments'] = $user['user']->userable->contracts->reduce(function ($count, $item) {
+        $statistics['contracts_count'] = $user->userable->contracts->count();
+        $statistics['shipments_count'] = $user->userable->contracts->reduce(function ($count, $item) {
             return $count + $item->shipments->count();
         }, 0);
 
-        return response()->success($user);
+        return response()->success($user->merge($statistics));
     }
 
     public function registerFCMToken(Request $request)
