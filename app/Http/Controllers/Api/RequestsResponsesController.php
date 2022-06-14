@@ -129,7 +129,7 @@ class RequestsResponsesController extends Controller
             ->whereHas('port_to')
             ->whereHas('port_from')
             ->with(['payments', 'port_to', 'port_from', 'owner.userable', 'routes', 'request_goods_types.good_type'])
-            ->first();;
+            ->first();
 
 
         return response()->success($data);
