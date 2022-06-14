@@ -45,7 +45,7 @@ class RequestsResponsesController extends Controller
                     $qu->withTrashed();
                 });
             }, 'vessels', 'request_goods_types.good_type'
-        ]);
+        ])->whereHas('vessels')->whereHas('request_goods_types');
 
         if ($id) {
             $query->where('request_id', $id);

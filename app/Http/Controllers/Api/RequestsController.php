@@ -31,7 +31,7 @@ class RequestsController extends Controller
                 $q->whereHas('user');
             })->with(['port_to', 'port_from', 'tenant.user'])
             ->withCount(['responses' => function (Builder $q) {
-                $q->whereHas('vessels')->whereHas('request_goods_types')->where('status', 0);
+                $q->whereHas('vessels')->whereHas('request_goods_types');
             }]);
 
         $search_val = $request->input('keyword', null);
