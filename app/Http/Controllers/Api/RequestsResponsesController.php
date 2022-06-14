@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Models\Contract;
 use App\Models\ContractPayment;
 use App\Models\Owner;
-use App\Models\Request as ShippingRequest;
 use App\Models\RequestResponse;
 use App\Models\RequestResponsePayment;
 use App\Models\Shipment;
@@ -118,22 +117,21 @@ class RequestsResponsesController extends Controller
         if (auth('api')->check()) {
             $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
-            $user_id = isset($user->tenant) ? $user->tenant->id : null;
+            $user_id = isset($user->userable) ? $user->userable->id : null;
         }
 
-        $data['request'] = ShippingRequest::where('id', $id)
-            ->whereHas('port_to')->whereHas('port_from')
-            ->whereHas('tenant', function ($q) {
-                $q->whereHas('user');
-            })->with(['tenant.user', 'port_from', 'port_to'])
-            ->withCount(['responses'])
+        $data['data'] = RequestResponse::where('id', $id)->whereHas('request', function ($q) use ($user_id) {
+            $q->whereHas('tenant', function ($qu) use ($user_id) {
+                $qu->where('id', $user_id);
+            });
+        })
+            ->whereHas('tenant')
+            ->whereHas('port_to')
+            ->whereHas('port_from')
+            ->with(['payments', 'port_to', 'port_from', 'routes', 'request_goods_types.good_type'])
             ->first();
 
-        if ($data['request']->tenant->id === $user_id) {
-            $data['responses'] = RequestResponse::where('request_id', $data['request']->id)
-                ->whereHas('owner')
-                ->with(['payments', 'routes', 'goods_types'])->get();
-        }
+
         return response()->success($data);
     }
 
