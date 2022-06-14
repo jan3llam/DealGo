@@ -34,7 +34,6 @@ class RequestsResponsesController extends Controller
         $search_clm = ['owner.user.contact_name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
-        $request_id = $request->input('request_id', null);
         $params = $request->all();
 
         $query = RequestResponse::with([
@@ -48,15 +47,14 @@ class RequestsResponsesController extends Controller
             }, 'vessels', 'request_goods_types.good_type'
         ]);
 
-        if ($request_id) {
-            $query->where('request_id', $request_id);
+        if ($id) {
+            $query->where('request_id', $id);
         }
 
-        $search_val = isset($params['search']) ? $params['search'] : null;
-        $sort_field = isset($params['order']) ? $params['order'] : null;
-        $page = isset($params['start']) ? $params['start'] : 0;
-        $filter_status = isset($params['status']) ? $params['status'] : 1;
-        $per_page = isset($params['length']) ? $params['length'] : 10;
+        $search_val = $request->input('keyword', null);
+        $page_size = $request->input('page_size', 10);
+        $page_number = $request->input('page_number', 1);
+        $filter_status = $request->input('status', 1);
 
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
@@ -77,11 +75,6 @@ class RequestsResponsesController extends Controller
                     }
                 }
             });
-        }
-
-        if ($sort_field) {
-            $order_field = $sort_field;
-            $order_sort = $params['direction'];
         }
 
         if ($filter_status) {
@@ -109,11 +102,10 @@ class RequestsResponsesController extends Controller
             }
         }
 
-        $total = $query->limit($per_page)->count();
+        $total = $query->limit($page_size)->count();
 
-        $data['data'] = $query->skip(($page) * $per_page)
-            ->take($per_page)->orderBy($order_field, $order_sort)->get();
-
+        $data['data'] = $query->skip(($page_number - 1) * $page_size)
+            ->take($page_size)->orderBy($order_field, $order_sort)->get();
 
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
