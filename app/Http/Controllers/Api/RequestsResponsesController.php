@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Contract;
 use App\Models\ContractPayment;
 use App\Models\Owner;
+use App\Models\Request as ShippingRequest;
 use App\Models\RequestResponse;
 use App\Models\RequestResponsePayment;
 use App\Models\Shipment;
@@ -16,8 +17,18 @@ use Validator;
 class RequestsResponsesController extends Controller
 {
 
-    public function list(Request $request)
+    public function list($id, Request $request)
     {
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
+        $shipping = ShippingRequest::find($id);
+        if (!$shipping || $shipping->tenant->id !== $user->userable->id) {
+            return response()->error('objectNotFound');
+        }
 
         $data = [];
         $search_clm = ['owner.user.contact_name'];
@@ -25,6 +36,7 @@ class RequestsResponsesController extends Controller
         $order_sort = 'desc';
         $request_id = $request->input('request_id', null);
         $params = $request->all();
+
         $query = RequestResponse::with([
             'payments' => function ($query) {
                 $query->sum('value');
