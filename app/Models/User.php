@@ -104,7 +104,9 @@ class User extends Authenticatable implements JWTSubject
 //            return $sum + ($item->payments->sum('value'));
 //        }, 0);
 
-        return $this->userable->with('contracts.payments')->sum('value');
+        return $this->userable->with(['contracts.payments' => function ($query) {
+            $query->select('value');
+        }])->sum('value');
 
     }
 
