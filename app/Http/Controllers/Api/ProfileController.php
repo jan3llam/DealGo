@@ -21,10 +21,13 @@ class ProfileController extends Controller
             $id = auth('api')->user()->id;
         }
 
-        $user = User::with('userable')->withCount('userable.contracts')->withCount('userable.contracts.shipments')->find($id);
+        $user['user'] = User::with('userable')->find($id);
         if (!$user) {
             return response()->error('objectNotFound');
         }
+
+        $user['statistics']['contracts'] = $user->userable->contracts;
+        $user['statistics']['shipments'] = $user->userable->contracts->shipments;
 
         return response()->success($user);
     }
