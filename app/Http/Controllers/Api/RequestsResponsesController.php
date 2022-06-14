@@ -125,10 +125,10 @@ class RequestsResponsesController extends Controller
                 $qu->where('id', $user_id);
             });
         })
-            ->whereHas('tenant')
+            ->whereHas('owner')
             ->whereHas('port_to')
             ->whereHas('port_from')
-            ->with(['payments', 'port_to', 'port_from', 'routes', 'request_goods_types.good_type'])
+            ->with(['payments', 'port_to', 'port_from', 'owner.userable', 'routes', 'request_goods_types.good_type'])
             ->first();
 
 
