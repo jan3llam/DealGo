@@ -126,8 +126,6 @@ class RequestsResponsesController extends Controller
             });
         })
             ->whereHas('owner')
-            ->whereHas('port_to')
-            ->whereHas('port_from')
             ->with(['payments', 'request.port_to', 'request.port_from', 'owner.userable', 'routes', 'request_goods_types.good_type'])
             ->first();
 
