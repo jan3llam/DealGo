@@ -98,6 +98,20 @@ class User extends Authenticatable implements JWTSubject
         return $this->userable->contracts->count();
     }
 
+    public function getUserPaymentsSumAttribute()
+    {
+        return $this->userable->contracts->reduce(function ($sum, $item) {
+            return $sum + $item->payments->sum();
+        }, 0);
+    }
+
+    public function getUserNextPaymentAttribute()
+    {
+        return $this->userable->contracts->reduce(function ($date, $item) {
+            return $item->payments->where('paid', 0)->orderBy('date')->limit(1);
+        }, 0);
+    }
+
     public function getUserShipmentsCountAttribute()
     {
         return $this->userable->contracts->reduce(function ($count, $item) {

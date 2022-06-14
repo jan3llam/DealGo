@@ -26,7 +26,7 @@ class ProfileController extends Controller
             return response()->error('objectNotFound');
         }
 
-        return response()->success($user->append(['user_contracts_count', 'user_shipments_count']));
+        return response()->success($user->append(['user_contracts_count', 'user_shipments_count', 'user_payments_sum', 'user_next_payment']));
     }
 
     public function registerFCMToken(Request $request)
