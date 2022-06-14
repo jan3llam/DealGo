@@ -24,7 +24,7 @@ class RequestResponse extends Model
 
     public function parent()
     {
-        return $this->offer();
+        return $this->request();
     }
 
     public function total()
