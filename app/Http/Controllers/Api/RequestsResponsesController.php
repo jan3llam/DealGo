@@ -219,7 +219,7 @@ class RequestsResponsesController extends Controller
 
         $item = RequestResponse::where('id', $id)->first();
 
-        if ($item->request->tenant->id !== $user->tenant->id) {
+        if ($item->request->tenant->id !== $user->userable->id) {
             return response()->error('objectNotFound');
         }
 
