@@ -27,9 +27,9 @@ class ProfileController extends Controller
         }
 
         $user['statistics']['contracts'] = $user['user']->userable->contracts->count();
-        $user['statistics']['shipments'] = $user['user']->userable->contracts->each(function ($item) {
-            return $item->withCount('shipments');
-        });
+        $user['statistics']['shipments'] = $user['user']->userable->contracts->reduce(function ($count, $item) {
+            return $count + $item->shipments->count();
+        }, 0);
 
         return response()->success($user);
     }
