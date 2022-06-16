@@ -107,7 +107,7 @@ class OffersController extends Controller
                             $que->withTrashed();
                         });
                     }]);
-                }])->withCount('responses')->get();
+                }, 'port_from'])->withCount('responses')->get();
 
 
         $data['meta']['draw'] = $request->input('draw');
@@ -203,6 +203,17 @@ class OffersController extends Controller
         return response()->success();
     }
 
+    public function bulk_delete(Request $request)
+    {
+        foreach ($request->input('ids', []) as $id) {
+            $item = Offer::withTrashed()->where('id', $id)->first();
+            if ($item) {
+                $item->delete();
+            }
+        }
+        return response()->success();
+    }
+
     public function delete($id)
     {
 
@@ -212,17 +223,6 @@ class OffersController extends Controller
             $item->delete();
         }
 
-        return response()->success();
-    }
-
-    public function bulk_delete(Request $request)
-    {
-        foreach ($request->input('ids', []) as $id) {
-            $item = Offer::withTrashed()->where('id', $id)->first();
-            if ($item) {
-                $item->delete();
-            }
-        }
         return response()->success();
     }
 
