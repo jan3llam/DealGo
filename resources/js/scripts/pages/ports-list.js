@@ -527,6 +527,7 @@ $(function () {
         $('#longitude').val(data.longitude);
         $('#latitude').val(data.latitude);
         $('#unlocode').val(data.unlocode);
+        $('#city_id').val(data.city.id);
         $('#country').val(data.city.country.id).trigger('change.select2');
         $('#object_id').val(data.id);
         var latlng = new google.maps.LatLng(data.latitude, data.longitude);
@@ -536,7 +537,6 @@ $(function () {
         for (const [key, value] of Object.entries(data.name)) {
             $('[name="name[' + key + ']"]').val(data.name[key]);
         }
-        $('#city').val(data.city.id);
     });
 
     $(document).on('click', '.add-port', function () {
