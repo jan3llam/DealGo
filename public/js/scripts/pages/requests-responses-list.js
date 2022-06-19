@@ -445,7 +445,14 @@ $(function () {
                     processData: false,
                     contentType: false,
                     data: data,
+                    beforeSend: function () {
+                        // setting a timeout
+                        $('button[type=submit]').hide();
+                        $('#loading-btn').show();
+                    },
                     success: function (response) {
+                        $('button[type=submit]').show();
+                        $('#loading-btn').hide();
                         if (parseInt(response.code) === 1) {
                             dtTable.DataTable().ajax.reload();
                             toastr['success'](response.message);

@@ -333,7 +333,15 @@ $(function () {
                     type: 'POST', url: assetPath + 'api/admin/requests/' + type, dataType: 'json', headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                         Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
-                    }, processData: false, contentType: false, data: data, success: function (response) {
+                    }, processData: false, contentType: false, data: data,
+                    beforeSend: function () {
+                        // setting a timeout
+                        $('button[type=submit]').hide();
+                        $('#loading-btn').show();
+                    },
+                    success: function (response) {
+                        $('button[type=submit]').show();
+                        $('#loading-btn').hide();
                         if (parseInt(response.code) === 1) {
                             dtTable.DataTable().ajax.reload();
                             toastr['success'](response.message);

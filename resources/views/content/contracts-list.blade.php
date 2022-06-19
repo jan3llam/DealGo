@@ -148,6 +148,11 @@
                                     <span>{{__('locale.AddNew')}}</span>
                                 </button>
                             </div>
+                            <button id="loading-btn" class="btn btn-primary me-1 waves-effect" type="button" disabled=""
+                                    style="display: none">
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                <span class="ms-25 align-middle">{{__('locale.Loading')}}</span>
+                            </button>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 {{__('locale.Submit')}}
                             </button>

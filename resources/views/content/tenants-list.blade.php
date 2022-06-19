@@ -181,6 +181,11 @@
                                 <span id="edit-legal"></span>
                                 <input type="file" name="legal" id="legal"/>
                             </div>
+                            <button id="loading-btn" class="btn btn-primary me-1 waves-effect" type="button" disabled=""
+                                    style="display: none">
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                <span class="ms-25 align-middle">{{__('locale.Loading')}}</span>
+                            </button>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 {{__('locale.Submit')}}
                             </button>
@@ -235,6 +240,10 @@
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.ContactName')}}:</span>
                                         <span id="view-contact"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.GoodsTypes')}}:</span>
+                                        <span id="view-goods"></span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.Email')}}:</span>
@@ -340,16 +349,16 @@
                             text: result.data[i].name
                         }));
                     }
+
+                    if ($('#city_id').val()) {
+                        target.val($('#city_id').val());
+                        target.trigger('change');
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError);
                 }
             });
-
-            if ($('#city_id').val()) {
-                target.val($('#city_id').val());
-                target.trigger('change');
-            }
         });
     </script>
 @endsection

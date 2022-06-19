@@ -42,15 +42,14 @@
                 <h4 class="card-title">{{__('locale.SearchAndFilter')}}</h4>
                 <input type="hidden" id="status_filter" value="0">
             </div>
-        </div>
-        <div class="card-datatable table-responsive pt-0">
-            <table class="responses-list-table table">
-                <thead class="table-light">
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>#</th>
-                    <th>{{__('locale.Tenants')}}</th>
+            <div class="card-datatable table-responsive pt-0">
+                <table class="responses-list-table table">
+                    <thead class="table-light">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>#</th>
+                        <th>{{__('locale.Tenants')}}</th>
                         <th>{{__('locale.ShipmentOrigin')}}</th>
                         <th>{{__('locale.ShipmentDestination')}}</th>
                         <th>{{__('locale.Date')}}</th>
@@ -255,6 +254,11 @@
                                 <label for="files" class="form-label">{{__('locale.Attachments')}}</label>
                                 <input type="file" name="files" id="files"/>
                             </div>
+                            <button id="loading-btn" class="btn btn-primary me-1 waves-effect" type="button" disabled=""
+                                    style="display: none">
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                <span class="ms-25 align-middle">{{__('locale.Loading')}}</span>
+                            </button>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 {{__('locale.Submit')}}
                             </button>

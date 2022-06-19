@@ -69,6 +69,11 @@
                                 <input type="text" class="form-control dt-full-name" id="code"
                                        placeholder="{{__('locale.ISOCode')}}" name="code" maxlength="2"/>
                             </div>
+                            <button id="loading-btn" class="btn btn-primary me-1 waves-effect" type="button" disabled=""
+                                    style="display: none">
+                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                <span class="ms-25 align-middle">{{__('locale.Loading')}}</span>
+                            </button>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 {{__('locale.Submit')}}
                             </button>

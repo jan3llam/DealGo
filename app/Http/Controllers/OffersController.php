@@ -128,6 +128,7 @@ class OffersController extends Controller
         $validator = Validator::make($params, [
             'vessel' => 'required|numeric',
             'description' => 'required|string',
+            'port_from' => 'required|numeric',
             'date_from' => 'required|string',
             'date_to' => 'required|string',
             'weight' => 'required|numeric',
@@ -140,6 +141,7 @@ class OffersController extends Controller
         $item = new Offer;
 
         $item->vessel_id = $params['vessel'];
+        $item->port_from = $params['port_from'];
         $item->date_from = Carbon::parse($params['date_from'])->toDateString();
         $item->date_to = Carbon::parse($params['date_to'])->toDateString();
         $item->description = $params['description'];
@@ -171,6 +173,7 @@ class OffersController extends Controller
         $validator = Validator::make($params, [
             'vessel' => 'required|numeric',
             'description' => 'required|string',
+            'port_from' => 'required|numeric',
             'date_from' => 'required|string',
             'date_to' => 'required|string',
             'weight' => 'required|numeric',
@@ -183,6 +186,7 @@ class OffersController extends Controller
         $item = Offer::withTrashed()->where('id', $id)->first();
 
         $item->vessel_id = $params['vessel'];
+        $item->port_from = $params['port_from'];
         $item->date_from = Carbon::parse($params['date_from'])->toDateString();
         $item->date_to = Carbon::parse($params['date_to'])->toDateString();
         $item->description = $params['description'];
