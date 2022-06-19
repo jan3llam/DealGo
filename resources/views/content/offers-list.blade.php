@@ -97,6 +97,16 @@
                                        placeholder="{{__('locale.MaxWeight')}}" name="weight"/>
                             </div>
                             <div class="mb-1">
+                                <label class="form-label" for="port_from">{{__('locale.ShipmentOrigin')}}</label>
+                                <select class="form-control dt-full-name select2" id="port_from"
+                                        name="port_from">
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
+                                    @foreach($ports as $port)
+                                        <option value="{{$port->id}}">{{$port->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-1">
                                 <label class="form-label" for="date_from">{{__('locale.FromDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="date_from"
                                        placeholder="{{__('locale.FromDate')}}" name="date_from"/>

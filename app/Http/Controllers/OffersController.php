@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Offer;
 use App\Models\Owner;
+use App\Models\Port;
 use App\Models\User;
 use App\Models\Vessel;
 use Carbon\Carbon;
@@ -30,11 +31,13 @@ class OffersController extends Controller
 
         $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();
         $vessels = Vessel::where('status', 1)->get();
+        $ports = Port::all();
 
         return view('content.offers-list', [
             'breadcrumbs' => $breadcrumbs,
             'owners' => $owners,
             'vessels' => $vessels,
+            'ports' => $ports,
         ]);
     }
 
