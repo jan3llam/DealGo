@@ -270,9 +270,6 @@ $(function () {
                 name: {
                     required: true
                 },
-                description: {
-                    required: true
-                },
             }
         })
 

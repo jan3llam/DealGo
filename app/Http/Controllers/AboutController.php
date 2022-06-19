@@ -136,7 +136,6 @@ class AboutController extends Controller
     {
         $id = $request->object_id;
 
-        $fileName = null;
         $params = $request->all();
         $validator = Validator::make($params, [
 
@@ -154,10 +153,10 @@ class AboutController extends Controller
             $extension = $request->file('file')->getClientOriginalExtension();
             $fileName = Str::random(18) . '.' . $extension;
             Storage::disk('public_images')->putFileAs('', $request->file('file'), $fileName);
+            $item->file = $fileName;
         }
 
         $item->name = $params['name'];
-        $item->file = $fileName;
         $item->description = $params['description'];
 
         $item->save();
