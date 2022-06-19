@@ -88,11 +88,13 @@
                                            placeholder="{{__('locale.Commercial')}} #" name="commercial"/>
                                 </div>
                                 <div class=mb-1>
-                                    <label for="license" class="form-label">{{__('locale.BusinessLicense')}}')}}</label>
+                                    <label for="license" class="form-label">{{__('locale.BusinessLicense')}}</label>
+                                    <span id="edit-license"></span>
                                     <input type="file" name="license" id="license">
                                 </div>
                                 <div class=mb-1>
                                     <label for="company" class="form-label">{{__('locale.CompanyFile')}}</label>
+                                    <span id="edit-company"></span>
                                     <input type="file" name="company" id="company">
                                 </div>
                             </div>
@@ -168,6 +170,7 @@
                             </div>
                             <div class=mb-1>
                                 <label for="legal" class="form-label">{{__('locale.LegalFile')}}</label>
+                                <span id="edit-legal"></span>
                                 <input type="file" name="legal" id="legal"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
