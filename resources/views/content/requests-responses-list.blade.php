@@ -89,7 +89,7 @@
                                 <label class="form-label" for="date">{{__('locale.Date')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="date"
                                        @if($request)
-                                       min="{{\Illuminate\Support\Carbon::parse($request->date_from)->toDateString()}}"
+                                           min="{{\Illuminate\Support\Carbon::parse($request->date_from)->toDateString()}}"
                                        @endif
                                        placeholder="{{__('locale.Date')}}" name="date"/>
                             </div>
@@ -138,19 +138,17 @@
                                             </label>
                                         </div>
                                     </div>
-                                    @foreach($request->goods_types as $gt)
-                                        <div class="mb-1">
-                                            <label class="form-label" for="vessel">{{__('locale.Vessel')}}</label>
-                                            <select type="text" class="form-control dt-full-name vessels-select2"
-                                                    name="vessel[{{$gt->pivot->id}}]">
-                                                <option value="" disabled
-                                                        selected>{{__('locale.KindlyChoose')}}</option>
-                                                @foreach($vessels->whereIn('type_id',$item->vessels_types->pluck('id')) as $vessel)
-                                                    <option value="{{$vessel->id}}">{{$vessel->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    @endforeach
+                                    <div class="mb-1">
+                                        <label class="form-label" for="vessel">{{__('locale.Vessel')}}</label>
+                                        <select type="text" class="form-control dt-full-name vessels-select2"
+                                                name="vessel[{{$item->pivot->id}}]">
+                                            <option value="" disabled
+                                                    selected>{{__('locale.KindlyChoose')}}</option>
+                                            @foreach($vessels->whereIn('type_id',$item->vessels_types->pluck('id')) as $vessel)
+                                                <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <hr>
                                 @endforeach
                             @endisset

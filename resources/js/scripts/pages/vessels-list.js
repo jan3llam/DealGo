@@ -132,10 +132,10 @@ $(function () {
                             LANG.View + '</a>' +
                             '<a href="/admin/crews/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
                             feather.icons['users'].toSvg({class: 'font-small-4 me-50'}) +
-                            LANG.Crew + '(' + full['crews_count'] + ')</a>' +
+                            LANG.Crew + '(' + full['crew_count'] + ')</a>' +
                             '<a href="/admin/maintenances/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
                             feather.icons['tool'].toSvg({class: 'font-small-4 me-50'}) +
-                            LANG.Maintenance + '(' + full['maintenances_count'] + ')</a>' +
+                            LANG.Maintenance + '(' + full['maintenance_count'] + ')</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Edit + '</a>' +
