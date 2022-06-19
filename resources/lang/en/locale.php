@@ -20,6 +20,7 @@ return [
     "AreYouSure" => "Are you sure ?",
     "ArrivingAt" => "Arriving @",
     "Article" => "Article",
+    "Loading" => "Loading...",
     "Articles" => "Articles",
     "Approve" => "Approve",
     "Approved" => "Approved",

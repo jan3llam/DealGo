@@ -263,11 +263,7 @@ $(function () {
         var editor = null;
         newForm.validate({
             errorClass: 'error',
-            rules: {
-                description: {
-                    required: true
-                },
-            }
+            rules: {}
         })
 
         $('[name^="name"]').each(function () {

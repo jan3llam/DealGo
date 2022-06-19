@@ -322,7 +322,14 @@ $(function () {
                     processData: false,
                     contentType: false,
                     data: data,
+                    beforeSend: function () {
+                        // setting a timeout
+                        $('button[type=submit]').hide();
+                        $('#loading-btn').show();
+                    },
                     success: function (response) {
+                        $('button[type=submit]').show();
+                        $('#loading-btn').hide();
                         if (parseInt(response.code) === 1) {
                             dtTable.DataTable().ajax.reload();
                             toastr['success'](response.message);
@@ -529,7 +536,7 @@ $(function () {
         for (const [key, value] of Object.entries(data.name)) {
             $('[name="name[' + key + ']"]').val(data.name[key]);
         }
-        $('#city_id').val(data.city.id);
+        $('#city').val(data.city.id);
     });
 
     $(document).on('click', '.add-port', function () {

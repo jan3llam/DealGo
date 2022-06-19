@@ -310,6 +310,8 @@ $(function () {
                     data: data,
                     success: function (response) {
                         if (parseInt(response.code) === 1) {
+                            newForm[0].reset();
+                            newSidebar.modal('hide')
                             dtTable.DataTable().ajax.reload();
                             toastr['success'](response.message);
                         } else {

@@ -640,6 +640,7 @@ $(function () {
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
+        $('#country').val(data.city.country.id).trigger('change.select2');
         $('#edit-legal').html('<a target="_blank" href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#edit-license').html('<a target="_blank" href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#edit-company').html('<a target="_blank" href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
@@ -658,12 +659,11 @@ $(function () {
             showUpload: false,
             initialPreviewAsData: true,
         });
-        $('#country').val(data.city.country.id).trigger('change.select2');
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
+        $('#city').val(data.city.id).trigger('change.select2');
         $('#type').val(data.type).trigger('change');
-
     });
 
     $(document).on('click', '.item-view', function () {

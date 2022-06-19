@@ -264,12 +264,6 @@ $(function () {
                 'created_at': {
                     required: true
                 },
-                'updated_at': {
-                    required: true
-                },
-                'description': {
-                    required: true
-                },
             }
         })
 
