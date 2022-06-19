@@ -258,7 +258,7 @@ $(function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#view-contract').html(data.contract_id);
-        $('#view-tenant').html(data.tenant.user.contact_name);
+        $('#view-tenant').html(data.contract.tenant.user.contact_name);
         $('#view-owner').html(data.vessel.owner.user.contact_name);
         $('#view-vessel').html(data.vessel.name);
         $('#view-origin').html(data.port_from.name_translation);
