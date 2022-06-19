@@ -517,7 +517,6 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#city_id').val(data.city.id);
         $('#longitude').val(data.longitude);
         $('#latitude').val(data.latitude);
         $('#unlocode').val(data.unlocode);
@@ -530,6 +529,7 @@ $(function () {
         for (const [key, value] of Object.entries(data.name)) {
             $('[name="name[' + key + ']"]').val(data.name[key]);
         }
+        $('#city_id').val(data.city.id);
     });
 
     $(document).on('click', '.add-port', function () {
