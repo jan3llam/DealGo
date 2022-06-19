@@ -229,16 +229,15 @@
                             text: result.data[i].name
                         }));
                     }
+                    if ($('#city_id').val()) {
+                        target.val($('#city_id').val());
+                        target.trigger('change');
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(thrownError);
                 }
             });
-
-            if ($('#city_id').val()) {
-                target.val($('#city_id').val());
-                target.trigger('change');
-            }
         });
     </script>
     <script>
