@@ -105,8 +105,8 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <input type="hidden" name="longitude" id="longitude">
-                                <input type="hidden" name="latitude" id="latitude">
+                                <input type="text" readonly name="longitude" id="longitude">
+                                <input type="text" readonly name="latitude" id="latitude">
                                 <label class="form-label" for="map">{{__('locale.LocationOnMap')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="google-link"
                                        placeholder="{{__('locale.GoogleLink')}}" name="google-link"/>

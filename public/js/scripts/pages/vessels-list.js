@@ -132,10 +132,10 @@ $(function () {
                             LANG.View + '</a>' +
                             '<a href="/admin/crews/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
                             feather.icons['users'].toSvg({class: 'font-small-4 me-50'}) +
-                            LANG.Crew + '</a>' +
+                            LANG.Crew + '(' + full['crews_count'] + ')</a>' +
                             '<a href="/admin/maintenances/' + full['id'] + '" class="dropdown-item" data-id="' + full['id'] + '">' +
                             feather.icons['tool'].toSvg({class: 'font-small-4 me-50'}) +
-                            LANG.Maintenance + '</a>' +
+                            LANG.Maintenance + '(' + full['maintenances_count'] + ')</a>' +
                             '<a href="javascript:;" class="dropdown-item item-update" data-id="' + full['id'] + '">' +
                             feather.icons['edit'].toSvg({class: 'font-small-4 me-50'}) +
                             LANG.Edit + '</a>' +
@@ -536,6 +536,11 @@ $(function () {
             showUpload: false,
             initialPreviewAsData: true,
         });
+        $("#files").fileinput('destroy').fileinput({
+            initialPreview: [assetPath + 'images/' + data.files],
+            showUpload: false,
+            initialPreviewAsData: true,
+        });
         $('#imo').val(data.imo);
         $('#mmsi').val(data.mmsi);
         $('#build').val(data.build_year);
@@ -559,9 +564,10 @@ $(function () {
         var filesHtml = '';
         data.forEach(item => {
             filesHtml +=
-                '<a href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
+                '<a target="_blank"  href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
         })
         $('#view-files').html(filesHtml);
+        $('#view-image').html('<a target="_blank"  href="' + assetPath + 'images/' + data.image + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
 
     });
 

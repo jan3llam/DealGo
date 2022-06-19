@@ -640,6 +640,9 @@ $(function () {
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
+        $('#edit-legal').html('<a target="_blank" href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#edit-license').html('<a target="_blank" href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#edit-company').html('<a target="_blank" href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $("#legal").fileinput('destroy').fileinput({
             initialPreview: [assetPath + 'images/' + data.legal_file],
             showUpload: false,
@@ -656,7 +659,6 @@ $(function () {
             initialPreviewAsData: true,
         });
         $('#country').val(data.city.country.id).trigger('change.select2');
-
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
@@ -672,9 +674,14 @@ $(function () {
         if (data.type == 1) {
             $('#view-company-container').show();
         }
-        $('#view-legal').html('<a href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-license').html('<a href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-company').html('<a href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        var GoodsHtml = '';
+        data.goods_types.forEach(item => {
+            GoodsHtml += item['name_translation'] + ',';
+        })
+        $('#view-goods').html(GoodsHtml);
+        $('#view-legal').html('<a target="_blank" href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-license').html('<a target="_blank" href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-company').html('<a target="_blank" href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#view-name').html(data.full_name);
         $('#view-contact').html(data.contact_name);
         $('#view-commercial').html(data.commercial_number);
@@ -698,6 +705,9 @@ $(function () {
             $("#legal").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
             $("#company").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
             $("#license").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+            $('#edit-legal').html('');
+            $('#edit-license').html('');
+            $('#edit-company').html('');
         }
         $('#form_status').val(1);
         $('#image_container').attr('src', '');

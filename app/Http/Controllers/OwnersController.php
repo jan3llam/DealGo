@@ -118,7 +118,7 @@ class OwnersController extends Controller
 
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
-        $data['meta']['count'] = $data['data']->count();
+        $data['meta']['count'] = $total;
         $data['data'] = $data['data']->toArray();
 
         return response()->success($data);

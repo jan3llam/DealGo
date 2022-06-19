@@ -578,7 +578,7 @@ $(function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         viewSidebar.modal('show');
-        $('#view-file').html('<a href="' + assetPath + 'images/' + data.file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-file').html('<a target="_blank"  href="' + assetPath + 'images/' + data.file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#view-first-name').html(data.first_name);
         $('#view-last-name').html(data.last_name);
         $('#view-job').html(data.job_title);
@@ -621,7 +621,7 @@ $(function () {
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         })
-        $('#vessel').val().trigger('change.select2');
+        $('#vessel').val($('#vessel_id').val()).trigger('change.select2')
         $('#country').val().trigger('change.select2');
         $('#city').val().trigger('change.select2');
         $("#file").fileinput('destroy').fileinput({

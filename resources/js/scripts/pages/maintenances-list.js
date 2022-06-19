@@ -468,7 +468,7 @@ $(function () {
         var filesHtml = '';
         data.forEach(item => {
             filesHtml +=
-                '<a href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
+                '<a target="_blank"  href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
         })
         $('#view-files').html(filesHtml);
 
@@ -478,6 +478,7 @@ $(function () {
         $('#form_status').val(1);
         $('#image_container').attr('src', '');
         $('#object_id').val('');
+        $('#vessel').val($('#vessel_id').val()).trigger('change.select2')
         newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         })

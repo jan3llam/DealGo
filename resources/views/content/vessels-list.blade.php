@@ -127,8 +127,12 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <label for="image" class="form-label">{{__('locale.Attachments')}}</label>
+                                <label for="image" class="form-label">{{__('locale.Image')}}</label>
                                 <input type="file" name="image" id="image"/>
+                            </div>
+                            <div class="mb-1">
+                                <label for="image" class="form-label">{{__('locale.Attachments')}}</label>
+                                <input type="file" name="files" multiple id="files"/>
                             </div>
                             <button type="submit" class="btn btn-primary me-1 data-submit">
                                 {{__('locale.Submit')}}
@@ -190,6 +194,10 @@
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.Crews')}}:</span>
                                         <span id="view-crews"></span>
+                                    </li>
+                                    <li class="mb-75">
+                                        <span class="fw-bolder me-25">{{__('locale.Image')}}:</span>
+                                        <span id="view-image"></span>
                                     </li>
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.Attachments')}}:</span>

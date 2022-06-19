@@ -620,9 +620,9 @@ $(function () {
         if (data.type == 1) {
             $('#view-company-container').show();
         }
-        $('#view-legal').html('<a href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-license').html('<a href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-        $('#view-company').html('<a href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-legal').html('<a target="_blank" href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-license').html('<a target="_blank" href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-company').html('<a target="_blank" href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#view-name').html(data.full_name);
         $('#view-contact').html(data.contact_name);
         $('#view-commercial').html(data.commercial_number);
@@ -644,6 +644,9 @@ $(function () {
         $('#form_status').val(2);
         $('#object_id').val(data.id);
         data = data.user;
+        $('#edit-legal').html('<a target="_blank" href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#edit-license').html('<a target="_blank" href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#edit-company').html('<a target="_blank" href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#name').val(data.full_name);
         $('#contact').val(data.contact_name);
         $('#province').val(data.province);
@@ -681,6 +684,9 @@ $(function () {
             $("#legal").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
             $("#company").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
             $("#license").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+            $('#edit-legal').html('');
+            $('#edit-license').html('');
+            $('#edit-company').html('');
         }
         $('#form_status').val(1);
         $('#image_container').attr('src', '');

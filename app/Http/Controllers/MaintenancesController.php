@@ -45,7 +45,7 @@ class MaintenancesController extends Controller
         ]);
     }
 
-    public function list_api(Request $request)
+    public function list_api($id = null, Request $request)
     {
 
         $data = [];
@@ -106,6 +106,10 @@ class MaintenancesController extends Controller
             }
         }
 
+        if ($id) {
+            $query->where('vessel_id', $id);
+        }
+
         $total = $query->limit($per_page)->count();
 
         $data['data'] = $query->skip(($page) * $per_page)
@@ -114,7 +118,7 @@ class MaintenancesController extends Controller
 
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
-        $data['meta']['count'] = $data['data']->count();
+        $data['meta']['count'] = $total;
         $data['data'] = $data['data']->toArray();
 
         return response()->success($data);
