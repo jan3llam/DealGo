@@ -29,7 +29,7 @@ class RequestsController extends Controller
         $query = ShippingRequest::whereHas('port_to')->whereHas('port_from')
             ->whereHas('tenant', function ($q) {
                 $q->whereHas('user');
-            })->with(['port_to', 'port_from', 'tenant.user', 'routes', 'request_goods_types.good_type'])
+            })->with(['port_to', 'port_from', 'tenant.user', 'routes'])
             ->withCount(['responses' => function (Builder $q) {
                 $q->whereHas('vessels')->whereHas('request_goods_types');
             }]);
