@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Admin;
 use App\Models\Reply;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -12,47 +12,70 @@ class TicketsController extends Controller
 {
     public function reply($id, Request $request)
     {
+        $user_id = auth('api')->user()->id;
+
         $params = $request->all();
         $validator = Validator::make($params, [
-            'reply' => 'required',
+            'text' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->with('error', __('api.codes.missingParameters.message'))
-                ->withInput();
+            return response()->error('missingParameters', $validator->failed());
         }
 
-        $item = Ticket::withTrashed()->where('id', $id)->first();
+        $item = Ticket::where('id', $id)->where('user_id', $user_id)->first();
 
-        if ($item->status === 1 || $item->admin->id === auth('admins')->user()->id) {
-            $reply = new Reply;
-
-            $reply->ticket_id = $item->id;
-            $reply->author_id = auth('admins')->user()->id;
-            $reply->author_type = Admin::class;
-            $reply->text = $request->reply;
-
-            $item->replies()->save($reply);
-
-            $item->status = 2;
-            $item->admin_id = auth('admins')->user()->id;
-
-            $item->save();
-
-            return redirect()->back()
-                ->with('success', __('api.codes.success.message'))
-                ->withInput();
-        } else {
-            return redirect()->back()
-                ->with('error', __('api.codes.notAuthorized.message'))
-                ->withInput();
+        if (!$item) {
+            return response()->error('objectNotFound');
         }
 
+        $reply = new Reply;
+
+        $reply->ticket_id = $item->id;
+        $reply->author_id = $user_id;
+        $reply->author_type = User::class;
+        $reply->text = $request->text;
+
+        $item->replies()->save($reply);
+
+        $item->status = 2;
+
+        $item->save();
+
+        return response()->success();
+    }
+
+    public function add(Request $request)
+    {
+        $user_id = auth('api')->user()->id;
+
+        $params = $request->all();
+        $validator = Validator::make($params, [
+            'subject' => 'required|string',
+            'description' => 'required|string',
+            'type' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->error('missingParameters', $validator->failed());
+        }
+
+        $ticket = new Ticket;
+
+        $ticket->subject = $request->subject;
+        $ticket->user_id = $user_id;
+        $ticket->description = $request->description;
+        $ticket->type = $request->type;
+        $ticket->status = 1;
+
+        $ticket->save();
+
+        return response()->success();
     }
 
     public function list_api(Request $request)
     {
+        $user_id = auth('api')->user()->id;
 
         $data = [];
         $search_clm = ['user.name', 'user.email', 'user.phone', 'user.contact_name',
@@ -61,7 +84,7 @@ class TicketsController extends Controller
         $order_sort = 'desc';
 
         $params = $request->all();
-        $query = Ticket::query();
+        $query = Ticket::where('user_id', $user_id);
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
@@ -125,9 +148,7 @@ class TicketsController extends Controller
 
         $data['data'] = $query->skip(($page) * $per_page)
             ->with([
-                'user' => function ($q) {
-                    $q->withTrashed();
-                },
+                'user',
                 'admin' => function ($q) {
                     $q->withTrashed();
                 }
@@ -140,5 +161,24 @@ class TicketsController extends Controller
         $data['data'] = $data['data']->toArray();
 
         return response()->success($data);
+    }
+
+    public function delete($id)
+    {
+        $user_id = auth('api')->user()->id;
+
+        $item = Ticket::where('id', $id)->where('user_id', $user_id)->first();
+
+        if (!$item) {
+            return response()->error('objectNotFound');
+        }
+
+        if ($item) {
+            $item->status = 3;
+            $item->save();
+            $item->delete();
+        }
+
+        return response()->success();
     }
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RequestsController;
 use App\Http\Controllers\Api\RequestsResponsesController;
 use App\Http\Controllers\Api\ShipmentsController;
+use App\Http\Controllers\Api\TicketsController;
 use App\Http\Controllers\Api\VesselsController;
 use App\Http\Controllers\Api\VesselsTypesController;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
@@ -188,6 +189,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'tickets', 'middleware' => ['auth:sanctum']], function () {
         Route::post('/add', [TicketsController::class, 'add']);
+        Route::post('/reply/{id}', [TicketsController::class, 'reply']);
         Route::get('/list', [TicketsController::class, 'list']);
         Route::get('/{id}', [TicketsController::class, 'get']);
         Route::delete('/{id}', [TicketsController::class, 'delete']);
