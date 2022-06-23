@@ -232,7 +232,7 @@
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
                 },
                 url: '/api/admin/vessels/list?owner=' + $element.find("option:selected").val(),
                 type: 'GET',
