@@ -385,9 +385,11 @@ $(function () {
                     beforeSend: function () {
                         // setting a timeout
                         $('button[type=submit]').hide();
-                        $('button[type=submit]').hide();
+                        $('#loading-btn').show();
                     },
                     success: function (response) {
+                        $('button[type=submit]').show();
+                        $('#loading-btn').hide();
                         if (parseInt(response.code) === 1) {
                             newForm[0].reset();
                             newSidebar.modal('hide')

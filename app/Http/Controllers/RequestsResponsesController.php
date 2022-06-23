@@ -251,6 +251,7 @@ class RequestsResponsesController extends Controller
             $cVessels = [];
 
             foreach ($item->vessels as $vessel) {
+                dd($item->request);
                 $shipment = new Shipment;
                 $shipment->vessel_id = $vessel->id;
                 $shipment->port_from = $item->request->port_from;
