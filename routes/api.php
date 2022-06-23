@@ -388,6 +388,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
         Route::get('/list', [RequestsResponsesAPI::class, 'list_api']);
         Route::post('/add', [RequestsResponsesAPI::class, 'add']);
         Route::post('/update', [RequestsResponsesAPI::class, 'update']);
+        Route::put('/approve/{id}', [RequestsResponsesAPI::class, 'approve']);
         Route::put('/status/{id}', [RequestsResponsesAPI::class, 'status']);
         Route::delete('/bulk', [RequestsResponsesAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [RequestsResponsesAPI::class, 'delete']);
