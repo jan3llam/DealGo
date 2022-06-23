@@ -3,7 +3,9 @@
 use App\Http\Controllers\AboutController as AboutAPI;
 use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
+use App\Http\Controllers\Api\ArticlesController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\CitiesController;
 use App\Http\Controllers\Api\ContractsController;
 use App\Http\Controllers\Api\CountriesController;
@@ -108,9 +110,13 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/list', [PortsController::class, 'list']);
     });
 
+    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/list', [CategoriesController::class, 'list']);
+    });
 
-    Route::group(['prefix' => 'ports'], function () {
-        Route::get('/list', [PortsController::class, 'list']);
+    Route::group(['prefix' => 'articles'], function () {
+        Route::get('/list', [ArticlesController::class, 'list']);
+        Route::get('/get/{id}', [ArticlesController::class, 'get']);
     });
 
     Route::group(['prefix' => 'shipments', 'middleware' => 'auth:api'], function () {
