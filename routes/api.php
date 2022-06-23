@@ -108,6 +108,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/list', [PortsController::class, 'list']);
     });
 
+
+    Route::group(['prefix' => 'ports'], function () {
+        Route::get('/list', [PortsController::class, 'list']);
+    });
+
     Route::group(['prefix' => 'shipments', 'middleware' => 'auth:api'], function () {
         Route::get('/list/{id?}', [ShipmentsController::class, 'list']);
         Route::get('/get/{id}', [ShipmentsController::class, 'get']);
