@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
-    public function list_api(Request $request)
+    public function list(Request $request)
     {
         $search_clm = ['name', 'category.name'];
 
