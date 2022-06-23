@@ -225,4 +225,33 @@
 @section('page-script')
     {{-- Page js files --}}
     <script src="{{ asset(mix('js/scripts/pages/offers-list.js')) }}"></script>
+    <script>
+        $('#owner').on("change.select2", function () {
+            var $element = $(this);
+            var target = $element.parents('form').find('select#vessel');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/api/admin/vessels/list?owner=' + $element.find("option:selected").val(),
+                type: 'GET',
+                cache: false,
+                contentType: 'application/json',
+                dataType: "json",
+                success: function (result) {
+                    var dbSelect = target;
+                    dbSelect.empty();
+                    for (var i = 0; i < result.data.data.length; i++) {
+                        dbSelect.append($('<option/>', {
+                            value: result.data[i].id,
+                            text: result.data[i].name
+                        }));
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+        })
+    </script>
 @endsection

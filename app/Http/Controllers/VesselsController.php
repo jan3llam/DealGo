@@ -154,6 +154,10 @@ class VesselsController extends Controller
             }
         }
 
+        if (isset($request->owner) && $request->owner) {
+            $query->where('owner_id', $request->owner);
+        }
+
         $total = $query->limit($per_page)->count();
 
         $data['data'] = $query->skip(($page) * $per_page)
@@ -293,6 +297,19 @@ class VesselsController extends Controller
         return response()->success();
     }
 
+    public function bulk_delete(Request $request)
+    {
+        foreach ($request->input('ids', []) as $id) {
+            $item = Vessel::withTrashed()->where('id', $id)->first();
+            if ($item) {
+                $item->status = 0;
+                $item->save();
+                $item->delete();
+            }
+        }
+        return response()->success();
+    }
+
     public function delete($id)
     {
 
@@ -304,19 +321,6 @@ class VesselsController extends Controller
             $item->delete();
         }
 
-        return response()->success();
-    }
-
-    public function bulk_delete(Request $request)
-    {
-        foreach ($request->input('ids', []) as $id) {
-            $item = Vessel::withTrashed()->where('id', $id)->first();
-            if ($item) {
-                $item->status = 0;
-                $item->save();
-                $item->delete();
-            }
-        }
         return response()->success();
     }
 
