@@ -198,7 +198,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/homepage', [HomepageController::class, 'get']);
     });
 
-    Route::group(['prefix' => 'tickets', 'middleware' => ['auth:sanctum']], function () {
+    Route::group(['prefix' => 'tickets', 'middleware' => ['auth:api']], function () {
         Route::post('/add', [TicketsController::class, 'add']);
         Route::post('/reply/{id}', [TicketsController::class, 'reply']);
         Route::get('/list', [TicketsController::class, 'list']);
