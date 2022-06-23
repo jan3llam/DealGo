@@ -500,7 +500,7 @@ $(function () {
             if (result.value) {
                 $.ajax({
                     type: 'PUT',
-                    url: assetPath + 'api/admin/offers_responses/approve/' + element.data('id'),
+                    url: assetPath + 'api/admin/requests_responses/approve/' + element.data('id'),
                     dataType: 'json',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
