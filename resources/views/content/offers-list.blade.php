@@ -244,8 +244,8 @@
                     dbSelect.empty();
                     for (var i = 0; i < result.data.data.length; i++) {
                         dbSelect.append($('<option/>', {
-                            value: result.data[i].id,
-                            text: result.data[i].name
+                            value: result.data.data[i].id,
+                            text: result.data.data[i].name
                         }));
                     }
                 },
