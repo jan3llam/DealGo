@@ -58,4 +58,25 @@ class PostsController extends Controller
 
         return response()->success($data);
     }
+
+    public function get($id, Request $request)
+    {
+        $user_id = null;
+
+        if (auth('api')->check()) {
+            $user_id = auth('api')->user()->id;
+        }
+
+        $query = Post::query();
+        $query->where('id', $id);
+
+        $data = $query->first();
+
+        if ($user_id) {
+            $data->views += 1;
+            $data->save();
+        }
+
+        return response()->success($data);
+    }
 }
