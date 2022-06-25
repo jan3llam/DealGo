@@ -80,17 +80,21 @@ class TicketsController extends Controller
         $data = [];
         $search_clm = ['user.name', 'user.email', 'user.phone', 'user.contact_name',
             'admin.name', 'admin.email', 'admin.phone', 'subject', 'description'];
-        $order_field = 'created_at';
-        $order_sort = 'desc';
+
 
         $params = $request->all();
-        $query = Ticket::where('user_id', $user_id);
+        $query = Ticket::where('user_id', $user_id)->with([
+            'user',
+            'admin' => function ($q) {
+                $q->withTrashed();
+            }
+        ]);
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
-        $page = isset($params['start']) ? $params['start'] : 0;
         $filter_status = isset($params['status']) ? $params['status'] : 1;
-        $per_page = isset($params['length']) ? $params['length'] : 10;
+        $page_size = $request->input('page_size', 10);
+        $page_number = $request->input('page_number', 1);
 
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
@@ -112,11 +116,6 @@ class TicketsController extends Controller
 
                 }
             });
-        }
-
-        if ($sort_field) {
-            $order_field = $sort_field;
-            $order_sort = $params['direction'];
         }
 
         if ($filter_status !== null) {
@@ -144,21 +143,31 @@ class TicketsController extends Controller
             }
         }
 
-        $total = $query->limit($per_page)->count();
+        $total = $query->limit($page_size)->count();
 
-        $data['data'] = $query->skip(($page) * $per_page)
-            ->with([
-                'user',
-                'admin' => function ($q) {
-                    $q->withTrashed();
-                }
-            ])->take($per_page)->orderBy($order_field, $order_sort)->get();
-
+        $data['data'] = $query->skip(($page_number - 1) * $page_size)
+            ->take($page_size)->get();
 
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $data['data']->count();
         $data['data'] = $data['data']->toArray();
+
+        return response()->success($data);
+    }
+
+    public function get($id, Request $request)
+    {
+        $user_id = auth('api')->user()->id;
+
+        $query = Ticket::query();
+        $query->where('id', $id)->where('user_id', $user_id);
+
+        $data = $query->first();
+
+        if (!$data) {
+            return response()->error('objectNotFound');
+        }
 
         return response()->success($data);
     }
@@ -181,4 +190,5 @@ class TicketsController extends Controller
 
         return response()->success();
     }
+
 }
