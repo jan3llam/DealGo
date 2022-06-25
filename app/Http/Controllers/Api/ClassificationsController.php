@@ -12,7 +12,7 @@ class ClassificationsController extends Controller
         $search_clm = ['name', 'parent.name'];
 
         $params = $request->all();
-        $query = Classification::withCount('articles')->withCount('children')->with('parent');
+        $query = Classification::withCount('posts')->withCount('children')->with('parent');
 
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
