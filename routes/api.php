@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ArticlesController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\CitiesController;
+use App\Http\Controllers\Api\ClassificationsController;
 use App\Http\Controllers\Api\ContractsController;
 use App\Http\Controllers\Api\CountriesController;
 use App\Http\Controllers\Api\CrewsController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Api\MaintenancesController;
 use App\Http\Controllers\Api\OffersController;
 use App\Http\Controllers\Api\OffersResponsesController;
 use App\Http\Controllers\Api\PortsController;
+use App\Http\Controllers\Api\PostsController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RequestsController;
 use App\Http\Controllers\Api\RequestsResponsesController;
@@ -117,6 +119,15 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
     Route::group(['prefix' => 'articles'], function () {
         Route::get('/list', [ArticlesController::class, 'list']);
         Route::get('/get/{id}', [ArticlesController::class, 'get']);
+    });
+
+    Route::group(['prefix' => 'classifications'], function () {
+        Route::get('/list', [ClassificationsController::class, 'list']);
+    });
+
+    Route::group(['prefix' => 'posts'], function () {
+        Route::get('/list', [PostsController::class, 'list']);
+        Route::get('/get/{id}', [PostsController::class, 'get']);
     });
 
     Route::group(['prefix' => 'shipments', 'middleware' => 'auth:api'], function () {

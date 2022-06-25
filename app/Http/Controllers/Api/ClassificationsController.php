@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Article;
+use App\Models\Classification;
 use Illuminate\Http\Request;
 
-class ArticlesController extends Controller
+class ClassificationsController extends Controller
 {
     public function list(Request $request)
     {
-        $search_clm = ['name', 'category.name'];
+        $search_clm = ['name', 'parent.name'];
 
         $params = $request->all();
-        $query = Article::with(['category' => function ($q) {
-            $q->withTrashed();
-        }, 'related']);
+        $query = Classification::withCount('articles')->withCount('children')->with('parent');
 
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
@@ -42,8 +40,8 @@ class ArticlesController extends Controller
             });
         }
 
-        if (isset($request->category) && $request->category) {
-            $query->where('category_id', $request->category);
+        if (isset($request->parent) && $request->parent) {
+            $query->where('parent_id', $request->parent);
         }
 
         $total = $query->limit($page_size)->count();
@@ -55,27 +53,6 @@ class ArticlesController extends Controller
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $total;
         $data['data'] = $data['data']->toArray();
-
-        return response()->success($data);
-    }
-
-    public function get($id, Request $request)
-    {
-        $user_id = null;
-
-        if (auth('api')->check()) {
-            $user_id = auth('api')->user()->id;
-        }
-
-        $query = Article::query();
-        $query->where('id', $id);
-
-        $data = $query->first();
-
-        if ($user_id) {
-            $data->views += 1;
-            $data->save();
-        }
 
         return response()->success($data);
     }

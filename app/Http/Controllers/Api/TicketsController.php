@@ -73,7 +73,7 @@ class TicketsController extends Controller
         return response()->success();
     }
 
-    public function list_api(Request $request)
+    public function list(Request $request)
     {
         $user_id = auth('api')->user()->id;
 
