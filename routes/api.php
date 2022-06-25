@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\HomepageController;
 use App\Http\Controllers\Api\MaintenancesController;
 use App\Http\Controllers\Api\OffersController;
 use App\Http\Controllers\Api\OffersResponsesController;
+use App\Http\Controllers\Api\PaymentsController;
 use App\Http\Controllers\Api\PortsController;
 use App\Http\Controllers\Api\PostsController;
 use App\Http\Controllers\Api\ProfileController;
@@ -123,6 +124,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'classifications'], function () {
         Route::get('/list', [ClassificationsController::class, 'list']);
+    });
+
+
+    Route::group(['prefix' => 'payments'], function () {
+        Route::get('/list', [PaymentsController::class, 'list']);
     });
 
     Route::group(['prefix' => 'posts'], function () {
