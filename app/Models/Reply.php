@@ -12,6 +12,7 @@ class Reply extends Model
     const UPDATED_AT = null;
     public $timestamps = ["created_at"];
     protected $table = 'tickets_replies';
+    protected $with = ['author'];
 
     public function author()
     {
