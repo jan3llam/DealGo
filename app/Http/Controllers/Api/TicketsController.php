@@ -160,7 +160,13 @@ class TicketsController extends Controller
     {
         $user_id = auth('api')->user()->id;
 
-        $query = Ticket::query();
+        $query = Ticket::with([
+            'user',
+            'replies',
+            'admin' => function ($q) {
+                $q->withTrashed();
+            }
+        ]);
         $query->where('id', $id)->where('user_id', $user_id);
 
         $data = $query->first();
