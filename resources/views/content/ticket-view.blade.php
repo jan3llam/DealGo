@@ -161,7 +161,7 @@
                 <!--/  Ticket Replies  -->
         @endif
         <!-- Leave a reply -->
-            @if($ticket->status === 1 || ($ticket->admin->id === auth('admins')->user()->id && $ticket->status === 2 ))
+            @if($ticket->status === 1 || ($ticket->status === 2 && $ticket->admin && $ticket->admin->id === auth('admins')->user()->id ))
                 <div class="col-12 mt-1">
                     <h6 class="section-label mt-25">{{__('locale.Reply')}}</h6>
                     <div class="card">
