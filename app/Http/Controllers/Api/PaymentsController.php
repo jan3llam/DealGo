@@ -24,6 +24,11 @@ class PaymentsController extends Controller
                     });
                 });
             });
+
+        if ($request->input('paid', null) !== null) {
+            $query->where('paid', $request->input('paid', null));
+        }
+
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
 
