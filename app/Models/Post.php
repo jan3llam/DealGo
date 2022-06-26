@@ -15,7 +15,7 @@ class Post extends Model
 
     public $translatable = ['name', 'description', 'slug'];
     public $timestamps = false;
-    protected $appends = ['name_translation'];
+    protected $appends = ['name_translation', 'meta_file'];
     protected $casts = [
         'created_at' => 'date:Y-m-d',
         'updated_at' => 'date:Y-m-d',
@@ -43,6 +43,12 @@ class Post extends Model
     public function getSlugTranslationAttribute()
     {
         return $this->getTranslation('slug', app()->getLocale());
+
+    }
+
+    public function getMetaFileAttribute()
+    {
+        return $this->meta_image;
 
     }
 }
