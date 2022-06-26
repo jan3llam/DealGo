@@ -53,6 +53,12 @@ class OfferResponse extends Model
         return $this->hasMany(OfferResponseGoodsType::class, 'offer_id');
     }
 
+
+    public function offer_goods_types()
+    {
+        return $this->belongsToMany(gType::class, 'offers_responses_goods_types', 'offer_id', 'good_id')->withPivot('weight', 'id');
+    }
+
     public function getFilesAttribute($value)
     {
         return json_decode($value);
