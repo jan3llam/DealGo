@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Mail\PasswordEmail;
 use App\Models\Code;
 use App\Models\FCMToken;
 use App\Models\Owner;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -154,7 +156,7 @@ class AuthController extends Controller
         $code->save();
         $user->save();
 
-//        Mail::to($user->email)->send(new VerificationEmail($verificationCode));
+        Mail::to($user->email)->send(new PasswordEmail($verificationCode));
 
         return response()->success();
 
