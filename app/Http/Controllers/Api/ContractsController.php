@@ -28,7 +28,7 @@ class ContractsController extends Controller
         ])->whereHas('owner', function ($q) use ($user_id) {
             $q->whereHas('user', function ($qu) use ($user_id) {
                 $qu->where('id', $user_id);
-            });
+            });;
         })->orWhereHas('tenant', function ($q) use ($user_id) {
             $q->whereHas('user', function ($qu) use ($user_id) {
                 $qu->where('id', $user_id);
