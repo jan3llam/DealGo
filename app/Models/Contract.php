@@ -48,11 +48,11 @@ class Contract extends Model
     {
         if ($this->origin instanceof OfferResponse) {
             return $this->origin->goods_types->each(function ($item) {
-                return $item->good_type;
+                return $item->with('good_type');
             });
         } elseif ($this->origin instanceof RequestResponse) {
             return $this->origin->request->goods_types->each(function ($item) {
-                return $item->good_type;
+                return $item->with('good_type');
             });
         }
     }
