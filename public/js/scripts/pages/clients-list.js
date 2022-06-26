@@ -52,7 +52,7 @@ $(function () {
             processing: true,
             serverSide: true,
             columns: [// columns according to JSON
-                {data: ''}, {data: 'id'}, {data: 'id'}, {data: 'url'}, {data: 'file'}, {data: ''}],
+                {data: ''}, {data: 'id'}, {data: 'id'}, {data: 'file'}, {data: 'url'}, {data: ''}],
             columnDefs: [{
                 // For Responsive
                 className: 'control',
