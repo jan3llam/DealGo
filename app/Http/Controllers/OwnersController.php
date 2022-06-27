@@ -44,8 +44,8 @@ class OwnersController extends Controller
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? str_replace('__', '.', $params['order']) : null;
-        $page = isset($params['start']) ? $params['start'] : 0;
         $filter_status = isset($params['status']) ? $params['status'] : 1;
+        $page = isset($params['start']) ? $params['start'] : 0;
         $per_page = isset($params['length']) ? $params['length'] : 10;
 
         if ($search_val) {
@@ -110,7 +110,7 @@ class OwnersController extends Controller
 
         $total = $query->limit($per_page)->count();
 
-        $data['data'] = $query->skip(($page) * $per_page)
+        $data['data'] = $query->skip($page)
             ->take($per_page)->orderBy($order_field, $order_sort)
             ->with(['user' => function ($q) {
                 $q->withTrashed();

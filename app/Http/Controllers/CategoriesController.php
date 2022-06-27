@@ -108,7 +108,7 @@ class CategoriesController extends Controller
 
         $total = $query->limit($per_page)->count();
 
-        $data['data'] = $query->skip(($page) * $per_page)
+        $data['data'] = $query->skip($page)
             ->take($per_page)->orderBy($order_field, $order_sort)->get();
 
 
@@ -159,7 +159,7 @@ class CategoriesController extends Controller
 
         $item = Category::withTrashed()->where('id', $id)->first();
 
-        $item->parent_id = $request->input('category', null);
+        $item->parent_id = $request->input('category', null) === 'null' ? null : $request->input('category', null);
         $item->name = $params['name'];
         $item->description = $params['description'];
 

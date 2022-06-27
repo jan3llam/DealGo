@@ -111,7 +111,7 @@ class OfficesController extends Controller
 
         $total = $query->limit($per_page)->count();
 
-        $data['data'] = $query->skip(($page) * $per_page)
+        $data['data'] = $query->skip($page)
             ->take($per_page)->orderBy($order_field, $order_sort)
             ->with(['user' => function ($q) {
                 $q->withTrashed();
