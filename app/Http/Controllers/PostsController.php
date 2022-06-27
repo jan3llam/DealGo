@@ -225,4 +225,27 @@ class PostsController extends Controller
         return response()->success();
     }
 
+    public function bulk_delete(Request $request)
+    {
+        foreach ($request->input('ids', []) as $id) {
+            $item = Post::withTrashed()->where('id', $id)->first();
+            if ($item) {
+                $item->delete();
+            }
+        }
+        return response()->success();
+    }
+
+    public function delete($id)
+    {
+
+        $item = Post::withTrashed()->where('id', $id)->first();
+
+        if ($item) {
+            $item->delete();
+        }
+
+        return response()->success();
+    }
+
 }
