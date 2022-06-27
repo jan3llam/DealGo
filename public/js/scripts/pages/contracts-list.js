@@ -259,7 +259,7 @@ $(function () {
                             .append($(`<input type="date" class="form-control dt-full-name" placeholder="${LANG.SubmittedDate}" name="payment[${item.id}][date]">`).val(item.submit_date)))
                         .append($('<div class="col">')
                             .append($('<label class="form-label" for="description">').html(LANG.Description))
-                            .append($(`<input type="text" class="form-control dt-full-name" placeholder="${LANG.Description}" name="payment[${item.id}][date]">`).val(item.description))))
+                            .append($(`<input type="text" class="form-control dt-full-name" placeholder="${LANG.Description}" name="payment[${item.id}][description]">`).val(item.description))))
                 )
             }
         })

@@ -223,6 +223,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::delete('/{id}', [TicketsController::class, 'delete']);
     });
 
+
+    Route::group(['prefix' => 'test'], function () {
+        Route::get('/test', [CountriesController::class, 'test']);
+    });
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function () {
