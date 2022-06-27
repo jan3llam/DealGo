@@ -162,7 +162,7 @@ class ClassificationsController extends Controller
 
         $item = Classification::withTrashed()->where('id', $id)->first();
 
-        $item->parent_id = $request->input('classification', null);
+        $item->parent_id = $request->input('classification', null) === 'null' ? null : $request->input('classification', null);
         $item->name = $params['name'];
         $item->description = $params['description'];
 
