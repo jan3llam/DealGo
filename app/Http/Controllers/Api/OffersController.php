@@ -95,7 +95,7 @@ class OffersController extends Controller
             $q->whereHas('owner', function ($qu) {
                 $qu->whereHas('user');
             });
-        })->whereHas('port_from')
+        })->whereHas('responses.goods_types')->whereHas('port_from')
             ->with(['vessel.type.goods_types', 'port_from'])
             ->withCount(['responses' => function (Builder $q) {
                 $q->whereHas('port_to')->whereHas('goods_types')->where('status', 0);

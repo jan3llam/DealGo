@@ -123,7 +123,7 @@ class CrewsController extends Controller
         return response()->success();
     }
 
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
         $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
@@ -131,7 +131,7 @@ class CrewsController extends Controller
             return response()->error('notAuthorized');
         }
 
-        $id = $request->object_id;
+//        $id = $request->object_id;
 
         $params = $request->all();
         $validator = Validator::make($params, [
@@ -142,9 +142,8 @@ class CrewsController extends Controller
             'birth' => 'required|string',
             'address' => 'required|string',
             'city' => 'required|numeric',
-            'email' => 'required|unique:crews,email',
+            'email' => 'required',
             'phone' => 'required',
-            'file' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -171,7 +170,9 @@ class CrewsController extends Controller
         $item->dob = $params['birth'];
         $item->address = $params['address'];
         $item->status = 1;
-        $item->file = $params['file'];
+        if (isset($params['file'])) {
+            $item->file = $params['file'];
+        }
         $item->files = json_encode($request->input('files', []));
 
         $item->save();
