@@ -32,7 +32,7 @@ class ProfileController extends Controller
     public function getNotificationsCount()
     {
 
-        $user = User::withCount('notifications')->first()->pluck('notifications_count');
+        $user = User::withCount('notifications')->first();
         if (!$user) {
             return response()->error('objectNotFound');
         }
