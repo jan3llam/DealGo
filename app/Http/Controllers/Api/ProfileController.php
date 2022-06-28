@@ -37,7 +37,7 @@ class ProfileController extends Controller
             return response()->error('objectNotFound');
         }
 
-        return response()->success($user);
+        return response()->success($user->notifications_count);
     }
 
     public function registerFCMToken(Request $request)
