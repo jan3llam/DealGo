@@ -29,6 +29,17 @@ class ProfileController extends Controller
         return response()->success($user->append(['user_contracts_count', 'user_shipments_count', 'user_payments_sum', 'user_next_payment']));
     }
 
+    public function getNotificationsCount()
+    {
+
+        $user = User::withCount('notifications')->first()->pluck('notificaitons_count');
+        if (!$user) {
+            return response()->error('objectNotFound');
+        }
+
+        return response()->success($user);
+    }
+
     public function registerFCMToken(Request $request)
     {
         $validator = Validator::make($request->all(),

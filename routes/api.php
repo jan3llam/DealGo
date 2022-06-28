@@ -88,6 +88,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
             Route::get('/get', [ProfileController::class, 'getProfile']);
             Route::get('/get/{id}', [ProfileController::class, 'getProfile']);
             Route::get('/getNotifications', [ProfileController::class, 'getNotifications']);
+            Route::get('/getNotificationsCount', [ProfileController::class, 'getNotificationsCount']);
             Route::post('/registerFCMToken', [ProfileController::class, 'registerFCMToken']);
             Route::put('/updateProfile', [ProfileController::class, 'updateProfile']);
             Route::put('/notification/{id}', [ProfileController::class, 'getNotification']);
