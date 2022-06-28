@@ -75,6 +75,8 @@ class ProfileController extends Controller
 
         $notification->seen = 1;
 
+        $notification->save();
+
         return response()->success($notification);
     }
 

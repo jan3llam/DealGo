@@ -16,7 +16,7 @@ class PaymentsController extends Controller
             $user_id = auth('api')->user()->id;
         }
 
-        $query = ContractPayment::with('contract')
+        $query = ContractPayment::with('contract.owner')
             ->whereHas('contract', function ($q) use ($user_id) {
                 $q->whereHas('tenant', function ($qu) use ($user_id) {
                     $qu->whereHas('user', function ($que) use ($user_id) {
