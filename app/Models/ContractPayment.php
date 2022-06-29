@@ -12,6 +12,16 @@ class ContractPayment extends Model
 
     protected $table = 'contracts_payments';
 
+    public function getRemainingValueAttribute()
+    {
+        return ($this->getFullValueAttribute() - $this->where('contract_id', $this->contract_id)->where('paid', 1)->sum('value'));
+    }
+
+    public function getFullValueAttribute()
+    {
+        return intval($this->where('contract_id', $this->contract_id)->sum('value'));
+    }
+
     public function contract()
     {
         return $this->belongsTo(Contract::class, 'contract_id');

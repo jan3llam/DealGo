@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\Helpers;
-use App\Models\City;
 use App\Models\FCMToken;
 use App\Models\Notification;
 use App\Models\Tag;
@@ -11,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Validator;
 
 class ProfileController extends Controller
@@ -93,24 +93,21 @@ class ProfileController extends Controller
 
     public function updateProfile(Request $request)
     {
+        $user_id = auth('api')->user()->id;
+        $user = User::find($user_id);
 
         $validator = Validator::make($request->all(),
             [
-                'name' => 'required',
-                'email' => 'required|email',
-                'gsm' => 'required|numeric',
-                'image' => 'required',
-                'type' => 'required',
-                'gender' => 'numeric',
-                'dob' => 'date',
-                'city_id' => 'required_if:type,2,3|numeric',
-                'coordinates' => 'required_if:type,3|string',
-                'field' => 'required_if:type,3|numeric',
-                'preferred_type' => 'required_if:type,2|numeric',
-                'commercial_record' => 'string',
-                'profession_record' => 'string',
-                'password' => 'string',
-                'tags' => 'array'
+                'business_name' => Rule::requiredIf($user->type === 1),
+                'commercial' => Rule::requiredIf($user->type === 1),
+                'contact_name' => 'required|string',
+                'zip' => 'required|string',
+                'province' => 'required|string',
+                'address_1' => 'required|string',
+                'address_2' => 'nullable|string',
+                'city' => 'required|numeric',
+                'email' => 'required',
+                'phone' => 'required',
             ]);
 
         if ($validator->fails()) {
@@ -118,70 +115,22 @@ class ProfileController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $user_id = auth('api')->user()->id;
-
-        $user = User::find($user_id);
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->gsm = $request->gsm;
-        $user->profile_pic = $request->image;
-
-
         if ($user->type === 1) {
-            $requestDob = $request->input('dob', null);
-            if ($requestDob) {
-                $dob = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $request->dob)));
-                $user->dob = $dob;
-            }
-            $user->gender = $request->input('gender', null);
-
-        } elseif ($user->type === 2) {
-
-            $city = City::find($request->city_id);
-
-            if (!$city) {
-                return response()->error('objectNotFound');
-            }
-
-            $user->gender = $request->input('gender', null);
-            $requestDob = $request->input('dob', null);
-            if ($requestDob) {
-                $dob = $request->dob ? date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $request->dob))) : null;
-                $user->dob = $dob;
-                $user->provider()->update([
-                    'dob' => $dob,
-                ]);
-            }
-
-            $user->provider()->update([
-                'city_id' => $request->city_id,
-                'profession_record' => $request->profession_record,
-                'preferred_type' => $request->preferred_type
-            ]);
-        } elseif ($user->type === 3) {
-
-            $city = City::find($request->city_id);
-
-            if (!$city) {
-                return response()->error('objectNotFound');
-            }
-
-            $user->company()->update([
-                'field' => $request->field,
-                'coordinates' => $request->coordinates,
-                'city_id' => $request->city_id,
-                'commercial_record' => $request->commercial_record
-            ]);
+            $user->business_name = $request->business_name;
+            $user->company_file = $request->company_file;
+            $user->license_file = $request->license_file;
+            $user->commercial = $request->commercial;
         }
-
-        if (sizeof($request->input('tags', [])) > 0) {
-            foreach ($request->input('tags') as $tag) {
-                if (Tag::find($tag)) {
-                    $user->tags()->attach($tag);
-                }
-            }
-        }
+        $user->contact_name = $request->contact_name;
+        $user->zip = $request->zip;
+        $user->province = $request->province;
+        $user->address_1 = $request->address_1;
+        $user->address_2 = $request->address_2;
+        $user->city = $request->city;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->legal_file = $request->legal_file;
+        $user->files = json_encode($request->input('files', []));
 
         try {
             $user->save();

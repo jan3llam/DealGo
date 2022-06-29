@@ -35,7 +35,23 @@ class PaymentsController extends Controller
         $total = $query->limit($page_size)->count();
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
-            ->take($page_size)->get();
+            ->take($page_size)->get()->each(function ($items) {
+                $items->append(['full_value', 'remaining_value']);
+            });
+
+        $statistics = ContractPayment::with('contract.owner')
+            ->whereHas('contract', function ($q) use ($user_id) {
+                $q->whereHas('tenant', function ($qu) use ($user_id) {
+                    $qu->whereHas('user', function ($que) use ($user_id) {
+                        $que->where('id', $user_id);
+                    });
+                });
+            })->get()->each(function ($items) {
+                $items->append(['full_value', 'remaining_value']);
+            });
+
+        $data['statistics']['full'] = $statistics->sum('full_value');
+        $data['statistics']['remaining'] = $statistics->sum('remaining_value');
 
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $data['data']->count();
