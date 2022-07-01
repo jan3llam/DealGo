@@ -80,7 +80,7 @@ class TicketsController extends Controller
         $user_id = auth('api')->user()->id;
 
         $data = [];
-        $search_clm = ['user.name', 'user.email', 'user.phone', 'user.contact_name',
+        $search_clm = ['user.email', 'user.phone', 'user.contact_name',
             'admin.name', 'admin.email', 'admin.phone', 'subject', 'description'];
 
 

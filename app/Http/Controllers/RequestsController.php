@@ -48,7 +48,7 @@ class RequestsController extends Controller
     {
 
         $data = [];
-        $search_clm = ['port_from.name', 'port_to.name', 'port.city.name', 'port.city.country.name', 'tenant.user.contact_name'];
+        $search_clm = ['port_from.name', 'port_to.name', 'port_from.city.name_ar', 'port_from.city.name_en', 'port_to.city.name_ar', 'port_to.city.name_en', 'tenant.user.contact_name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 

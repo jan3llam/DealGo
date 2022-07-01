@@ -64,7 +64,7 @@ class OffersResponsesController extends Controller
     {
 
         $data = [];
-        $search_clm = ['user.name', 'user.username', 'user.gsm', 'user.email'];
+        $search_clm = ['tenant.user.contact_name', 'tenant.user.phone', 'tenant.user.email'];
         $order_field = 'created_at';
         $order_sort = 'desc';
         $offer_id = $request->input('offer_id', null);

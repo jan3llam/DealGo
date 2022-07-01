@@ -51,7 +51,7 @@ class CrewsController extends Controller
     {
 
         $data = [];
-        $search_clm = ['first_name', 'last_name', 'job_title', 'email', 'phone', 'city.name', 'vessel.name', 'address'];
+        $search_clm = ['first_name', 'last_name', 'job_title', 'email', 'phone', 'city.name_ar', 'city.name_en', 'vessel.name', 'address'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
