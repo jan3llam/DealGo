@@ -185,12 +185,12 @@ class Helper
             })->with('FCMTokens')->get()->pluck('FCMTokens')->collapse()->pluck('text')->toArray();
         } else {
             $ids = is_array($ids) ? $ids : [$ids];
-            $firebaseTokenAr = User::whereHas('FCMTokens', function ($query) {
+            $firebaseTokenAr = User::/*whereHas('FCMTokens', function ($query) {
                 return $query->where('language', 'ar');
-            })->whereIn('id', $ids)->with('FCMTokens')->get()->pluck('FCMTokens')->collapse()->pluck('text')->toArray();
-            $firebaseTokenEn = User::whereHas('FCMTokens', function ($query) {
+            })->*/ whereIn('id', $ids)->with('FCMTokens')->get()->pluck('FCMTokens')->collapse()->pluck('text')->toArray();
+            $firebaseTokenEn = User::/*whereHas('FCMTokens', function ($query) {
                 return $query->where('language', 'en');
-            })->whereIn('id', $ids)->with('FCMTokens')->get()->pluck('FCMTokens')->collapse()->pluck('text')->toArray();
+            })->*/ whereIn('id', $ids)->with('FCMTokens')->get()->pluck('FCMTokens')->collapse()->pluck('text')->toArray();
             foreach ($ids as $id) {
 
                 $notification = new Notification;

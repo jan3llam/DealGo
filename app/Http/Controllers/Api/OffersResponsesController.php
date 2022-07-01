@@ -219,7 +219,7 @@ class OffersResponsesController extends Controller
         $item->payments()->saveMany($paymentsArr);
 
         try {
-            Helper::sendNotification('responseOffer', [], $item->offer->owner->user->id);
+            Helper::sendNotification('responseOffer', [], $item->offer->vessel->owner->user->id);
         } catch (\Exception $e) {
             return response()->success();
         }

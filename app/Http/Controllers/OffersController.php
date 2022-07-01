@@ -45,7 +45,7 @@ class OffersController extends Controller
     {
 
         $data = [];
-        $search_clm = ['vessel.name', 'vessel.owner.contact_name', 'vessel.owner.full_name'];
+        $search_clm = ['vessel.name', 'vessel.owner.user.contact_name', 'vessel.owner.user.full_name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
@@ -62,7 +62,15 @@ class OffersController extends Controller
             $query->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
                     $item = explode('.', $item);
-                    if (sizeof($item) == 3) {
+                    if (sizeof($item) == 4) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
+                                $que->whereHas($item[2], function ($quer) use ($item, $search_val) {
+                                    $quer->where($item[3], 'like', '%' . $search_val . '%');
+                                });
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 3) {
                         $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
                             $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
                                 $que->where($item[2], 'like', '%' . $search_val . '%');

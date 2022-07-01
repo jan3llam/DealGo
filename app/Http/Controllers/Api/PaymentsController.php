@@ -35,7 +35,7 @@ class PaymentsController extends Controller
         $total = $query->limit($page_size)->count();
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
-            ->take($page_size)->get()->each(function ($items) {
+            ->take($page_size)->orderBy('created_at', 'desc')->get()->each(function ($items) {
                 $items->append(['full_value', 'remaining_value']);
             });
 

@@ -148,7 +148,7 @@ class TicketsController extends Controller
         $total = $query->limit($page_size)->count();
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
-            ->take($page_size)->get();
+            ->take($page_size)->orderBy('created_at', 'desc')->get();
 
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
