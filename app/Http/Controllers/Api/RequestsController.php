@@ -77,12 +77,12 @@ class RequestsController extends Controller
 
         if ($date_from) {
             $from = Carbon::parse(date('Y-m-d', strtotime($date_from)))->toDateString();
-            $query->where('date_from', '<=', $from);
+            $query->where('date_from', '>=', $from);
         }
 
         if ($date_to) {
             $to = Carbon::parse(date('Y-m-d', strtotime($date_to)))->toDateString();
-            $query->where('date_to', '>=', $to);
+            $query->where('date_to', '<=', $to);
         }
 
         if ($tenant) {

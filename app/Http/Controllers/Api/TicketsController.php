@@ -38,7 +38,9 @@ class TicketsController extends Controller
 
         $item->replies()->save($reply);
 
-        $item->status = 2;
+        if ($item->status !== 1) {
+            $item->status = 2;
+        }
 
         $item->save();
 
@@ -92,7 +94,7 @@ class TicketsController extends Controller
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
-        $filter_status = isset($params['status']) ? $params['status'] : 1;
+        $filter_status = isset($params['status']) ? $params['status'] : null;
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
 

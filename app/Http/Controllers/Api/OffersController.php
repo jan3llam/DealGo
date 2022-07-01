@@ -66,12 +66,12 @@ class OffersController extends Controller
 
         if ($date_from) {
             $from = Carbon::parse(date('Y-m-d', strtotime($date_from)))->toDateString();
-            $query->where('date_from', '<=', $from);
+            $query->where('date_from', '>=', $from);
         }
 
         if ($date_to) {
             $to = Carbon::parse(date('Y-m-d', strtotime($date_to)))->toDateString();
-            $query->where('date_to', '>=', $to);
+            $query->where('date_to', '<=', $to);
         }
 
         if ($owner) {
@@ -82,12 +82,13 @@ class OffersController extends Controller
             });
         }
 
-
+//dd(auth('api')->user()->userable->id);
         if ($is_mine && auth('api')->check()) {
             $query->whereHas('vessel', function ($q) use ($owner) {
-                $q->whereHas('owner', function ($qu) use ($owner) {
-                    $qu->where('id', auth('api')->user()->userable->id);
-                });
+                $q->where('owner_id', auth('api')->user()->userable->id);
+//                $q->whereHas('owner', function ($qu) use ($owner) {
+//                    $qu->where('id', auth('api')->user()->userable->id);
+//                });
             });
         }
 
@@ -95,8 +96,8 @@ class OffersController extends Controller
             $q->whereHas('owner', function ($qu) {
                 $qu->whereHas('user');
             });
-        })->whereHas('responses.goods_types')->whereHas('port_from')
-            ->with(['vessel.type.goods_types', 'port_from'])
+        })->whereHas('port_from')
+            ->with(['vessel.type.goods_types', 'port_from', 'vessel.owner.user'])
             ->withCount(['responses' => function (Builder $q) {
                 $q->whereHas('port_to')->whereHas('goods_types')->where('status', 0);
             }]);

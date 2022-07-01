@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Helpers;
 use App\Models\Contract;
 use App\Models\ContractPayment;
 use App\Models\Offer;
@@ -13,6 +14,7 @@ use App\Models\Shipment;
 use App\Models\Tenant;
 use App\Models\User;
 use Carbon\Carbon;
+use Helper;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -216,6 +218,12 @@ class OffersResponsesController extends Controller
 
         $item->payments()->saveMany($paymentsArr);
 
+        try {
+            Helper::sendNotification('responseOffer', [], $item->offer->owner->user->id);
+        } catch (\Exception $e) {
+            return response()->success();
+        }
+
         return response()->success();
     }
 
@@ -294,6 +302,12 @@ class OffersResponsesController extends Controller
                 $i->status = 2;
                 $i->save();
             });;
+        }
+
+        try {
+            Helper::sendNotification('responseApproval', [], $contract->tenant->user->id);
+        } catch (\Exception $e) {
+            return response()->success();
         }
 
         return response()->success();

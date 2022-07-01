@@ -11,6 +11,7 @@ use App\Models\RequestResponsePayment;
 use App\Models\Shipment;
 use App\Models\Tenant;
 use App\Models\User;
+use Helper;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -205,6 +206,11 @@ class RequestsResponsesController extends Controller
 
         $item->payments()->saveMany($paymentsArr);
 
+        try {
+            Helper::sendNotification('responseRequest', [], $item->request->tenant->user->id);
+        } catch (\Exception $e) {
+            return response()->success();
+        }
         return response()->success();
     }
 
@@ -271,6 +277,12 @@ class RequestsResponsesController extends Controller
                 $i->status = 2;
                 $i->save();
             });;
+        }
+
+        try {
+            Helper::sendNotification('responseApproval', [], $contract->owner->user->id);
+        } catch (\Exception $e) {
+            return response()->success();
         }
 
         return response()->success();

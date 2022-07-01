@@ -84,7 +84,7 @@ class TicketsController extends Controller
     {
 
         $data = [];
-        $search_clm = ['user.name', 'user.email', 'user.phone', 'user.contact_name',
+        $search_clm = ['user.email', 'user.phone', 'user.contact_name',
             'admin.name', 'admin.email', 'admin.phone', 'subject', 'description'];
         $order_field = 'created_at';
         $order_sort = 'desc';

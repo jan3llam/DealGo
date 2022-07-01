@@ -100,6 +100,8 @@ class ProfileController extends Controller
             [
                 'business_name' => Rule::requiredIf($user->type === 1),
                 'commercial' => Rule::requiredIf($user->type === 1),
+                'company' => Rule::requiredIf($user->type === 1),
+                'license' => Rule::requiredIf($user->type === 1),
                 'contact_name' => 'required|string',
                 'zip' => 'required|string',
                 'province' => 'required|string',
@@ -108,6 +110,7 @@ class ProfileController extends Controller
                 'city' => 'required|numeric',
                 'email' => 'required',
                 'phone' => 'required',
+                'legal' => 'required',
             ]);
 
         if ($validator->fails()) {
@@ -116,17 +119,17 @@ class ProfileController extends Controller
         }
 
         if ($user->type === 1) {
-            $user->business_name = $request->business_name;
+            $user->full_name = $request->business_name;
             $user->company_file = $request->company_file;
             $user->license_file = $request->license_file;
-            $user->commercial = $request->commercial;
+            $user->commercial_number = $request->commercial;
         }
         $user->contact_name = $request->contact_name;
-        $user->zip = $request->zip;
+        $user->zip_code = $request->zip;
         $user->province = $request->province;
         $user->address_1 = $request->address_1;
         $user->address_2 = $request->address_2;
-        $user->city = $request->city;
+        $user->city_id = $request->city;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->legal_file = $request->legal_file;
@@ -155,7 +158,7 @@ class ProfileController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $user = auth('api')->user();
+        $user = User::find(auth('api')->user()->id);
 
         $user->password = bcrypt($request->password);
         $user->save();
