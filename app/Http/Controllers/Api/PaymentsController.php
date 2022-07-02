@@ -26,7 +26,11 @@ class PaymentsController extends Controller
             });
 
         if ($request->input('paid', null) !== null) {
-            $query->where('paid', $request->input('paid', null));
+            if ($request->input('paid', null) == 0) {
+                $query->whereNull('submit_date');
+            } else {
+                $query->whereNotNull('submit_date');
+            }
         }
 
         $page_size = $request->input('page_size', 10);
