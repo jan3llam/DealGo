@@ -14,7 +14,7 @@ class ContractPayment extends Model
 
     public function getRemainingValueAttribute()
     {
-        return ($this->getFullValueAttribute() - $this->where('contract_id', $this->contract_id)->whereNotNull('submit_date')->sum('value'));
+        return ($this->getFullValueAttribute() - ($this->where('contract_id', $this->contract_id)->whereNotNull('submit_date')->sum('value')));
     }
 
     public function getFullValueAttribute()

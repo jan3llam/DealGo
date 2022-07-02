@@ -16,7 +16,7 @@ class PaymentsController extends Controller
             $user_id = auth('api')->user()->id;
         }
 
-        $query = ContractPayment::with('contract.owner')
+        $query = ContractPayment::with('contract.owner.user')
             ->whereHas('contract', function ($q) use ($user_id) {
                 $q->whereHas('tenant', function ($qu) use ($user_id) {
                     $qu->whereHas('user', function ($que) use ($user_id) {
@@ -43,19 +43,26 @@ class PaymentsController extends Controller
                 $items->append(['full_value', 'remaining_value']);
             });
 
-        $statistics = ContractPayment::with('contract.owner.user')
-            ->whereHas('contract', function ($q) use ($user_id) {
-                $q->whereHas('tenant', function ($qu) use ($user_id) {
-                    $qu->whereHas('user', function ($que) use ($user_id) {
-                        $que->where('id', $user_id);
-                    });
+        $statistics = ContractPayment::whereHas('contract', function ($q) use ($user_id) {
+            $q->whereHas('tenant', function ($qu) use ($user_id) {
+                $qu->whereHas('user', function ($que) use ($user_id) {
+                    $que->where('id', $user_id);
                 });
-            })->get()->each(function ($items) {
-                $items->append(['full_value', 'remaining_value']);
             });
+        })->get();
 
-        $data['statistics']['full'] = $statistics->sum('full_value');
-        $data['statistics']['remaining'] = $statistics->sum('remaining_value');
+        $fullPayments = 0;
+        $duePayments = 0;
+
+        foreach ($statistics as $item) {
+            if (!$item->submit_date) {
+                $duePayments += $item->value;
+            }
+            $fullPayments += $item->value;
+        }
+
+        $data['statistics']['full'] = $fullPayments;
+        $data['statistics']['remaining'] = $duePayments;
 
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $data['data']->count();

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Helpers;
 use App\Models\FCMToken;
 use App\Models\Notification;
-use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -114,6 +113,7 @@ class ProfileController extends Controller
                 'email' => 'required',
                 'phone' => 'required',
                 'legal' => 'required',
+                'image' => 'required',
             ]);
 
         if ($validator->fails()) {
@@ -136,6 +136,7 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->legal_file = $request->legal_file;
+        $user->image = $request->image;
         $user->files = json_encode($request->input('files', []));
 
         try {
