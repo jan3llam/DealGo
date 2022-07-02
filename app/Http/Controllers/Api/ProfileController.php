@@ -21,7 +21,9 @@ class ProfileController extends Controller
             $id = auth('api')->user()->id;
         }
 
-        $user = User::with(['userable', 'city.country'])->withCount('notifications')->find($id);
+        $user = User::with(['userable', 'city.country'])->withCount(['notifications' => function ($q) {
+            $q->where('seen', 0);
+        }])->find($id);
         if (!$user) {
             return response()->error('objectNotFound');
         }
@@ -32,11 +34,12 @@ class ProfileController extends Controller
     public function getNotificationsCount()
     {
 
-        $user = User::withCount('notifications')->first();
+        $user = User::withCount(['notifications' => function ($q) {
+            $q->where('seen', 0);
+        }])->find(auth('api')->user()->id);
         if (!$user) {
             return response()->error('objectNotFound');
         }
-
         return response()->success($user->notifications_count);
     }
 
