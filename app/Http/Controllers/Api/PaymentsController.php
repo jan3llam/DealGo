@@ -43,7 +43,7 @@ class PaymentsController extends Controller
                 $items->append(['full_value', 'remaining_value']);
             });
 
-        $statistics = ContractPayment::with('contract.owner')
+        $statistics = ContractPayment::with('contract.owner.user')
             ->whereHas('contract', function ($q) use ($user_id) {
                 $q->whereHas('tenant', function ($qu) use ($user_id) {
                     $qu->whereHas('user', function ($que) use ($user_id) {
