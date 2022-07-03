@@ -207,7 +207,7 @@ class RequestsResponsesController extends Controller
         $item->payments()->saveMany($paymentsArr);
 
         try {
-            Helper::sendNotification('responseRequest', [], $item->request->tenant->user->id, ['id' => $item->id, 'action' => 'response_request']);
+            Helper::sendNotification('responseRequest', [], $item->request->tenant->user->id, ['id' => $item->id, 'origin_id' => $item->request_id, 'action' => 'response_request']);
         } catch (\Exception $e) {
             return response()->success();
         }
