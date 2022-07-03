@@ -200,7 +200,7 @@ class Helper
                 $notification->text_ar = $text_ar;
                 $notification->text_en = $text_en;
                 $notification->type = 2;
-//                $notification->custom_data = json_encode($customData);
+                $notification->payload = json_encode($customData);
                 $notification->save();
             }
         }

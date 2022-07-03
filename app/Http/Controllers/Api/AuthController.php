@@ -265,16 +265,16 @@ class AuthController extends Controller
 //            Helpers::sendNotification('login', [], $social_account_id);
 //        }
 
-        try {
-            Helper::sendNotification('login', [], auth('api')->user()->id);
-        } catch (\Exception $e) {
-            return response()->success([
-                'access_token' => $token,
-                'token_type' => 'bearer',
-                'user_type' => auth('api')->user()->userable_type,
-                'expires_in' => auth('api')->factory()->getTTL() * 60
-            ]);
-        }
+//        try {
+//            Helper::sendNotification('login', [], auth('api')->user()->id);
+//        } catch (\Exception $e) {
+//            return response()->success([
+//                'access_token' => $token,
+//                'token_type' => 'bearer',
+//                'user_type' => auth('api')->user()->userable_type,
+//                'expires_in' => auth('api')->factory()->getTTL() * 60
+//            ]);
+//        }
 
         return response()->success([
             'access_token' => $token,

@@ -28,7 +28,7 @@ class Notification extends Model
     ];
 
 
-    public function getCustomDataAttribute($value)
+    public function getPayloadAttribute($value)
     {
         return json_decode($value);
     }

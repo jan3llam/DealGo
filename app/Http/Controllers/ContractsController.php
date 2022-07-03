@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contract;
 use App\Models\ContractPayment;
 use Carbon\Carbon;
+use Helper;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -128,6 +129,8 @@ class ContractsController extends Controller
 
             $contract->payments()->save($item);
         }
+        Helper::sendNotification('paymentChanged', [], $contract->owner->user->id, ['id' => $contract->id, 'action' => 'payment']);
+        Helper::sendNotification('paymentChanged', [], $contract->tenant->user->id, ['id' => $contract->id, 'action' => 'payment']);
 
         return response()->success();
     }
