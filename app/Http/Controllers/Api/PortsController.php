@@ -67,11 +67,11 @@ class PortsController extends Controller
         $query = Port::where('status', 1);
 
         if ($user instanceof Tenant) {
-            $query->whereHas('offers')->with('offers');
+            $query->whereHas('offers')->with(['offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
         } elseif ($user instanceof Owner) {
-            $query->whereHas('requests')->with('requests');
+            $query->whereHas('requests')->with(['requests.port_to', 'requests.tenant.user', 'requests.routes', 'requests.goods_types']);
         } else {
-            $query->whereHas('requests')->whereHas('offers')->with(['requests', 'offers']);
+            $query->whereHas('requests')->whereHas('offers')->with(['requests.port_to', 'requests.tenant.user', 'requests.routes', 'requests.goods_types', 'offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
         }
 
         $data['data'] = $query->get()->toArray();

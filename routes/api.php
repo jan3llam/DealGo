@@ -112,7 +112,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'ports'], function () {
         Route::get('/list', [PortsController::class, 'list']);
-        Route::get('/list_map', [PortsController::class, 'list']);
+        Route::get('/list_map', [PortsController::class, 'list_map']);
     });
 
     Route::group(['prefix' => 'categories'], function () {
