@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\ContractPayment;
+use App\Models\Owner;
+use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -10,19 +13,30 @@ class PaymentsController extends Controller
 {
     public function list(Request $request)
     {
+        $user = null;
         $user_id = null;
 
         if (auth('api')->check()) {
             $user_id = auth('api')->user()->id;
+            $user = User::find(auth('api')->user()->id)->userable;
         }
 
         $query = ContractPayment::with('contract.owner.user')
-            ->whereHas('contract', function ($q) use ($user_id) {
-                $q->whereHas('tenant', function ($qu) use ($user_id) {
-                    $qu->whereHas('user', function ($que) use ($user_id) {
-                        $que->where('id', $user_id);
+            ->whereHas('contract', function ($q) use ($user_id, $user) {
+                if ($user->userable instanceof Tenant::class) {
+                    $q->whereHas('tenant', function ($qu) use ($user_id) {
+                        $qu->whereHas('user', function ($que) use ($user_id) {
+                            $que->where('id', $user_id);
+                        });
                     });
-                });
+                } elseif ($user->userable instanceof Owner::class) {
+                    $q->whereHas('owner', function ($qu) use ($user_id) {
+                        $qu->whereHas('user', function ($que) use ($user_id) {
+                            $que->where('id', $user_id);
+
+                        });
+                    });
+                }
             });
 
         if ($request->input('paid', null) !== null) {
@@ -43,12 +57,21 @@ class PaymentsController extends Controller
                 $items->append(['full_value', 'remaining_value']);
             });
 
-        $statistics = ContractPayment::whereHas('contract', function ($q) use ($user_id) {
-            $q->whereHas('tenant', function ($qu) use ($user_id) {
-                $qu->whereHas('user', function ($que) use ($user_id) {
-                    $que->where('id', $user_id);
+        $statistics = ContractPayment::whereHas('contract', function ($q) use ($user_id, $user) {
+            if ($user->userable instanceof Tenant::class) {
+                $q->whereHas('tenant', function ($qu) use ($user_id) {
+                    $qu->whereHas('user', function ($que) use ($user_id) {
+                        $que->where('id', $user_id);
+                    });
                 });
-            });
+            } elseif ($user->userable instanceof Owner::class) {
+                $q->whereHas('owner', function ($qu) use ($user_id) {
+                    $qu->whereHas('user', function ($que) use ($user_id) {
+                        $que->where('id', $user_id);
+
+                    });
+                });
+            }
         })->get();
 
         $fullPayments = 0;
