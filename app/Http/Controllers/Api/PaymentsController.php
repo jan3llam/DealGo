@@ -23,13 +23,13 @@ class PaymentsController extends Controller
 
         $query = ContractPayment::with('contract.owner.user')
             ->whereHas('contract', function ($q) use ($user_id, $user) {
-                if ($user->userable instanceof Tenant::class) {
+                if ($user->userable instanceof Tenant) {
                     $q->whereHas('tenant', function ($qu) use ($user_id) {
                         $qu->whereHas('user', function ($que) use ($user_id) {
                             $que->where('id', $user_id);
                         });
                     });
-                } elseif ($user->userable instanceof Owner::class) {
+                } elseif ($user->userable instanceof Owner) {
                     $q->whereHas('owner', function ($qu) use ($user_id) {
                         $qu->whereHas('user', function ($que) use ($user_id) {
                             $que->where('id', $user_id);
@@ -58,13 +58,13 @@ class PaymentsController extends Controller
             });
 
         $statistics = ContractPayment::whereHas('contract', function ($q) use ($user_id, $user) {
-            if ($user->userable instanceof Tenant::class) {
+            if ($user->userable instanceof Tenant) {
                 $q->whereHas('tenant', function ($qu) use ($user_id) {
                     $qu->whereHas('user', function ($que) use ($user_id) {
                         $que->where('id', $user_id);
                     });
                 });
-            } elseif ($user->userable instanceof Owner::class) {
+            } elseif ($user->userable instanceof Owner) {
                 $q->whereHas('owner', function ($qu) use ($user_id) {
                     $qu->whereHas('user', function ($que) use ($user_id) {
                         $que->where('id', $user_id);
