@@ -21,7 +21,7 @@ class PaymentsController extends Controller
             $user = User::find(auth('api')->user()->id)->userable;
         }
 
-        $query = ContractPayment::with('contract.owner.user')
+        $query = ContractPayment::with(['contract.owner.user', 'contract.tenant.user'])
             ->whereHas('contract', function ($q) use ($user_id, $user) {
                 if ($user->userable instanceof Tenant) {
                     $q->whereHas('tenant', function ($qu) use ($user_id) {
@@ -33,7 +33,6 @@ class PaymentsController extends Controller
                     $q->whereHas('owner', function ($qu) use ($user_id) {
                         $qu->whereHas('user', function ($que) use ($user_id) {
                             $que->where('id', $user_id);
-
                         });
                     });
                 }
