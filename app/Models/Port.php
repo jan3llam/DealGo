@@ -24,4 +24,14 @@ class Port extends Model
     {
         return $this->getTranslation('name', app()->getLocale());
     }
+
+    public function requests()
+    {
+        return $this->hasMany(Request::class, 'port_from', 'id');
+    }
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class, 'port_from', 'id');
+    }
 }

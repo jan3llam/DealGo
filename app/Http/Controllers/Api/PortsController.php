@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Owner;
 use App\Models\Port;
+use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -49,6 +52,29 @@ class PortsController extends Controller
         $data['meta']['count'] = $data['data']->count();
         $data['meta']['page_number'] = $page_number;
         $data['data'] = $data['data']->toArray();
+
+        return response()->success($data);
+    }
+
+    public function list_map(Request $request)
+    {
+        $user = null;
+
+        if (auth('api')->check()) {
+            $user = User::find(auth('api')->user()->id)->userable;
+        }
+
+        $query = Port::where('status', 1);
+
+        if ($user instanceof Tenant) {
+            $query->whereHas('offers')->with('offers');
+        } elseif ($user instanceof Owner) {
+            $query->whereHas('requests')->with('requests');
+        } else {
+            $query->whereHas('requests')->whereHas('offers')->with(['requests', 'offers']);
+        }
+
+        $data['data'] = $query->get()->toArray();
 
         return response()->success($data);
     }
