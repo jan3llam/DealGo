@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Reply;
 use App\Models\Ticket;
+use Helper;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -68,6 +69,8 @@ class TicketsController extends Controller
             $item->admin_id = auth('admins')->user()->id;
 
             $item->save();
+
+            Helper::sendNotification('ticketReply', [], $item->user_id, ['id' => $item->id, 'action' => 'ticket_reply']);
 
             return redirect()->back()
                 ->with('success', __('api.codes.success.message'))
@@ -171,19 +174,6 @@ class TicketsController extends Controller
         return response()->success($data);
     }
 
-    public function delete($id)
-    {
-        $item = Ticket::withTrashed()->where('id', $id)->first();
-
-        if ($item) {
-            $item->status = 3;
-            $item->save();
-            $item->delete();
-        }
-
-        return response()->success();
-    }
-
     public function bulk_delete(Request $request)
     {
         foreach ($request->input('ids', []) as $id) {
@@ -194,6 +184,19 @@ class TicketsController extends Controller
                 $item->delete();
             }
         }
+        return response()->success();
+    }
+
+    public function delete($id)
+    {
+        $item = Ticket::withTrashed()->where('id', $id)->first();
+
+        if ($item) {
+            $item->status = 3;
+            $item->save();
+            $item->delete();
+        }
+
         return response()->success();
     }
 

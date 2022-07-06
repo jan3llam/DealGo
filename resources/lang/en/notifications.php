@@ -9,6 +9,7 @@ return [
         'responseRequest' => 'New response on your request',
         'responseApproval' => 'Response approval',
         'paymentChanged' => 'New payment',
+        'ticketReply' => 'New reply',
     ],
     'body' => [
         'disabledNotification' => 'You have disabled notification feature',
@@ -17,5 +18,6 @@ return [
         'responseRequest' => 'You\'ve just got a new response on your request',
         'responseApproval' => 'Your response has just been approved',
         'paymentChanged' => 'New payment on your contract',
+        'ticketReply' => 'A new reply has just been added on your ticket',
     ]
 ];
