@@ -58,6 +58,10 @@ class PortsController extends Controller
 
     public function list_map(Request $request)
     {
+
+        $search_val = $request->input('keyword', '');
+        $search_clm = ['city.name', 'city.country.name', 'name'];
+
         $user = null;
 
         if (auth('api')->check()) {
@@ -72,6 +76,28 @@ class PortsController extends Controller
             $query->whereHas('requests')->with(['requests.port_to', 'requests.tenant.user', 'requests.routes', 'requests.goods_types']);
         } else {
             $query->whereHas('requests')->whereHas('offers')->with(['requests.port_to', 'requests.tenant.user', 'requests.routes', 'requests.goods_types', 'offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
+        }
+
+        if ($search_val) {
+            $query->where(function ($q) use ($search_clm, $search_val) {
+                foreach ($search_clm as $item) {
+                    $item = explode('.', $item);
+                    if (sizeof($item) == 3) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
+                                $que->where($item[2], 'like', '%' . $search_val . '%');
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 2) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->where($item[1], 'like', '%' . $search_val . '%');
+                        })->get();
+                    } elseif (sizeof($item) == 1) {
+                        $q->orWhere($item[0], 'like', '%' . $search_val . '%');
+                    }
+
+                }
+            });
         }
 
         $data['data'] = $query->get()->toArray();
