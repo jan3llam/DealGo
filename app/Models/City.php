@@ -14,6 +14,8 @@ class City extends Model
         'name',
     ];
 
+    public $timestamps = false;
+
     public function getNameAttribute()
     {
         return $this->{'name_' . App::getLocale()};

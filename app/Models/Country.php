@@ -13,6 +13,7 @@ class Country extends Model
     protected $appends = [
         'name',
     ];
+    public $timestamps = false;
 
     public function getNameAttribute()
     {
