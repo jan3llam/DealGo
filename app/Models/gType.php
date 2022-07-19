@@ -20,6 +20,11 @@ class gType extends Model
         return $this->belongsTo(self::class, 'parent_id');
     }
 
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id');
+    }
+
     public function vessels_types()
     {
         return $this->belongsToMany(vType::class, 'vessels_goods_types', 'good_id', 'type_id');

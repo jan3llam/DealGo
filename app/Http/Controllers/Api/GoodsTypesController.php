@@ -9,7 +9,7 @@ use Validator;
 
 class GoodsTypesController extends Controller
 {
-    public function list(Request $request)
+    public function list_parent(Request $request)
     {
         $query = gType::withoutTrashed()->whereNull('parent_id')->with('children');
         $page_size = $request->input('page_size', 10);
@@ -39,7 +39,7 @@ class GoodsTypesController extends Controller
         return response()->success($data);
     }
 
-    public function list_parent(Request $request)
+    public function list(Request $request)
     {
         $query = gType::withoutTrashed();
         $page_size = $request->input('page_size', 10);

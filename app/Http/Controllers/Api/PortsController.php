@@ -60,7 +60,11 @@ class PortsController extends Controller
     {
 
         $search_val = $request->input('keyword', '');
-        $search_clm = ['city.name', 'city.country.name', 'name'];
+        $port = $request->input('port');
+        $date_from = $request->input('date_from');
+        $date_to = $request->input('date_to');
+        $goods_types = $request->input('goods_types', []);
+        $search_clm = ['city.name', 'city.country.name', 'name', 'offers.vessel.name'];
 
         $user = null;
 
@@ -72,10 +76,73 @@ class PortsController extends Controller
 
         if ($user instanceof Tenant) {
             $query->whereHas('offers')->with(['offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
+            if ($date_from) {
+                $query->whereHas('offers', function ($q) use ($date_from) {
+                    $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
+                });
+            }
+            if ($date_to) {
+                $query->whereHas('offers', function ($q) use ($date_to) {
+                    $q->where('date_to', '>=', $date_to)->where('date_to', '<=', $date_to);
+                });
+            }
+            if (!empty($goods_types)) {
+                $query->whereHas('offers.vessel.type.goods_types', function ($q) use ($goods_types) {
+                    $q->whereIn('id', $goods_types);
+                });
+            }
         } elseif ($user instanceof Owner) {
             $query->whereHas('requests')->with(['requests.port_to', 'requests.tenant.user', 'requests.routes', 'requests.goods_types']);
+            if ($date_from) {
+                $query->whereHas('requests', function ($q) use ($date_from) {
+                    $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
+                });
+            }
+            if ($date_to) {
+                $query->whereHas('requests', function ($q) use ($date_to) {
+                    $q->where('date_to', '>=', $date_to)->where('date_to', '<=', $date_to);
+                });
+            }
+            if (!empty($goods_types)) {
+                $query->whereHas('requests_goods_types', function ($q) use ($goods_types) {
+                    $q->whereIn('id', $goods_types);
+                });
+            }
         } else {
-            $query->whereHas('requests')->whereHas('offers')->with(['requests.port_to', 'requests.tenant.user', 'requests.routes', 'requests.goods_types', 'offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
+            $query->whereHas('requests')->whereHas('offers')
+                ->with(['requests.port_to', 'requests.tenant.user',
+                    'requests.routes', 'requests.goods_types', 'offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
+
+            if ($date_from) {
+                $query->whereHas('requests', function ($q) use ($date_from) {
+                    $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
+                });
+                $query->whereHas('offers', function ($q) use ($date_from) {
+                    $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
+                });
+            }
+            if ($date_to) {
+                $query->whereHas('requests', function ($q) use ($date_to) {
+                    $q->where('date_to', '>=', $date_to)->where('date_to', '<=', $date_to);
+                });
+                $query->whereHas('offers', function ($q) use ($date_to) {
+                    $q->where('date_to', '>=', $date_to)->where('date_to', '<=', $date_to);
+                });
+            }
+            if (!empty($goods_types)) {
+                $query->whereHas('offers.vessel.type.goods_types', function ($q) use ($goods_types) {
+                    $q->whereIn('id', $goods_types);
+                });
+                $query->whereHas('requests_goods_types', function ($q) use ($goods_types) {
+                    $q->whereIn('id', $goods_types);
+                });
+            }
+
+        }
+
+
+        if ($port) {
+            $query->where('id', $port);
         }
 
         if ($search_val) {
