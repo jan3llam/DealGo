@@ -138,6 +138,98 @@ class OffersResponsesController extends Controller
         return response()->success($data);
     }
 
+    public function list_mine(Request $request)
+    {
+        $user = null;
+        if (auth('api')->check()) {
+            $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+        }
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
+        $data = [];
+        $search_clm = [];
+        $order_field = 'created_at';
+        $order_sort = 'desc';
+        $query = OfferResponse::with(['tenant', 'port_to'])
+            ->whereHas('port_to')
+            ->whereHas('goods_types.good_type');
+
+        $search_val = $request->input('keyword', null);
+        $page_size = $request->input('page_size', 10);
+        $page_number = $request->input('page_number', 1);
+        $filter_status = $request->input('status', 0);
+        $port_to = $request->input('port_to', null);
+
+        if ($search_val) {
+            $query->where(function ($q) use ($search_clm, $search_val) {
+                foreach ($search_clm as $item) {
+                    $item = explode('.', $item);
+                    if (sizeof($item) == 3) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
+                                $que->where($item[2], 'like', '%' . $search_val . '%');
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 2) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
+                            $qu->where($item[1], 'like', '%' . $search_val . '%');
+                        })->get();
+                    } elseif (sizeof($item) == 1) {
+                        $q->orWhere($item[0], 'like', '%' . $search_val . '%');
+                    }
+                }
+            });
+        }
+
+        if ($filter_status !== null) {
+            switch ($filter_status) {
+                case 0:
+                {
+                    $query->where('status', 0);
+                    break;
+                }
+                case 1:
+                {
+                    $query->where('status', 1);
+                    break;
+                }
+                case 2:
+                {
+                    $query->where('status', 2);
+                    break;
+                }
+                case 3:
+                {
+                    $query->onlyTrashed();
+                    break;
+                }
+            }
+        }
+
+        if ($port_to) {
+            $query->where('port_to', $port_to);
+        }
+
+        $query->whereHas('tenant', function ($q) {
+            $q->where('id', auth('api')->user()->userable->id);
+        });
+
+        $total = $query->limit($page_size)->count();
+
+        $data['data'] = $query->skip(($page_number - 1) * $page_size)
+            ->take($page_size)->orderBy($order_field, $order_sort)->get();
+
+        $data['meta']['draw'] = $request->input('draw');
+        $data['meta']['total'] = $total;
+        $data['meta']['count'] = $data['data']->count();
+        $data['data'] = $data['data']->toArray();
+
+        return response()->success($data);
+    }
+
     public function add(Request $request)
     {
         $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();

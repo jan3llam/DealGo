@@ -12,8 +12,10 @@ class GoodsTypesController extends Controller
     public function list_parent(Request $request)
     {
         $query = gType::withoutTrashed()->whereNull('parent_id')->with('children');
+        $search_clm = ['name', 'parent.name', 'children.name'];
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
+        $keyword = $request->input('keyword', null);
         $vessel_id = $request->input('vessel', null);
         $order_field = 'created_at';
         $order_sort = 'desc';
@@ -24,6 +26,29 @@ class GoodsTypesController extends Controller
                 $query->whereIn('id', $vessel->type->goods_types->pluck('id'));
             }
         }
+
+        if ($keyword) {
+            $query->where(function ($q) use ($search_clm, $keyword) {
+                foreach ($search_clm as $item) {
+                    $item = explode('.', $item);
+                    if (sizeof($item) == 3) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $keyword) {
+                            $qu->whereHas($item[1], function ($que) use ($item, $keyword) {
+                                $que->where($item[2], 'like', '%' . $keyword . '%');
+                            });
+                        })->get();
+                    } elseif (sizeof($item) == 2) {
+                        $q->orWhereHas($item[0], function ($qu) use ($item, $keyword) {
+                            $qu->where($item[1], 'like', '%' . $keyword . '%');
+                        })->get();
+                    } elseif (sizeof($item) == 1) {
+                        $q->orWhere($item[0], 'like', '%' . $keyword . '%');
+                    }
+
+                }
+            });
+        }
+
 
         $total = $query->limit($page_size)->count();
 

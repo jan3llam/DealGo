@@ -189,6 +189,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'offers_responses', 'middleware' => 'auth:api'], function () {
         Route::get('/list/{id?}', [OffersResponsesController::class, 'list']);
+        Route::get('/listMy', [OffersResponsesController::class, 'list_mine']);
         Route::get('/get/{id}', [OffersResponsesController::class, 'get']);
         Route::post('/add', [OffersResponsesController::class, 'add']);
         Route::post('/approve/{id}', [OffersResponsesController::class, 'approve']);
@@ -206,6 +207,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'requests_responses', 'middleware' => 'auth:api'], function () {
         Route::get('/list/{id?}', [RequestsResponsesController::class, 'list']);
+        Route::get('/listMy', [RequestsResponsesController::class, 'list_mine']);
         Route::get('/get/{id}', [RequestsResponsesController::class, 'get']);
         Route::post('/add', [RequestsResponsesController::class, 'add']);
         Route::post('/approve/{id}', [RequestsResponsesController::class, 'approve']);
