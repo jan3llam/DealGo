@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Helpers;
 use App\Models\FCMToken;
 use App\Models\Notification;
+use App\Models\Owner;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,6 +26,9 @@ class ProfileController extends Controller
         }])->find($id);
         if (!$user) {
             return response()->error('objectNotFound');
+        }
+        if ($user->userable instanceof Owner) {
+            $user->userable->vessels = $user->userable->vessels();
         }
 
         return response()->success($user->append(['user_contracts_count', 'user_shipments_count', 'user_payments_sum', 'user_next_payment']));
