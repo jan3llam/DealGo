@@ -15,6 +15,11 @@ class Tenant extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function rated()
+    {
+        return $this->hasMany(Rate::class);
+    }
+
     public function user()
     {
         return $this->morphOne(User::class, 'userable');

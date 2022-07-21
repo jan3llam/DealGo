@@ -144,6 +144,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/get/{id}', [ShipmentsController::class, 'get']);
     });
 
+    Route::group(['prefix' => 'rates', 'middleware' => 'auth:api'], function () {
+        Route::get('/list/{id}', [ProfileController::class, 'getProfileRates']);
+        Route::post('/{id}', [ProfileController::class, 'rateOwner']);
+    });
+
     Route::group(['prefix' => 'contracts', 'middleware' => 'auth:api'], function () {
         Route::get('/list', [ContractsController::class, 'list']);
         Route::get('/get/{id}', [ContractsController::class, 'get']);

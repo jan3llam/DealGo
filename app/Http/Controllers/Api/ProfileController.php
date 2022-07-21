@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\Helpers;
+use App\Models\Contract;
 use App\Models\FCMToken;
 use App\Models\Notification;
 use App\Models\Owner;
+use App\Models\Rate;
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +32,8 @@ class ProfileController extends Controller
         }
         if ($user->userable instanceof Owner) {
             $user->userable->vessels = $user->userable->vessels();
+            $user->userable->rate = $user->userable->withSum('rates', 'rate');
+            $user->userable->is_ratable = Contract::where('owner_id', $user->userable->id)->where('tenant_id', auth('api')->user()->id)->count() && !Rate::where('owner_id', $user->userable->id)->where('tenant_id', auth('api')->user()->id)->count();
         }
 
         return response()->success($user->append(['user_contracts_count', 'user_shipments_count', 'user_payments_sum', 'user_next_payment']));
@@ -44,6 +49,45 @@ class ProfileController extends Controller
             return response()->error('objectNotFound');
         }
         return response()->success($user->notifications_count);
+    }
+
+    public function getProfileRates($id)
+    {
+        $rates = Rate::where('owner_id', $id)->get();
+        return response()->success($rates);
+    }
+
+    public function rateOwner($id, Request $request)
+    {
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
+        $validator = Validator::make($request->all(),
+            [
+                'rate' => 'required|numeric',
+                'message' => 'required|string',
+            ]);
+
+        if ($validator->fails()) {
+            return response()->error('missingParameters', $validator->failed());
+        }
+
+        $rate = Rate::where('owner_id', $id)->first();
+
+        if ($rate) {
+            return response()->error('alreadyRated');
+        }
+        $rate = new Rate;
+        $rate->tenant_id = auth('api')->user()->id;
+        $rate->owner_id = $id;
+        $rate->rate = $request->rate;
+        $rate->message = $request->message;
+        $rate->save();
+
+        return response()->success();
     }
 
     public function registerFCMToken(Request $request)

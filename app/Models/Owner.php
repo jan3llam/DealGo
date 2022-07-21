@@ -10,10 +10,14 @@ class Owner extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     public function vessels()
     {
         return $this->hasMany(Vessel::class);
+    }
+
+    public function rates()
+    {
+        return $this->hasMany(Rate::class);
     }
 
     public function city()
