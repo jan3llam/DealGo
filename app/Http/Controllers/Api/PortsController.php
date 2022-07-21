@@ -88,7 +88,7 @@ class PortsController extends Controller
             }
             if (!empty($goods_types)) {
                 $query->whereHas('offers.vessel.type.goods_types', function ($q) use ($goods_types) {
-                    $q->whereIn('id', $goods_types);
+                    $q->whereIn('goods_types.id', $goods_types);
                 });
             }
         } elseif ($user instanceof Owner) {
@@ -105,7 +105,7 @@ class PortsController extends Controller
             }
             if (!empty($goods_types)) {
                 $query->whereHas('requests.goods_types', function ($q) use ($goods_types) {
-                    $q->whereIn('id', $goods_types);
+                    $q->whereIn('goods_types.id', $goods_types);
                 });
             }
         } else {
@@ -131,10 +131,10 @@ class PortsController extends Controller
             }
             if (!empty($goods_types)) {
                 $query->whereHas('offers.vessel.type.goods_types', function ($q) use ($goods_types) {
-                    $q->whereIn('id', $goods_types);
+                    $q->whereIn('goods_types.id', $goods_types);
                 });
                 $query->whereHas('requests.goods_types', function ($q) use ($goods_types) {
-                    $q->whereIn('id', $goods_types);
+                    $q->whereIn('goods_types.id', $goods_types);
                 });
             }
 
@@ -142,7 +142,7 @@ class PortsController extends Controller
 
 
         if ($port) {
-            $query->where('id', $port);
+            $query->where('ports.id', $port);
         }
 
         if ($search_val) {
