@@ -124,5 +124,21 @@ class User extends Authenticatable implements JWTSubject
         }, 0);
     }
 
+    public function getIsRatableAttribute()
+    {
+        return Contract::where('owner_id', $this->userable->id)->where('tenant_id', auth('api')->user()->id)->count() && !Rate::where('owner_id', $this->userable->id)->where('tenant_id', auth('api')->user()->id)->count();
+
+    }
+
+    public function getRateAttribute()
+    {
+        return $this->userable->rating;
+    }
+
+    public function getOffersAttribute()
+    {
+        return $this->userable->with('vessels.offers')->get();
+    }
+
 
 }

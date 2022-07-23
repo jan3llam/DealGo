@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Offer;
 use App\Models\Request as ShippingRequest;
 use App\Models\RequestResponse;
 use App\Models\Tenant;
@@ -195,6 +196,33 @@ class RequestsController extends Controller
         }
 
         return response()->success();
+    }
+
+    public function suggest(Request $request)
+    {
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
+        $params = $request->all();
+        $validator = Validator::make($params, [
+            'date_from' => 'required|string',
+            'date_to' => 'required|string',
+            'port_from' => 'required',
+            'port_to' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->error('missingParameters', $validator->failed());
+        }
+
+        $items = Offer::where('port_from', $request->port_from)
+            ->where('date_from', Carbon::parse($request->date_from)->toDateTimeString())
+            ->where('date_to', Carbon::parse($request->date_to)->toDateTimeString())->count();
+
+        return response()->success($items);
     }
 
     public function delete($id)

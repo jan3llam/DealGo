@@ -206,6 +206,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/get/{id}', [RequestsController::class, 'get']);
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/add', [RequestsController::class, 'add']);
+            Route::post('/suggest', [RequestsController::class, 'suggest']);
             Route::delete('/{id}', [RequestsController::class, 'delete']);
         });
     });

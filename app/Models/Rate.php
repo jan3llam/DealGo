@@ -13,4 +13,9 @@ class Rate extends Model
     {
         return $this->belongsTo(Owner::class);
     }
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 }

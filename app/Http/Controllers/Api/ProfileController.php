@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\Helpers;
-use App\Models\Contract;
 use App\Models\FCMToken;
 use App\Models\Notification;
 use App\Models\Owner;
@@ -31,9 +30,8 @@ class ProfileController extends Controller
             return response()->error('objectNotFound');
         }
         if ($user->userable instanceof Owner) {
-            $user->userable->vessels = $user->userable->vessels();
-            $user->userable->rate = $user->userable->withSum('rates', 'rate');
-            $user->userable->is_ratable = Contract::where('owner_id', $user->userable->id)->where('tenant_id', auth('api')->user()->id)->count() && !Rate::where('owner_id', $user->userable->id)->where('tenant_id', auth('api')->user()->id)->count();
+            $user->rate_list = Rate::where('owner_id', $user->userable->id)->with('tenant.user')->get();
+            $user->append(['rate', 'is_ratable', 'offers']);
         }
 
         return response()->success($user->append(['user_contracts_count', 'user_shipments_count', 'user_payments_sum', 'user_next_payment']));
@@ -53,7 +51,10 @@ class ProfileController extends Controller
 
     public function getProfileRates($id)
     {
-        $rates = Rate::where('owner_id', $id)->get();
+        $owner = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', $id)->first();
+
+        $rates = Rate::where('owner_id', $owner->userable->id)->with('tenant.user')->get();
+
         return response()->success($rates);
     }
 
@@ -75,14 +76,21 @@ class ProfileController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $rate = Rate::where('owner_id', $id)->first();
+        $owner = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', $id)->first();
+
+        if (!$owner) {
+            return response()->error('objectNotFound');
+        }
+
+        $rate = Rate::where('owner_id', $owner->userable->id)->first();
 
         if ($rate) {
             return response()->error('alreadyRated');
         }
+
         $rate = new Rate;
-        $rate->tenant_id = auth('api')->user()->id;
-        $rate->owner_id = $id;
+        $rate->tenant_id = $user->userable->id;
+        $rate->owner_id = $owner->userable->id;
         $rate->rate = $request->rate;
         $rate->message = $request->message;
         $rate->save();

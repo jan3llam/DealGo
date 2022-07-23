@@ -20,6 +20,11 @@ class Owner extends Model
         return $this->hasMany(Rate::class);
     }
 
+    public function getRatingAttribute()
+    {
+        return (int)$this->rates()->avg('rate');
+    }
+
     public function city()
     {
         return $this->belongsTo(City::class);
