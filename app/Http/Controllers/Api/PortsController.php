@@ -6,6 +6,7 @@ use App\Models\Owner;
 use App\Models\Port;
 use App\Models\Tenant;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -64,6 +65,7 @@ class PortsController extends Controller
         $date_from = $request->input('date_from');
         $date_to = $request->input('date_to');
         $goods_types = $request->input('goods_types', []);
+//        return response()->success($goods_types);
         $search_clm = ['city.name', 'city.country.name', 'name', 'offers.vessel.name'];
 
         $user = null;
@@ -81,11 +83,6 @@ class PortsController extends Controller
                     $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
                 });
             }
-            if ($date_to) {
-                $query->whereHas('offers', function ($q) use ($date_to) {
-                    $q->where('date_to', '>=', $date_to)->where('date_to', '<=', $date_to);
-                });
-            }
             if (!empty($goods_types)) {
                 $query->whereHas('offers.vessel.type.goods_types', function ($q) use ($goods_types) {
                     $q->whereIn('goods_types.id', $goods_types);
@@ -96,11 +93,6 @@ class PortsController extends Controller
             if ($date_from) {
                 $query->whereHas('requests', function ($q) use ($date_from) {
                     $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
-                });
-            }
-            if ($date_to) {
-                $query->whereHas('requests', function ($q) use ($date_to) {
-                    $q->where('date_to', '>=', $date_to)->where('date_to', '<=', $date_to);
                 });
             }
             if (!empty($goods_types)) {
@@ -115,18 +107,10 @@ class PortsController extends Controller
 
             if ($date_from) {
                 $query->whereHas('requests', function ($q) use ($date_from) {
-                    $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
+                    $q->where('date_from', '<=', Carbon::parse($date_from)->toDateString())->where('date_to', '>=', Carbon::parse($date_from)->toDateString());
                 });
                 $query->whereHas('offers', function ($q) use ($date_from) {
-                    $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
-                });
-            }
-            if ($date_to) {
-                $query->whereHas('requests', function ($q) use ($date_to) {
-                    $q->where('date_to', '>=', $date_to)->where('date_to', '<=', $date_to);
-                });
-                $query->whereHas('offers', function ($q) use ($date_to) {
-                    $q->where('date_to', '>=', $date_to)->where('date_to', '<=', $date_to);
+                    $q->where('date_from', '<=', Carbon::parse($date_from)->toDateString())->where('date_to', '>=', Carbon::parse($date_from)->toDateString());
                 });
             }
             if (!empty($goods_types)) {

@@ -110,6 +110,9 @@ class MaintenancesController extends Controller
 
         $item->save();
 
+        $vessel->status = 2;
+        $vessel->save();
+
         return response()->success();
     }
 
@@ -156,6 +159,9 @@ class MaintenancesController extends Controller
         $item->files = json_encode($params['files']);
 
         $item->save();
+
+        $vessel->status = 2;
+        $vessel->save();
 
         return response()->success();
     }
