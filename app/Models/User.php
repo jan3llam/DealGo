@@ -144,9 +144,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->userable->with('vessels.offers')->get();
     }
 
-    public function getContactNameAttribute()
+    public function getContactNameAttribute($value)
     {
-        return $this->type == 1 ? $this->full_name : $this->contact_name;
+        return $this->type == 1 ? $this->full_name : $value;
     }
 
     public function getNameAttribute()
