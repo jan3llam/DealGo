@@ -135,6 +135,15 @@
                     "permission": 51
                 },
                 {
+                    "url": "/admin/requests_responses",
+                    "name": "Requests Responses",
+                    "icon": "file-text",
+                    "slug": "admin.request_responses",
+                    "permissions": [
+                        55
+                    ]
+                },
+                {
                     "url": "/admin/gtypes",
                     "name": "Goods types",
                     "icon": "package",
@@ -148,6 +157,15 @@
             "name": "Offers",
             "icon": "file-plus",
             "slug": "admin.offers",
+            "permissions": [
+                55
+            ]
+        },
+        {
+            "url": "/admin/offers_responses",
+            "name": "OffersResponses",
+            "icon": "file-text",
+            "slug": "admin.offers_responses",
             "permissions": [
                 55
             ]

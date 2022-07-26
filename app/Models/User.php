@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+
+//use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -23,6 +24,10 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+    ];
+
+    protected $appends = [
+        'name',
     ];
 
     /**
@@ -138,6 +143,16 @@ class User extends Authenticatable implements JWTSubject
     public function getOffersAttribute()
     {
         return $this->userable->with('vessels.offers')->get();
+    }
+
+    public function getContactNameAttribute()
+    {
+        return $this->type == 1 ? $this->full_name : $this->contact_name;
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->contact_name;
     }
 
 

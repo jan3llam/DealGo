@@ -114,7 +114,7 @@ return [
     "NotAssignedYet" => "Not assigned yet",
     "Offer" => "Offer",
     "OfferResponse" => "Offer Response",
-    "Offers" => "Ships offers",
+    "Offers" => "Vessels Offers",
     "OffersResponses" => "Offers Responses",
     "Office" => "Shipping agent",
     "Offices" => "Shipping Agents",
