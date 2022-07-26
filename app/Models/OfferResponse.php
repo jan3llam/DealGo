@@ -12,15 +12,16 @@ class OfferResponse extends Model
 
     protected $table = 'offers_responses';
     protected $with = ['tenant.user'];
-
-    public function offer()
-    {
-        return $this->belongsTo(Offer::class);
-    }
+    protected $appends = ['approved'];
 
     public function parent()
     {
         return $this->offer();
+    }
+
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
     }
 
     public function tenant()
@@ -67,6 +68,11 @@ class OfferResponse extends Model
     public function origin()
     {
         return $this->morphOne(Contract::class, 'origin');
+    }
+
+    public function getApprovedAttribute()
+    {
+        return !!$this->has('origin');
     }
 
 }

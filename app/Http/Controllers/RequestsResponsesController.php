@@ -235,7 +235,12 @@ class RequestsResponsesController extends Controller
 
         $item = RequestResponse::withTrashed()->where('id', $id)->first();
 
-        if ($item) {
+        $shipping_request = $item->request;
+
+        if ($item && $shipping_request->approved == 0) {
+            $shipping_request->approved = 1;
+            $shipping_request->save();
+
             $contract = new Contract;
             $contract->owner_id = $item->owner->id;
             $contract->tenant_id = $item->request->tenant->id;
@@ -283,6 +288,8 @@ class RequestsResponsesController extends Controller
                 $i->status = 2;
                 $i->save();
             });;
+        } else {
+            return response()->error('operationNotPermitted');
         }
 
         return response()->success();

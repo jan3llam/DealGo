@@ -351,7 +351,12 @@ class OffersResponsesController extends Controller
             return response()->error('objectNotFound');
         }
 
-        if ($item) {
+        $offer = $item->offer;
+        if ($item && $offer->approved == 0) {
+
+            $offer->approved = 1;
+            $offer->save();
+
             $contract = new Contract;
             $contract->owner_id = $item->offer->vessel->owner->id;
             $contract->tenant_id = $item->tenant_id;
@@ -394,6 +399,8 @@ class OffersResponsesController extends Controller
                 $i->status = 2;
                 $i->save();
             });;
+        } else {
+            return response()->error('operationNotPermitted');
         }
 
         try {

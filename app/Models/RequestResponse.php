@@ -11,6 +11,7 @@ class RequestResponse extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'requests_responses';
+    protected $appends = ['approved'];
 
     public function request()
     {
@@ -60,6 +61,11 @@ class RequestResponse extends Model
     public function origin()
     {
         return $this->morphOne(Contract::class, 'origin');
+    }
+
+    public function getApprovedAttribute()
+    {
+        return !!$this->has('origin');
     }
 
 }

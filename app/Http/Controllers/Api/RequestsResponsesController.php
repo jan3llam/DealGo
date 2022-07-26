@@ -116,6 +116,28 @@ class RequestsResponsesController extends Controller
         return response()->success($data);
     }
 
+    public function get($id, Request $request)
+    {
+
+        if (auth('api')->check()) {
+            $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+            $user_id = isset($user->userable) ? $user->userable->id : null;
+        }
+
+        $data['data'] = RequestResponse::where('id', $id)->whereHas('request', function ($q) use ($user_id) {
+            $q->whereHas('tenant', function ($qu) use ($user_id) {
+                $qu->where('id', $user_id);
+            });
+        })
+            ->whereHas('owner')
+            ->with(['payments', 'request.port_to', 'request.port_from', 'owner.user', 'routes', 'vessels', 'request_goods_types.good_type'])
+            ->first();
+
+
+        return response()->success($data);
+    }
+
     public function list_mine(Request $request)
     {
         $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
@@ -205,28 +227,6 @@ class RequestsResponsesController extends Controller
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $data['data']->count();
         $data['data'] = $data['data']->toArray();
-
-        return response()->success($data);
-    }
-
-    public function get($id, Request $request)
-    {
-
-        if (auth('api')->check()) {
-            $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
-
-            $user_id = isset($user->userable) ? $user->userable->id : null;
-        }
-
-        $data['data'] = RequestResponse::where('id', $id)->whereHas('request', function ($q) use ($user_id) {
-            $q->whereHas('tenant', function ($qu) use ($user_id) {
-                $qu->where('id', $user_id);
-            });
-        })
-            ->whereHas('owner')
-            ->with(['payments', 'request.port_to', 'request.port_from', 'owner.user', 'routes', 'vessels', 'request_goods_types.good_type'])
-            ->first();
-
 
         return response()->success($data);
     }
@@ -321,8 +321,12 @@ class RequestsResponsesController extends Controller
         if ($item->request->tenant->id !== $user->userable->id) {
             return response()->error('objectNotFound');
         }
+        $shipping_request = $item->request;
 
-        if ($item) {
+        if ($item && $shipping_request->approved == 0) {
+            $shipping_request->approved = 1;
+            $shipping_request->save();
+
             $contract = new Contract;
             $contract->owner_id = $item->owner->id;
             $contract->tenant_id = $item->request->tenant->id;
@@ -370,6 +374,8 @@ class RequestsResponsesController extends Controller
                 $i->status = 2;
                 $i->save();
             });;
+        } else {
+            return response()->error('operationNotPermitted');
         }
 
         try {
