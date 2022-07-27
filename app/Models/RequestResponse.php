@@ -65,7 +65,7 @@ class RequestResponse extends Model
 
     public function getApprovedAttribute()
     {
-        return !!$this->has('origin');
+        return $this->origin ? 1 : 0;
     }
 
 }
