@@ -160,8 +160,8 @@ class RequestsResponsesController extends Controller
                 $q->withTrashed()->with('user', function ($qu) {
                     $qu->withTrashed();
                 });
-            }, 'vessels', 'request.goods_types.good_type'
-        ])->whereHas('vessels')->whereHas('request.goods_types.good_type');
+            }, 'vessels', 'request.goods_types'
+        ])->whereHas('vessels')->whereHas('request.goods_types');
 
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
