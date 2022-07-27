@@ -139,7 +139,7 @@
                     "name": "Requests Responses",
                     "icon": "file-text",
                     "slug": "admin.request_responses",
-                    "permissions": [
+                    "permission": [
                         55
                     ]
                 },
