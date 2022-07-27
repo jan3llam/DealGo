@@ -139,9 +139,7 @@
                     "name": "Requests Responses",
                     "icon": "file-text",
                     "slug": "admin.request_responses",
-                    "permission": [
-                        55
-                    ]
+                    "permission": 51
                 },
                 {
                     "url": "/admin/gtypes",
