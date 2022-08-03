@@ -442,7 +442,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
     });
 
     Route::group(['prefix' => 'shipments'], function () {
-        Route::get('/list', [ShipmentsAPI::class, 'list_api']);
+        Route::get('/list/{id?}', [ShipmentsAPI::class, 'list_api']);
         Route::delete('/bulk', [ShipmentsAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [ShipmentsAPI::class, 'delete']);
     });
