@@ -129,7 +129,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/list', [ClassificationsController::class, 'list']);
     });
 
-
     Route::group(['prefix' => 'payments', 'middleware' => 'auth:api'], function () {
         Route::get('/list', [PaymentsController::class, 'list']);
     });
