@@ -10,7 +10,7 @@ use Validator;
 
 class ShipmentsController extends Controller
 {
-    public function list($id, Request $request)
+    public function list($id = null, Request $request)
     {
         $user_id = null;
 
