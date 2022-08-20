@@ -11,6 +11,7 @@ use App\Models\RequestResponsePayment;
 use App\Models\Shipment;
 use App\Models\Tenant;
 use App\Models\User;
+use Carbon\Carbon;
 use Helper;
 use Illuminate\Http\Request;
 use Validator;
@@ -243,7 +244,7 @@ class RequestsResponsesController extends Controller
         $validator = Validator::make($params, [
             'request' => 'required|numeric',
             'payments' => 'required',
-            'date' => 'required',
+            'date' => 'required|string',
             'description' => 'required|string',
             'vessels' => 'required|array',
         ]);
@@ -256,12 +257,11 @@ class RequestsResponsesController extends Controller
 
         $item->request_id = $params['request'];
         $item->owner_id = $user->userable->id;
-        $item->date = $params['date'];
+        $item->date = Carbon::parse($params['date'])->toDateString();
         $item->description = $params['description'];
         $item->files = json_encode($request->input('files', []));
 
         $item->save();
-
 
         if ($item->request->contract == 1) {
 
@@ -284,7 +284,7 @@ class RequestsResponsesController extends Controller
 
             $paymentItem = new RequestResponsePayment;
             $paymentItem->value = $payment['value'];
-            $paymentItem->date = $payment['date'];
+            $paymentItem->date = Carbon::parse($params['date'])->toDateString();
             $paymentItem->description = $payment['description'];
 
             $paymentItem->file = $fileName;

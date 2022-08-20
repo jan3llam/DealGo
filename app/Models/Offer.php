@@ -30,4 +30,9 @@ class Offer extends Model
     {
         return json_decode($value);
     }
+
+    public function getMatrixAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

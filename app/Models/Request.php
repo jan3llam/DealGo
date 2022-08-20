@@ -50,4 +50,9 @@ class Request extends Model
     {
         return $this->belongsToMany(gType::class, 'requests_goods_types', 'request_id', 'good_id')->withPivot('weight', 'id');
     }
+
+    public function getMatrixAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

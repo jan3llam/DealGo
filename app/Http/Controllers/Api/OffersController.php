@@ -198,7 +198,7 @@ class OffersController extends Controller
         $item->date_to = Carbon::parse($params['date_to'])->toDateString();
         $item->description = $params['description'];
         $item->weight = $params['weight'];
-
+        $item->matrix = json_encode($request->input('matrix', []));
         $item->files = json_encode($request->input('files', []));
 
         $item->save();

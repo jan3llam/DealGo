@@ -161,6 +161,7 @@ class RequestsController extends Controller
             'port_from' => 'required',
             'port_to' => 'required',
             'name' => 'required|string',
+            'matrix' => 'required|array'
         ]);
 
         if ($validator->fails()) {
@@ -179,6 +180,7 @@ class RequestsController extends Controller
         $item->description = $params['description'];
         $item->contract = $params['contract'];
         $item->files = json_encode($request->input('files', []));
+        $item->matrix = json_encode($request->input('matrix', []));
 
         $item->save();
 
