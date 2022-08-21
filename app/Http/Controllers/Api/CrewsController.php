@@ -6,6 +6,7 @@ use App\Models\Crew;
 use App\Models\Owner;
 use App\Models\User;
 use App\Models\Vessel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -112,7 +113,7 @@ class CrewsController extends Controller
         $item->last_name = $params['last_name'];
         $item->city_id = $params['city'];
         $item->job_title = $params['job'];
-        $item->dob = $params['birth'];
+        $item->dob = Carbon::parse($params['birth'])->toDateTimeString();
         $item->address = $params['address'];
         $item->file = $params['file'];
         $item->files = json_encode($request->input('files', []));

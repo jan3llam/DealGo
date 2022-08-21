@@ -143,8 +143,8 @@ class MaintenancesController extends Controller
 
         $item->vessel_id = $params['vessel'];
         $item->name = $params['name'];
-        $item->start_at = Carbon::parse($params['start']);
-        $item->end_at = Carbon::parse($params['end']);
+        $item->start_at = Carbon::parse($params['start'])->toDateTimeString();
+        $item->end_at = Carbon::parse($params['end'])->toDateTimeString();
         $item->description = $params['description'];
 
         $files = $request->file('files', []);
