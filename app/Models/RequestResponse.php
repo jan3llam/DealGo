@@ -11,12 +11,7 @@ class RequestResponse extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'requests_responses';
-    protected $appends = ['approved'];
-
-    public function request()
-    {
-        return $this->belongsTo(Request::class);
-    }
+    protected $appends = ['approved', 'matrix'];
 
     public function owner()
     {
@@ -28,24 +23,14 @@ class RequestResponse extends Model
         return $this->request();
     }
 
-    public function total()
+    public function request()
     {
-        return $this->payments()->sum('value');
-    }
-
-    public function payments()
-    {
-        return $this->hasMany(RequestResponsePayment::class, 'offer_id');
+        return $this->belongsTo(Request::class);
     }
 
     public function routes()
     {
         return $this->belongsToMany(Port::class, 'requests_responses_routes', 'offer_id', 'port_id')->withPivot('order');
-    }
-
-    public function vessels()
-    {
-        return $this->belongsToMany(Vessel::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'vessel_id')->withPivot('request_good_id');
     }
 
     public function request_goods_types()
@@ -66,6 +51,39 @@ class RequestResponse extends Model
     public function getApprovedAttribute()
     {
         return $this->origin ? 1 : 0;
+    }
+
+    public function getMatrixAttribute()
+    {
+        // 1 price
+        // 2 vessel age
+        // 3 maintenance number
+        // 4 shipments number
+        // 5 rate
+        // 6 nearest date
+        return [
+            1 => intval($this->total()),
+            2 => $this->vessels()->get()->pluck('build_year', 'id')->toArray(),
+            3 => $this->vessels()->withCount('maintenance')->get()->sum('maintenance_count'),
+            4 => $this->vessels()->withCount('shipments')->get()->sum('shipments_count'),
+            5 => $this->vessels()->first()->owner()->first()->rating,
+            6 => $this->vessels()->with('shipments')->get()->pluck('shipments.date', 'id')->toArray(),
+        ];
+    }
+
+    public function total()
+    {
+        return $this->payments()->sum('value');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(RequestResponsePayment::class, 'offer_id');
+    }
+
+    public function vessels()
+    {
+        return $this->belongsToMany(Vessel::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'vessel_id')->withPivot('request_good_id');
     }
 
 }

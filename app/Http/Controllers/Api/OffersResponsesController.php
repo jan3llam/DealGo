@@ -37,7 +37,7 @@ class OffersResponsesController extends Controller
         $search_clm = [];
         $order_field = 'created_at';
         $order_sort = 'desc';
-        $query = OfferResponse::with(['tenant', 'port_to'])
+        $query = OfferResponse::with(['tenant', 'port_to', 'parent'])
             ->whereHas('port_to')
             ->whereHas('goods_types.good_type');
 
@@ -153,7 +153,7 @@ class OffersResponsesController extends Controller
         $search_clm = [];
         $order_field = 'created_at';
         $order_sort = 'desc';
-        $query = OfferResponse::with(['tenant', 'port_to'])
+        $query = OfferResponse::with(['tenant', 'port_to', 'parent'])
             ->whereHas('port_to')
             ->whereHas('goods_types.good_type');
 

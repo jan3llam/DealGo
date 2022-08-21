@@ -46,7 +46,7 @@ class RequestsResponsesController extends Controller
                 $q->withTrashed()->with('user', function ($qu) {
                     $qu->withTrashed();
                 });
-            }, 'vessels', 'request_goods_types.good_type'
+            }, 'vessels', 'request_goods_types.good_type', 'parent'
         ])->whereHas('vessels')->whereHas('request_goods_types');
 
         if ($id) {
@@ -161,7 +161,7 @@ class RequestsResponsesController extends Controller
                 $q->withTrashed()->with('user', function ($qu) {
                     $qu->withTrashed();
                 });
-            }, 'vessels', 'request.goods_types'
+            }, 'vessels', 'request_goods_types.good_type', 'parent'
         ])->whereHas('vessels')->whereHas('request.goods_types');
 
         $search_val = $request->input('keyword', null);
