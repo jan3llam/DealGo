@@ -67,7 +67,7 @@ class RequestResponse extends Model
             3 => $this->vessels()->withCount('maintenance')->get()->sum('maintenance_count'),
             4 => $this->vessels()->withCount('shipments')->get()->sum('shipments_count'),
             5 => $this->vessels()->first()->owner()->first()->rating,
-            6 => $this->vessels()->with('shipments')->get()->pluck('shipments.date', 'id')->toArray(),
+            6 => $this->date,
         ];
     }
 
