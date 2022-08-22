@@ -46,7 +46,7 @@ class ClassificationsController extends Controller
         ]);
     }
 
-    public function list_api($id = null, Request $request)
+    public function list_api(Request $request, $id = null)
     {
 
         $data = [];
