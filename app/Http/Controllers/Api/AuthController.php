@@ -10,7 +10,9 @@ use App\Models\Tenant;
 use App\Models\User;
 use Helper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -103,6 +105,7 @@ class AuthController extends Controller
         $item->address_1 = $params['address_1'];
         $item->address_2 = $params['address_2'];
         $item->files = json_encode([]);
+        $item->secret = Str::random(40);
 
         $item->userable_id = $class->id;
         $item->userable_type = $user_type === 1 ? Owner::class : Tenant::class;
@@ -110,6 +113,19 @@ class AuthController extends Controller
         $item->status = 1;
 
         $item->save();
+
+        $data = [
+            'username' => $item->email,
+            'secret' => $item->secret,
+            'email' => $item->email,
+            'first_name' => $item->contact_name,
+            'last_name' => '',
+            'custom_json' => 'none',
+        ];
+
+        Http::withHeaders([
+            'PRIVATE-KEY' => env('CHATENGINE_PROJECT_KEY'),
+        ])->post('https://api.chatengine.io/users/', $data);
 
         return response()->success();
     }

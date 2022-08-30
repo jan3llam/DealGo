@@ -34,6 +34,30 @@ class CountriesController extends Controller
     {
         ini_set('max_execution_time', 0);
 
+//        foreach (User::all() as $item) {
+//
+//            $item->secret = Str::random(40);
+//
+//
+//            $data = [
+//                'username' => $item->email,
+//                'secret' => $item->secret,
+//                'email' => $item->email,
+//                'first_name' => $item->contact_name,
+//                'last_name' => '',
+//                'custom_json' =>'none'
+//            ];
+//
+//            $item->save();
+//
+//            $response = Http::withHeaders([
+//                'PRIVATE-KEY' => env('CHATENGINE_PROJECT_KEY'),
+//            ])->post('https://api.chatengine.io/users/', $data);
+//
+////            dd($response);
+//        }
+//        dd(1);
+
         $data = array_map('str_getcsv', file('/home/u990379777/domains/dealgo.site/public_html/Ports.csv'));
         foreach ($data as $index => $item) {
             if ($index) {
