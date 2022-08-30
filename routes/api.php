@@ -6,6 +6,7 @@ use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\Api\ArticlesController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoriesController;
+use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\CitiesController;
 use App\Http\Controllers\Api\ClassificationsController;
 use App\Http\Controllers\Api\ContractsController;
@@ -97,10 +98,9 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         });
     });
 
-
-//    Route::group(['prefix' => 'search'], function () {
-//        Route::get('/provider', [SearchController::class, 'searchProviders']);
-//    });
+    Route::group(['prefix' => 'chat'], function () {
+        Route::get('/users', [ChatController::class, 'getAll']);
+    });
 
     Route::group(['prefix' => 'vesselsTypes'], function () {
         Route::get('/list', [VesselsTypesController::class, 'list']);

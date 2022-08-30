@@ -9,6 +9,7 @@ use App\Models\Thread;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Validator;
 
 class ChatController extends Controller
@@ -175,6 +176,18 @@ class ChatController extends Controller
         }
         return response()->success(["unread_count" => null]);
     }
+
+    public function getAll(Request $request)
+    {
+
+        $response = Http::withHeaders([
+            'PRIVATE-KEY' => env('CHATENGINE_PROJECT_KEY'),
+        ])->get('https://api.chatengine.io/users/');
+
+        return response()->success(json_decode($response->body()));
+    }
+
+
 //    /**
 //     * Remove the specified resource from storage.
 //     *
