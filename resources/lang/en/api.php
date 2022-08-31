@@ -22,6 +22,10 @@ return [
             'code' => "-11",
             'message' => 'Username, gsm or email already exist'
         ],
+        'alreadyExistEmail' => [
+            'code' => "-11",
+            'message' => 'Email already exist'
+        ],
         'missingParameters' => [
             'code' => "-12",
             'message' => 'Missing required parameters'
