@@ -26,11 +26,15 @@ class RequestsController extends Controller
         $search_clm = ['port_from.name', 'port_to.name', 'port.city.name', 'port.city.country.name', 'tenant.user.contact_name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
+        $now = Carbon::parse(date('Y-m-d', strtotime(now())))->toDateString();
 
         $query = ShippingRequest::whereHas('port_to')->whereHas('port_from')
             ->whereHas('tenant', function ($q) {
                 $q->whereHas('user');
-            })->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types'])
+            })
+            ->where('date_to', '<=', $now)
+            ->where('date_from', '>=', $now)
+            ->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types'])
             ->withCount(['responses' => function (Builder $q) {
                 $q->whereHas('vessels')->whereHas('request_goods_types');
             }]);
