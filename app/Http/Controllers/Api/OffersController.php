@@ -29,8 +29,8 @@ class OffersController extends Controller
         $order_sort = 'desc';
         $now = Carbon::parse(date('Y-m-d', strtotime(now())))->toDateString();
 
-        $query = Offer::where('date_to', '<=', $now)
-            ->where('date_from', '>=', $now);
+        $query = Offer::where('date_to', '>=', $now)
+            ->where('date_from', '<=', $now);
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
