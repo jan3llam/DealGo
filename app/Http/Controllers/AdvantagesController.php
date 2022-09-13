@@ -70,7 +70,7 @@ class AdvantagesController extends Controller
         }
 
         if ($sort_field) {
-            $order_field = $sort_field;
+            $order_field = str_replace('_translation', '', $sort_field);
             $order_sort = $params['direction'];
         }
 

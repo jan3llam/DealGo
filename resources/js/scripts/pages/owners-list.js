@@ -65,7 +65,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'user.full_name'},
-                {data: 'user.city.name'},
+                {data: 'user.city.name', orderable: false},
                 {data: 'user.contact_name'},
                 {data: 'user.phone'},
                 {data: 'user.email'},

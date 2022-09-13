@@ -68,7 +68,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'subject'},
-                {data: 'user.contact_name'},
+                {data: 'user.contact_name', orderable: false},
                 {data: 'type'},
                 {data: 'created_at'},
                 {data: 'status'},

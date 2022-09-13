@@ -62,7 +62,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'name_translation'},
-                {data: 'file'},
+                {data: 'file', orderable: false},
                 {data: ''}
             ],
             columnDefs: [

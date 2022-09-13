@@ -70,7 +70,7 @@ class PortsController extends Controller
         }
 
         if ($sort_field) {
-            $order_field = $sort_field;
+            $order_field = str_replace('_translation', '', $sort_field);
             $order_sort = $params['direction'];
         }
 
@@ -78,12 +78,17 @@ class PortsController extends Controller
             switch ($filter_status) {
                 case 1:
                 {
-                    $query->withoutTrashed();
+                    $query->where('status', 1)->withoutTrashed();
                     break;
                 }
                 case 2:
                 {
                     $query->onlyTrashed();
+                    break;
+                }
+                case 0:
+                {
+                    $query->where('status', 0)->withoutTrashed();;
                     break;
                 }
             }
