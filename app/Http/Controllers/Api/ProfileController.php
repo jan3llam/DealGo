@@ -82,7 +82,7 @@ class ProfileController extends Controller
             return response()->error('objectNotFound');
         }
 
-        $rate = Rate::where('owner_id', $owner->userable->id)->first();
+        $rate = Rate::where('owner_id', $owner->userable->id)->where('tenant_id', $user->userable->id)->first();
 
         if ($rate) {
             return response()->error('alreadyRated');

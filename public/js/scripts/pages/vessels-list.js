@@ -66,8 +66,8 @@ $(function () {
                 {data: 'id'},
                 {data: 'name'},
                 {data: 'imo'},
-                {data: 'owner.user.contact_name'},
-                {data: 'country.name'},
+                {data: 'owner.user.contact_name', orderable: false},
+                {data: 'country.name', orderable: false},
                 {data: 'status'},
                 {data: ''}
             ],

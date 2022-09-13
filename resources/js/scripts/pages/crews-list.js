@@ -72,8 +72,8 @@ $(function () {
                 {data: 'first_name'},
                 {data: 'phone'},
                 {data: 'email'},
-                {data: 'city.country.name'},
-                {data: 'city.name'},
+                {data: 'city.country.name', orderable: false},
+                {data: 'city.name', orderable: false},
                 {data: 'job_title'},
                 {data: 'status'},
                 {data: ''}
