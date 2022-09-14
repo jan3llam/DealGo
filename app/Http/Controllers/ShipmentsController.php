@@ -33,11 +33,15 @@ class ShipmentsController extends Controller
         $query = Shipment::with([
             'vessel' => function ($q) {
                 $q->withTrashed()->with('owner', function ($q) {
-                    $q->withTrashed()->with('user');
+                    $q->withTrashed()->with('user', function ($qu) {
+                        $qu->withTrashed();
+                    });
                 });
             },
             'contract.tenant' => function ($q) {
-                $q->withTrashed()->with('user');
+                $q->withTrashed()->with('user', function ($qu) {
+                    $qu->withTrashed();
+                });
             },
             'port_from' => function ($q) {
                 $q->withTrashed();

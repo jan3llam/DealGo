@@ -187,14 +187,17 @@ class VesselsController extends Controller
             'type' => 'required|numeric',
             'owner' => 'required|numeric',
             'country' => 'required|numeric',
-            'imo' => 'required|string',
-            'mmsi' => 'required|string',
+            'imo' => 'required|string|unique:vessels,imo',
+            'mmsi' => 'required|string|unique:vessels,mmsi',
             'capacity' => 'required',
             'build' => 'required',
             'image' => 'required|file',
         ]);
 
         if ($validator->fails()) {
+            if (isset($validator->failed()['imo']['Unique']) || isset($validator->failed()['mmsi']['Unique'])) {
+                return response()->error('alreadyExist');
+            }
             return response()->error('missingParameters', $validator->failed());
         }
 

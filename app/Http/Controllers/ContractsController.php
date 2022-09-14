@@ -34,10 +34,14 @@ class ContractsController extends Controller
         $params = $request->all();
         $query = Contract::withCount('shipments')->with([
             'tenant' => function ($q) {
-                $q->withTrashed()->with('user');
+                $q->withTrashed()->with('user', function ($qu) {
+                    $qu->withTrashed();
+                });
             },
             'owner' => function ($q) {
-                $q->withTrashed()->with('user');
+                $q->withTrashed()->with('user', function ($qu) {
+                    $qu->withTrashed();
+                });
             }, 'payments'
         ]);
         $search_val = isset($params['search']) ? $params['search'] : null;
