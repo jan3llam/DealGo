@@ -78,6 +78,10 @@ return [
             'code' => "-26",
             'message' => 'You\'re not authorized to do this action'
         ],
+        'wrongUsernamePwd' => [
+            'code' => "-27",
+            'message' => 'اسم المستخدم / كلمة المرور خاطئة'
+        ],
         //HTTP Errors
         'unauthorized' => [
             'code' => "-401",

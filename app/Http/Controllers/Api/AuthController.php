@@ -255,7 +255,7 @@ class AuthController extends Controller
         $token = null;
 
         if ((!$token = auth('api')->attempt($credentialsEmail)) && (!$token = auth('api')->attempt($credentialsGSM))) {
-            return response()->httpError('unauthorized');
+            return response()->error('wrongUsernamePwd');
         }
 
         if (!auth('api')->user()->status) {
