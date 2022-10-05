@@ -26,6 +26,10 @@ return [
             'code' => "-11",
             'message' => 'Email already exist'
         ],
+        'alreadyExistPhone' => [
+            'code' => "-11",
+            'message' => 'Phone already exist'
+        ],
         'missingParameters' => [
             'code' => "-12",
             'message' => 'Missing required parameters'

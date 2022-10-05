@@ -9,13 +9,13 @@ class Rate extends Model
 {
     use HasFactory;
 
-    public function owner()
+    public function rated()
     {
-        return $this->belongsTo(Owner::class);
+        return $this->belongsTo(User::class, 'rated_id');
     }
 
-    public function tenant()
+    public function rater()
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo(User::class, 'rater_id');
     }
 }

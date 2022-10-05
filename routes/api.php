@@ -145,7 +145,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'rates', 'middleware' => 'auth:api'], function () {
         Route::get('/list/{id}', [ProfileController::class, 'getProfileRates']);
-        Route::post('/{id}', [ProfileController::class, 'rateOwner']);
+        Route::post('/{id}', [ProfileController::class, 'rate']);
     });
 
     Route::group(['prefix' => 'contracts', 'middleware' => 'auth:api'], function () {

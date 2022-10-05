@@ -7,7 +7,6 @@ use App\Models\FCMToken;
 use App\Models\Notification;
 use App\Models\Owner;
 use App\Models\Rate;
-use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +29,7 @@ class ProfileController extends Controller
             return response()->error('objectNotFound');
         }
         if ($user->userable instanceof Owner) {
-            $user->rate_list = Rate::where('owner_id', $user->userable->id)->with('tenant.user')->get();
+            $user->rate_list = Rate::where('rated_id', $user->id)->with('rater')->get();
             $user->append(['rate', 'is_ratable', 'offers']);
         }
 
@@ -51,16 +50,16 @@ class ProfileController extends Controller
 
     public function getProfileRates($id)
     {
-        $owner = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', $id)->first();
+        $rated = User::/*whereHasMorph('userable', [Owner::class])->*/ where('status', 1)->where('id', $id)->first();
 
-        $rates = Rate::where('owner_id', $owner->userable->id)->with('tenant.user')->get();
+        $rates = Rate::where('rated_id', $rated->id)->with('rater')->get();
 
         return response()->success($rates);
     }
 
-    public function rateOwner($id, Request $request)
+    public function rate($id, Request $request)
     {
-        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+        $user = User::/*whereHasMorph('userable', [Tenant::class])->*/ where('status', 1)->where('id', auth('api')->user()->id)->first();
 
         if (!$user) {
             return response()->error('notAuthorized');
@@ -76,21 +75,21 @@ class ProfileController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $owner = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', $id)->first();
+        $rated = User::/*whereHasMorph('userable', [Owner::class])->*/ where('status', 1)->where('id', $id)->first();
 
-        if (!$owner) {
+        if (!$rated) {
             return response()->error('objectNotFound');
         }
 
-        $rate = Rate::where('owner_id', $owner->userable->id)->where('tenant_id', $user->userable->id)->first();
+        $rate = Rate::where('rated_id', $rated->id)->where('rater_id', $user->id)->first();
 
         if ($rate) {
             return response()->error('alreadyRated');
         }
 
         $rate = new Rate;
-        $rate->tenant_id = $user->userable->id;
-        $rate->owner_id = $owner->userable->id;
+        $rate->rater_id = $user->id;
+        $rate->rated_id = $rated->id;
         $rate->rate = $request->rate;
         $rate->message = $request->message;
         $rate->save();

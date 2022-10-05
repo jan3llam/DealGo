@@ -34,7 +34,8 @@ class VesselsController extends Controller
         $filter_status = $request->input('status', null);
         $owner = $request->input('owner', null);
         $country = $request->input('country', null);
-        $vType = $request->input('type', null);
+        $vType = $request->input('vtype', null);
+        $gType = $request->input('gtype', null);
         $is_mine = $request->input('is_mine', 0);
 
         if ($search_val) {
@@ -74,6 +75,14 @@ class VesselsController extends Controller
         if ($vType) {
             $query->whereHas('type', function ($q) use ($vType) {
                 $q->where('id', $vType);
+            });
+        }
+
+        if ($gType) {
+            $query->whereHas('type', function ($qu) use ($gType) {
+                $qu->whereHas('goods_types', function ($q) use ($gType) {
+                    $q->where('id', $gType);
+                });
             });
         }
 
