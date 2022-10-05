@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Helpers;
 use App\Models\FCMToken;
 use App\Models\Notification;
-use App\Models\Owner;
 use App\Models\Rate;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,10 +27,9 @@ class ProfileController extends Controller
         if (!$user) {
             return response()->error('objectNotFound');
         }
-        if ($user->userable instanceof Owner) {
-            $user->rate_list = Rate::where('rated_id', $user->id)->with('rater')->get();
-            $user->append(['rate', 'is_ratable', 'offers']);
-        }
+
+        $user->rate_list = Rate::where('rated_id', $user->id)->with('rater')->get();
+        $user->append(['rate', 'is_ratable', 'offers']);
 
         return response()->success($user->append(['user_contracts_count', 'user_shipments_count', 'user_payments_sum', 'user_next_payment']));
     }
