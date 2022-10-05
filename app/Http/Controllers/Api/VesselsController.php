@@ -236,6 +236,7 @@ class VesselsController extends Controller
             'mmsi' => 'required|string',
             'capacity' => 'required',
             'build' => 'required',
+            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -256,6 +257,7 @@ class VesselsController extends Controller
         $item->mmsi = $params['mmsi'];
         $item->capacity = $params['capacity'];
         $item->build_year = $params['build'];
+        $item->status = $params['status'];
         $item->files = json_encode($request->input('files', []));
 
         $item->save();
