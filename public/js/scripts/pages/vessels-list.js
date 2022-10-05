@@ -569,13 +569,12 @@ $(function () {
         $('#view-maintenances').html(data.maintenance_count);
         $('#view-crews').html(data.crew_count);
         var filesHtml = '';
-        data.forEach(item => {
+        data.files.forEach(item => {
             filesHtml +=
                 '<a target="_blank" href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
         })
         $('#view-files').html(filesHtml);
         $('#view-image').html('<a target="_blank" href="' + assetPath + 'images/' + data.image + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
-
     });
 
     $(document).on('click', '.add-vessel', function () {

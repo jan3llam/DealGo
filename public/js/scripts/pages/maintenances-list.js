@@ -473,7 +473,7 @@ $(function () {
         $('#view-end').html(data.end_at);
         $('#view-description').html(data.description);
         var filesHtml = '';
-        data.forEach(item => {
+        data.files.forEach(item => {
             filesHtml +=
                 '<a target="_blank"  href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
         })

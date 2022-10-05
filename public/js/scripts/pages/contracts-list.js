@@ -230,6 +230,7 @@ $(function () {
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         });
+        $('#payments-container').find('.row').remove();
 
         data.payments.forEach(item => {
             if (item.is_down) {

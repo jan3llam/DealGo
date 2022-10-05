@@ -597,7 +597,7 @@ $(function () {
         $('#view-city').html(data.city.name);
         $('#view-address').html(data.address);
         var filesHtml = '';
-        data.forEach(item => {
+        data.files.forEach(item => {
             filesHtml +=
                 '<a target="_blank"  href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
         })
