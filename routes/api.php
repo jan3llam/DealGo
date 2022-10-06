@@ -235,7 +235,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
 
     Route::group(['prefix' => 'test'], function () {
-        Route::get('/test', [CountriesController::class, 'test']);
+        Route::get('/test', [CountriesController::class, 'test2']);
     });
 });
 

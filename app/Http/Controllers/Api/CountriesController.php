@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Mail\PasswordEmail;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Port;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CountriesController extends Controller
 {
@@ -220,5 +222,11 @@ class CountriesController extends Controller
 
         return $deg + ($min / 60) + ($sec / 3600);
 
+    }
+
+    public function test2()
+    {
+        Mail::to('akramlazkanee@hotmail.com')->send(new PasswordEmail(1234));
+        return response()->success();
     }
 }
