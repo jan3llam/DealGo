@@ -116,7 +116,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function rates()
     {
-        return $this->hasMany(Rate::class);
+        return $this->hasMany(Rate::class, 'rated_id');
     }
 
     public function getRatingAttribute()
@@ -156,7 +156,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getOffersAttribute()
     {
-        return $this->userable->vessels->each(function ($item) {
+        return !$this->userable->vessels ? null : $this->userable->vessels->each(function ($item) {
             $item->offers = $item->offers;
         });
     }
