@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\gType;
 use App\Models\Vessel;
+use App\Models\vType;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -70,6 +71,7 @@ class GoodsTypesController extends Controller
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
         $vessel_id = $request->input('vessel', null);
+        $vtype = $request->input('vtype', null);
         $order_field = 'created_at';
         $order_sort = 'desc';
 
@@ -77,6 +79,13 @@ class GoodsTypesController extends Controller
             $vessel = Vessel::find($vessel_id);
             if ($vessel) {
                 $query->whereIn('id', $vessel->type->goods_types->pluck('id'));
+            }
+        }
+
+        if ($vtype) {
+            $type = vType::find($vtype);
+            if ($type) {
+                $query->whereIn('id', $type->goods_types->pluck('id'));
             }
         }
 
