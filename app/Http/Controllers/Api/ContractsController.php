@@ -95,19 +95,21 @@ class ContractsController extends Controller
             'owner' => function ($q) {
                 $q->with('user');
             }, 'shipments.vessel', 'shipments.port_from', 'shipments.port_to', 'payments', 'origin.parent'
-        ])->whereHas('owner', function ($q) use ($user_id) {
-            $q->whereHas('user', function ($qu) use ($user_id) {
-                $qu->where('id', $user_id);
-            });
-        })->orWhereHas('tenant', function ($q) use ($user_id) {
-            $q->whereHas('user', function ($qu) use ($user_id) {
-                $qu->where('id', $user_id);
+        ])->where(function ($q) use ($user_id) {
+            $q->orwhereHas('owner', function ($qu) use ($user_id) {
+                $qu->whereHas('user', function ($que) use ($user_id) {
+                    $que->where('id', $user_id);
+                });
+            })->orWhereHas('tenant', function ($qu) use ($user_id) {
+                $qu->whereHas('user', function ($que) use ($user_id) {
+                    $que->where('id', $user_id);
+                });
             });
         });
+//dd($id);
+//        $query->find($id);
 
-        $query->where('id', $id);
-
-        $data = $query->first()->append(['full_value', 'remaining_value', 'goods_types', 'goods_types_vessels']);
+        $data = $query->find($id)->append(['full_value', 'remaining_value', 'goods_types', 'goods_types_vessels']);
 
         return response()->success($data);
     }

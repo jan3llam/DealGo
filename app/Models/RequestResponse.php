@@ -83,7 +83,7 @@ class RequestResponse extends Model
 
     public function vessels()
     {
-        return $this->belongsToMany(Vessel::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'vessel_id')->withPivot('request_good_id');
+        return $this->belongsToMany(Vessel::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'vessel_id')->withPivot('request_good_id', 'weight');
     }
 
 }
