@@ -274,7 +274,7 @@ class RequestsResponsesController extends Controller
         $vessels = $request->input('vessels', []);
 
         foreach ($vessels as $index => $vessel) {
-            $item->vessels()->attach($vessel, ['request_good_id' => $index]);
+            $item->vessels()->attach($vessel['vessel'], ['request_good_id' => $vessel['request_good_id'], 'weight' => $vessel['weight']]);
         }
 
         $payments = $request->input('payments', []);

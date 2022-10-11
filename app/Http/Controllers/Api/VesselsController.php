@@ -81,7 +81,7 @@ class VesselsController extends Controller
         if ($gType) {
             $query->whereHas('type', function ($qu) use ($gType) {
                 $qu->whereHas('goods_types', function ($q) use ($gType) {
-                    $q->where('id', $gType);
+                    $q->where('goods_types.id', $gType);
                 });
             });
         }

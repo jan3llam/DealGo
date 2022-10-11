@@ -35,7 +35,7 @@ class RequestResponse extends Model
 
     public function request_goods_types()
     {
-        return $this->belongsToMany(RequestsGoodsType::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'request_good_id')->withPivot('vessel_id');
+        return $this->belongsToMany(RequestsGoodsType::class, 'requests_responses_requests_goods_types_vessels', 'offer_id', 'request_good_id')->withPivot(['vessel_id', 'weight']);
     }
 
     public function getFilesAttribute($value)

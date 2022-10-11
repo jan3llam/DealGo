@@ -52,4 +52,20 @@ class Contract extends Model
             return $this->origin->request->goods_types;
         }
     }
+
+    public function getGoodsTypesVesselsAttribute()
+    {
+        if ($this->origin instanceof RequestResponse) {
+            $data = $this->origin->vessels;
+            foreach ($data as &$item) {
+                $rgt = RequestsGoodsType::find($item->pivot->request_good_id) ? RequestsGoodsType::find($item->pivot->request_good_id)->good_id : null;
+                if ($rgt) {
+                    $item->good_type = gType::find($rgt);
+                }
+            }
+            return $data;
+        }
+        return null;
+    }
+
 }

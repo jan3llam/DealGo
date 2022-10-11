@@ -88,7 +88,7 @@ class ShipmentsController extends Controller
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
             ->take($page_size)->orderBy($order_field, $order_sort)->get()->each(function ($items) {
-                $items->append(['goods_types']);
+                $items->append(['goods_types', 'goods_types_vessels']);
             });;
 
         $data['meta']['total'] = $total;
@@ -135,7 +135,7 @@ class ShipmentsController extends Controller
 
         $query->where('id', $id);
 
-        $data = $query->first()->append(['goods_types']);
+        $data = $query->first()->append(['goods_types', 'goods_types_vessels']);
 
         return response()->success($data);
     }

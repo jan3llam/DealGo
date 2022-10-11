@@ -68,7 +68,7 @@ class ContractsController extends Controller
 
         $data['data'] = $query->skip(($page_number - 1) * $page_size)
             ->take($page_size)->orderBy($order_field, $order_sort)->get()->each(function ($items) {
-                $items->append(['full_value', 'remaining_value', 'goods_types']);
+                $items->append(['full_value', 'remaining_value', 'goods_types', 'goods_types_vessels']);
             });
 
         $data['meta']['total'] = $total;
@@ -107,7 +107,7 @@ class ContractsController extends Controller
 
         $query->where('id', $id);
 
-        $data = $query->first()->append(['full_value', 'remaining_value', 'goods_types']);
+        $data = $query->first()->append(['full_value', 'remaining_value', 'goods_types', 'goods_types_vessels']);
 
         return response()->success($data);
     }

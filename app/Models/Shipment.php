@@ -39,4 +39,19 @@ class Shipment extends Model
             return $this->contract->origin->request->goods_types;
         }
     }
+
+    public function getGoodsTypesVesselsAttribute()
+    {
+        if ($this->contract->origin instanceof RequestResponse) {
+            $data = $this->contract->origin->vessels;
+            foreach ($data as &$item) {
+                $rgt = RequestsGoodsType::find($item->pivot->request_good_id) ? RequestsGoodsType::find($item->pivot->request_good_id)->good_id : null;
+                if ($rgt) {
+                    $item->good_type = gType::find($rgt);
+                }
+            }
+            return $data;
+        }
+        return null;
+    }
 }
