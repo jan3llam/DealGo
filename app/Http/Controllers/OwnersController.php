@@ -78,7 +78,7 @@ class OwnersController extends Controller
         }
 
         if ($sort_field) {
-            $order_field = explode('.', $sort_field)[1];
+            $order_field = $sort_field;
             $order_sort = $params['direction'];
         }
 
