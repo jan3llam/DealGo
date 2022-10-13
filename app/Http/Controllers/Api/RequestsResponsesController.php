@@ -126,12 +126,12 @@ class RequestsResponsesController extends Controller
             $user_id = isset($user->userable) ? $user->userable->id : null;
         }
 
-        $data['data'] = RequestResponse::where('id', $id)->whereHas('request', function ($q) use ($user_id) {
+        $data['data'] = RequestResponse::where('id', $id)/*->whereHas('request', function ($q) use ($user_id) {
             $q->whereHas('tenant', function ($qu) use ($user_id) {
                 $qu->where('id', $user_id);
             });
-        })
-            ->whereHas('owner')
+        })*/
+        ->whereHas('owner')
             ->with(['payments', 'request.port_to', 'request.port_from', 'owner.user', 'routes', 'vessels', 'request_goods_types.good_type'])
             ->first();
 

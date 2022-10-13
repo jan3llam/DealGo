@@ -123,14 +123,14 @@ class OffersResponsesController extends Controller
             $user_id = isset($user->userable) ? $user->userable->id : null;
         }
 
-        $data['data'] = OfferResponse::where('id', $id)->whereHas('offer', function ($q) use ($user_id) {
+        $data['data'] = OfferResponse::where('id', $id)/*->whereHas('offer', function ($q) use ($user_id) {
             $q->whereHas('vessel', function ($qu) use ($user_id) {
                 $qu->whereHas('owner', function ($que) use ($user_id) {
                     $que->where('id', $user_id);
                 });
             });
-        })
-            ->whereHas('tenant')
+        })*/
+        ->whereHas('tenant')
             ->whereHas('port_to')
             ->with(['payments', 'port_to', 'routes', 'goods_types.good_type', 'offer.port_from'])
             ->first();
