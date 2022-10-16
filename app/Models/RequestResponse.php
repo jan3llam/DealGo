@@ -66,7 +66,7 @@ class RequestResponse extends Model
             2 => $this->vessels()->get()->pluck('build_year', 'id')->toArray(),
             3 => $this->vessels()->withCount('maintenance')->get()->sum('maintenance_count'),
             4 => $this->vessels()->withCount('shipments')->get()->sum('shipments_count'),
-            5 => $this->vessels()->first()->owner()->first()->rating,
+            5 => $this->vessels()->first() ? $this->vessels()->first()->owner()->first()->rating : 0,
             6 => $this->date,
         ];
     }

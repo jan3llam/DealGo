@@ -154,8 +154,8 @@ class OffersResponsesController extends Controller
         $order_field = 'created_at';
         $order_sort = 'desc';
         $query = OfferResponse::with(['tenant', 'port_to', 'parent'])
-            ->whereHas('port_to')
-            ->whereHas('goods_types.good_type');
+            ->whereHas('port_to');
+//            ->whereHas('goods_types.good_type');
 
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
