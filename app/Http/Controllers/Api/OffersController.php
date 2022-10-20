@@ -29,8 +29,7 @@ class OffersController extends Controller
         $order_sort = 'desc';
         $now = Carbon::parse(date('Y-m-d', strtotime(now())))->toDateString();
 
-        $query = Offer::where('date_to', '>=', $now)
-            ->where('date_from', '<=', $now);
+        $query = Offer::query();
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
@@ -92,6 +91,9 @@ class OffersController extends Controller
 //                    $qu->where('id', auth('api')->user()->userable->id);
 //                });
             });
+        } else {
+            $query->where('date_to', '>=', $now)
+                ->where('date_from', '<=', $now);
         }
 
         $query->whereHas('vessel', function ($q) {
