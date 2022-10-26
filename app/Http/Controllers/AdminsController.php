@@ -202,7 +202,7 @@ class AdminsController extends Controller
             $item->address = $params['address'];
             $item->city_id = $params['city'];
 
-            if ($request->has('password')) {
+            if ($request->has('password') && $request->password) {
                 $item->password = bcrypt($params['password']);
             }
 
