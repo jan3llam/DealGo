@@ -103,7 +103,7 @@ class OffersController extends Controller
         })->whereHas('port_from')
             ->with(['vessel.type.goods_types', 'port_from', 'vessel.owner.user'])
             ->withCount(['responses' => function (Builder $q) {
-                $q->whereHas('port_to')->whereHas('goods_types');
+                $q->whereHas('port_to');//->whereHas('goods_types');
             }]);
 
         $total = $query->count();
