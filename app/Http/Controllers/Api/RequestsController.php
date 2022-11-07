@@ -32,8 +32,6 @@ class RequestsController extends Controller
             ->whereHas('tenant', function ($q) {
                 $q->whereHas('user');
             })
-            ->where('date_to', '>=', $now)
-            ->where('date_from', '<=', $now)
             ->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types'])
             ->withCount(['responses' => function (Builder $q) {
                 $q->whereHas('vessels')->whereHas('request_goods_types');
@@ -101,6 +99,9 @@ class RequestsController extends Controller
             $query->whereHas('tenant', function ($q) use ($user_id) {
                 $q->where('id', auth('api')->user()->userable->id);
             });
+        } else {
+            $query->where('date_to', '>=', $now)
+                ->where('date_from', '<=', $now);
         }
 
         $total = $query->count();
