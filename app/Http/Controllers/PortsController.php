@@ -96,7 +96,7 @@ class PortsController extends Controller
 
         $total = $query->limit($per_page)->count();
 
-        $data['data'] = $query->skip(($page) * $per_page)
+        $data['data'] = $query->skip($page)
             ->with('city.country')->take($per_page)->orderBy($order_field, $order_sort)->get();
 
 
