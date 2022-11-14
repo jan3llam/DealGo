@@ -42,7 +42,6 @@
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
                         <th>{{__('locale.Country')}}</th>
-                        <th>{{__('locale.City')}}</th>
                         <th>{{__('locale.UNLocode')}}</th>
                         <th>{{__('locale.Status')}}</th>
                         <th>{{__('locale.Actions')}}</th>

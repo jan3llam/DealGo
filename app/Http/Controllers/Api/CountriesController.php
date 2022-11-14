@@ -60,14 +60,14 @@ class CountriesController extends Controller
 //        }
 //        dd(1);
 
-        $data = array_map('str_getcsv', file('/home/u990379777/domains/dealgo.site/public_html/Ports.csv'));
+        $data = array_map('str_getcsv', file('/home/u990379777/domains/dealgo.site/public_html/port.csv'));
         foreach ($data as $index => $item) {
             if ($index) {
 
                 $country = Country::where(DB::raw('LOWER(name_en)'), 'like', '%' . rtrim(ltrim(strtolower($item[0]))) . '%')->first();
                 if ($country) {
 
-                    $city = City::where(DB::raw('LOWER(name_en)'), 'like', '%' . rtrim(ltrim(strtolower($item[2]))) . '%')->where('country_id', $country->id)->first();
+                    $city = City::where(DB::raw('LOWER(name_en)'), 'like', '%' . rtrim(ltrim(strtolower($item[0]))) . '%')->first();
 
                     if ($city) {
 
@@ -76,12 +76,13 @@ class CountriesController extends Controller
                         if ($port) {
                             continue;
                         } else {
-                            if ($item[3] && $item[13] && $item[14]) {
+//                            dd($item);
+                            if ($item[2] && $item[12] && $item[13]) {
                                 $port = new Port;
                                 $port->city_id = $city->id;
-                                $port->unlocode = $item[3];
-                                $port->latitude = $item[13];
-                                $port->longitude = $item[14];
+                                $port->unlocode = $item[2];
+                                $port->latitude = str_replace('°', '', rtrim(ltrim($item[12])));
+                                $port->longitude = str_replace('°', '', rtrim(ltrim($item[13])));
                                 $port->status = 1;
                                 $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
                                     ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
@@ -92,23 +93,26 @@ class CountriesController extends Controller
                     } else {
                         $city = new City;
                         $city->country_id = $country->id;
-                        $city->name_ar = rtrim(ltrim($item[2]));
-                        $city->name_en = rtrim(ltrim($item[2]));
-                        $city->name_fr = rtrim(ltrim($item[2]));
+                        $city->name_ar = rtrim(ltrim($item[0]));
+                        $city->name_en = rtrim(ltrim($item[0]));
+                        $city->name_fr = rtrim(ltrim($item[0]));
                         $city->code = '01';
                         $city->save();
 
-                        $port->city_id = $city->id;
-                        $port->unlocode = $item[3];
-                        $port->latitude = $item[13];
-                        $port->longitude = $item[14];
-                        $port->status = 1;
-                        $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
-                            ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
-                            ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
+                        if ($item[2] && $item[12] && $item[13]) {
+                            $port = new Port;
+                            $port->city_id = $city->id;
+                            $port->unlocode = $item[2];
+                            $port->latitude = str_replace('°', '', rtrim(ltrim($item[12])));
+                            $port->longitude = str_replace('°', '', rtrim(ltrim($item[13])));
+                            $port->status = 1;
+                            $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
+                                ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
+                                ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
+                        }
                     }
                 } else {
-                    $country = new Country();
+                    $country = new Country;
                     $country->name_ar = rtrim(ltrim($item[0]));
                     $country->name_en = rtrim(ltrim($item[0]));
                     $country->name_fr = rtrim(ltrim($item[0]));
@@ -117,16 +121,18 @@ class CountriesController extends Controller
 
                     $city = new City;
                     $city->country_id = $country->id;
-                    $city->name_ar = rtrim(ltrim($item[2]));
-                    $city->name_en = rtrim(ltrim($item[2]));
-                    $city->name_fr = rtrim(ltrim($item[2]));
+                    $city->name_ar = rtrim(ltrim($item[0]));
+                    $city->name_en = rtrim(ltrim($item[0]));
+                    $city->name_fr = rtrim(ltrim($item[0]));
                     $city->code = '01';
                     $city->save();
-                    if ($item[3] && $item[13] && $item[14]) {
+
+                    if ($item[2] && $item[13] && $item[12]) {
+                        $port = new Port;
                         $port->city_id = $city->id;
-                        $port->unlocode = $item[3];
-                        $port->latitude = $item[13];
-                        $port->longitude = $item[14];
+                        $port->unlocode = $item[2];
+                        $port->latitude = str_replace('°', '', rtrim(ltrim($item[12])));
+                        $port->longitude = str_replace('°', '', rtrim(ltrim($item[13])));
                         $port->status = 1;
                         $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
                             ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
@@ -211,8 +217,8 @@ class CountriesController extends Controller
             $min .= $tempM;
         }//close for min
 
-        dd($deg, $min, $sec);
-        $result = $deg + ((($min * 60) + ($sec)) / 3600);
+//        dd($deg, $min, $sec);
+        return $deg + ((($min * 60) + ($sec)) / 3600);
 
         print "<br> Degree is " . $deg * 1;
         print "<br> Minutes is " . $min;

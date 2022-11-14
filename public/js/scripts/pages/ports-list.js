@@ -65,7 +65,6 @@ $(function () {
                 {data: 'id'},
                 {data: 'name_translation'},
                 {data: 'city.country.name'},
-                {data: 'city.name'},
                 {data: 'unlocode'},
                 {data: 'status'},
                 {data: ''}
@@ -102,7 +101,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 7,
+                    targets: 6,
                     render: function (data, type, full, meta) {
                         var $status = full['status']
                         return (
