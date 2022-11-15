@@ -34,7 +34,7 @@ class PortsController extends Controller
     {
 
         $data = [];
-        $search_clm = ['city.name', 'city.country.name', 'name'];
+        $search_clm = ['city.name_ar', 'city.name_en', 'city.name_tr', 'city.country.name_ar', 'city.country.name_en', 'city.country.name_tr', 'name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
@@ -169,6 +169,17 @@ class PortsController extends Controller
         return response()->success();
     }
 
+    public function bulk_delete(Request $request)
+    {
+        foreach ($request->input('ids', []) as $id) {
+            $item = Port::withTrashed()->where('id', $id)->first();
+            if ($item) {
+                $item->delete();
+            }
+        }
+        return response()->success();
+    }
+
     public function delete($id)
     {
 
@@ -180,18 +191,6 @@ class PortsController extends Controller
             $item->delete();
         }
 
-        return response()->success();
-    }
-
-
-    public function bulk_delete(Request $request)
-    {
-        foreach ($request->input('ids', []) as $id) {
-            $item = Port::withTrashed()->where('id', $id)->first();
-            if ($item) {
-                $item->delete();
-            }
-        }
         return response()->success();
     }
 

@@ -18,7 +18,7 @@ class PortsController extends Controller
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
         $search_val = $request->input('keyword', '');
-        $search_clm = ['city.name', 'city.country.name', 'name'];
+        $search_clm = ['city.name_ar', 'city.name_en', 'city.name_tr', 'city.country.name_ar', 'city.country.name_en', 'city.country.name_tr', 'name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
