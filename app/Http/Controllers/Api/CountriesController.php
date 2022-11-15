@@ -87,6 +87,16 @@ class CountriesController extends Controller
                                 $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
                                     ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
                                     ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
+                            } else {
+                                $port = new Port;
+                                $port->city_id = $city->id;
+                                $port->unlocode = null;
+                                $port->latitude = 0.0;
+                                $port->longitude = 0.0;
+                                $port->status = 1;
+                                $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
+                                    ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
+                                    ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
                             }
 
                         }
@@ -105,6 +115,16 @@ class CountriesController extends Controller
                             $port->unlocode = $item[2];
                             $port->latitude = str_replace('°', '', rtrim(ltrim($item[12])));
                             $port->longitude = str_replace('°', '', rtrim(ltrim($item[13])));
+                            $port->status = 1;
+                            $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
+                                ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
+                                ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
+                        } else {
+                            $port = new Port;
+                            $port->city_id = $city->id;
+                            $port->unlocode = null;
+                            $port->latitude = 0.0;
+                            $port->longitude = 0.0;
                             $port->status = 1;
                             $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
                                 ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
@@ -133,6 +153,16 @@ class CountriesController extends Controller
                         $port->unlocode = $item[2];
                         $port->latitude = str_replace('°', '', rtrim(ltrim($item[12])));
                         $port->longitude = str_replace('°', '', rtrim(ltrim($item[13])));
+                        $port->status = 1;
+                        $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
+                            ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
+                            ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
+                    } else {
+                        $port = new Port;
+                        $port->city_id = $city->id;
+                        $port->unlocode = null;
+                        $port->latitude = 0.0;
+                        $port->longitude = 0.0;
                         $port->status = 1;
                         $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
                             ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
