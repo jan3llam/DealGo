@@ -34,7 +34,7 @@ class PortsController extends Controller
     {
 
         $data = [];
-        $search_clm = ['city.name_ar', 'city.name_en', 'city.name_tr', 'city.country.name_ar', 'city.country.name_en', 'city.country.name_tr', 'name'];
+        $search_clm = ['city.name_ar', 'city.name_en', 'city.name_fr', 'city.country.name_ar', 'city.country.name_en', 'city.country.name_fr', 'name'];
         $order_field = 'created_at';
         $order_sort = 'desc';
 
