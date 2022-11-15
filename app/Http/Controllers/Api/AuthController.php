@@ -334,7 +334,7 @@ class AuthController extends Controller
             $code->save();
             $user->save();
         } else {
-            dd($code->created_at->diffInMinutes(now()) < intval(env('SMS_VALID_MINUTES')));
+//            dd($code->created_at->diffInMinutes(now()) < intval(env('SMS_VALID_MINUTES')));
             return response()->error('codeNotValid');
         }
 
