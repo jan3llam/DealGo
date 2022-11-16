@@ -1,10 +1,10 @@
 @component('mail::message')
-    # Password email
+    # Forget password email
 
     {{__('api.email.welcomeText')}}
-    <br>
+
     {{__('api.email.passwordText',['password'=>$password])}}
 
-    Thanks,<br>
+    Thanks,
     {{ config('app.name') }}
 @endcomponent

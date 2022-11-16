@@ -30,6 +30,7 @@ class PasswordEmail extends Mailable
     public function build()
     {
         return $this
+            ->subject('Forget password email')
             ->from(env('MAIL_FROM_ADDRESS'))
             ->markdown('emails.password', ['password' => $this->password]);
     }
