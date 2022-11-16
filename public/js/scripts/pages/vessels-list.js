@@ -288,6 +288,9 @@ $(function () {
             }
         });
 
+        $("#files").fileinput({'showUpload': false, 'previewFileType': 'any'});
+        $("#image").fileinput({'showUpload': false, 'previewFileType': 'any'});
+
         newForm.validate({
             errorClass: 'error',
             rules: {
@@ -585,6 +588,8 @@ $(function () {
             $(this).val('');
         })
         $("#image").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
+
+        $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
         $('#owner').val('').trigger('change.select2');
         $('#country').val('').trigger('change.select2');
         $('#type').val('').trigger('change.select2');
