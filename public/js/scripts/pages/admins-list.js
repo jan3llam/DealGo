@@ -589,7 +589,7 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         viewSidebar.modal('show');
         $('#view-role').html(data.roles[0].name);
-        $('#view-contact').html(data.contact_name);
+        $('#view-contact').html(data.name);
         $('#view-id').html(data.dealgo_id);
         $('#view-email').html(data.email);
         $('#view-phone').html(data.phone);
@@ -599,10 +599,10 @@ $(function () {
         var filesHtml = '';
         data.files.forEach(item => {
             filesHtml +=
-                '<a target="_blank" href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
+                '<a target="_blank"  href="' + assetPath + 'images/' + item + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>'
         })
         $('#view-files').html(filesHtml);
-        $('#view-image').html('<a target="_blank" href="' + assetPath + 'images/' + data.image + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+        $('#view-image').html('<a target="_blank"  href="' + assetPath + 'images/' + data.image + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
     })
 
     $(document).on('click', '.add-admin', function () {

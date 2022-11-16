@@ -208,6 +208,13 @@ class AdminsController extends Controller
 
 //            Mail::to($request->input('email'))->send(new PasswordEmail($item->password));
 
+            if ($request->hasFile('image')) {
+                $extension = $request->file('image')->getClientOriginalExtension();
+                $fileName = Str::random(18) . '.' . $extension;
+                Storage::disk('public_images')->putFileAs('', $request->file('image'), $fileName);
+                $item->image = $fileName;
+            }
+
             $files = $request->file('files', []);
             $filesArr = [];
             if ($files) {

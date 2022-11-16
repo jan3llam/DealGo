@@ -60,7 +60,7 @@ class CountriesController extends Controller
 //        }
 //        dd(1);
 
-        $data = array_map('str_getcsv', file('/home/u310033965/domains/dealgo.net/public_html/admin/port.csv'));
+        $data = array_map('str_getcsv', file('D:\Projects\dealGo\port.csv'));
         foreach ($data as $index => $item) {
             if ($index) {
 
@@ -101,13 +101,18 @@ class CountriesController extends Controller
 
                         }
                     } else {
-                        $city = new City;
-                        $city->country_id = $country->id;
-                        $city->name_ar = rtrim(ltrim($item[0]));
-                        $city->name_en = rtrim(ltrim($item[0]));
-                        $city->name_fr = rtrim(ltrim($item[0]));
-                        $city->code = '01';
-                        $city->save();
+
+                        $city = City::where('country_id', $country->id)->first();
+
+                        if (!$city) {
+                            $city = new City;
+                            $city->country_id = $country->id;
+                            $city->name_ar = rtrim(ltrim($item[0]));
+                            $city->name_en = rtrim(ltrim($item[0]));
+                            $city->name_fr = rtrim(ltrim($item[0]));
+                            $city->code = '01';
+                            $city->save();
+                        }
 
                         if ($item[2] && $item[12] && $item[13]) {
                             $port = new Port;
@@ -138,6 +143,18 @@ class CountriesController extends Controller
                     $country->name_fr = rtrim(ltrim($item[0]));
                     $country->code = '01';
                     $country->save();
+
+                    $city = City::where('country_id', $country->id)->first();
+
+                    if (!$city) {
+                        $city = new City;
+                        $city->country_id = $country->id;
+                        $city->name_ar = rtrim(ltrim($item[0]));
+                        $city->name_en = rtrim(ltrim($item[0]));
+                        $city->name_fr = rtrim(ltrim($item[0]));
+                        $city->code = '01';
+                        $city->save();
+                    }
 
                     $city = new City;
                     $city->country_id = $country->id;

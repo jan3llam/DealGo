@@ -589,7 +589,7 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
         viewSidebar.modal('show');
         $('#view-role').html(data.roles[0].name);
-        $('#view-contact').html(data.contact_name);
+        $('#view-contact').html(data.name);
         $('#view-id').html(data.dealgo_id);
         $('#view-email').html(data.email);
         $('#view-phone').html(data.phone);
