@@ -16,12 +16,12 @@ $(function () {
         addRoleForm = $('#addRoleForm');
     roleAdd.on('click', function () {
         roleTitle.text('Add New Role'); // reset text
-        addRoleForm.attr('action', 'http://dealgo.site/api/admin/roles/add');
+        addRoleForm.attr('action', 'https://admin.dealgo.net/api/admin/roles/add');
         $('#object_id').val('');
     });
     roleEdit.on('click', function () {
         roleTitle.text('Edit Role');
-        addRoleForm.attr('action', 'http://dealgo.site/api/admin/roles/update');
+        addRoleForm.attr('action', 'https://admin.dealgo.net/api/admin/roles/update');
         $('#object_id').val($(this).data('id'));
     });
 
