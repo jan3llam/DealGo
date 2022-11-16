@@ -66,7 +66,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'name_translation'},
-                {data: 'parent.name_translation'},
+                {data: 'parent'},
                 {data: ''}
             ],
             columnDefs: [
@@ -103,7 +103,7 @@ $(function () {
                 {
                     targets: 4,
                     render: function (data, type, full, meta) {
-                        return data ? data.name : '-';
+                        return data ? data.name_translation : '-';
                     }
                 },
                 {
