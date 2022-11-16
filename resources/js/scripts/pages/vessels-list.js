@@ -345,6 +345,12 @@ $(function () {
                 newForm.find('input[type=file]').each(function () {
                     data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
+                const elem = newForm.find('#files');
+                for (var i = 0; i < elem[0].files.length; i++) {
+                    data.append(elem.attr('name') + '[]', elem[0].files[i]);
+                }
+                data.append(newForm.find('#files').attr('name') + '_old', newForm.find('#images').data('fileinput').initialPreview);
+
                 $.ajax({
                     type: 'POST',
                     url: assetPath + 'api/admin/vessels/' + type,
