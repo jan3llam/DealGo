@@ -349,7 +349,7 @@ $(function () {
                 for (var i = 0; i < elem[0].files.length; i++) {
                     data.append(elem.attr('name') + '[]', elem[0].files[i]);
                 }
-                data.append(newForm.find('#files').attr('name') + '_old', newForm.find('#images').data('fileinput').initialPreview);
+                data.append(newForm.find('#files').attr('name') + '_old', newForm.find('#files').data('fileinput').initialPreview);
 
                 $.ajax({
                     type: 'POST',
@@ -552,6 +552,7 @@ $(function () {
             showUpload: false,
             initialPreviewAsData: true,
         });
+
         $("#files").fileinput('destroy').fileinput({
             initialPreview: [assetPath + 'images/' + data.files],
             showUpload: false,
