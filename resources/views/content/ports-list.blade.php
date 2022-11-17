@@ -95,7 +95,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="mb-1">
+                            <div class="mb-1" style="display: none">
                                 <input type="hidden" value="" id="city_id">
                                 <label class="form-label" for="city">{{__('locale.City')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="city"

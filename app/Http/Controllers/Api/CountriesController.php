@@ -32,6 +32,45 @@ class CountriesController extends Controller
         return response()->success($data);
     }
 
+    public function test5()
+    {
+        ini_set('max_execution_time', 0);
+        $data = array_map('str_getcsv', file('D:\Projects\dealGo\world-cities.csv'));
+        foreach ($data as $index => $item) {
+            if ($index) {
+                $country = Country::where(DB::raw('LOWER(name_en)'), 'like', '%' . rtrim(ltrim(strtolower($item[1]))) . '%')->first();
+                if ($country) {
+                    $city = City::where(DB::raw('LOWER(name_en)'), 'like', '%' . rtrim(ltrim(strtolower($item[2]))) . '%')->first();
+                    if (!$city) {
+                        $city = new City;
+                        $city->country_id = $country->id;
+                        $city->name_ar = rtrim(ltrim($item[2]));
+                        $city->name_en = rtrim(ltrim($item[2]));
+                        $city->name_fr = rtrim(ltrim($item[2]));
+                        $city->code = '01';
+                        $city->save();
+                    }
+                } else {
+                    $country = new Country;
+                    $country->name_ar = rtrim(ltrim($item[1]));
+                    $country->name_en = rtrim(ltrim($item[1]));
+                    $country->name_fr = rtrim(ltrim($item[1]));
+                    $country->code = '01';
+                    $country->save();
+
+                    $city = new City;
+                    $city->country_id = $country->id;
+                    $city->name_ar = rtrim(ltrim($item[2]));
+                    $city->name_en = rtrim(ltrim($item[2]));
+                    $city->name_fr = rtrim(ltrim($item[2]));
+                    $city->code = '01';
+                    $city->save();
+                }
+
+            }
+        }
+    }
+
     public function test()
     {
         ini_set('max_execution_time', 0);
