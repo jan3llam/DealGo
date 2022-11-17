@@ -46,6 +46,10 @@ return [
             'code' => "-15",
             'message' => 'Account not active'
         ],
+        'accountNotVerified' => [
+            'code' => "-30",
+            'message' => 'Account not verified'
+        ],
         'objectNotFound' => [
             'code' => "-16",
             'message' => 'Object not found'

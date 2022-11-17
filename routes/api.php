@@ -75,6 +75,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::post('/signUp', [AuthController::class, 'signUp']);
         Route::post('/resendCode', [AuthController::class, 'sendCode']);
         Route::post('/forgetPassword', [AuthController::class, 'sendCode']);
+        Route::post('/verify', [AuthController::class, 'verifyCode']);
         Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
         Route::post('/refreshToken', [AuthController::class, 'refresh']);
         Route::post('/checkField', [UsersAPI::class, 'check_field']);

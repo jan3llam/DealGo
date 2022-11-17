@@ -18,6 +18,10 @@ return [
             'code' => "1",
             'message' => 'نجاح'
         ],
+        'accountNotVerified' => [
+            'code' => "-30",
+            'message' => 'الحساب غير موثق'
+        ],
         'alreadyExistEmail' => [
             'code' => "-11",
             'message' => 'البريد الالكتروني مستعمل سابقاً'

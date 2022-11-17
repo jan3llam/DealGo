@@ -110,7 +110,8 @@ class AuthController extends Controller
         $item->userable_id = $class->id;
         $item->userable_type = $user_type === 1 ? Owner::class : Tenant::class;
 
-        $item->status = 0;
+        $item->status = 1;
+        $item->verified = 0;
 
         $item->save();
 
@@ -196,9 +197,8 @@ class AuthController extends Controller
         $identifier = $request->input('identifier');
         $userCode = intval($request->input('code'));
 
-        $user = User::where('username', $identifier)
-            ->orWhere('email', $identifier)
-            ->orWhere('gsm', $identifier)
+        $user = User::where('email', $identifier)
+            ->orWhere('phone', $identifier)
             ->first();
 
         if (!$user) {
@@ -207,7 +207,7 @@ class AuthController extends Controller
 
         $code = $user->codes->last();
         if ($code && $userCode === $code->code && $code->valid && $code->created_at->diffInMinutes(now()) < intval(env('SMS_VALID_MINUTES'))) {
-            $user->active = 1;
+            $user->verified = 1;
             $code->valid = false;
             $code->save();
             $user->save();
@@ -260,6 +260,10 @@ class AuthController extends Controller
 
         if (!auth('api')->user()->status) {
             return response()->error('accountNotActive');
+        }
+
+        if (!auth('api')->user()->verified) {
+            return response()->error('accountNotVerified');
         }
 
         return $this->respondWithToken($token);
