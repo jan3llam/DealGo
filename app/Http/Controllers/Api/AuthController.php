@@ -110,7 +110,7 @@ class AuthController extends Controller
         $item->userable_id = $class->id;
         $item->userable_type = $user_type === 1 ? Owner::class : Tenant::class;
 
-        $item->status = 1;
+        $item->status = 0;
 
         $item->save();
 

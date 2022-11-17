@@ -13,6 +13,7 @@
                 <!-- Add role form -->
                 <form id="addRoleForm" class="row" action="{{route('admin.roles.add')}}" method="post">
                     <input type="hidden" name="object_id" id="object_id">
+                    <input type="hidden" name="object_id" id="object_id">
                     @csrf
                     <div class="col-12">
                         <label class="form-label" for="modalRoleName">{{__('locale.Name')}}</label>
