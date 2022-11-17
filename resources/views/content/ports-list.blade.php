@@ -150,7 +150,7 @@
                                         <span class="fw-bolder me-25">{{__('locale.Country')}}:</span>
                                         <span id="view-country"></span>
                                     </li>
-                                    <li class="mb-75">
+                                    <li class="mb-75" style="display: none;">
                                         <span class="fw-bolder me-25">{{__('locale.City')}}:</span>
                                         <span id="view-city"></span>
                                     </li>
