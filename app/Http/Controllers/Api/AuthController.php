@@ -128,6 +128,8 @@ class AuthController extends Controller
             'PRIVATE-KEY' => env('CHATENGINE_PROJECT_KEY'),
         ])->post('https://api.chatengine.io/users/', $data);
 
+        $this->sendCode($request, $item->id);
+
         return response()->success();
     }
 
