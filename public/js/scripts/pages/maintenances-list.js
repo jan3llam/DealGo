@@ -300,9 +300,15 @@ $(function () {
                 newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
                     data.append($(this).attr('name'), $(this).val());
                 });
-                newForm.find('input[type=file]').each(function () {
-                    data.append($(this).attr('name'), $(this)[0].files[0]);
-                });
+                // newForm.find('input[type=file]').each(function () {
+                //     data.append($(this).attr('name'), $(this)[0].files[0]);
+                // });
+                const elem = newForm.find('#files');
+                for (var i = 0; i < elem[0].files.length; i++) {
+                    data.append(elem.attr('name') + '[]', elem[0].files[i]);
+                }
+                data.append(newForm.find('#files').attr('name') + '_old', newForm.find('#files').data('fileinput').initialPreview);
+
                 $.ajax({
                     type: 'POST',
                     url: assetPath + 'api/admin/maintenances/' + type,

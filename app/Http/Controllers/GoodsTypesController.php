@@ -205,6 +205,16 @@ class GoodsTypesController extends Controller
         $item = gType::withTrashed()->where('id', $id)->first();
 
         if ($item) {
+            if ($item->children()->count() > 0) {
+                foreach ($item->children() as $sub) {
+                    $sub->delete();
+                    if ($sub->children()->count() > 0) {
+                        foreach ($sub->children() as $sub2) {
+                            $sub2->delete();
+                        }
+                    }
+                }
+            }
             $item->delete();
         }
 
