@@ -65,6 +65,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('offers', [OffersController::class, 'list'])->name('offers');
         Route::get('ports', [PortsController::class, 'list'])->name('ports');
         Route::get('roles', [RolesController::class, 'list'])->name('roles');
+        Route::post('roles/add', [RolesController::class, 'add'])->name('roles.add');
+        Route::post('roles/update', [RolesController::class, 'update'])->name('roles.update');
         Route::get('requests_responses/{id?}', [RequestsResponsesController::class, 'list'])->name('requests_responses');
         Route::get('offers_responses/{id?}', [OffersResponsesController::class, 'list'])->name('offers_responses');
         Route::get('vessels', [VesselsController::class, 'list'])->name('vessels');

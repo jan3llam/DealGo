@@ -403,8 +403,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
 
     Route::group(['prefix' => 'roles'], function () {
         Route::get('/list', [RolesAPI::class, 'list_api']);
-        Route::post('/add', [RolesAPI::class, 'add'])->name('admin.roles.add');
-        Route::post('/update', [RolesAPI::class, 'update']);
+//        Route::post('/add', [RolesAPI::class, 'add'])->name('admin.roles.add');
+//        Route::post('/update', [RolesAPI::class, 'update'])->name('admin.roles.update');
         Route::put('/status/{id}', [RolesAPI::class, 'status']);
         Route::delete('/{id}', [RolesAPI::class, 'delete']);
     });
