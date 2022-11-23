@@ -261,6 +261,9 @@ $(function () {
                 'created_at': {
                     required: true
                 },
+                'updated_at': {
+                    required: true
+                },
                 'meta_name': {
                     required: true
                 },
