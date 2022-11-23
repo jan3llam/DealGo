@@ -675,16 +675,18 @@ $(function () {
 
     $(document).on('click', '.item-view', function () {
         var element = $(this);
-        let data = dtTable.api().row(element.parents('tr')).data().user;
+        let data = dtTable.api().row(element.parents('tr')).data();
         viewSidebar.modal('show');
-        $('#view-type').html(data.type);
-        if (data.type == 1) {
-            $('#view-company-container').show();
-        }
+
         var GoodsHtml = '';
         data.goods_types.forEach(item => {
             GoodsHtml += item['name_translation'] + ',';
         })
+        data = data.user;
+        if (data.type == 1) {
+            $('#view-company-container').show();
+        }
+        $('#view-type').html(data.type);
         $('#view-goods').html(GoodsHtml);
         $('#view-legal').html('<a target="_blank" href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#view-license').html('<a target="_blank" href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
