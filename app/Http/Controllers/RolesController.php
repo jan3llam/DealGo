@@ -64,6 +64,7 @@ class RolesController extends Controller
 
     public function update(Request $request)
     {
+        dd($request);
         $id = $request->object_id;
 
         $params = $request->all();
@@ -82,7 +83,7 @@ class RolesController extends Controller
         foreach (array_values($permissions) as $index => $item) {
             array_push($perms, array_keys($item)[0]);
         }
-
+        dd($id);
         $item = Role::findById($id);
         if ($item) {
             $item->name = $params['name'];

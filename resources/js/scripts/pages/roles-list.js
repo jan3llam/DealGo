@@ -16,7 +16,7 @@ $(function () {
         addRoleForm = $('#addRoleForm');
     roleAdd.on('click', function () {
         roleTitle.text('Add New Role'); // reset text
-        addRoleForm.attr('action', '/admin/roles/update');
+        addRoleForm.attr('action', '/admin/roles/add');
         $('#object_id').val('');
     });
     roleEdit.on('click', function () {
