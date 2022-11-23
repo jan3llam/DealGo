@@ -289,6 +289,9 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
+                'image': {
+                    required: true
+                },
                 'name': {
                     required: true
                 },
