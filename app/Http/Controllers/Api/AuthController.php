@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Mail\ActivationEmail;
 use App\Mail\PasswordEmail;
 use App\Models\Code;
 use App\Models\FCMToken;
@@ -128,12 +129,12 @@ class AuthController extends Controller
             'PRIVATE-KEY' => env('CHATENGINE_PROJECT_KEY'),
         ])->post('https://api.chatengine.io/users/', $data);
 
-        $this->sendCode($request, $item->id);
+        $this->sendCode($request, $item->id, true);
 
         return response()->success();
     }
 
-    public function sendCode(Request $request, $user_id = null)
+    public function sendCode(Request $request, $user_id = null, $activation = false)
     {
         if (!$user_id) {
             $validator = Validator::make($request->all(),
@@ -176,7 +177,11 @@ class AuthController extends Controller
         $code->save();
         $user->save();
 
-        Mail::to($user->email)->send(new PasswordEmail($verificationCode));
+        if ($activation) {
+            Mail::to($user->email)->send(new ActivationEmail($verificationCode));
+        } else {
+            Mail::to($user->email)->send(new PasswordEmail($verificationCode));
+        }
 
         return response()->success();
 

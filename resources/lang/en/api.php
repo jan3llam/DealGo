@@ -146,5 +146,6 @@ return [
         'welcomeText' => 'Hi there,',
         'inviteText' => 'Kindly use (:password) as your verification code to reset your password',
         'passwordText' => 'Kindly use (:password) as your password to login to your account',
+        'activationText' => 'Kindly use (:password) as your activation code',
     ]
 ];
