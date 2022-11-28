@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RequestsController;
 use App\Http\Controllers\Api\RequestsResponsesController;
 use App\Http\Controllers\Api\ShipmentsController;
+use App\Http\Controllers\Api\StatesController;
 use App\Http\Controllers\Api\TicketsController;
 use App\Http\Controllers\Api\VesselsController;
 use App\Http\Controllers\Api\VesselsTypesController;
@@ -223,6 +224,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
     Route::group(['prefix' => 'content'], function () {
         Route::get('/cities/{id?}', [CitiesController::class, 'getCities']);
         Route::get('/countries', [CountriesController::class, 'getCountries']);
+        Route::get('/states/{id?}', [StatesController::class, 'getStates']);
         Route::get('/homepage', [HomepageController::class, 'get']);
     });
 

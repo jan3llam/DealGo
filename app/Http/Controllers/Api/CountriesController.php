@@ -99,7 +99,7 @@ class CountriesController extends Controller
 //        }
 //        dd(1);
 
-        $data = array_map('str_getcsv', file('D:\Projects\dealGo\port.csv'));
+        $data = array_map('str_getcsv', file('/home/u310033965/domains/dealgo.net/public_html/admin/port.csv'));
         foreach ($data as $index => $item) {
             if ($index) {
 
