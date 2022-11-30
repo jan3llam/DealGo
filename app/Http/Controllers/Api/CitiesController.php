@@ -19,7 +19,7 @@ class CitiesController extends Controller
         }
 
         if ($state) {
-            $query->where('state_id', $id);
+            $query->where('state_id', $state);
         }
 
         $total = $query->limit($page_size)->count();
