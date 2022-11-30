@@ -16,7 +16,9 @@ class CitiesController extends Controller
 
         if ($id) {
             $query->where('country_id', $id);
-        } elseif ($state) {
+        }
+
+        if ($state) {
             $query->where('state_id', $id);
         }
 
