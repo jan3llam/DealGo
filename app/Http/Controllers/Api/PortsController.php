@@ -77,7 +77,9 @@ class PortsController extends Controller
         $query = Port::where('status', 1);
 
         if ($user instanceof Tenant) {
-            $query->whereHas('offers')->with(['offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
+            $query->whereHas('offers', function ($qu) {
+                $qu->where('approved', 0);
+            })->with(['offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
             if ($date_from) {
                 $query->whereHas('offers', function ($q) use ($date_from) {
                     $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
@@ -89,7 +91,9 @@ class PortsController extends Controller
                 });
             }
         } elseif ($user instanceof Owner) {
-            $query->whereHas('requests')->with(['requests.port_to', 'requests.tenant.user', 'requests.routes', 'requests.goods_types']);
+            $query->whereHas('requests', function ($qu) {
+                $qu->where('approved', 0);
+            })->with(['requests.port_to', 'requests.tenant.user', 'requests.routes', 'requests.goods_types']);
             if ($date_from) {
                 $query->whereHas('requests', function ($q) use ($date_from) {
                     $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
@@ -102,7 +106,11 @@ class PortsController extends Controller
             }
         } else {
             $query->where(function ($q) {
-                $q->orWhereHas('requests')->orWhereHas('offers');
+                $q->orWhereHas('requests', function ($qu) {
+                    $qu->where('approved', 0);
+                })->orWhereHas('offers', function ($qu) {
+                    $qu->where('approved', 0);
+                });
             })->with(['requests.port_to', 'requests.tenant.user',
                 'requests.routes', 'requests.goods_types', 'offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
 
