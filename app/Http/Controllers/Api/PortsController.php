@@ -101,9 +101,10 @@ class PortsController extends Controller
                 });
             }
         } else {
-            $query->whereHas('requests')->whereHas('offers')
-                ->with(['requests.port_to', 'requests.tenant.user',
-                    'requests.routes', 'requests.goods_types', 'offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
+            $query->where(function ($q) {
+                $q->orWhereHas('requests')->orWhereHas('offers');
+            })->with(['requests.port_to', 'requests.tenant.user',
+                'requests.routes', 'requests.goods_types', 'offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
 
             if ($date_from) {
                 $query->whereHas('requests', function ($q) use ($date_from) {
