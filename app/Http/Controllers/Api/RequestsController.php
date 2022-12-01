@@ -99,10 +99,11 @@ class RequestsController extends Controller
             $query->whereHas('tenant', function ($q) use ($user_id) {
                 $q->where('id', auth('api')->user()->userable->id);
             });
-        } else {
-            $query->where('date_to', '>=', $now)
-                ->where('date_from', '<=', $now);
         }
+//        else {
+//            $query->where('date_to', '>=', $now)
+//                ->where('date_from', '<=', $now);
+//        }
 
         $total = $query->count();
 

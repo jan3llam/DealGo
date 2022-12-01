@@ -91,10 +91,11 @@ class OffersController extends Controller
 //                    $qu->where('id', auth('api')->user()->userable->id);
 //                });
             });
-        } else {
-            $query->where('date_to', '>=', $now)
-                ->where('date_from', '<=', $now);
         }
+//        else {
+//            $query->where('date_to', '>=', $now)
+//                ->where('date_from', '<=', $now);
+//        }
 
         $query->whereHas('vessel', function ($q) {
             $q->whereHas('owner', function ($qu) {
