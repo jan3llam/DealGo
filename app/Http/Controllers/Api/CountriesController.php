@@ -139,7 +139,7 @@ class CountriesController extends Controller
                             }
 
                         }
-                    } else {
+                    } /*else {
 
                         $city = City::where('country_id', $country->id)->first();
 
@@ -174,8 +174,8 @@ class CountriesController extends Controller
                                 ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
                                 ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
                         }
-                    }
-                } else {
+                    }*/
+                } /*else {
                     $country = new Country;
                     $country->name_ar = rtrim(ltrim($item[0]));
                     $country->name_en = rtrim(ltrim($item[0]));
@@ -224,7 +224,7 @@ class CountriesController extends Controller
                             ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
                             ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
                     }
-                }
+                }*/
             }
 ////                    $newcat->parent_id = $cat->id;
 ////                    $newcat->setTranslation('name', 'ar', rtrim(ltrim($item[0])))
