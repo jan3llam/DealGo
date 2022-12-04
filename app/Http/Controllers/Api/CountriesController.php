@@ -106,7 +106,7 @@ class CountriesController extends Controller
                 $country = Country::where(DB::raw('LOWER(name_en)'), 'like', '%' . rtrim(ltrim(strtolower($item[0]))) . '%')->first();
                 if ($country) {
 
-                    $city = City::where(DB::raw('LOWER(name_en)'), 'like', '%' . rtrim(ltrim(strtolower($item[0]))) . '%')->first();
+                    $city = City::where('country_id', $country->id)->first();
 
                     if ($city) {
 
