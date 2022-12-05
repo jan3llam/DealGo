@@ -112,7 +112,7 @@ class ContractsController extends Controller
             if ($item->is_down) {
                 $item->paid = $item->value;
             } else {
-                $item->paid = $payment['value'];
+                $item->paid = $payment['paid'];
             }
             if (isset($payment['date'])) {
                 $item->submit_date = Carbon::parse($payment['date'])->toDateTimeString();
