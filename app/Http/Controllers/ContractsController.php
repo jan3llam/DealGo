@@ -133,7 +133,7 @@ class ContractsController extends Controller
             $item->value = $payment['value'];
             $item->paid = $payment['paid'];
             $item->description = $payment['description'];
-            $item->submit_date = Carbon::parse($payment['date'])->toDateTimeString();
+            $item->submit_date = $payment['date'] ? Carbon::parse($payment['date'])->toDateTimeString() : null;
             $item->date = Carbon::parse($payment['next'])->toDateTimeString();
 
             $contract->payments()->save($item);
