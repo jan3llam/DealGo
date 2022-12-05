@@ -120,6 +120,9 @@ class ContractsController extends Controller
             if (isset($payment['next'])) {
                 $item->date = Carbon::parse($payment['next'])->toDateTimeString();
             }
+            if (isset($payment['description'])) {
+                $item->description = $payment['description'];
+            }
             $item->save();
         }
 
