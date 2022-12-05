@@ -230,7 +230,7 @@ $(function () {
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         });
-        // $('#payments-container').html('')
+        $('.existed-payment').remove()
         data.payments.forEach(item => {
             if (item.is_down) {
                 $('#view-down-value').html(item.value.toLocaleString(undefined, {minimumFractionDigits: 0}));
@@ -243,7 +243,7 @@ $(function () {
                     $('#view-down-submit').data('paid', 0).hide();
                 }
             } else {
-                $('#payments-container').prepend($('<div>')
+                $('#payments-container').prepend($('<div class="existed-payment">')
                     .append($('<div class="mb-1 row">')
                         .append($('<div class="col">')
                             .append($('<label class="form-label" for="value">').html(LANG.PaymentDue))
