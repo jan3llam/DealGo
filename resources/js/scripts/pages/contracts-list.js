@@ -243,7 +243,7 @@ $(function () {
                     $('#view-down-submit').data('paid', 0).hide();
                 }
             } else {
-                $('#payments-container').append($('<div>')
+                $('#payments-container').prepend($('<div>')
                     .append($('<div class="mb-1 row">')
                         .append($('<div class="col">')
                             .append($('<label class="form-label" for="value">').html(LANG.PaymentDue))

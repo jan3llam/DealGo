@@ -43,7 +43,7 @@ class ContractsController extends Controller
                     $qu->withTrashed();
                 });
             }, 'payments' => function ($q) {
-                $q->orderBy('id', 'asc');
+                $q->orderBy('id', 'desc');
             }
         ]);
         $search_val = isset($params['search']) ? $params['search'] : null;
