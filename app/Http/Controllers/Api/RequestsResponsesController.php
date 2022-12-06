@@ -327,7 +327,8 @@ class RequestsResponsesController extends Controller
                 if (intval($attr->rowType) === 1) {
                     $min = $attr->min;
                     $max = $attr->max;
-                    $matrix_compare[$attr->rowType] = intval(($item->payments()->sum('value') - $min) * 100 / ($max - $min));
+                    $count = $item->payments()->sum('value');
+                    $matrix_compare[$attr->rowType] = 1 / intval(($count - $min) * 100 / ($max - $min));
                 } elseif (intval($attr->rowType) === 2) {
                     $min = Carbon::parse($attr->min);
                     $max = Carbon::parse($attr->max);
