@@ -358,14 +358,23 @@ class RequestsResponsesController extends Controller
                 } elseif (intval($attr->rowType) === 5) {
                     $min = $attr->min;
                     $max = $attr->max;
-
-                    $matrix_compare[$attr->rowType] = ($item->vessels()->first()->owner()->first()->rating - $min) * 100 / ($max - $min);
+                    $count = $item->vessels()->first()->owner()->first()->rating;
+                    if ($count <= $min) {
+                        $matrix_compare[$attr->rowType] = 100;
+                    } else {
+                        $matrix_compare[$attr->rowType] = intval($count * 100 / ($min + $max) / 2);
+                    }
                 } elseif (intval($attr->rowType) === 6) {
                     $min = Carbon::parse($attr->min);
                     $max = Carbon::parse($attr->max);
                     $diffMax = $max->diffInDays($min);
                     $diffMtx = $min->diffInDays(Carbon::parse($item->date));
-                    $matrix_compare[$attr->rowType] = ($diffMtx) * 100 / $diffMax;
+                    if ($diffMtx < $diffMax) {
+                        $matrix_compare[$attr->rowType] = 100;
+                    } else {
+                        $matrix_compare[$attr->rowType] = intval($diffMtx * 100 / ($min + $max) / 2);
+                    }
+//                    $matrix_compare[$attr->rowType] = ($diffMtx) * 100 / $diffMax;
                 }
             }
 
