@@ -315,14 +315,22 @@ class RequestsResponsesController extends Controller
             // 6 nearest date
             $matrix_compare = [];
 
+//            [
+//                {"key":0,"rowIndex":0,"rowType":1,"min":"500","max":"60000"}
+//            ,{"key":1,"rowIndex":1,"rowType":2,"min":"2020-12-06T21:23:01.556Z","max":"1993-12-06T21:23:03.235Z"},
+//            {"key":2,"rowIndex":2,"rowType":3,"min":5,"max":9},
+//            {"key":3,"rowIndex":3,"rowType":4,"min":5,"max":15},
+//            {"key":4,"rowIndex":4,"rowType":5,"min":1,"max":5},
+//            {"key":5,"rowIndex":5,"rowType":6,"min":"2022-12-06T20:24:00.209Z","max":"2022-12-31T20:24:01.761Z"}]
+
             foreach ($requestObj->matrix as $attr) {
                 if (intval($attr->rowType) === 1) {
                     $min = $attr->min;
                     $max = $attr->max;
                     $matrix_compare[$attr->rowType] = ($item->payments()->sum('value') - $min) * 100 / ($max - $min);
                 } elseif (intval($attr->rowType) === 2) {
-                    $min = $attr->min;
-                    $max = $attr->max;
+                    $min = intval(Carbon::parse($attr->min)->format('Y'));
+                    $max = intval(Carbon::parse($attr->max)->format('Y'));
                     $matrix_compare[$attr->rowType] = ($item->vessels()->first()->build_year - $min) * 100 / ($max - $min);
                 } elseif (intval($attr->rowType) === 3) {
                     $min = $attr->min;
@@ -337,8 +345,8 @@ class RequestsResponsesController extends Controller
                     $max = $attr->max;
                     $matrix_compare[$attr->rowType] = ($item->vessels()->first()->owner()->first()->rating - $min) * 100 / ($max - $min);
                 } elseif (intval($attr->rowType) === 6) {
-                    $min = $attr->min;
-                    $max = $attr->max;
+                    $min = intval(Carbon::parse($attr->min)->format('d-m-Y'));
+                    $max = intval(Carbon::parse($attr->max)->format('d-m-Y'));
                     $matrix_compare[$attr->rowType] = ($item->date - $min) * 100 / ($max - $min);
                 }
             }
