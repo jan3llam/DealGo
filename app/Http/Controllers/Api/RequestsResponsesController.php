@@ -327,11 +327,11 @@ class RequestsResponsesController extends Controller
                 if (intval($attr->rowType) === 1) {
                     $min = $attr->min;
                     $max = $attr->max;
-                    $matrix_compare[$attr->rowType] = ($item->payments()->sum('value') - $min) * 100 / ($max - $min);
+                    $matrix_compare[$attr->rowType] = intval(($item->payments()->sum('value') - $min) * 100 / ($max - $min));
                 } elseif (intval($attr->rowType) === 2) {
                     $min = intval(Carbon::parse($attr->min)->format('Y'));
                     $max = intval(Carbon::parse($attr->max)->format('Y'));
-                    $matrix_compare[$attr->rowType] = ($item->vessels()->first()->build_year - $min) * 100 / ($max - $min);
+                    $matrix_compare[$attr->rowType] = intval(($item->vessels()->first()->build_year - $max) * 100 / ($min - $max));
                 } elseif (intval($attr->rowType) === 3) {
                     $min = $attr->min;
                     $max = $attr->max;
