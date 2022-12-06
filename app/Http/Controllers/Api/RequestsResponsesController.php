@@ -340,15 +340,25 @@ class RequestsResponsesController extends Controller
                 } elseif (intval($attr->rowType) === 3) {
                     $min = $attr->min;
                     $max = $attr->max;
-                    dd($item->vessels()->withCount('maintenance')->get()->sum('maintenance_count'));
-                    $matrix_compare[$attr->rowType] = ($item->vessels()->withCount('maintenance')->get()->sum('maintenance_count') - $min) * 100 / ($max - $min);
+                    $count = $item->vessels()->withCount('maintenance')->get()->sum('maintenance_count');
+                    if ($count <= $max) {
+                        $matrix_compare[$attr->rowType] = 100;
+                    } else {
+                        $matrix_compare[$attr->rowType] = intval($count * 100 / ($min + $max) / 2);
+                    }
                 } elseif (intval($attr->rowType) === 4) {
                     $min = $attr->min;
                     $max = $attr->max;
-                    $matrix_compare[$attr->rowType] = ($item->vessels()->withCount('shipments')->get()->sum('shipments_count') - $min) * 100 / ($max - $min);
+                    $count = $item->vessels()->withCount('shipments')->get()->sum('shipments_count');
+                    if ($count <= $max) {
+                        $matrix_compare[$attr->rowType] = 100;
+                    } else {
+                        $matrix_compare[$attr->rowType] = intval($count * 100 / ($min + $max) / 2);
+                    }
                 } elseif (intval($attr->rowType) === 5) {
                     $min = $attr->min;
                     $max = $attr->max;
+
                     $matrix_compare[$attr->rowType] = ($item->vessels()->first()->owner()->first()->rating - $min) * 100 / ($max - $min);
                 } elseif (intval($attr->rowType) === 6) {
                     $min = Carbon::parse($attr->min);
