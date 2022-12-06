@@ -70,6 +70,11 @@ class OfferResponse extends Model
         return $this->morphOne(Contract::class, 'origin');
     }
 
+    public function getMatrixAttribute($value)
+    {
+        return json_decode($value);
+    }
+
     public function getApprovedAttribute()
     {
         return $this->origin ? 1 : 0;
