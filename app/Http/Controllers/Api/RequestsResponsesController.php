@@ -314,6 +314,7 @@ class RequestsResponsesController extends Controller
             // 5 rate
             // 6 nearest date
             $matrix_compare = [];
+            dd($requestObj->matrix);
             foreach ($requestObj->matrix as $attr) {
                 if (intval($attr->rowType) === 1) {
                     $min = $attr->min;
