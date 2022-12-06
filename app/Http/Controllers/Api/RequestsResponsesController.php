@@ -335,11 +335,12 @@ class RequestsResponsesController extends Controller
                     if ($vessel->between($max, $min)) {
                         $matrix_compare[$attr->rowType] = 100;
                     } else {
-                        $matrix_compare[$attr->rowType] = intval($vessel->format('Y')) * 100 / ((intval($min->format('Y')) + intval($max->format('Y'))) / 2);
+                        $matrix_compare[$attr->rowType] = intval(intval($vessel->format('Y')) * 100 / ((intval($min->format('Y')) + intval($max->format('Y'))) / 2));
                     }
                 } elseif (intval($attr->rowType) === 3) {
                     $min = $attr->min;
                     $max = $attr->max;
+                    dd($item->vessels()->withCount('maintenance')->get()->sum('maintenance_count'));
                     $matrix_compare[$attr->rowType] = ($item->vessels()->withCount('maintenance')->get()->sum('maintenance_count') - $min) * 100 / ($max - $min);
                 } elseif (intval($attr->rowType) === 4) {
                     $min = $attr->min;
