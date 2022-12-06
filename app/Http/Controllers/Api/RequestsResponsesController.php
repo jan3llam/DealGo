@@ -329,9 +329,14 @@ class RequestsResponsesController extends Controller
                     $max = $attr->max;
                     $matrix_compare[$attr->rowType] = intval(($item->payments()->sum('value') - $min) * 100 / ($max - $min));
                 } elseif (intval($attr->rowType) === 2) {
-                    $min = intval(Carbon::parse($attr->min)->format('Y'));
-                    $max = intval(Carbon::parse($attr->max)->format('Y'));
-                    $matrix_compare[$attr->rowType] = intval(($item->vessels()->first()->build_year - $max) * 100 / ($min - $max));
+                    $min = Carbon::parse($attr->min);
+                    $max = Carbon::parse($attr->max);
+                    $vessel = Carbon::now()->setYear($item->vessels()->first()->build_year);
+                    if ($vessel->between($max, $min)) {
+                        $matrix_compare[$attr->rowType] = 100;
+                    } else {
+                        $matrix_compare[$attr->rowType] = intval($vessel->format('Y')) * 100 / ((intval($min->format('Y')) + intval($max->format('Y'))) / 2);
+                    }
                 } elseif (intval($attr->rowType) === 3) {
                     $min = $attr->min;
                     $max = $attr->max;
