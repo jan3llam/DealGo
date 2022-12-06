@@ -347,9 +347,9 @@ class RequestsResponsesController extends Controller
                 } elseif (intval($attr->rowType) === 6) {
                     $min = Carbon::parse($attr->min);
                     $max = Carbon::parse($attr->max);
-                    $diff = $max->diffInDays($min);
-                    dd($diff);
-                    $matrix_compare[$attr->rowType] = ($item->date - $min) * 100 / ($max - $min);
+                    $diffMax = $max->diffInDays($min);
+                    $diffMtx = $min->diffInDays($item->date);
+                    $matrix_compare[$attr->rowType] = ($diffMtx) * 100 / $diffMax;
                 }
             }
 
