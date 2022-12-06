@@ -348,7 +348,7 @@ class RequestsResponsesController extends Controller
                     $min = Carbon::parse($attr->min);
                     $max = Carbon::parse($attr->max);
                     $diffMax = $max->diffInDays($min);
-                    $diffMtx = $min->diffInDays($item->date);
+                    $diffMtx = $min->diffInDays(Carbon::parse($item->date));
                     $matrix_compare[$attr->rowType] = ($diffMtx) * 100 / $diffMax;
                 }
             }
