@@ -256,10 +256,17 @@ class OffersResponsesController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
+        $offerObj = Offer::find($params['offer']);
+
+        if (!$offerObj) {
+            return response()->error('objectNotFound');
+        }
+
+
         $item = new OfferResponse;
 
         $item->name = $params['name'];
-        $item->offer_id = $params['offer'];
+        $item->offer_id = $offerObj->id;
         $item->tenant_id = $user->userable->id;
         $item->port_to = $params['port_to'];
         $item->date_from = Carbon::parse($params['date_from'])->toDateString();
@@ -309,6 +316,43 @@ class OffersResponsesController extends Controller
         array_push($paymentsArr, $paymentItem);
 
         $item->payments()->saveMany($paymentsArr);
+
+        if ($offerObj->matrix) {
+            // 1 price
+            // 5 rate
+            // 6 nearest date
+            $matrix_compare = [];
+            foreach ($offerObj->matrix as $attr) {
+                if (intval($attr->rowType) === 1) {
+                    $min = $attr->min;
+                    $max = $attr->max;
+                    $matrix_compare[$attr->rowType] = ($item->total - $min) * 100 / ($max - $min);
+                }/* elseif (intval($attr->rowType) === 2) {
+                    $min = $attr->min;
+                    $max = $attr->max;
+                    $matrix_compare[$attr->rowType] = ($item->vessels()->first()->build_year - $min) * 100 / ($max - $min);
+                } elseif (intval($attr->rowType) === 3) {
+                    $min = $attr->min;
+                    $max = $attr->max;
+                    $matrix_compare[$attr->rowType] = ($item->vessels()->withCount('maintenance')->sum('maintenance_count') - $min) * 100 / ($max - $min);
+                } elseif (intval($attr->rowType) === 4) {
+                    $min = $attr->min;
+                    $max = $attr->max;
+                    $matrix_compare[$attr->rowType] = ($item->vessels()->withCount('shipments')->get()->sum('shipments_count') - $min) * 100 / ($max - $min);
+                }*/ elseif (intval($attr->rowType) === 5) {
+                    $min = $attr->min;
+                    $max = $attr->max;
+                    $matrix_compare[$attr->rowType] = ($item->offer()->vessel()->owner()->first()->rating - $min) * 100 / ($max - $min);
+                } elseif (intval($attr->rowType) === 6) {
+                    $min = $attr->min;
+                    $max = $attr->max;
+                    $matrix_compare[$attr->rowType] = ($item->date - $min) * 100 / ($max - $min);
+                }
+            }
+
+            $item->matrix = json_encode($matrix_compare);
+            $item->save();
+        }
 
         try {
             Helper::sendNotification('responseOffer', [], $item->offer->vessel->owner->user->id, ['id' => $item->id, 'origin_id' => $item->offer_id, 'action' => 'response_offer']);

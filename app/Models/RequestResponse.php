@@ -11,7 +11,7 @@ class RequestResponse extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'requests_responses';
-    protected $appends = ['approved', 'matrix'];
+    protected $appends = ['approved'];
 
     public function owner()
     {
@@ -53,23 +53,23 @@ class RequestResponse extends Model
         return $this->origin ? 1 : 0;
     }
 
-    public function getMatrixAttribute()
-    {
-        // 1 price
-        // 2 vessel age
-        // 3 maintenance number
-        // 4 shipments number
-        // 5 rate
-        // 6 nearest date
-        return [
-            1 => intval($this->total()),
-            2 => $this->vessels()->get()->pluck('build_year', 'id')->toArray(),
-            3 => $this->vessels()->withCount('maintenance')->get()->sum('maintenance_count'),
-            4 => $this->vessels()->withCount('shipments')->get()->sum('shipments_count'),
-            5 => $this->vessels()->first() ? $this->vessels()->first()->owner()->first()->rating : 0,
-            6 => $this->date,
-        ];
-    }
+//    public function getMatrixAttribute()
+//    {
+//        // 1 price
+//        // 2 vessel age
+//        // 3 maintenance number
+//        // 4 shipments number
+//        // 5 rate
+//        // 6 nearest date
+//        return [
+//            1 => intval($this->total()),
+//            2 => $this->vessels()->get()->pluck('build_year', 'id')->toArray(),
+//            3 => $this->vessels()->withCount('maintenance')->get()->sum('maintenance_count'),
+//            4 => $this->vessels()->withCount('shipments')->get()->sum('shipments_count'),
+//            5 => $this->vessels()->first() ? $this->vessels()->first()->owner()->first()->rating : 0,
+//            6 => $this->date,
+//        ];
+//    }
 
     public function total()
     {
