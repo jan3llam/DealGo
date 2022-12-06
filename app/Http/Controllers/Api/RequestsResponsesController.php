@@ -319,7 +319,7 @@ class RequestsResponsesController extends Controller
                 if (intval($attr->rowType) === 1) {
                     $min = $attr->min;
                     $max = $attr->max;
-                    $matrix_compare[$attr->rowType] = ($item->total - $min) * 100 / ($max - $min);
+                    $matrix_compare[$attr->rowType] = ($item->total() - $min) * 100 / ($max - $min);
                 } elseif (intval($attr->rowType) === 2) {
                     $min = $attr->min;
                     $max = $attr->max;
