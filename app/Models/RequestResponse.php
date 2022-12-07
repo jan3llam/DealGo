@@ -11,6 +11,7 @@ class RequestResponse extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'requests_responses';
+    protected $with = ['routes'];
     protected $appends = ['approved'];
 
     public function owner()

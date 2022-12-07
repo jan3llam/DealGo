@@ -11,6 +11,8 @@ class Request extends Model
     use HasFactory, SoftDeletes;
 
 
+    protected $with = ['port_from', 'port_to', 'routes'];
+
     public function owner()
     {
         return $this->belongsTo(Owner::class);

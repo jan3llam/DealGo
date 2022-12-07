@@ -10,6 +10,7 @@ class Offer extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $with = ['port_from'];
 
     public function responses()
     {
