@@ -114,19 +114,19 @@ class User extends Authenticatable implements JWTSubject
 
     }
 
-    public function rates()
-    {
-        return $this->hasMany(Rate::class, 'rated_id');
-    }
-
     public function getRatingAttribute()
     {
         return (int)$this->rates()->avg('rate');
     }
 
+    public function rates()
+    {
+        return $this->hasMany(Rate::class, 'rated_id');
+    }
+
     public function getUserNextPaymentAttribute()
     {
-        $data = ContractPayment::whereIn('contract_id', $this->userable->contracts->pluck('id'))->orderBy('date')->where('paid', 0)->whereNotNull('date')->limit(1)->first();
+        $data = ContractPayment::whereIn('contract_id', $this->userable->contracts->pluck('id'))->orderBy('date', 'desc')->where('paid', 0)->whereNotNull('date')->limit(1)->first();
         $payment = $data ? $data->pluck('date')[0] : null;
         return $payment;
     }
