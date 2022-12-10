@@ -51,6 +51,7 @@ use App\Http\Controllers\RolesController as RolesAPI;
 use App\Http\Controllers\ServicesController as ServicesAPI;
 use App\Http\Controllers\ShipmentsController as ShipmentsAPI;
 use App\Http\Controllers\SliderController as SliderAPI;
+use App\Http\Controllers\StatesController as StatesAPI;
 use App\Http\Controllers\TenantsController as TenantsAPI;
 use App\Http\Controllers\TicketsController as TicketsAPI;
 use App\Http\Controllers\UsersController as UsersAPI;
@@ -251,6 +252,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
 
     Route::group(['prefix' => 'cities'], function () {
         Route::get('/list/{id}', [CitiesAPI::class, 'getCities']);
+    });
+
+
+    Route::group(['prefix' => 'states'], function () {
+        Route::get('/list/{id}', [StatesAPI::class, 'getStates']);
     });
 
     Route::group(['prefix' => 'admins'], function () {
