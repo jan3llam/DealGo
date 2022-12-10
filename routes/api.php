@@ -223,6 +223,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'content'], function () {
         Route::get('/cities/{id?}', [CitiesController::class, 'getCities']);
+        Route::get('/states/{id?}', [StatesController::class, 'getStates']);
         Route::get('/countries', [CountriesController::class, 'getCountries']);
         Route::get('/states/{id?}', [StatesController::class, 'getStates']);
         Route::get('/homepage', [HomepageController::class, 'get']);
