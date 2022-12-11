@@ -440,6 +440,7 @@ $(function () {
                 newForm.find('input[type=file]').each(function () {
                     data.append($(this).attr('name'), $(this)[0].files[0]);
                 });
+                data.append('province', $('#province').find("option:selected").text());
                 $.ajax({
                     type: 'POST',
                     url: assetPath + 'api/admin/tenants/' + type,
