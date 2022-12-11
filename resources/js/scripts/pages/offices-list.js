@@ -701,7 +701,9 @@ $(function () {
         $('#image_container').attr('src', '');
         $('#object_id').val('');
         $('#country').val('').trigger('change.select2');
+        $('#city').empty();
         $('#city').val('').trigger('change.select2');
-        $('#state').val('').trigger('change.select2');
+        $('#province').empty();
+        $('#province').val('').trigger('change.select2');
     });
 })
