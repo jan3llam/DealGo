@@ -410,7 +410,7 @@ $(function () {
 
         $("#legal,#company,#license").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
-        $('#country,#city,#state').select2({
+        $('#country,#city,#province').select2({
             dropdownParent: newSidebar
         });
 
@@ -647,6 +647,7 @@ $(function () {
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
+        $('#province_id').val(data.province);
         $('#country').val(data.city.country.id).trigger('change.select2');
         $('#edit-legal').html('<a target="_blank" href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#edit-license').html('<a target="_blank" href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');

@@ -409,7 +409,7 @@ $(function () {
 
         $("#legal,#company,#license").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
-        $('#country,#city,#state').select2({
+        $('#country,#city,#province').select2({
             dropdownParent: newSidebar
         });
 
@@ -677,6 +677,7 @@ $(function () {
         $('#phone').val(data.phone);
         $('#country').val(data.city.country.id).trigger('change.select2');
         $('#city_id').val(data.city.id);
+        $('#province_id').val(data.province);
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
         $('#zip').val(data.zip_code);
