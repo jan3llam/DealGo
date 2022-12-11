@@ -361,7 +361,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/api/admin/cities/list/' + $element.find("option:selected").val(),
+                url: '/api/admin/cities/list?s=' + $element.find("option:selected").val(),
                 type: 'GET',
                 cache: false,
                 contentType: 'application/json',

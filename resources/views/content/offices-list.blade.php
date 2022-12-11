@@ -342,7 +342,7 @@
                     }
 
                     if ($('#province_id').val()) {
-                        target.val($('#province_id').val());
+                        target.val(target.find('option[text="' + $('#province_id').val() + '"]').val());
                         target.trigger('change');
                     }
                 },
@@ -358,7 +358,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: '/api/admin/cities/list/' + $element.find("option:selected").val(),
+                url: '/api/admin/cities/list?s=' + $element.find("option:selected").val(),
                 type: 'GET',
                 cache: false,
                 contentType: 'application/json',
