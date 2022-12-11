@@ -153,9 +153,12 @@
                                 </select>
                             </div>
                             <div class="mb-1">
+                                <input type="hidden" value="" id="province_id">
                                 <label class="form-label" for="province">{{__('locale.Province')}}</label>
-                                <input type="text" class="form-control dt-full-name" id="province"
-                                       placeholder="{{__('locale.Province')}}" name="province"/>
+                                <select type="text" class="form-control dt-full-name select2" id="province"
+                                        name="province">
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
+                                </select>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="address_1">{{__('locale.Address')}} 1</label>
@@ -315,7 +318,40 @@
     {{-- Page js files --}}
     <script src="{{ asset(mix('js/scripts/pages/offices-list.js')) }}"></script>
     <script>
+
         $('#country').on("change.select2", function () {
+            var $element = $(this);
+            var target = $element.parents('form').find('select#province');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/api/admin/states/list/' + $element.find("option:selected").val(),
+                type: 'GET',
+                cache: false,
+                contentType: 'application/json',
+                dataType: "json",
+                success: function (result) {
+                    var dbSelect = target;
+                    dbSelect.empty();
+                    for (var i = 0; i < result.data.length; i++) {
+                        dbSelect.append($('<option/>', {
+                            value: result.data[i].id,
+                            text: result.data[i].name
+                        }));
+                    }
+
+                    if ($('#province_id').val()) {
+                        target.val($('#province_id').val());
+                        target.trigger('change');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+        });
+        $('#province').on("change.select2", function () {
             var $element = $(this);
             var target = $element.parents('form').find('select#city');
             $.ajax({

@@ -147,9 +147,8 @@
                             </div>
 
                             <div class="mb-1">
+                                <input type="hidden" value="" id="province_id">
                                 <label class="form-label" for="province">{{__('locale.Province')}}</label>
-                                {{--                                <input type="text" class="form-control dt-full-name" id="province"--}}
-                                {{--                                       placeholder="{{__('locale.Province')}}" name="province"/>--}}
                                 <select type="text" class="form-control dt-full-name select2" id="province"
                                         name="province">
                                     <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
