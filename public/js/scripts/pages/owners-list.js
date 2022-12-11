@@ -702,5 +702,8 @@ $(function () {
         $('#form_status').val(1);
         $('#image_container').attr('src', '');
         $('#object_id').val('');
+        $('#country').val('').trigger('change.select2');
+        $('#city').val('').trigger('change.select2');
+        $('#state').val('').trigger('change.select2');
     });
 })
