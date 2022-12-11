@@ -142,6 +142,7 @@ return [
     "Remaining" => "المتبقي",
     "Reply" => "رد",
     "Request" => "طلب",
+    "State" => "المحافظة",
     "Requests Responses" => "ردود الطلبات",
     "Requests" => "الطلبات",
     "Role" => "دور",

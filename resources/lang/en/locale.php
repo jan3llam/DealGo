@@ -35,6 +35,7 @@ return [
     "COA" => "COA",
     "Cancel" => "Cancel",
     "Capacity" => "Capacity TEU",
+    "State" => "State",
     "Categories" => "Categories",
     "Category" => "Category",
     "ChangeStatusMsg" => "Do you want to change status for this item ?",
