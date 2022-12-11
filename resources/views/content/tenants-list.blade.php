@@ -354,7 +354,7 @@
                     }
 
                     if ($('#province_id').val()) {
-                        target.val(target.find('option[text="' + $('#province_id').val() + '"]').val());
+                        target.val(target.find('option:contains(' + $('#province_id').val() + ')').val());
                         target.trigger('change');
                     }
                 },
