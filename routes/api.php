@@ -251,7 +251,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
     });
 
     Route::group(['prefix' => 'cities'], function () {
-        Route::get('/list/{id}', [CitiesAPI::class, 'getCities']);
+        Route::get('/list/{id?}', [CitiesAPI::class, 'getCities']);
     });
 
 
