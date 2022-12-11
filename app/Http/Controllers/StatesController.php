@@ -19,6 +19,6 @@ class StatesController extends Controller
             $states->where('country_id', $id);
         }
 
-        return response()->success($states->skip(($page_number - 1) * $page_size)->take($page_size)->get());
+        return response()->success($states->skip(($page_number - 1) * $page_size)->take($page_size)->orderBy('name_en')->get());
     }
 }
