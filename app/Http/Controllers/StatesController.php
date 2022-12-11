@@ -11,7 +11,7 @@ class StatesController extends Controller
     public function getStates(Request $request, $id = null)
     {
 
-        $page_size = $request->input('page_size', 10);
+        $page_size = $request->input('page_size', 1000);
         $page_number = $request->input('page_number', 1);
 
         $states = State::query();
