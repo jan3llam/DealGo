@@ -363,8 +363,8 @@
                 contentType: 'application/json',
                 dataType: "json",
                 success: function (result) {
-                    target.each(dbSelect => {
-                        console.log(target);
+                    target.each(index => {
+                        var dbSelect = $(this);
                         dbSelect.empty();
                         for (var i = 0; i < result.data.data.length; i++) {
                             dbSelect.append($('<option/>', {
