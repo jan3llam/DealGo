@@ -7,6 +7,7 @@ use App\Models\gType;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Validator;
@@ -116,7 +117,7 @@ class TenantsController extends Controller
             ->take($per_page)->orderBy($order_field, $order_sort)
             ->with(['user' => function ($q) {
                 $q->withTrashed();
-            }, 'user.city.country', 'goods_types'])->get();
+            }, 'user.city.state.country', 'goods_types'])->get();
 
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
@@ -217,6 +218,8 @@ class TenantsController extends Controller
 
         $item->files = json_encode($filesArr);
         $item->status = 1;
+        $item->verified = 1;
+        $item->secret = Str::random(40);
 
         $item->save();
 
@@ -224,6 +227,19 @@ class TenantsController extends Controller
         foreach ($gtypes as $type) {
             $tenant->goods_types()->attach($type);
         }
+
+        $data = [
+            'username' => $item->email,
+            'secret' => $item->secret,
+            'email' => $item->email,
+            'first_name' => $item->contact_name,
+            'last_name' => '',
+            'custom_json' => 'none',
+        ];
+
+        Http::withHeaders([
+            'PRIVATE-KEY' => env('CHATENGINE_PROJECT_KEY'),
+        ])->post('https://api.chatengine.io/users/', $data);
 
         return response()->success();
     }

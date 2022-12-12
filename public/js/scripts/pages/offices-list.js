@@ -122,6 +122,13 @@ $(function () {
                         return data ? data : '-';
                     }
                 },
+
+                {
+                    targets: 4,
+                    render: function (data, type, full, meta) {
+                        return data ? data.name + data.state.name : '-';
+                    }
+                },
                 {
                     // Actions
                     targets: -1,

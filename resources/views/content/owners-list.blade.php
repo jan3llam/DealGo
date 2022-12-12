@@ -145,7 +145,6 @@
                                     @endforeach
                                 </select>
                             </div>
-
                             <div class="mb-1">
                                 <input type="hidden" value="" id="province_id">
                                 <label class="form-label" for="province">{{__('locale.State')}}</label>

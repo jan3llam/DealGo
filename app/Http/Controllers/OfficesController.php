@@ -6,6 +6,7 @@ use App\Models\Country;
 use App\Models\Office;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Validator;
@@ -216,8 +217,24 @@ class OfficesController extends Controller
 
         $item->files = json_encode($filesArr);
         $item->status = 1;
+        $item->verified = 1;
+        $item->secret = Str::random(40);
 
         $item->save();
+
+
+        $data = [
+            'username' => $item->email,
+            'secret' => $item->secret,
+            'email' => $item->email,
+            'first_name' => $item->contact_name,
+            'last_name' => '',
+            'custom_json' => 'none',
+        ];
+
+        Http::withHeaders([
+            'PRIVATE-KEY' => env('CHATENGINE_PROJECT_KEY'),
+        ])->post('https://api.chatengine.io/users/', $data);
 
         return response()->success();
     }

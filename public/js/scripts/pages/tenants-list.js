@@ -65,7 +65,7 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'user.full_name'},
-                {data: 'user.city.name'},
+                {data: 'user.city'},
                 {data: 'user.contact_name'},
                 {data: 'user.phone'},
                 {data: 'user.email'},
@@ -120,6 +120,12 @@ $(function () {
                     targets: 3,
                     render: function (data, type, full, meta) {
                         return data ? data : '-';
+                    }
+                },
+                {
+                    targets: 4,
+                    render: function (data, type, full, meta) {
+                        return data ? data.name + data.state.name : '-';
                     }
                 },
                 {

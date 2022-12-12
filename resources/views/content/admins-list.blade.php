@@ -119,6 +119,14 @@
                                 </select>
                             </div>
                             <div class="mb-1">
+                                <input type="hidden" value="" id="province_id">
+                                <label class="form-label" for="province">{{__('locale.State')}}</label>
+                                <select type="text" class="form-control dt-full-name select2" id="province"
+                                        name="province">
+                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
+                                </select>
+                            </div>
+                            <div class="mb-1">
                                 <input type="hidden" value="" id="city_id">
                                 <label class="form-label" for="city">{{__('locale.City')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="city"
@@ -253,34 +261,70 @@
     <script>
         $('#country').on("change.select2", function () {
             var $element = $(this);
-            var target = $element.parents('form').find('select#city');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/api/admin/cities/list/' + $element.find("option:selected").val(),
-                type: 'GET',
-                cache: false,
-                contentType: 'application/json',
-                dataType: "json",
-                success: function (result) {
-                    var dbSelect = target;
-                    dbSelect.empty();
-                    for (var i = 0; i < result.data.length; i++) {
-                        dbSelect.append($('<option/>', {
-                            value: result.data[i].id,
-                            text: result.data[i].name
-                        }));
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
-            });
+            var target = $element.parents('form').find('select#province');
+            if ($element.find("option:selected").val()) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: '/api/admin/states/list/' + $element.find("option:selected").val(),
+                    type: 'GET',
+                    cache: false,
+                    contentType: 'application/json',
+                    dataType: "json",
+                    success: function (result) {
+                        var dbSelect = target;
+                        dbSelect.empty();
+                        for (var i = 0; i < result.data.length; i++) {
+                            dbSelect.append($('<option/>', {
+                                value: result.data[i].id,
+                                text: result.data[i].name
+                            }));
+                        }
 
-            if ($('#city_id').val()) {
-                target.val($('#city_id').val());
-                target.trigger('change');
+                        if ($('#province_id').val()) {
+                            target.val(target.find('option:contains(' + $('#province_id').val() + ')').val());
+                            target.trigger('change');
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(thrownError);
+                    }
+                });
+            }
+        });
+        $('#province').on("change.select2", function () {
+            var $element = $(this);
+            var target = $element.parents('form').find('select#city');
+            if ($element.find("option:selected").val()) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: '/api/admin/cities/list?s=' + $element.find("option:selected").val(),
+                    type: 'GET',
+                    cache: false,
+                    contentType: 'application/json',
+                    dataType: "json",
+                    success: function (result) {
+                        var dbSelect = target;
+                        dbSelect.empty();
+                        for (var i = 0; i < result.data.length; i++) {
+                            dbSelect.append($('<option/>', {
+                                value: result.data[i].id,
+                                text: result.data[i].name
+                            }));
+                        }
+
+                        if ($('#city_id').val()) {
+                            target.val($('#city_id').val());
+                            target.trigger('change');
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(thrownError);
+                    }
+                });
             }
         });
     </script>
