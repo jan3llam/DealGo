@@ -363,7 +363,7 @@
                 contentType: 'application/json',
                 dataType: "json",
                 success: function (result) {
-                    target.forEach(dbSelect => {
+                    result.forEach(dbSelect => {
                         dbSelect.empty();
                         for (var i = 0; i < result.data.data.length; i++) {
                             dbSelect.append($('<option/>', {

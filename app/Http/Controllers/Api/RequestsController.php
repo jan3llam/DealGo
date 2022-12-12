@@ -167,7 +167,6 @@ class RequestsController extends Controller
             'port_from' => 'required',
             'port_to' => 'required',
             'name' => 'required|string',
-            'matrix' => 'required|array'
         ]);
 
         if ($validator->fails()) {
