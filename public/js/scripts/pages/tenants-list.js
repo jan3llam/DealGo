@@ -655,7 +655,7 @@ $(function () {
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
         $('#province_id').val(data.province);
-        $('#country').val(data.city.country.id).trigger('change.select2');
+        $('#country').val(data.city.state.country.id).trigger('change.select2');
         $('#edit-legal').html('<a target="_blank" href="' + assetPath + 'images/' + data.legal_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#edit-license').html('<a target="_blank" href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#edit-company').html('<a target="_blank" href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
@@ -704,7 +704,7 @@ $(function () {
         $('#view-commercial').html(data.commercial_number);
         $('#view-email').html(data.email);
         $('#view-phone').html(data.phone);
-        $('#view-country').html(data.city.country.name).trigger('change.select2');
+        $('#view-country').html(data.city.state.country.name).trigger('change.select2');
         $('#view-city').html(data.city.name);
         $('#view-province').html(data.province);
         $('#view-address-1').html(data.address_1);

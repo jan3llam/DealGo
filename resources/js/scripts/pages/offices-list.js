@@ -643,7 +643,7 @@ $(function () {
         $('#view-commercial').html(data.commercial_number);
         $('#view-email').html(data.email);
         $('#view-phone').html(data.phone);
-        $('#view-country').html(data.city.country.name).trigger('change.select2');
+        $('#view-country').html(data.city.state.country.name).trigger('change.select2');
         $('#view-city').html(data.city.name);
         $('#view-province').html(data.province);
         $('#view-address-1').html(data.address_1);
@@ -683,7 +683,7 @@ $(function () {
         });
         $('#email').val(data.email);
         $('#phone').val(data.phone);
-        $('#country').val(data.city.country.id).trigger('change.select2');
+        $('#country').val(data.city.state.country.id).trigger('change.select2');
         $('#city_id').val(data.city.id);
         $('#province_id').val(data.province);
         $('#address_1').val(data.address_1);
