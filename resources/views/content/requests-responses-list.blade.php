@@ -364,7 +364,7 @@
                 dataType: "json",
                 success: function (result) {
                     target.each((index, dbSelect) => {
-                        dbSelect.empty();
+                        $(dbSelect).empty();
                         for (var i = 0; i < result.data.data.length; i++) {
                             dbSelect.append($('<option/>', {
                                 value: result.data.data[i].id,
