@@ -126,7 +126,7 @@ $(function () {
                 {
                     targets: 4,
                     render: function (data, type, full, meta) {
-                        return data ? data.name + data.state.name : '-';
+                        return data ? data.name + ' - ' + data.state.name : '-';
                     }
                 },
                 {
