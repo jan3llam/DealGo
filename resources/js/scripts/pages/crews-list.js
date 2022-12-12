@@ -72,7 +72,7 @@ $(function () {
                 {data: 'first_name'},
                 {data: 'phone'},
                 {data: 'email'},
-                {data: 'city.country.name', orderable: false},
+                {data: 'city.state.country.name', orderable: false},
                 {data: 'city.name', orderable: false},
                 {data: 'job_title'},
                 {data: 'status'},

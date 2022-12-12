@@ -72,7 +72,7 @@ $(function () {
                 {data: 'first_name'},
                 {data: 'phone'},
                 {data: 'email'},
-                {data: 'city.country.name', orderable: false},
+                {data: 'city.state.country.name', orderable: false},
                 {data: 'city.name', orderable: false},
                 {data: 'job_title'},
                 {data: 'status'},
@@ -375,7 +375,7 @@ $(function () {
 
         $("#file").fileinput({'showUpload': false, 'previewFileType': 'any', 'language': $('html').attr('lang')});
 
-        $('#country,#city,#vessel').select2({dropdownParent: newSidebar});
+        $('#country,#province,#city,#vessel').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             e.preventDefault();
