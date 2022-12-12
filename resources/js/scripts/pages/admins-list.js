@@ -358,7 +358,7 @@ $(function () {
         $("#files").fileinput({'showUpload': false, 'previewFileType': 'any'});
         $("#image").fileinput({'showUpload': false, 'previewFileType': 'any'});
 
-        $('#country,#city,#role').select2({dropdownParent: newSidebar});
+        $('#country,#city,#province,#role').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             e.preventDefault();
