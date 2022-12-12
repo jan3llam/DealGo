@@ -621,6 +621,7 @@ $(function () {
         newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         });
+        $('#province,#city,#country').val('').trigger('change.select2');
         $("#files").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
         $("#image").fileinput('destroy').fileinput({'showUpload': false, 'previewFileType': 'any'});
     });

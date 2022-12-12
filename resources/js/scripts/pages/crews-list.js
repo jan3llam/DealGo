@@ -629,8 +629,9 @@ $(function () {
             $(this).val('');
         })
         $('#vessel').val($('#vessel_id').val()).trigger('change.select2')
-        $('#country').val().trigger('change.select2');
-        $('#city').val().trigger('change.select2');
+        $('#country').val('').trigger('change.select2');
+        $('#province').val('').trigger('change.select2');
+        $('#city').val('').trigger('change.select2');
         $("#file").fileinput('destroy').fileinput({
             'showUpload': false,
             'previewFileType': 'any',
