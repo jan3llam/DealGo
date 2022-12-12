@@ -370,8 +370,8 @@
                                 value: result.data.data[i].id,
                                 text: result.data.data[i].name
                             }));
-                            $(dbSelect).trigger('change.select2');
                         }
+                        $(dbSelect).trigger('change.select2');
                     })
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
