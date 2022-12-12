@@ -10,11 +10,10 @@ class City extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $appends = [
         'name',
     ];
-
-    public $timestamps = false;
 
     public function getNameAttribute()
     {
@@ -24,5 +23,10 @@ class City extends Model
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
     }
 }
