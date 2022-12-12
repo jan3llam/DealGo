@@ -139,6 +139,7 @@ class AdminsController extends Controller
         $item->phone = $params['phone'];
         $item->address = $params['address'];
         $item->city_id = $params['city'];
+        $item->province = $params['province'];
         $item->password = bcrypt($params['password']);
         $item->status = 1;
 
@@ -199,6 +200,7 @@ class AdminsController extends Controller
             $item->email = $params['email'];
             $item->dealgo_id = $params['dealgo_id'];
             $item->phone = $params['phone'];
+            $item->province = $params['province'];
             $item->address = $params['address'];
             $item->city_id = $params['city'];
 

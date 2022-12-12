@@ -171,6 +171,7 @@ class CrewsController extends Controller
         $item->last_name = $params['last_name'];
         $item->city_id = $params['city'];
         $item->job_title = $params['job'];;
+        $item->province = $params['province'];
         $item->dob = Carbon::parse($params['birth'])->toDateTimeString();
         $item->address = $params['address'];
 
@@ -238,6 +239,7 @@ class CrewsController extends Controller
         $item->last_name = $params['last_name'];
         $item->city_id = $params['city'];
         $item->job_title = $params['job'];
+        $item->province = $params['province'];
         $item->dob = Carbon::parse($params['birth'])->toDateTimeString();
         $item->address = $params['address'];
 
