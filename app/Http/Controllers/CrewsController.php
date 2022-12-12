@@ -119,7 +119,7 @@ class CrewsController extends Controller
 
         $data['data'] = $query->skip($page)
             ->take($per_page)->orderBy($order_field, $order_sort)
-            ->with(['city.country'])->get();
+            ->with(['city.state.country'])->get();
 
 
         $data['meta']['draw'] = $request->input('draw');
