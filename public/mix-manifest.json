@@ -120,8 +120,8 @@
     "/js/scripts/pages/modal-edit-user.js": "/js/scripts/pages/modal-edit-user.js?id=cc7894a739960817a12e",
     "/js/scripts/pages/offers-list.js": "/js/scripts/pages/offers-list.js?id=d6912712de817f406b06",
     "/js/scripts/pages/offers-responses-list.js": "/js/scripts/pages/offers-responses-list.js?id=12ed62a1d8b7dbf08b2d",
-    "/js/scripts/pages/offices-list.js": "/js/scripts/pages/offices-list.js?id=936833a20a5ef015b4f0",
-    "/js/scripts/pages/owners-list.js": "/js/scripts/pages/owners-list.js?id=b12af7b3010375375d1e",
+    "/js/scripts/pages/offices-list.js": "/js/scripts/pages/offices-list.js?id=a3cb0276696de23ee3b8",
+    "/js/scripts/pages/owners-list.js": "/js/scripts/pages/owners-list.js?id=0dd716de68e4c309ea7c",
     "/js/scripts/pages/ports-list.js": "/js/scripts/pages/ports-list.js?id=c5351a94ebf5b37f1311",
     "/js/scripts/pages/posts-list.js": "/js/scripts/pages/posts-list.js?id=828f0e8a06aaa81cf12a",
     "/js/scripts/pages/requests-list.js": "/js/scripts/pages/requests-list.js?id=aff28e6cdf5146d54142",
@@ -131,7 +131,7 @@
     "/js/scripts/pages/settings-view.js": "/js/scripts/pages/settings-view.js?id=289634208eb05f8941ae",
     "/js/scripts/pages/shipments-list.js": "/js/scripts/pages/shipments-list.js?id=951d6d36c365e9339308",
     "/js/scripts/pages/slider-list.js": "/js/scripts/pages/slider-list.js?id=bd5fd53b793308dde23f",
-    "/js/scripts/pages/tenants-list.js": "/js/scripts/pages/tenants-list.js?id=0fb0b47d3ffa4b1454e0",
+    "/js/scripts/pages/tenants-list.js": "/js/scripts/pages/tenants-list.js?id=eb523d55576dfd3fe674",
     "/js/scripts/pages/ticket-view.js": "/js/scripts/pages/ticket-view.js?id=e72766798453e6a7f37f",
     "/js/scripts/pages/tickets-list.js": "/js/scripts/pages/tickets-list.js?id=57e2f337a624fe0e7727",
     "/js/scripts/pages/vessels_types-list.js": "/js/scripts/pages/vessels_types-list.js?id=2d455c31da1f84d60b1b",
@@ -628,7 +628,7 @@
     "/css-rtl/base/themes/bordered-layout.css": "/css-rtl/base/themes/bordered-layout.css?id=79bac8a38b0f2784ca06",
     "/css-rtl/base/themes/dark-layout.css": "/css-rtl/base/themes/dark-layout.css?id=c79952fb1b6fa620cd46",
     "/css-rtl/base/themes/semi-dark-layout.css": "/css-rtl/base/themes/semi-dark-layout.css?id=37f53ef7f392809d233c",
-    "/css-rtl/core.css": "/css-rtl/core.css?id=d41d8cd98f00b204e980",
+    "/css-rtl/core.css": "/css-rtl/core.css?id=6d8a3408e0f1b69c4b54",
     "/css-rtl/overrides.css": "/css-rtl/overrides.css?id=d8d935406ecad1cd688e",
     "/css-rtl/style.css": "/css-rtl/style.css?id=a88a62d2ee47e4374dcd"
 }

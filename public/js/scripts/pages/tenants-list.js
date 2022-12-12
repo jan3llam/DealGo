@@ -336,7 +336,7 @@ $(function () {
                     required: function (element) {
                         return parseInt($("#form_status").val()) === 1;
                     },
-                    minlength: 8
+                    minlength: 6
                 },
                 'legal': {
                     required: function (element) {
