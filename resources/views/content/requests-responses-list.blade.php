@@ -363,7 +363,7 @@
                 contentType: 'application/json',
                 dataType: "json",
                 success: function (result) {
-                    target.forEach(dbSelect => {
+                    target.each(dbSelect => {
                         console.log(target);
                         dbSelect.empty();
                         for (var i = 0; i < result.data.data.length; i++) {
