@@ -253,6 +253,25 @@
                     alert(thrownError);
                 }
             });
-        })
+        });
+        $('#port_from').select2({
+            ajax: {
+                url: '/api/admin/ports/list',
+                data: function (params) {
+                    console.log(params);
+                    var query = {
+                        search: params.term,
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    console.log(data);
+                    return {
+                        results: data.data
+                    };
+                }
+            }
+        });
     </script>
 @endsection
