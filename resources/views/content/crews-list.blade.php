@@ -279,11 +279,11 @@
                                 text: result.data[i].name
                             }));
                         }
-
+                        target.val(undefined);
                         if ($('#province_id').val()) {
                             target.val(target.find('option:contains(' + $('#province_id').val() + ')').val());
-                            target.trigger('change');
                         }
+                        target.trigger('change');
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         alert(thrownError);
@@ -313,11 +313,11 @@
                                 text: result.data[i].name
                             }));
                         }
-
+                        target.val(undefined);
                         if ($('#city_id').val()) {
                             target.val($('#city_id').val());
-                            target.trigger('change');
                         }
+                        target.trigger('change');
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         alert(thrownError);
