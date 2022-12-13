@@ -272,10 +272,10 @@
                     return query;
                 },
                 processResults: function (data, params) {
-                    console.log(params, data.data.meta.total, (params.page * 10) < data.data.meta.total);
+                    params.page = params.page || 1;
                     return {
                         results: $.map(data.data.data, function (obj) {
-                            obj.text = obj.name_translation;
+                            obj.text = obj.name_translation + ' - ' + obj.city.country.name;
                             return obj;
                         }),
                         pagination: {
