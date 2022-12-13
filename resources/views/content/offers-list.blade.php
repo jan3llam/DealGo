@@ -270,9 +270,8 @@
                 },
                 processResults: function (data) {
                     // Transforms the top-level key of the response object from 'items' to 'results'
-                    console.log(data);
                     return {
-                        results: data.data
+                        results: data.data.data
                     };
                 }
             }
