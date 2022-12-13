@@ -80,7 +80,7 @@ class PortsController extends Controller
             $query->whereHas('offers', function ($qu) {
                 $qu->where('approved', 0);
             })->with(['offers' => function ($q) {
-                $q->where('approved', 0)->with(['vessel.type.goods_types', 'offers.vessel.owner.user']);
+                $q->where('approved', 0)->with(['vessel.type.goods_types', 'vessel.owner.user']);
             }]);
             if ($date_from) {
                 $query->whereHas('offers', function ($q) use ($date_from) {
@@ -118,7 +118,7 @@ class PortsController extends Controller
             })->with(['requests' => function ($q) {
                 $q->where('approved', 0)->with(['port_to', 'tenant.user', 'routes', 'goods_types']);
             }, 'offers' => function ($q) {
-                $q->where('approved', 0)->with(['vessel.type.goods_types', 'offers.vessel.owner.user']);
+                $q->where('approved', 0)->with(['vessel.type.goods_types', 'vessel.owner.user']);
             }]);
 
             if ($date_from) {
