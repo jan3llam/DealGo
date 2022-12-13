@@ -100,10 +100,6 @@
                                 <label class="form-label" for="port_from">{{__('locale.ShipmentOrigin')}}</label>
                                 <select class="form-control dt-full-name select2" id="port_from"
                                         name="port_from">
-                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
-                                    @foreach($ports as $port)
-                                        <option value="{{$port->id}}">{{$port->name}}</option>
-                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
@@ -225,65 +221,4 @@
 @section('page-script')
     {{-- Page js files --}}
     <script src="{{ asset(mix('js/scripts/pages/offers-list.js')) }}"></script>
-    <script>
-        $('#owner').on("change.select2", function () {
-            var $element = $(this);
-            var target = $element.parents('form').find('select#vessel');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
-                },
-                url: '/api/admin/vessels/list?owner=' + $element.find("option:selected").val(),
-                type: 'GET',
-                cache: false,
-                contentType: 'application/json',
-                dataType: "json",
-                success: function (result) {
-                    var dbSelect = target;
-                    dbSelect.empty();
-                    for (var i = 0; i < result.data.data.length; i++) {
-                        dbSelect.append($('<option/>', {
-                            value: result.data.data[i].id,
-                            text: result.data.data[i].name
-                        }));
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
-            });
-        });
-        $('#port_from').select2({
-            minimumInputLength: 3,
-            dropdownParent: $('.new-offer-modal'),
-            ajax: {
-                delay: 250,
-                url: '/api/admin/ports/list',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
-                },
-                data: function (params) {
-                    var query = {
-                        search: params.term,
-                        page: params.page || 1
-                    }
-                    return query;
-                },
-                processResults: function (data, params) {
-                    params.page = params.page || 1;
-                    return {
-                        results: $.map(data.data.data, function (obj) {
-                            obj.text = obj.name_translation + ' - ' + obj.city.country.name;
-                            return obj;
-                        }),
-                        pagination: {
-                            more: (params.page * 10) < data.data.meta.total
-                        }
-                    };
-                }
-            }
-        });
-    </script>
 @endsection

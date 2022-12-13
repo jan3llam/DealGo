@@ -303,7 +303,68 @@ $(function () {
                     required: true
                 }
             }
-        })
+        });
+
+        $('#port_from').select2({
+            minimumInputLength: 3,
+            dropdownParent: newSidebar,
+            ajax: {
+                delay: 250,
+                url: assetPath + 'api/admin/ports/list',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                },
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                        page: params.page || 1
+                    }
+                    return query;
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: $.map(data.data.data, function (obj) {
+                            obj.text = obj.name_translation + ' - ' + obj.city.country.name;
+                            return obj;
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < data.data.meta.total
+                        }
+                    };
+                }
+            }
+        });
+
+        $('#owner').on("change.select2", function () {
+            var $element = $(this);
+            var target = $element.parents('form').find('select#vessel');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                },
+                url: assetPath + 'api/admin/vessels/list?owner=' + $element.find("option:selected").val(),
+                type: 'GET',
+                cache: false,
+                contentType: 'application/json',
+                dataType: "json",
+                success: function (result) {
+                    var dbSelect = target;
+                    dbSelect.empty();
+                    for (var i = 0; i < result.data.data.length; i++) {
+                        dbSelect.append($('<option/>', {
+                            value: result.data.data[i].id,
+                            text: result.data.data[i].name
+                        }));
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+        });
 
         $('#vessel,#owner').select2({dropdownParent: newSidebar});
 

@@ -95,20 +95,12 @@
                                 <label class="form-label" for="port_from">{{__('locale.ShipmentOrigin')}}</label>
                                 <select class="form-control dt-full-name select2" id="port_from"
                                         name="port_from">
-                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
-                                    @foreach($ports as $port)
-                                        <option value="{{$port->id}}">{{$port->name}}</option>
-                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="port_to">{{__('locale.ShipmentDestination')}}</label>
                                 <select class="form-control dt-full-name select2" id="port_to"
                                         name="port_to">
-                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
-                                    @foreach($ports as $port)
-                                        <option value="{{$port->id}}">{{$port->name}}</option>
-                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
@@ -129,11 +121,6 @@
                                             <div class="input-group">
                                                 <select class="form-control dt-full-name routes-select2"
                                                         name="route">
-                                                    <option value="" disabled
-                                                            selected>{{__('locale.KindlyChoose')}}</option>
-                                                    @foreach($ports as $port)
-                                                        <option value="{{$port->id}}">{{$port->name}}</option>
-                                                    @endforeach
                                                 </select>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-icon btn-danger" type="button"

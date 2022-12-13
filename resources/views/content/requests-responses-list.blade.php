@@ -102,11 +102,6 @@
                                             <div class="input-group">
                                                 <select class="form-control dt-full-name routes-select2"
                                                         name="route">
-                                                    <option value="" disabled
-                                                            selected>{{__('locale.KindlyChoose')}}</option>
-                                                    @foreach($ports as $port)
-                                                        <option value="{{$port->id}}">{{$port->name}}</option>
-                                                    @endforeach
                                                 </select>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-icon btn-danger" type="button"
@@ -348,36 +343,4 @@
 @section('page-script')
     {{-- Page js files --}}
     <script src="{{ asset(mix('js/scripts/pages/requests-responses-list.js')) }}"></script>
-    <script>
-        $('#owner').on("change.select2", function () {
-            var $element = $(this);
-            var target = $element.parents('form').find('select.vessels-select2');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
-                },
-                url: '/api/admin/vessels/list?owner=' + $element.find("option:selected").val(),
-                type: 'GET',
-                cache: false,
-                contentType: 'application/json',
-                dataType: "json",
-                success: function (result) {
-                    target.each((index, dbSelect) => {
-                        $(dbSelect).empty();
-                        for (var i = 0; i < result.data.data.length; i++) {
-                            $(dbSelect).append($('<option/>', {
-                                value: result.data.data[i].id,
-                                text: result.data.data[i].name
-                            }));
-                        }
-                        $(dbSelect).trigger('change.select2');
-                    })
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
-            });
-        })
-    </script>
 @endsection

@@ -210,21 +210,33 @@ $(function () {
             initEmpty: true, show: function () {
                 $(this).slideDown(function () {
                     $(this).find('.routes-select2').select2({
-                        dropdownParent: newSidebar, ajax: {
-                            url: assetPath + 'api/admin/ports/list', dataType: 'json', headers: {
+                        minimumInputLength: 3,
+                        dropdownParent: newSidebar,
+                        ajax: {
+                            delay: 250,
+                            url: assetPath + 'api/admin/ports/list',
+                            headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                                Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
-                            }, data: function (params) {
-                                return {
-                                    search: params.term, start: params.page || 0
+                                'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                            },
+                            data: function (params) {
+                                var query = {
+                                    search: params.term,
+                                    page: params.page || 1
                                 }
-                            }, processResults: function (data) {
-                                data = data.data.data.map(function (item) {
-                                    return {
-                                        id: item.id, text: item.name_translation,
-                                    };
-                                });
-                                return {results: data};
+                                return query;
+                            },
+                            processResults: function (data, params) {
+                                params.page = params.page || 1;
+                                return {
+                                    results: $.map(data.data.data, function (obj) {
+                                        obj.text = obj.name_translation + ' - ' + obj.city.country.name;
+                                        return obj;
+                                    }),
+                                    pagination: {
+                                        more: (params.page * 10) < data.data.meta.total
+                                    }
+                                };
                             }
                         }
                     });
@@ -289,23 +301,34 @@ $(function () {
             }
         })
 
-
         $('#port_from,#port_to').select2({
-            dropdownParent: newSidebar, ajax: {
-                url: assetPath + 'api/admin/ports/list', dataType: 'json', headers: {
+            minimumInputLength: 3,
+            dropdownParent: newSidebar,
+            ajax: {
+                delay: 250,
+                url: assetPath + 'api/admin/ports/list',
+                headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    Authorization: 'Bearer ' + $('meta[name="api-token"]').attr('content')
-                }, data: function (params) {
-                    return {
-                        search: params.term, start: params.page || 0
+                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                },
+                data: function (params) {
+                    var query = {
+                        search: params.term,
+                        page: params.page || 1
                     }
-                }, processResults: function (data) {
-                    data = data.data.data.map(function (item) {
-                        return {
-                            id: item.id, text: item.name_translation,
-                        };
-                    });
-                    return {results: data};
+                    return query;
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: $.map(data.data.data, function (obj) {
+                            obj.text = obj.name_translation + ' - ' + obj.city.country.name;
+                            return obj;
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < data.data.meta.total
+                        }
+                    };
                 }
             }
         });

@@ -31,13 +31,11 @@ class OffersController extends Controller
 
         $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();
         $vessels = Vessel::where('status', 1)->get();
-        $ports = Port::all();
 
         return view('content.offers-list', [
             'breadcrumbs' => $breadcrumbs,
             'owners' => $owners,
-            'vessels' => $vessels,
-            'ports' => $ports,
+            'vessels' => $vessels
         ]);
     }
 

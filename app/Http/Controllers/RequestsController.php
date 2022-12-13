@@ -32,15 +32,13 @@ class RequestsController extends Controller
 
         $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();
         $tenants = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->get();
-        $ports = Port::all();
         $types = gType::all();
 
         return view('content.requests-list', [
             'breadcrumbs' => $breadcrumbs,
             'types' => $types,
             'owners' => $owners,
-            'tenants' => $tenants,
-            'ports' => $ports
+            'tenants' => $tenants
         ]);
     }
 
