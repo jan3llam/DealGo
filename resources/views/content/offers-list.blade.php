@@ -256,6 +256,7 @@
         });
         $('#port_from').select2({
             minimumInputLength: 3,
+            dropdownParent: $('.new-offer-modal'),
             ajax: {
                 delay: 250,
                 url: '/api/admin/ports/list',
