@@ -79,7 +79,9 @@ class PortsController extends Controller
         if ($user instanceof Tenant) {
             $query->whereHas('offers', function ($qu) {
                 $qu->where('approved', 0);
-            })->with(['offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
+            })->with(['offers' => function ($q) {
+                $q->where('approved', 0)->with(['vessel.type.goods_types', 'offers.vessel.owner.user']);
+            }]);
             if ($date_from) {
                 $query->whereHas('offers', function ($q) use ($date_from) {
                     $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
@@ -93,7 +95,9 @@ class PortsController extends Controller
         } elseif ($user instanceof Owner) {
             $query->whereHas('requests', function ($qu) {
                 $qu->where('approved', 0);
-            })->with(['requests.port_to', 'requests.tenant.user', 'requests.routes', 'requests.goods_types']);
+            })->with(['requests' => function ($q) {
+                $q->where('approved', 0)->with(['port_to', 'tenant.user', 'routes', 'goods_types']);
+            }]);
             if ($date_from) {
                 $query->whereHas('requests', function ($q) use ($date_from) {
                     $q->where('date_from', '<=', $date_from)->where('date_to', '>=', $date_from);
@@ -106,13 +110,16 @@ class PortsController extends Controller
             }
         } else {
             $query->where(function ($q) {
-                $q->whereHas('requests', function ($qu) {
+                $q->orWhereHas('requests', function ($qu) {
                     $qu->where('approved', 0);
-                })->whereHas('offers', function ($qu) {
+                })->orWhereHas('offers', function ($qu) {
                     $qu->where('approved', 0);
                 });
-            })->with(['requests.port_to', 'requests.tenant.user',
-                'requests.routes', 'requests.goods_types', 'offers.vessel.type.goods_types', 'offers.vessel.owner.user']);
+            })->with(['requests' => function ($q) {
+                $q->where('approved', 0)->with(['port_to', 'tenant.user', 'routes', 'goods_types']);
+            }, 'offers' => function ($q) {
+                $q->where('approved', 0)->with(['vessel.type.goods_types', 'offers.vessel.owner.user']);
+            }]);
 
             if ($date_from) {
                 $query->whereHas('requests', function ($q) use ($date_from) {
