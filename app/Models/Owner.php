@@ -15,6 +15,11 @@ class Owner extends Model
         return $this->hasMany(Vessel::class);
     }
 
+    public function rated()
+    {
+        return $this->hasMany(Rate::class);
+    }
+
     public function city()
     {
         return $this->belongsTo(City::class);
