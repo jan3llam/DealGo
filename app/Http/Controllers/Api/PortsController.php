@@ -106,9 +106,9 @@ class PortsController extends Controller
             }
         } else {
             $query->where(function ($q) {
-                $q->orWhereHas('requests', function ($qu) {
+                $q->whereHas('requests', function ($qu) {
                     $qu->where('approved', 0);
-                })->orWhereHas('offers', function ($qu) {
+                })->whereHas('offers', function ($qu) {
                     $qu->where('approved', 0);
                 });
             })->with(['requests.port_to', 'requests.tenant.user',
