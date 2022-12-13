@@ -278,7 +278,7 @@
                             return obj;
                         }),
                         pagination: {
-                            more: (params.page * 10) < data.meta.total
+                            more: (params.page * 10) < data.data.meta.total
                         }
                     };
                 }
