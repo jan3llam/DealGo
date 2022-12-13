@@ -255,6 +255,7 @@
             });
         });
         $('#port_from').select2({
+            minimumInputLength: 3,
             ajax: {
                 delay: 250,
                 url: '/api/admin/ports/list',
@@ -263,7 +264,6 @@
                     'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
                 },
                 data: function (params) {
-                    console.log(params);
                     var query = {
                         search: params.term,
                         page: params.page || 1
@@ -271,7 +271,7 @@
                     return query;
                 },
                 processResults: function (data, params) {
-                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    console.log(params, data.data.meta.total, (params.page * 10) < data.data.meta.total);
                     return {
                         results: $.map(data.data.data, function (obj) {
                             obj.text = obj.name_translation;
