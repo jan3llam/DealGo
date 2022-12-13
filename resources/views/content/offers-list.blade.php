@@ -256,6 +256,7 @@
         });
         $('#port_from').select2({
             ajax: {
+                delay: 250,
                 url: '/api/admin/ports/list',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -265,13 +266,20 @@
                     console.log(params);
                     var query = {
                         search: params.term,
+                        page: params.page || 1
                     }
                     return query;
                 },
-                processResults: function (data) {
+                processResults: function (data, params) {
                     // Transforms the top-level key of the response object from 'items' to 'results'
                     return {
-                        results: data.data.data
+                        results: $.map(data.data.data, function (obj) {
+                            obj.text = obj.name_translation;
+                            return obj;
+                        }),
+                        pagination: {
+                            more: (params.page * 10) < data.meta.total
+                        }
                     };
                 }
             }
