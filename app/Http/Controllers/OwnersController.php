@@ -371,6 +371,8 @@ class OwnersController extends Controller
         if ($item) {
 
             if ($item->user()->withTrashed()->first()->status === 0 && $item->deleted_at !== null) {
+                $item_user = $item->user()->withTrashed()->first();
+                $item_user->restore();
                 $item->restore();
             }
             $item = $item->user()->withTrashed()->first();
