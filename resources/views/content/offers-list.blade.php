@@ -85,10 +85,6 @@
                                 <label class="form-label" for="vessel">{{__('locale.Vessel')}}</label>
                                 <select type="text" class="form-control dt-full-name select2" id="vessel"
                                         name="vessel">
-                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
-                                    @foreach($vessels as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-1">
