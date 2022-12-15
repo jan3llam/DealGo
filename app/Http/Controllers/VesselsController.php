@@ -164,17 +164,17 @@ class VesselsController extends Controller
 
         if (isset($request->owner) && $request->owner && $available) {
             $vessels = [];
-            $contracts = Contract::where('owner_id', $request->owner)->get()->each(function ($contract) use ($vessels) {
+            Contract::where('owner_id', $request->owner)->get()->each(function ($contract) use ($vessels) {
                 if ($contract->origin->parent instanceof Offer) {
                     array_push($vessels, $contract->origin->parent->vessel->id);
                 } elseif ($contract->origin instanceof RequestResponse) {
                     foreach ($contract->origin->vessels as $vessel) {
-                        dd($vessel);
                         array_push($vessels, $vessel->id);
                     }
 
                 }
             });
+            dd($vessels);
             $query->whereNotIn('id', $vessels);
         }
 
