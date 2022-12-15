@@ -370,7 +370,7 @@ class OwnersController extends Controller
         $item = Owner::withTrashed()->where('id', $id)->first();
         if ($item) {
 
-            if ($item->user->status === 0 && $item->deleted_at !== null) {
+            if ($item->user()->withTrashed()->status === 0 && $item->deleted_at !== null) {
                 $item->restore();
             }
             $item = $item->user;
