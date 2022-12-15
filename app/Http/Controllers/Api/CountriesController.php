@@ -104,24 +104,25 @@ class CountriesController extends Controller
             if ($index) {
 
                 $country = Country::where(DB::raw('LOWER(name_en)'), 'like', rtrim(ltrim(strtolower($item[0]))))->first();
-
-                $city = City::where('country_id', $country->id)->first();
-                if (!$city) {
-                    continue;
+                if ($country) {
+                    $city = City::where('country_id', $country->id)->first();
+                    if (!$city) {
+                        continue;
 //                    dd($country, rtrim(ltrim(strtolower($item[0]))));
-                } else {
-                    $port = Port::where(DB::raw('LOWER(name)'), 'like', '%' . rtrim(ltrim(strtolower($item[1]))) . '%')->where('city_id', $city->id)->first();
+                    } else {
+                        $port = Port::where(DB::raw('LOWER(name)'), 'like', '%' . rtrim(ltrim(strtolower($item[1]))) . '%')->where('city_id', $city->id)->first();
 
-                    if ($port) {
-                        $port = new Port;
-                        $port->city_id = $city->id;
-                        $port->unlocode = $item[2] ? $item[2] : $item[1];
-                        $port->latitude = $item[12] ? str_replace('°', '', rtrim(ltrim($item[12]))) : 0;
-                        $port->longitude = $item[13] ? str_replace('°', '', rtrim(ltrim($item[13]))) : 0;
-                        $port->status = 1;
-                        $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
-                            ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
-                            ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
+                        if ($port) {
+                            $port = new Port;
+                            $port->city_id = $city->id;
+                            $port->unlocode = $item[2] ? $item[2] : $item[1];
+                            $port->latitude = $item[12] ? str_replace('°', '', rtrim(ltrim($item[12]))) : 0;
+                            $port->longitude = $item[13] ? str_replace('°', '', rtrim(ltrim($item[13]))) : 0;
+                            $port->status = 1;
+                            $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
+                                ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
+                                ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
+                        }
                     }
                 }
             }
