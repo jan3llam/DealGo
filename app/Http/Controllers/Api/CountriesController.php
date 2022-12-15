@@ -103,6 +103,62 @@ class CountriesController extends Controller
         foreach ($data as $index => $item) {
             if ($index) {
 
+                $country = Country::where(DB::raw('LOWER(name_en)'), 'like', rtrim(ltrim(strtolower($item[0]))))->first();
+
+                $city = City::where('country_id', $country->id)->first();
+
+                $port = Port::where(DB::raw('LOWER(name)'), 'like', '%' . rtrim(ltrim(strtolower($item[1]))) . '%')->where('city_id', $city->id)->first();
+
+                if ($port) {
+                    $port = new Port;
+                    $port->city_id = $city->id;
+                    $port->unlocode = $item[2] ? $item[2] : $item[1];
+                    $port->latitude = $item[12] ? str_replace('°', '', rtrim(ltrim($item[12]))) : 0;
+                    $port->longitude = $item[13] ? str_replace('°', '', rtrim(ltrim($item[13]))) : 0;
+                    $port->status = 1;
+                    $port->setTranslation('name', 'ar', rtrim(ltrim($item[1])))
+                        ->setTranslation('name', 'tr', rtrim(ltrim($item[1])))
+                        ->setTranslation('name', 'en', rtrim(ltrim($item[1])))->save();
+                }
+            }
+        }
+
+        return response()->success();
+    }
+
+
+    public function test423432()
+    {
+        ini_set('max_execution_time', 0);
+
+//        foreach (User::all() as $item) {
+//
+//            $item->secret = Str::random(40);
+//
+//
+//            $data = [
+//                'username' => $item->email,
+//                'secret' => $item->secret,
+//                'email' => $item->email,
+//                'first_name' => $item->contact_name,
+//                'last_name' => '',
+//                'custom_json' =>'none'
+//            ];
+//
+//            $item->save();
+//
+//            $response = Http::withHeaders([
+//                'PRIVATE-KEY' => env('CHATENGINE_PROJECT_KEY'),
+//            ])->post('https://api.chatengine.io/users/', $data);
+//
+////            dd($response);
+//        }
+//        dd(1);
+
+        $data = array_map('str_getcsv', file('/home/u310033965/domains/dealgo.net/public_html/admin/port.csv'));
+        foreach ($data as $index => $item) {
+            if ($index) {
+
                 $country = Country::where(DB::raw('LOWER(name_en)'), 'like', '%' . rtrim(ltrim(strtolower($item[0]))) . '%')->first();
                 if ($country) {
 
