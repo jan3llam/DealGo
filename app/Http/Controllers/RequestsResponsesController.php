@@ -11,7 +11,6 @@ use App\Models\RequestResponse;
 use App\Models\RequestResponsePayment;
 use App\Models\Shipment;
 use App\Models\User;
-use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -43,15 +42,12 @@ class RequestsResponsesController extends Controller
         $owners = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->get();
 
         $ports = Port::all();
-        $vessels = Vessel::all();
 
         return view('content.requests-responses-list', [
             'breadcrumbs' => $breadcrumbs,
             'requests' => $requests,
             'request' => $request,
-            'owners' => $owners,
-            'ports' => $ports,
-            'vessels' => $vessels,
+            'owners' => $owners
         ]);
     }
 
