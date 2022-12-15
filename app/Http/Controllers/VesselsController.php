@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contract;
 use App\Models\Country;
+use App\Models\Offer;
 use App\Models\Owner;
+use App\Models\RequestResponse;
 use App\Models\User;
 use App\Models\Vessel;
 use App\Models\vType;
@@ -105,6 +108,7 @@ class VesselsController extends Controller
         $page = isset($params['start']) ? $params['start'] : 0;
         $filter_status = isset($params['status']) ? $params['status'] : 1;
         $per_page = isset($params['length']) ? $params['length'] : 10;
+        $available = isset($params['available']) ? $params['available'] : null;
 
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
@@ -156,6 +160,21 @@ class VesselsController extends Controller
 
         if (isset($request->owner) && $request->owner) {
             $query->where('owner_id', $request->owner);
+        }
+
+        if (isset($request->owner) && $request->owner && $available) {
+            $vessels = [];
+            $contracts = Contract::where('owner_id', $request->owner)->get()->each(function ($contract) use ($vessels) {
+                if ($contract->origin->parent instanceof Offer) {
+                    array_push($vessels, $contract->origin->parent->vessel->id);
+                } elseif ($contract->origin instanceof RequestResponse) {
+                    foreach ($contract->origin->vessels as $vessel) {
+                        array_push($vessels, $vessel->id);
+                    }
+
+                }
+            });
+            $query->whereNotIn('id', $vessels);
         }
 
         $total = $query->limit($per_page)->count();
