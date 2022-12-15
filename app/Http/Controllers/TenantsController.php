@@ -353,9 +353,11 @@ class TenantsController extends Controller
         foreach ($request->input('ids', []) as $id) {
             $item = Tenant::withTrashed()->where('id', $id)->first();
             if ($item) {
-                $item->user->status = 0;
+                $item_user = $item->user;
+                $item_user->status = 0;
                 $item->save();
-                $item->user->delete();
+                $item_user->save();
+                $item_user->delete();
                 $item->delete();
             }
         }
@@ -368,9 +370,11 @@ class TenantsController extends Controller
         $item = Tenant::withTrashed()->where('id', $id)->first();
 
         if ($item) {
-            $item->user->status = 0;
+            $item_user = $item->user;
+            $item_user->status = 0;
             $item->save();
-            $item->user->delete();
+            $item_user->save();
+            $item_user->delete();
             $item->delete();
         }
 
