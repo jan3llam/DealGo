@@ -140,11 +140,19 @@
                             <div class="mb-1">
                                 <label class="form-label" for="date_from">{{__('locale.FromDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="date_from"
+                                       @if($offer)
+                                           min="{{\Illuminate\Support\Carbon::parse($offer->date_from)->toDateString()}}"
+                                       max="{{\Illuminate\Support\Carbon::parse($offer->date_to)->toDateString()}}"
+                                       @endif
                                        placeholder="{{__('locale.FromDate')}}" name="date_from"/>
                             </div>
                             <div class="mb-1">
                                 <label class="form-label" for="date_to">{{__('locale.ToDate')}}</label>
                                 <input type="date" class="form-control dt-full-name" id="date_to"
+                                       @if($offer)
+                                           min="{{\Illuminate\Support\Carbon::parse($offer->date_from)->toDateString()}}"
+                                       max="{{\Illuminate\Support\Carbon::parse($offer->date_to)->toDateString()}}"
+                                       @endif
                                        placeholder="{{__('locale.ToDate')}}" name="date_to"/>
                             </div>
                             <div id="goods_container">
