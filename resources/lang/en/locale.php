@@ -12,6 +12,8 @@ return [
     "Administrator" => "Administrator",
     "AdministratorAccess" => "Administrator access",
     "AdministratorAccessMsg" => "Allows a full access to the system",
+    "Latitude" => "Latitude",
+    "Longitude" => "Longitude",
     "Administrators" => "Administrators",
     "Advantage" => "Advantage",
     "Advantages" => "Advantages",

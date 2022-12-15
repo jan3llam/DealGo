@@ -10,6 +10,8 @@ return [
     "AddNewRoleMsg" => "أضف دور جديد، إن لم يكن هناك أدوار",
     "Address" => "العنوان",
     "Administrator" => "المسؤول",
+    "Latitude" => "العرض",
+    "Longitude" => "الطول",
     "AdministratorAccess" => "مدير نظام",
     "AdministratorAccessMsg" => "يمنح جميع الصلاحيات للمستخدم",
     "Administrators" => "المسؤولين",

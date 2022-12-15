@@ -43,6 +43,9 @@
                         <th>{{__('locale.Name')}}</th>
                         <th>{{__('locale.Country')}}</th>
                         <th>{{__('locale.UNLocode')}}</th>
+                        <th>{{__('locale.Latitude')}}</th>
+                        <th>{{__('locale.Longitude')}}</th>
+                        <th>{{__('locale.UNLocode')}}</th>
                         <th>{{__('locale.Status')}}</th>
                         <th>{{__('locale.Actions')}}</th>
                     </tr>
@@ -104,8 +107,8 @@
                                 </select>
                             </div>
                             <div class="mb-1">
-                                <input type="text" class="form-control" readonly name="longitude" id="longitude">
-                                <input type="text" class="form-control" readonly name="latitude" id="latitude">
+                                <input type="text" class="form-control" name="longitude" id="longitude">
+                                <input type="text" class="form-control" name="latitude" id="latitude">
                                 <label class="form-label" for="map">{{__('locale.LocationOnMap')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="google-link"
                                        placeholder="{{__('locale.GoogleLink')}}" name="google-link"/>

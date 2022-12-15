@@ -65,6 +65,8 @@ $(function () {
                 {data: 'id'},
                 {data: 'name_translation'},
                 {data: 'city.country.name'},
+                {data: 'latitude'},
+                {data: 'longitude'},
                 {data: 'unlocode'},
                 {data: 'status'},
                 {data: ''}
@@ -101,7 +103,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 6,
+                    targets: 8,
                     render: function (data, type, full, meta) {
                         var $status = full['status']
                         return (
