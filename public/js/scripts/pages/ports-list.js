@@ -65,9 +65,9 @@ $(function () {
                 {data: 'id'},
                 {data: 'name_translation'},
                 {data: 'city.country.name'},
+                {data: 'unlocode'},
                 {data: 'latitude'},
                 {data: 'longitude'},
-                {data: 'unlocode'},
                 {data: 'status'},
                 {data: ''}
             ],

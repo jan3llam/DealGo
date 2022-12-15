@@ -45,7 +45,6 @@
                         <th>{{__('locale.UNLocode')}}</th>
                         <th>{{__('locale.Latitude')}}</th>
                         <th>{{__('locale.Longitude')}}</th>
-                        <th>{{__('locale.UNLocode')}}</th>
                         <th>{{__('locale.Status')}}</th>
                         <th>{{__('locale.Actions')}}</th>
                     </tr>
