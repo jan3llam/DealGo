@@ -135,6 +135,9 @@ $(function () {
                     title: LANG.Actions,
                     orderable: false,
                     render: function (data, type, full, meta) {
+                        if (full['deleted_at']) {
+                            return '';
+                        }
                         return (
                             '<div class="btn-group">' +
                             '<a class="btn btn-sm dropdown-toggle hide-arrow" data-bs-toggle="dropdown">' +
