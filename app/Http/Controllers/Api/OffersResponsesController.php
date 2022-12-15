@@ -326,7 +326,8 @@ class OffersResponsesController extends Controller
                 if (intval($attr->rowType) === 1) {
                     $min = $attr->min;
                     $max = $attr->max;
-                    $matrix_compare[$attr->rowType] = ($item->total - $min) * 100 / ($max - $min);
+                    $count = $item->payments()->sum('value');
+                    $matrix_compare[$attr->rowType] = 1 / intval(($count - $min) * 100 / ($max - $min));
                 }/* elseif (intval($attr->rowType) === 2) {
                     $min = $attr->min;
                     $max = $attr->max;
@@ -342,11 +343,22 @@ class OffersResponsesController extends Controller
                 }*/ elseif (intval($attr->rowType) === 5) {
                     $min = $attr->min;
                     $max = $attr->max;
-                    $matrix_compare[$attr->rowType] = ($item->offer()->vessel()->owner()->first()->rating - $min) * 100 / ($max - $min);
+                    $count = $item->vessel()->first()->owner()->first()->rating;
+                    if ($count <= $min) {
+                        $matrix_compare[$attr->rowType] = 100;
+                    } else {
+                        $matrix_compare[$attr->rowType] = intval($count * 100 / ($min + $max) / 2);
+                    }
                 } elseif (intval($attr->rowType) === 6) {
-                    $min = $attr->min;
-                    $max = $attr->max;
-                    $matrix_compare[$attr->rowType] = ($item->date - $min) * 100 / ($max - $min);
+                    $min = Carbon::parse($attr->min);
+                    $max = Carbon::parse($attr->max);
+                    $diffMax = $max->diffInDays($min);
+                    $diffMtx = $min->diffInDays(Carbon::parse($item->date_from));
+                    if ($diffMtx < $diffMax) {
+                        $matrix_compare[$attr->rowType] = 100;
+                    } else {
+                        $matrix_compare[$attr->rowType] = intval($diffMtx * 100 / ($min + $max) / 2);
+                    }
                 }
             }
 
