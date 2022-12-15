@@ -174,7 +174,6 @@ class VesselsController extends Controller
 
                 }
             });
-            dd($vessels);
             $query->whereNotIn('id', $vessels);
         }
 
