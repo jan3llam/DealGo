@@ -166,10 +166,10 @@ class VesselsController extends Controller
             $vessels = [];
             Contract::where('owner_id', $request->owner)->get()->each(function ($contract) use ($vessels) {
                 if ($contract->origin->parent instanceof Offer) {
-                    array_push($vessels, $contract->origin->parent->vessel->id);
+                    $vessels[] = $contract->origin->parent->vessel->id;
                 } elseif ($contract->origin instanceof RequestResponse) {
                     foreach ($contract->origin->vessels as $vessel) {
-                        array_push($vessels, $vessel->id);
+                        $vessels[] = $vessel->id;
                     }
 
                 }
