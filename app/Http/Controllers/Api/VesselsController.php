@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Contract;
+use App\Models\Offer;
 use App\Models\Owner;
+use App\Models\RequestResponse;
 use App\Models\User;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
@@ -37,6 +40,7 @@ class VesselsController extends Controller
         $vType = $request->input('vtype', null);
         $gType = $request->input('gtype', null);
         $is_mine = $request->input('is_mine', 0);
+        $available = $request->input('available', 0);
 
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
@@ -109,6 +113,21 @@ class VesselsController extends Controller
             }
         } else {
             $query->where('status', 1);
+        }
+
+        if ($available) {
+            $vessels = [];
+            Contract::where('owner_id', $user_id)->get()->each(function ($contract) use (&$vessels) {
+                if ($contract->origin->parent instanceof Offer) {
+                    $vessels[] = $contract->origin->parent->vessel->id;
+                } elseif ($contract->origin instanceof RequestResponse) {
+                    foreach ($contract->origin->vessels as $vessel) {
+                        $vessels[] = $vessel->id;
+                    }
+
+                }
+            });
+            $query->whereNotIn('id', $vessels);
         }
 
         $total = $query->count();
