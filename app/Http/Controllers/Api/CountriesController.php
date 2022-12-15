@@ -106,7 +106,9 @@ class CountriesController extends Controller
                 $country = Country::where(DB::raw('LOWER(name_en)'), 'like', rtrim(ltrim(strtolower($item[0]))))->first();
 
                 $city = City::where('country_id', $country->id)->first();
-
+                if (!$city) {
+                    dd($item[0]);
+                }
                 $port = Port::where(DB::raw('LOWER(name)'), 'like', '%' . rtrim(ltrim(strtolower($item[1]))) . '%')->where('city_id', $city->id)->first();
 
                 if ($port) {
