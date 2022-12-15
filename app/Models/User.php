@@ -126,7 +126,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getUserNextPaymentAttribute()
     {
-        $data = ContractPayment::whereIn('contract_id', $this->userable->contracts->pluck('id'))->where('paid', 0)->whereNull('submit_date')->whereNotNull('date')->orderBy('date', 'desc')->limit(1)->first();
+        $data = ContractPayment::whereIn('contract_id', $this->userable->contracts->pluck('id'))->where('paid', 0)->whereNull('submit_date')->whereNotNull('date')->orderBy('date', 'asc')->limit(1)->first();
 //        dd($data, $data->pluck('date'));
         $payment = $data ? $data->date : null;
         return $payment;
