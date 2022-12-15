@@ -113,7 +113,6 @@ class CountriesController extends Controller
                         $port = Port::where(DB::raw('LOWER(name)'), 'like', '%' . rtrim(ltrim(strtolower($item[1]))) . '%')->where('city_id', $city->id)->first();
 
                         if ($port) {
-                            $port = new Port;
                             $port->city_id = $city->id;
                             $port->unlocode = $item[2] ? $item[2] : $item[1];
                             $port->latitude = $item[12] ? str_replace('°', '', rtrim(ltrim($item[12]))) : 0;
