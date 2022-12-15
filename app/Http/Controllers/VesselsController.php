@@ -169,6 +169,7 @@ class VesselsController extends Controller
                     array_push($vessels, $contract->origin->parent->vessel->id);
                 } elseif ($contract->origin instanceof RequestResponse) {
                     foreach ($contract->origin->vessels as $vessel) {
+                        dd($vessel);
                         array_push($vessels, $vessel->id);
                     }
 
