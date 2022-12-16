@@ -102,6 +102,10 @@ return [
             'code' => "-27",
             'message' => 'Wrong username / password'
         ],
+        'cannotDelete' => [
+            'code' => "-28",
+            'message' => 'Relations found, item cannot be deleted'
+        ],
         //HTTP Errors
         'unauthorized' => [
             'code' => "-401",

@@ -45,6 +45,11 @@ class Vessel extends Model
         return $this->hasMany(Shipment::class);
     }
 
+    public function request_responses()
+    {
+        return $this->belongsToMany(RequestResponse::class, 'requests_responses_requests_goods_types_vessels', 'vessel_id', 'offer_id');
+    }
+
     public function getFilesAttribute($value)
     {
         return json_decode($value);

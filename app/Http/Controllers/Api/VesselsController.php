@@ -295,6 +295,16 @@ class VesselsController extends Controller
         }
 
         if ($item) {
+
+            if ($item->offers()->count() > 0 ||
+                $item->shipments()->count() > 0 ||
+                $item->maintenance()->count() > 0 ||
+                $item->crew()->count() > 0 ||
+                $item->request_responses()->count() > 0
+            ) {
+                return response()->error('cannotDelete');
+            }
+
             $item->status = 0;
             $item->save();
             $item->delete();

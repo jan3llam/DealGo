@@ -323,6 +323,16 @@ class VesselsController extends Controller
     {
         foreach ($request->input('ids', []) as $id) {
             $item = Vessel::withTrashed()->where('id', $id)->first();
+
+            if ($item->offers()->count() > 0 ||
+                $item->shipments()->count() > 0 ||
+                $item->maintenance()->count() > 0 ||
+                $item->crew()->count() > 0 ||
+                $item->request_responses()->count() > 0
+            ) {
+                return response()->error('cannotDelete');
+            }
+
             if ($item) {
                 $item->status = 0;
                 $item->save();
@@ -336,6 +346,15 @@ class VesselsController extends Controller
     {
 
         $item = Vessel::withTrashed()->where('id', $id)->first();
+
+        if ($item->offers()->count() > 0 ||
+            $item->shipments()->count() > 0 ||
+            $item->maintenance()->count() > 0 ||
+            $item->crew()->count() > 0 ||
+            $item->request_responses()->count() > 0
+        ) {
+            return response()->error('cannotDelete');
+        }
 
         if ($item) {
             $item->status = 0;
