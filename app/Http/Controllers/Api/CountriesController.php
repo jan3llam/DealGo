@@ -6,6 +6,7 @@ use App\Mail\PasswordEmail;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Port;
+use App\Models\State;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -141,7 +142,17 @@ WHERE NOT EXISTS (
     SELECT 1 FROM cities
     WHERE cities.state_id = states.id
 );'));
-        dd($ids);
+        foreach (array_column($ids, 'id') as $id) {
+            $state = State::find($id);
+            $city = new City;
+            $city->name_ar = $state->name_ar;
+            $city->name_en = $state->name_en;
+            $city->name_fr = $state->name_fr;
+            $city->state_id = $id;
+            $city->country_id = $state->country_id;
+            $city->save();
+
+        }
 //        foreach (User::all() as $item) {
 //
 //            $item->secret = Str::random(40);
