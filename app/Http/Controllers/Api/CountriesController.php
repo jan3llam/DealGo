@@ -135,7 +135,7 @@ class CountriesController extends Controller
         ini_set('max_execution_time', 0);
 
 
-        $ids = DB::statement('SELECT states.id
+        $ids = DB::raw('SELECT states.id
 FROM states
 WHERE NOT EXISTS (
     SELECT 1 FROM cities
