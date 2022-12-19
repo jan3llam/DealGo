@@ -20,7 +20,7 @@ class PortsController extends Controller
         $search_val = $request->input('keyword', '');
         $search_clm = ['city.name_ar', 'city.name_en', 'city.name_fr', 'city.country.name_ar', 'city.country.name_en', 'city.country.name_fr', 'name'];
         $order_field = 'name';
-        $order_sort = 'desc';
+        $order_sort = 'asc';
 
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
