@@ -679,6 +679,7 @@ $(function () {
         });
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
+        $('#password_container').hide();
         $('#zip').val(data.zip_code);
         $('#city').val(data.city.id).trigger('change.select2');
         $('#type').val(data.type).trigger('change');
@@ -736,6 +737,7 @@ $(function () {
         $('#city').empty();
         $('#city').val('').trigger('change.select2');
         $('#province').empty();
+        $('#password_container').show();
         $('#province').val('').trigger('change.select2');
     });
 })

@@ -662,6 +662,7 @@ $(function () {
         $('#country').val(data.city.state.country.id).trigger('change.select2');
         $('#city_id').val(data.city.id);
         $('#province_id').val(data.province);
+        $('#password_container').hide();
         $('#province').val(data.province);
         $('#address_1').val(data.address_1);
         $('#address_2').val(data.address_2);
@@ -715,6 +716,7 @@ $(function () {
         $('#city').empty();
         $('#city').val('').trigger('change.select2');
         $('#province').empty();
+        $('#password_container').show();
         $('#province').val('').trigger('change.select2');
     });
 })
