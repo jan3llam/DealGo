@@ -666,6 +666,7 @@ $(function () {
         $('#edit-license').html('<a target="_blank" href="' + assetPath + 'images/' + data.license_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#edit-company').html('<a target="_blank" href="' + assetPath + 'images/' + data.company_file + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
         $('#name').val(data.full_name);
+        $('#password_container').hide();
         $('#contact').val(data.contact_name);
         $('#province').val(data.province);
         $('#commercial').val(data.commercial_number);
@@ -713,6 +714,7 @@ $(function () {
         $('#country').val('').trigger('change.select2');
         $('#city').empty();
         $('#city').val('').trigger('change.select2');
+        $('#password_container').show();
         $('#province').empty();
         $('#province').val('').trigger('change.select2');
     });
