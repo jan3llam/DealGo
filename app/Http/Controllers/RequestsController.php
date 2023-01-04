@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\gType;
 use App\Models\Owner;
-use App\Models\Port;
 use App\Models\Request as ShippingRequest;
 use App\Models\Tenant;
 use App\Models\User;
@@ -266,6 +265,9 @@ class RequestsController extends Controller
         $item = ShippingRequest::withTrashed()->where('id', $id)->first();
 
         if ($item) {
+            if ($item->responses()->count() > 0) {
+                return response()->error('cannotDelete');
+            }
             $item->delete();
         }
 
@@ -277,6 +279,9 @@ class RequestsController extends Controller
         foreach ($request->input('ids', []) as $id) {
             $item = ShippingRequest::withTrashed()->where('id', $id)->first();
             if ($item) {
+                if ($item->responses()->count() > 0) {
+                    return response()->error('cannotDelete');
+                }
                 $item->delete();
             }
         }

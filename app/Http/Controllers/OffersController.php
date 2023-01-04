@@ -217,6 +217,9 @@ class OffersController extends Controller
         foreach ($request->input('ids', []) as $id) {
             $item = Offer::withTrashed()->where('id', $id)->first();
             if ($item) {
+                if ($item->responses()->count() > 0) {
+                    return response()->error('cannotDelete');
+                }
                 $item->delete();
             }
         }
@@ -229,6 +232,9 @@ class OffersController extends Controller
         $item = Offer::withTrashed()->where('id', $id)->first();
 
         if ($item) {
+            if ($item->responses()->count() > 0) {
+                return response()->error('cannotDelete');
+            }
             $item->delete();
         }
 
