@@ -39,7 +39,7 @@ class OffersResponsesController extends Controller
         $order_sort = 'desc';
         $query = OfferResponse::with(['tenant', 'port_to', 'parent'])
             ->whereHas('port_to')
-            ->whereHas('goods_types.good_type');
+            ->whereHas('offer_goods_types');
 
         if ($id) {
             $query->where('offer_id', $id);
@@ -132,7 +132,7 @@ class OffersResponsesController extends Controller
         })*/
         ->whereHas('tenant')
             ->whereHas('port_to')
-            ->with(['payments', 'port_to', 'routes', 'goods_types.good_type', 'offer.port_from'])
+            ->with(['payments', 'port_to', 'routes', 'offer_goods_types', 'offer.port_from'])
             ->first();
 
         return response()->success($data);
