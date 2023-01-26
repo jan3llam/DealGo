@@ -46,7 +46,13 @@ class RequestsResponsesController extends Controller
                 $q->withTrashed()->with('user', function ($qu) {
                     $qu->withTrashed();
                 });
-            }, 'vessels.type', 'request_goods_types.good_type', 'parent'
+            }, 'vessels.type', 'request_goods_types.good_type', 'parent' => function ($qu) {
+                'tenant' => function ($q) {
+                    $q->withTrashed()->with('user', function ($qu) {
+                        $qu->withTrashed();
+                    });
+                }
+            }
         ])->whereHas('vessels')->whereHas('request_goods_types');
 
         if ($id) {
