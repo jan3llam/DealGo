@@ -78,9 +78,9 @@ class PortsController extends Controller
 
         if ($user instanceof Tenant) {
             $query->whereHas('offers', function ($qu) {
-                $qu->where('approved', 0);
+                $qu->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString());
             })->with(['offers' => function ($q) {
-                $q->where('approved', 0)->with(['vessel.type.goods_types', 'vessel.owner.user']);
+                $q->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString())->with(['vessel.type.goods_types', 'vessel.owner.user']);
             }]);
             if ($date_from) {
                 $query->whereHas('offers', function ($q) use ($date_from) {
@@ -94,9 +94,9 @@ class PortsController extends Controller
             }
         } elseif ($user instanceof Owner) {
             $query->whereHas('requests', function ($qu) {
-                $qu->where('approved', 0);
+                $qu->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString());
             })->with(['requests' => function ($q) {
-                $q->where('approved', 0)->with(['port_to', 'tenant.user', 'routes', 'goods_types']);
+                $q->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString())->with(['port_to', 'tenant.user', 'routes', 'goods_types']);
             }]);
             if ($date_from) {
                 $query->whereHas('requests', function ($q) use ($date_from) {
@@ -111,14 +111,14 @@ class PortsController extends Controller
         } else {
             $query->where(function ($q) {
                 $q->orWhereHas('requests', function ($qu) {
-                    $qu->where('approved', 0);
+                    $qu->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString());
                 })->orWhereHas('offers', function ($qu) {
-                    $qu->where('approved', 0);
+                    $qu->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString());
                 });
             })->with(['requests' => function ($q) {
-                $q->where('approved', 0)->with(['port_to', 'tenant.user', 'routes', 'goods_types']);
+                $q->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString())->with(['port_to', 'tenant.user', 'routes', 'goods_types']);
             }, 'offers' => function ($q) {
-                $q->where('approved', 0)->with(['vessel.type.goods_types', 'vessel.owner.user']);
+                $q->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString())->with(['vessel.type.goods_types', 'vessel.owner.user']);
             }]);
 
             if ($date_from) {
