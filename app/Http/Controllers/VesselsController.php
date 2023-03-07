@@ -75,6 +75,8 @@ class VesselsController extends Controller
             'protocol' => 'json',
             'timespan' => '1200'
         ]);
+
+        dd($response);
         if ($response->successful()) {
             if ($data = json_decode($response->getBody()->getContents())) {
                 return response()->success([
