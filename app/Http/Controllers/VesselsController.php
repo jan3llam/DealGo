@@ -77,7 +77,6 @@ class VesselsController extends Controller
         ]);
 
         if ($response->successful()) {
-            dd($response->getBody()->getContents());
             if ($data = json_decode($response->getBody()->getContents())) {
                 return response()->success([
                     'name' => $vessel->name,
