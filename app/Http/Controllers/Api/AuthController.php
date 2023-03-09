@@ -157,15 +157,15 @@ class AuthController extends Controller
             return response()->error('userNotFound');
         }
 
-        $code = $user->codes->last();
-
-        if ($code && $code->valid && $code->created_at->diffInMinutes(now()) < intval(env('SMS_VALID_MINUTES'))) {
-            $code->touch();
-            return response()->success(['code' => $code->code]);
-        } elseif ($code) {
-            $code->valid = false;
-            $code->save();
-        }
+//        $code = $user->codes->last();
+//
+//        if ($code && $code->valid && $code->created_at->diffInMinutes(now()) < intval(env('SMS_VALID_MINUTES'))) {
+//            $code->touch();
+//            return response()->success(['code' => $code->code]);
+//        } elseif ($code) {
+//            $code->valid = false;
+//            $code->save();
+//        }
 
         $verificationCode = mt_rand(1000, 9999);
 
@@ -213,7 +213,8 @@ class AuthController extends Controller
         }
 
         $code = $user->codes->last();
-        if ($code && $userCode === $code->code && $code->valid && $code->created_at->diffInMinutes(now()) < intval(env('SMS_VALID_MINUTES'))) {
+//        if ($code && $userCode === $code->code && $code->valid && $code->created_at->diffInMinutes(now()) < intval(env('SMS_VALID_MINUTES'))) {
+        if ($code && $userCode === $code->code && $code->valid) {
             $user->verified = 1;
             $code->valid = false;
             $code->save();
