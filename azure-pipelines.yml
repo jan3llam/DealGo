@@ -30,7 +30,7 @@ stages:
       inputs:
         command: build
         Dockerfile: $(dockerfilePath2)
-        arguments: '-t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath) ./../../'
+        arguments: '-t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath)'
         containerRegistry: $(acrName)
     
     - task: Docker@2
