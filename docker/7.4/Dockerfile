@@ -1,11 +1,27 @@
 # Use the official PHP image
 FROM php:7.4-fpm-alpine
+COPY composer.json /var/www/html/composer.json
+
+
+# ==================================================== #
+# Install necessary packages
+RUN apk add --no-cache curl git \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && cd /var/www/html \
+    && composer install --no-dev --no-scripts --no-autoloader \
+    && composer dump-autoload --optimize \
+    && rm -rf /root/.composer
 
 # Install dependencies
 RUN apk add --no-cache nginx supervisor
 
-# Copy the application code into the container
+# Copy application files to /var/www/html
 COPY . /var/www/html
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# ==================================================== #
 
 # Install dependencies using Composer
 RUN cd /var/www/html && \
