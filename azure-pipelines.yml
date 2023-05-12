@@ -13,6 +13,9 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
   dockerfilePath2: '**/Dockerfile'
   azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
+  tag: '$(Build.BuildNumber)'
+  # dockerfilePath: './docker/7.4/Dockerfile'
+  buildContext: './'
 
 stages:
 - stage: Build
@@ -21,6 +24,22 @@ stages:
   - job: Build
     displayName: Build Docker image
     steps:
+    - script: |
+        docker build -f $(dockerfilePath) \
+        --label com.azure.dev.image.system.teamfoundationcollectionuri=$(System.TeamFoundationCollectionUri) \
+        --label com.azure.dev.image.system.teamproject=$(System.TeamProject) \
+        --label com.azure.dev.image.build.repository.name=$(imageName) \
+        --label com.azure.dev.image.build.sourceversion=$(Build.SourceVersion) \
+        --label com.azure.dev.image.build.repository.uri=$(Build.Repository.Uri) \
+        --label com.azure.dev.image.build.sourcebranchname=$(Build.SourceBranchName) \
+        --label com.azure.dev.image.build.definitionname=$(Build.DefinitionName) \
+        --label com.azure.dev.image.build.buildnumber=$(Build.BuildNumber) \
+        --label com.azure.dev.image.build.builduri=$(Build.BuildUri) \
+        --label image.base.ref.name=php:7.4-fpm-alpine \
+        --label image.base.digest=sha256:0aeb129a60daff2874c5c70fcd9d88cdf3015b4fb4cc7c3f1a32a21e84631036 \
+        -t $(imageName):$(tag) $(buildContext)
+      displayName: Build Docker image
+
     - task: Docker@2
       displayName: Build Docker image
       inputs:
@@ -33,7 +52,8 @@ stages:
       displayName: Push Docker image to Azure Container Registry
       inputs:
         command: push
-        repository: $(imageRepository)
+        # repository: $(imageRepository)
+        repository: $(imageName)
         containerRegistry: $(acrName)
 
 - stage: Deploy
