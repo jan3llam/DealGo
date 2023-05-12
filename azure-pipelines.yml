@@ -37,14 +37,14 @@ stages:
                 $(imageName):$(imageTag)
                 $(imageName):latest
               buildContext: '.'
-              containerRegistry: '$(acrLoginServer)'
+              containerRegistry: '$(acrName)'
               includeLatestTag: true
 
           - task: Docker@2
             displayName: Push Docker image to Azure Container Registry
             inputs:
               command: 'push'
-              containerRegistry: '$(acrLoginServer)'
+              containerRegistry: '$(acrName)'
               repository: '$(imageName)'
               tags: |
                 $(imageTag)
@@ -54,8 +54,9 @@ stages:
   - stage: Deploy
     displayName: Deploy to Azure App Service
     dependsOn: Build
-    jobs:
 
+    jobs:
+    
       - deployment: Deploy
         displayName: Deploy to Azure App Service
         environment:
