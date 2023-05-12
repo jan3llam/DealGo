@@ -4,106 +4,62 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-# variables:
-#   # Azure Container Registry connection established during pipeline creation
-#   acrName: 'acrbackend'
-#   acrResourceGroup: 'SC-RG-APP-DEV'
-#   imageRepository: 'dealgo-backend'
-#   containerRegistry: '${acrName}.azurecr.io'
-#   # dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
-#   dockerfilePath: '**/Dockerfile'
-#   azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
-#   tag: '$(Build.BuildNumber)'
-#   buildContext: './'
+# Dockerize and Deploy Laravel app to Azure Container Registry and App Service
 
 variables:
-  # Container registry information
+  # Azure Container Registry and App Service details
   acrName: 'acrbackend'
-  acrResourceGroup: 'SC-RG-APP-DEV'
-  acrLoginServer: '${acrName}.azurecr.io'
-  
-  # Image information
-  imageName: 'myimage'
-  imageTag: '$(Build.BuildNumber)'
-  
-  # Dockerfile location
+  acrResourceGroup: 'RG-APP-DEV'
+  acrLoginServer: '$(acrName).azurecr.io'
+  appServiceName: 'dealgo-backend'
+  appServicePlanName: 'asp-backend'
+  appServiceResourceGroup: 'RG-APP-DEV'
+
+  # Docker image details
+  imageName: 'laravel-app'
+  imageTag: '$(Build.BuildId)'
   dockerfilePath: './Dockerfile'
 
-steps:
-- task: Docker@2
-  displayName: Build Docker image
-  inputs:
-    command: build
-    dockerfile: $(dockerfilePath)
-    tags: |
-      $(acrLoginServer)/$(imageName):$(imageTag)
-    buildContext: .
-  
-- task: Docker@2
-  displayName: Push Docker image
-  inputs:
-    command: push
-    imageName: $(acrLoginServer)/$(imageName)
-    tags: $(imageTag)
-    
-# stages:
-# - stage: Build
-#   displayName: Build Docker image
-#   jobs:
-#   - job: Build
-#     displayName: Build Docker image
-#     steps:
+stages:
+  - stage: Build
+    displayName: Build and Push Docker Image
+    jobs:
+      - job: Build
+        displayName: Build and Push Docker Image
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Docker@2
+            displayName: Build Docker image
+            inputs:
+              command: 'build'
+              Dockerfile: '$(dockerfilePath)'
+              tags: |
+                $(imageName):$(imageTag)
+                $(imageName):latest
+              buildContext: '.'
+              containerRegistry: '$(acrLoginServer)'
+              includeLatestTag: true
 
-#     # - task: Docker@2
-#     #   inputs:
-#     #     containerRegistry: 'acrbackend'
-#     #     command: 'buildAndPush'
-#     #     Dockerfile: '**/Dockerfile'
-#     #     repository: $(imageRepository)
-#     #     tags: '$(Build.BuildNumber)'
+          - task: Docker@2
+            displayName: Push Docker image to Azure Container Registry
+            inputs:
+              command: 'push'
+              containerRegistry: '$(acrLoginServer)'
+              repository: '$(imageName)'
+              tags: |
+                $(imageTag)
+                latest
+            condition: succeeded()
 
-#     - task: Docker@2
-#       inputs:
-#         containerRegistry: 'acrbackend'
-#         repository: '$(imageRepository)'
-#         command: 'build'
-#         Dockerfile: '**/Dockerfile'
-#         tags: '$(Build.BuildNumber)'
-
-#     - task: Docker@2
-#       displayName: Build Docker image
-#       inputs:
-#         command: build
-#         Dockerfile: $(dockerfilePath)
-#         repository: $(imageRepository)
-#         tags: '$(imageRepository):$(Build.BuildNumber)'
-#         arguments: '-t $(imageRepository):$(Build.BuildNumber) -f $(dockerfilePath)'
-#         containerRegistry: $(acrName)
-    
-#     - task: Docker@2
-#       displayName: Push Docker image to Azure Container Registry
-#       inputs:
-#         command: push
-#         repository: $(imageRepository)
-#         containerRegistry: $(acrName)
-
-# - stage: Deploy
-#   displayName: Deploy to Azure Web App
-#   dependsOn: Build
-#   jobs:
-#   - job: Deploy
-#     displayName: Deploy to Azure Web App
-#     steps:
-#     - task: AzureWebApp@1
-#       displayName: Azure Web App Deploy
-#       inputs:
-#         appType: webApp
-#         azureSubscription: $(acrResourceGroup)
-#         appName: 'dealgo-backend'
-#         package: $(imageRepository):$(Build.BuildNumber)
-#         deploymentMethod: 'containerRegistry'
-#         containerRegistryType: 'Azure Container Registry'
-#         dockerNamespace: $(acrName)
-#         dockerRegistryEndpoint: $(acrName).azurecr.io
-#         enableContinuousDeployment: true
-        
+  - stage: Deploy
+    displayName: Deploy to Azure App Service
+    dependsOn: Build
+    jobs:
+      - deployment: Deploy
+        displayName: Deploy to Azure App Service
+        pool:
+          vmImage: 'ubuntu-latest'
+        environment:
+          name: 'production'
+          resourceType: 'VirtualMachine'
