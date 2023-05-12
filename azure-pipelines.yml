@@ -24,29 +24,13 @@ stages:
   - job: Build
     displayName: Build Docker image
     steps:
-    - script: |
-        docker build -f $(dockerfilePath2) \
-        --label com.azure.dev.image.system.teamfoundationcollectionuri=$(System.TeamFoundationCollectionUri) \
-        --label com.azure.dev.image.system.teamproject=$(System.TeamProject) \
-        --label com.azure.dev.image.build.repository.name=$(imageRepository) \
-        --label com.azure.dev.image.build.sourceversion=$(Build.SourceVersion) \
-        --label com.azure.dev.image.build.repository.uri=$(Build.Repository.Uri) \
-        --label com.azure.dev.image.build.sourcebranchname=$(Build.SourceBranchName) \
-        --label com.azure.dev.image.build.definitionname=$(Build.DefinitionName) \
-        --label com.azure.dev.image.build.buildnumber=$(Build.BuildNumber) \
-        --label com.azure.dev.image.build.builduri=$(Build.BuildUri) \
-        --label image.base.ref.name=php:7.4-fpm-alpine \
-        --label image.base.digest=sha256:0aeb129a60daff2874c5c70fcd9d88cdf3015b4fb4cc7c3f1a32a21e84631036 \
-        -t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath) .
-      displayName: Build Docker image
 
     - task: Docker@2
       displayName: Build Docker image
       inputs:
         command: build
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: $(dockerfilePath2)
         arguments: '-t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath) .'
-        # arguments: '-t $(imageName):$(tag) -f $(dockerfilePath) .'
         containerRegistry: $(acrName)
     
     - task: Docker@2
