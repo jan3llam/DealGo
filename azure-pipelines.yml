@@ -14,7 +14,6 @@ variables:
   dockerfilePath2: '**/Dockerfile'
   azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
   tag: '$(Build.BuildNumber)'
-  # dockerfilePath: './docker/7.4/Dockerfile'
   buildContext: './'
 
 stages:
@@ -29,6 +28,7 @@ stages:
         containerRegistry: 'acrbackend'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
+        repository: $(imageRepository)
         tags: '$(Build.BuildNumber)'
 
     # - task: Docker@2
