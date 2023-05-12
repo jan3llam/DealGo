@@ -8,9 +8,10 @@ variables:
   # Azure Container Registry connection established during pipeline creation
   acrName: 'acrbackend'
   acrResourceGroup: 'rg-app-dev'
-  imageRepository: 'myimage'
+  imageRepository: 'dealgo-backend'
   containerRegistry: '${acrName}.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
+  azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
 
 stages:
 - stage: Build
@@ -43,7 +44,7 @@ stages:
       displayName: Azure Web App Deploy
       inputs:
         appType: webApp
-        azureSubscription: 'mySubscription'
+        azureSubscription: $(azureSubscription)
         appName: 'dealgo-backend'
         package: $(imageRepository):$(Build.BuildId)
         deploymentMethod: 'containerRegistry'
