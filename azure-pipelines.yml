@@ -23,12 +23,20 @@ stages:
   - job: Build
     displayName: Build Docker image
     steps:
+    # - task: Docker@2
+    #   inputs:
+    #     containerRegistry: 'acrbackend'
+    #     command: 'buildAndPush'
+    #     Dockerfile: '**/Dockerfile'
+    #     repository: $(imageRepository)
+    #     tags: '$(Build.BuildNumber)'
+
     - task: Docker@2
       inputs:
         containerRegistry: 'acrbackend'
-        command: 'buildAndPush'
+        repository: '$(imageRepository)'
+        command: 'build'
         Dockerfile: '**/Dockerfile'
-        repository: $(imageRepository)
         tags: '$(Build.BuildNumber)'
 
     # - task: Docker@2
