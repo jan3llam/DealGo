@@ -55,11 +55,12 @@ stages:
     displayName: Deploy to Azure App Service
     dependsOn: Build
     jobs:
+
       - deployment: Deploy
         displayName: Deploy to Azure App Service
-        # environment:
-        #   name: 'dev'
-        #   resourceType: 'VirtualMachine'
+        environment:
+          name: 'dev'
+          resourceType: 'VirtualMachine'
         strategy:
           runOnce:
             deploy:
