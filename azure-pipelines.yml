@@ -4,55 +4,48 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+# variables:
+#   # Azure Container Registry connection established during pipeline creation
+#   acrName: 'acrbackend'
+#   acrResourceGroup: 'SC-RG-APP-DEV'
+#   imageRepository: 'dealgo-backend'
+#   containerRegistry: '${acrName}.azurecr.io'
+#   # dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
+#   dockerfilePath: '**/Dockerfile'
+#   azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
+#   tag: '$(Build.BuildNumber)'
+#   buildContext: './'
+
 variables:
-  # Azure Container Registry connection established during pipeline creation
+  # Container registry information
   acrName: 'acrbackend'
   acrResourceGroup: 'SC-RG-APP-DEV'
-  imageRepository: 'dealgo-backend'
-  containerRegistry: '${acrName}.azurecr.io'
-  # dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
-  dockerfilePath: '**/Dockerfile'
-  azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
-  tag: '$(Build.BuildNumber)'
-  buildContext: './'
+  acrLoginServer: '${acrName}.azurecr.io'
+  
+  # Image information
+  imageName: 'myimage'
+  imageTag: '$(Build.BuildNumber)'
+  
+  # Dockerfile location
+  dockerfilePath: './Dockerfile'
 
 steps:
-  - task: Docker@2
-    displayName: Build and Push Docker image
-    inputs:
-      containerRegistry: $(acrName)
-      repository: $(imageRepository)
-      command: 'buildAndPush'
-      Dockerfile: $(dockerfilePath)
-      buildContext: $(buildContext)
-      tags: |
-        $(tag)
-        latest
-    env:
-      ACR_REGISTRY: $(acrName)
-      ACR_REPOSITORY: $(imageRepository)
-      SERVICE_PRINCIPAL_ID: $(servicePrincipalId)
-      SERVICE_PRINCIPAL_KEY: $(servicePrincipalKey)
-      SERVICE_PRINCIPAL_TENANT: $(tenantId)
-
-  - task: AzureCLI@2
-    displayName: 'ACR Login'
-    inputs:
-      azureSubscription: $(acrResourceGroup)
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: |
-        az acr login --name $(acrName)
-
-  - task: AzureCLI@2
-    displayName: 'ACR Task'
-    inputs:
-      azureSubscription: $(acrResourceGroup)
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: |
-        az acr task create --registry 'acrbackend.azurecr.io' --name $(imageRepository)-task --image $(imageRepository):$(tag) --context $(buildContext) --file $(dockerfilePath) --arg TAG=$(tag) --subscription $(azureSubscription)
-
+- task: Docker@2
+  displayName: Build Docker image
+  inputs:
+    command: build
+    dockerfile: $(dockerfilePath)
+    tags: |
+      $(acrLoginServer)/$(imageName):$(imageTag)
+    buildContext: .
+  
+- task: Docker@2
+  displayName: Push Docker image
+  inputs:
+    command: push
+    imageName: $(acrLoginServer)/$(imageName)
+    tags: $(imageTag)
+    
 # stages:
 # - stage: Build
 #   displayName: Build Docker image
