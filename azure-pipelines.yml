@@ -28,7 +28,7 @@ stages:
         docker build -f $(dockerfilePath2) \
         --label com.azure.dev.image.system.teamfoundationcollectionuri=$(System.TeamFoundationCollectionUri) \
         --label com.azure.dev.image.system.teamproject=$(System.TeamProject) \
-        --label com.azure.dev.image.build.repository.name=$(imageName) \
+        --label com.azure.dev.image.build.repository.name=$(imageRepository) \
         --label com.azure.dev.image.build.sourceversion=$(Build.SourceVersion) \
         --label com.azure.dev.image.build.repository.uri=$(Build.Repository.Uri) \
         --label com.azure.dev.image.build.sourcebranchname=$(Build.SourceBranchName) \
