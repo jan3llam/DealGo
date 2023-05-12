@@ -7,7 +7,7 @@ pool:
 variables:
   # Azure Container Registry connection established during pipeline creation
   acrName: 'acrbackend'
-  acrResourceGroup: 'rg-app-dev'
+  acrResourceGroup: 'SC-RG-APP-DEV'
   imageRepository: 'dealgo-backend'
   containerRegistry: '${acrName}.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
