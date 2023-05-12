@@ -37,7 +37,7 @@ stages:
         --label com.azure.dev.image.build.builduri=$(Build.BuildUri) \
         --label image.base.ref.name=php:7.4-fpm-alpine \
         --label image.base.digest=sha256:0aeb129a60daff2874c5c70fcd9d88cdf3015b4fb4cc7c3f1a32a21e84631036 \
-        -t $(imageRepository):$(tag) $(buildContext)
+        -t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath) .
       displayName: Build Docker image
 
     - task: Docker@2
