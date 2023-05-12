@@ -28,17 +28,17 @@ stages:
       - job: Build
         displayName: Build and Push Docker Image
         steps:
-          # - task: Docker@2
-          #   displayName: Build Docker image
-          #   inputs:
-          #     command: 'build'
-          #     Dockerfile: '$(dockerfilePath)'
-          #     tags: |
-          #       $(imageName):$(imageTag)
-          #       $(imageName):latest
-          #     buildContext: '.'
-          #     containerRegistry: '$(acrName)'
-          #     includeLatestTag: true
+          - task: Docker@2
+            displayName: Build Docker image
+            inputs:
+              command: 'build'
+              Dockerfile: '$(dockerfilePath)'
+              tags: |
+                $(imageName):$(imageTag)
+                $(imageName):latest
+              buildContext: '.'
+              containerRegistry: '$(acrName)'
+              includeLatestTag: true
 
           - task: Docker@2
             displayName: Push Docker image to Azure Container Registry
