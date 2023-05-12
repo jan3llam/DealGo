@@ -9,7 +9,7 @@ variables:
   acrName: 'acrbackend'
   acrResourceGroup: 'SC-RG-APP-DEV'
   imageRepository: 'dealgo-backend'
-  containerRegistry: '${acrName}.azurecr.io'
+  containerRegistry: 'acrbackend.azurecr.io'
   # dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
   dockerfilePath: '**/Dockerfile'
   azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
