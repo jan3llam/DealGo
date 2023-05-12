@@ -11,6 +11,7 @@ variables:
   imageRepository: 'dealgo-backend'
   containerRegistry: '${acrName}.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
+  dockerfilePath2: '**/Dockerfile'
   azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
 
 stages:
@@ -24,8 +25,10 @@ stages:
       displayName: Build Docker image
       inputs:
         command: build
-        arguments: '-t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath) .'
+        Dockerfile: '**/Dockerfile'
+        arguments: '-t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath2) .'
         containerRegistry: $(acrName)
+    
     - task: Docker@2
       displayName: Push Docker image to Azure Container Registry
       inputs:
