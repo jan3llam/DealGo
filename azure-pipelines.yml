@@ -10,7 +10,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'b8063350-9d91-4169-b9b7-b06511c28cc3'
+  dockerRegistryServiceConnection: 'SC-RG-APP-DEV'
   imageRepository: 'dealgobackend'
   containerRegistry: 'dealgostore.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
@@ -37,3 +37,11 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'SC-RG-APP-DEV'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          docker run -d -p 80:80 MyImage
