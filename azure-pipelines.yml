@@ -44,7 +44,7 @@ stages:
       displayName: Azure Web App Deploy
       inputs:
         appType: webApp
-        azureSubscription: $(azureSubscription)
+        azureSubscription: $(acrResourceGroup)
         appName: 'dealgo-backend'
         package: $(imageRepository):$(Build.BuildId)
         deploymentMethod: 'containerRegistry'
@@ -52,3 +52,4 @@ stages:
         dockerNamespace: $(acrName)
         dockerRegistryEndpoint: $(acrName).azurecr.io
         enableContinuousDeployment: true
+        
