@@ -16,8 +16,8 @@ variables:
   appServiceResourceGroup: 'RG-APP-DEV'
 
   # Docker image details
-  imageName: 'laravel-app'
-  imageTag: '$(Build.BuildId)'
+  imageName: 'dealgo-backend'
+  imageTag: '$(Build.BuildNumber).$(Build.BuildId)'
   dockerfilePath: './Dockerfile'
 
 stages:
@@ -58,8 +58,6 @@ stages:
     jobs:
       - deployment: Deploy
         displayName: Deploy to Azure App Service
-        pool:
-          vmImage: 'ubuntu-latest'
         environment:
-          name: 'production'
+          name: 'dev'
           resourceType: 'VirtualMachine'
