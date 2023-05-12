@@ -15,43 +15,43 @@ variables:
   azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
   tag: '$(Build.BuildNumber)'
   buildContext: './'
-  
+
 steps:
   - task: Docker@2
-  displayName: Build and Push Docker image
-  inputs:
-    containerRegistry: $(containerRegistry)
-    repository: $(imageRepository)
-    command: 'buildAndPush'
-    Dockerfile: $(dockerfilePath)
-    buildContext: $(buildContext)
-    tags: |
-      $(tag)
-      latest
-  env:
-    ACR_REGISTRY: $(containerRegistry)
-    ACR_REPOSITORY: $(imageRepository)
-    SERVICE_PRINCIPAL_ID: $(servicePrincipalId)
-    SERVICE_PRINCIPAL_KEY: $(servicePrincipalKey)
-    SERVICE_PRINCIPAL_TENANT: $(tenantId)
+    displayName: Build and Push Docker image
+    inputs:
+      containerRegistry: $(containerRegistry)
+      repository: $(imageRepository)
+      command: 'buildAndPush'
+      Dockerfile: $(dockerfilePath)
+      buildContext: $(buildContext)
+      tags: |
+        $(tag)
+        latest
+    env:
+      ACR_REGISTRY: $(containerRegistry)
+      ACR_REPOSITORY: $(imageRepository)
+      SERVICE_PRINCIPAL_ID: $(servicePrincipalId)
+      SERVICE_PRINCIPAL_KEY: $(servicePrincipalKey)
+      SERVICE_PRINCIPAL_TENANT: $(tenantId)
 
-- task: AzureCLI@2
-  displayName: 'ACR Login'
-  inputs:
-    azureSubscription: $(azureSubscription)
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      az acr login --name $(acrName)
+  - task: AzureCLI@2
+    displayName: 'ACR Login'
+    inputs:
+      azureSubscription: $(azureSubscription)
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az acr login --name $(acrName)
 
-- task: AzureCLI@2
-  displayName: 'ACR Task'
-  inputs:
-    azureSubscription: $(azureSubscription)
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      az acr task create --registry $(containerRegistry) --name $(imageRepository)-task --image $(imageRepository):$(tag) --context $(buildContext) --file $(dockerfilePath) --arg TAG=$(tag) --subscription $(azureSubscription)
+  - task: AzureCLI@2
+    displayName: 'ACR Task'
+    inputs:
+      azureSubscription: $(azureSubscription)
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az acr task create --registry $(containerRegistry) --name $(imageRepository)-task --image $(imageRepository):$(tag) --context $(buildContext) --file $(dockerfilePath) --arg TAG=$(tag) --subscription $(azureSubscription)
 
 # stages:
 # - stage: Build
