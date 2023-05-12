@@ -67,7 +67,7 @@ stages:
         appType: webApp
         azureSubscription: $(acrResourceGroup)
         appName: 'dealgo-backend'
-        package: $(imageRepository):$(Build.BuildId)
+        package: $(imageRepository):$(Build.BuildNumber)
         deploymentMethod: 'containerRegistry'
         containerRegistryType: 'Azure Container Registry'
         dockerNamespace: $(acrName)
