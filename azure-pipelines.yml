@@ -72,6 +72,6 @@ stages:
                   azureSubscription: '$(appServiceConnection)'
                   appType: 'webAppLinux'
                   appName: '$(appServiceName)'
-                  runtimeStack: 'PHP|8.0'
+                  runtimeStack: 'PHP|7.4'
                   package: '$(imageName):$(imageTag)'
                   startUpCommand: ''
