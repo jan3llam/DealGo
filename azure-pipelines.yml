@@ -10,7 +10,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'SC-RG-APP-DEV'
+  dockerRegistryServiceConnection: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
   imageRepository: 'dealgobackend'
   containerRegistry: 'dealgostore.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/docker/7.4/Dockerfile'
