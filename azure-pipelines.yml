@@ -15,62 +15,102 @@ variables:
   azureSubscription: 'b4e3d68f-20ee-447d-898b-4e40e6915fe0'
   tag: '$(Build.BuildNumber)'
   buildContext: './'
+  
+steps:
+  - task: Docker@2
+  displayName: Build and Push Docker image
+  inputs:
+    containerRegistry: $(containerRegistry)
+    repository: $(imageRepository)
+    command: 'buildAndPush'
+    Dockerfile: $(dockerfilePath)
+    buildContext: $(buildContext)
+    tags: |
+      $(tag)
+      latest
+  env:
+    ACR_REGISTRY: $(containerRegistry)
+    ACR_REPOSITORY: $(imageRepository)
+    SERVICE_PRINCIPAL_ID: $(servicePrincipalId)
+    SERVICE_PRINCIPAL_KEY: $(servicePrincipalKey)
+    SERVICE_PRINCIPAL_TENANT: $(tenantId)
 
-stages:
-- stage: Build
-  displayName: Build Docker image
-  jobs:
-  - job: Build
-    displayName: Build Docker image
-    steps:
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: 'acrbackend'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '**/Dockerfile'
-    #     repository: $(imageRepository)
-    #     tags: '$(Build.BuildNumber)'
+- task: AzureCLI@2
+  displayName: 'ACR Login'
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az acr login --name $(acrName)
 
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: 'acrbackend'
-    #     repository: '$(imageRepository)'
-    #     command: 'build'
-    #     Dockerfile: '**/Dockerfile'
-    #     tags: '$(Build.BuildNumber)'
+- task: AzureCLI@2
+  displayName: 'ACR Task'
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az acr task create --registry $(containerRegistry) --name $(imageRepository)-task --image $(imageRepository):$(tag) --context $(buildContext) --file $(dockerfilePath) --arg TAG=$(tag) --subscription $(azureSubscription)
 
-    - task: Docker@2
-      displayName: Build Docker image
-      inputs:
-        command: build
-        Dockerfile: $(dockerfilePath)
-        arguments: '-t $(imageRepository):$(Build.BuildNumber) -f $(dockerfilePath)'
-        containerRegistry: $(acrName)
+# stages:
+# - stage: Build
+#   displayName: Build Docker image
+#   jobs:
+#   - job: Build
+#     displayName: Build Docker image
+#     steps:
+
+#     # - task: Docker@2
+#     #   inputs:
+#     #     containerRegistry: 'acrbackend'
+#     #     command: 'buildAndPush'
+#     #     Dockerfile: '**/Dockerfile'
+#     #     repository: $(imageRepository)
+#     #     tags: '$(Build.BuildNumber)'
+
+#     - task: Docker@2
+#       inputs:
+#         containerRegistry: 'acrbackend'
+#         repository: '$(imageRepository)'
+#         command: 'build'
+#         Dockerfile: '**/Dockerfile'
+#         tags: '$(Build.BuildNumber)'
+
+#     - task: Docker@2
+#       displayName: Build Docker image
+#       inputs:
+#         command: build
+#         Dockerfile: $(dockerfilePath)
+#         repository: $(imageRepository)
+#         tags: '$(imageRepository):$(Build.BuildNumber)'
+#         arguments: '-t $(imageRepository):$(Build.BuildNumber) -f $(dockerfilePath)'
+#         containerRegistry: $(acrName)
     
-    - task: Docker@2
-      displayName: Push Docker image to Azure Container Registry
-      inputs:
-        command: push
-        repository: $(imageRepository)
-        containerRegistry: $(acrName)
+#     - task: Docker@2
+#       displayName: Push Docker image to Azure Container Registry
+#       inputs:
+#         command: push
+#         repository: $(imageRepository)
+#         containerRegistry: $(acrName)
 
-- stage: Deploy
-  displayName: Deploy to Azure Web App
-  dependsOn: Build
-  jobs:
-  - job: Deploy
-    displayName: Deploy to Azure Web App
-    steps:
-    - task: AzureWebApp@1
-      displayName: Azure Web App Deploy
-      inputs:
-        appType: webApp
-        azureSubscription: $(acrResourceGroup)
-        appName: 'dealgo-backend'
-        package: $(imageRepository):$(Build.BuildNumber)
-        deploymentMethod: 'containerRegistry'
-        containerRegistryType: 'Azure Container Registry'
-        dockerNamespace: $(acrName)
-        dockerRegistryEndpoint: $(acrName).azurecr.io
-        enableContinuousDeployment: true
+# - stage: Deploy
+#   displayName: Deploy to Azure Web App
+#   dependsOn: Build
+#   jobs:
+#   - job: Deploy
+#     displayName: Deploy to Azure Web App
+#     steps:
+#     - task: AzureWebApp@1
+#       displayName: Azure Web App Deploy
+#       inputs:
+#         appType: webApp
+#         azureSubscription: $(acrResourceGroup)
+#         appName: 'dealgo-backend'
+#         package: $(imageRepository):$(Build.BuildNumber)
+#         deploymentMethod: 'containerRegistry'
+#         containerRegistryType: 'Azure Container Registry'
+#         dockerNamespace: $(acrName)
+#         dockerRegistryEndpoint: $(acrName).azurecr.io
+#         enableContinuousDeployment: true
         
