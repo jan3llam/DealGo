@@ -25,7 +25,7 @@ stages:
     displayName: Build Docker image
     steps:
     - script: |
-        docker build -f $(dockerfilePath) \
+        docker build -f $(dockerfilePath2) \
         --label com.azure.dev.image.system.teamfoundationcollectionuri=$(System.TeamFoundationCollectionUri) \
         --label com.azure.dev.image.system.teamproject=$(System.TeamProject) \
         --label com.azure.dev.image.build.repository.name=$(imageName) \
@@ -37,7 +37,7 @@ stages:
         --label com.azure.dev.image.build.builduri=$(Build.BuildUri) \
         --label image.base.ref.name=php:7.4-fpm-alpine \
         --label image.base.digest=sha256:0aeb129a60daff2874c5c70fcd9d88cdf3015b4fb4cc7c3f1a32a21e84631036 \
-        -t $(imageName):$(tag) $(buildContext)
+        -t $(imageRepository):$(tag) $(buildContext)
       displayName: Build Docker image
 
     - task: Docker@2
@@ -45,16 +45,15 @@ stages:
       inputs:
         command: build
         Dockerfile: '**/Dockerfile'
-        # arguments: '-t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath) .'
-        arguments: '-t $(imageName):$(tag) -f $(dockerfilePath) .'
+        arguments: '-t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath) .'
+        # arguments: '-t $(imageName):$(tag) -f $(dockerfilePath) .'
         containerRegistry: $(acrName)
     
     - task: Docker@2
       displayName: Push Docker image to Azure Container Registry
       inputs:
         command: push
-        # repository: $(imageRepository)
-        repository: $(imageName)
+        repository: $(imageRepository)
         containerRegistry: $(acrName)
 
 - stage: Deploy
