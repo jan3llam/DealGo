@@ -47,8 +47,8 @@ stages:
               containerRegistry: '$(acrName)'
               repository: '$(imageName)'
               tags: |
-                $(imageTag)
-                latest
+                $(imageName):$(imageTag)
+                $(imageName):latest
             condition: succeeded()
 
   - stage: Deploy
