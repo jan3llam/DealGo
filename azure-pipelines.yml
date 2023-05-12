@@ -14,6 +14,7 @@ variables:
   appServiceName: 'dealgo-backend'
   appServicePlanName: 'asp-backend'
   appServiceResourceGroup: 'RG-APP-DEV'
+  appServiceConnection: 'SC-RG-APP-DEV'
 
   # Docker image details
   imageName: 'dealgo-backend'
@@ -61,3 +62,16 @@ stages:
         environment:
           name: 'dev'
           resourceType: 'VirtualMachine'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - task: AzureWebApp@1
+                displayName: 'Azure Web App Deploy'
+                inputs:
+                  azureSubscription: '$(appServiceConnection)'
+                  appType: 'webAppLinux'
+                  appName: '$(appServiceName)'
+                  runtimeStack: 'PHP|8.0'
+                  package: '$(imageName):$(imageTag)'
+                  startUpCommand: ''
