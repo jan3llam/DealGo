@@ -1,37 +1,41 @@
-# Base image
-FROM php:7.4-fpm
+# base image
+FROM php:8.0-fpm
 
-# Install dependencies
-RUN apt-get update && \
-    apt-get install -y \
+# update and install required packages
+RUN apt-get update && apt-get install -y \
         git \
         curl \
         libpng-dev \
         libonig-dev \
         libxml2-dev \
         zip \
-        unzip
+        unzip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
+# install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Set working directory
-WORKDIR /var/www/html
-
-# Copy project files
-COPY . .
-
-# Install Composer
+# install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install dependencies with Composer
-RUN composer install --no-dev
+# copy source code to container
+COPY . /var/www/html
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# install dependencies
+WORKDIR /var/www/html
+RUN composer install --no-interaction --no-dev --prefer-dist
 
-# Expose port 9000
+# copy configuration files
+COPY .env.example .env
+RUN php artisan key:generate
+
+# set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage
+
+# expose port
 EXPOSE 9000
 
-# Start PHP-FPM
+# start the server
 CMD ["php-fpm"]
