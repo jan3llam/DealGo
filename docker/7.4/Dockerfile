@@ -1,27 +1,47 @@
-# Use the official PHP image
-FROM php:7.4-fpm-alpine
-COPY composer.json /var/www/html/composer.json
+FROM ubuntu:20.04
 
+LABEL maintainer="Taylor Otwell"
 
-# ==================================================== #
-# Install necessary packages
-RUN apk add --no-cache curl git \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && cd /var/www/html \
-    && composer install --no-dev --no-scripts --no-autoloader \
-    && composer dump-autoload --optimize \
-    && rm -rf /root/.composer
+ARG WWWGROUP
 
-# Install dependencies
-RUN apk add --no-cache nginx supervisor
+WORKDIR /var/www/html
 
-# Copy application files to /var/www/html
-COPY . /var/www/html
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=UTC
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-# ==================================================== #
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt-get update \
+    && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 \
+    && mkdir -p ~/.gnupg \
+    && chmod 600 ~/.gnupg \
+    && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
+    && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E5267A6C \
+    && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C \
+    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu focal main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
+    && apt-get update \
+    && apt-get install -y php7.4-cli php7.4-dev \
+       php7.4-pgsql php7.4-sqlite3 php7.4-gd \
+       php7.4-curl php7.4-memcached \
+       php7.4-imap php7.4-mysql php7.4-mbstring \
+       php7.4-xml php7.4-zip php7.4-bcmath php7.4-soap \
+       php7.4-intl php7.4-readline php7.4-pcov \
+       php7.4-msgpack php7.4-igbinary php7.4-ldap \
+       php7.4-redis \
+    && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
+    && curl -sL https://deb.nodesource.com/setup_15.x | bash - \
+    && apt-get install -y nodejs \
+    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
+    && apt-get update \
+    && apt-get install -y yarn \
+    && apt-get install -y mysql-client \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN setcap "cap_net_bind_service=+ep" /usr/bin/php7.4
+
 
 # Install dependencies using Composer
 RUN cd /var/www/html && \
@@ -29,8 +49,6 @@ RUN cd /var/www/html && \
     composer install --no-dev --no-scripts --no-autoloader && \
     composer dump-autoload --optimize
 
-# Set the working directory
-WORKDIR /var/www/html
 
 # Copy the Nginx and Supervisor configuration files into the container
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -41,3 +59,16 @@ EXPOSE 80
 
 # Start Supervisor to run Nginx and PHP-FPM
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
+
+
+RUN groupadd --force -g $WWWGROUP sail
+RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
+
+COPY start-container /usr/local/bin/start-container
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY php.ini /etc/php/7.4/cli/conf.d/99-sail.ini
+RUN chmod +x /usr/local/bin/start-container
+
+EXPOSE 8000
+
+ENTRYPOINT ["start-container"]
