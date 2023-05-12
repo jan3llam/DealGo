@@ -51,7 +51,7 @@ steps:
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        az acr task create --registry $(containerRegistry) --name $(imageRepository)-task --image $(imageRepository):$(tag) --context $(buildContext) --file $(dockerfilePath) --arg TAG=$(tag) --subscription $(azureSubscription)
+        az acr task create --registry 'acrbackend.azurecr.io' --name $(imageRepository)-task --image $(imageRepository):$(tag) --context $(buildContext) --file $(dockerfilePath) --arg TAG=$(tag) --subscription $(azureSubscription)
 
 # stages:
 # - stage: Build
