@@ -46,6 +46,7 @@ stages:
         command: build
         Dockerfile: '**/Dockerfile'
         # arguments: '-t $(imageRepository):$(Build.BuildId) -f $(dockerfilePath) .'
+        arguments: '-t $(imageName):$(tag) -f $(dockerfilePath) .'
         containerRegistry: $(acrName)
     
     - task: Docker@2
