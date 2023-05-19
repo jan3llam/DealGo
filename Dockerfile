@@ -24,10 +24,10 @@ COPY . /var/www/html
 
 # install dependencies
 WORKDIR /var/www/html
-RUN composer install --no-interaction --no-dev --prefer-dist
+RUN composer install --ignore-platform-req=php --no-interaction --no-dev --prefer-dist
 
 # copy configuration files
-COPY .env.example .env
+# COPY .env.example .env
 RUN php artisan key:generate
 
 # set permissions
