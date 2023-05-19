@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: dealgo_db
+      MYSQL_USER: dealgo_user
+      MYSQL_PASSWORD: Peppa1234
+      MYSQL_ROOT_PASSWORD: Peppa1234
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
