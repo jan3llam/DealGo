@@ -36,4 +36,4 @@ stages:
           inputs:
             azureSubscription: '$(APP_SERVICE_CONNECTION)'
             appName: $(APP_SERVICE_NAME)
-            imageName: $(ACR_NAME)/$(IMAGE_NAME):$(IMAGE_TAG)
+            imageName: $(IMAGE_NAME):$(IMAGE_TAG)
