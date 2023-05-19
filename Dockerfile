@@ -1,49 +1,32 @@
-# Use an official PHP runtime as the base image
-FROM php:8.0-apache
+# Base image
+FROM php:7.4-apache
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libonig-dev \
-    libxml2-dev \
     libzip-dev \
-    && docker-php-ext-install \
-    pdo_mysql \
-    mbstring \
-    exif \
-    pcntl \
-    bcmath \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    unzip \
+    && docker-php-ext-install zip pdo pdo_mysql
 
-# Set the working directory
+# Set working directory
 WORKDIR /var/www/html
 
-# Copy the composer files and install dependencies
-COPY composer.json composer.lock ./
-RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
+# Copy application files
+COPY . /var/www/html
 
-# Copy the rest of the application source code
-COPY . .
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Set the ownership and permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache
+# Install application dependencies
+RUN composer install --no-interaction --optimize-autoloader
 
-# Set the environment variables
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-ENV APACHE_LOG_DIR /var/log/apache2
-
-# Enable Apache modules
+# Set up Apache configuration
 RUN a2enmod rewrite
 
-# Copy the virtual host configuration
-COPY ./docker/8.0/apache2/000-default.conf /etc/apache2/sites-available/000-default.conf
+# Set environment variables
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
-# Install MySQL client
-RUN apt-get install -y default-mysql-client
+# Expose port
+EXPOSE 80
 
-# Set the entrypoint
-COPY ./docker/8.0/entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+# Run the Apache server
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
