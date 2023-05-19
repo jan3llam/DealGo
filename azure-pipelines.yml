@@ -34,11 +34,11 @@ stages:
         - task: AzureRmWebAppDeployment@4 
           inputs:
             ConnectionType: 'AzureRM'
-            azureSubscription: 'SC-RG-APP-DEV'
+            azureSubscription: '$(APP_SERVICE_CONNECTION)'
             appType: 'webAppContainer'
-            WebAppName: 'dealgo-backend'
-            DockerNamespace: 'acrbackend.azurecr.io'
-            DockerRepository: 'dealgo-backend'
+            WebAppName: '$(APP_SERVICE_NAME)'
+            DockerNamespace: '$(ACR_LOGIN_SERVER)'
+            DockerRepository: '$(APP_SERVICE_NAME)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
 
       # - job: Deploy
