@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /var/www/html
 
 # Copy the composer files and install dependencies
-COPY composer.json composer.lock ./
+COPY ../composer.json ../composer.lock ./
 RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
 
 # Copy the rest of the application source code
