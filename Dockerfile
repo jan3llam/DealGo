@@ -15,6 +15,7 @@ COPY . /var/www/html
 
 RUN chmod 775 /var/www/html/storage
 RUN chmod 775 /var/www/html/storage/logs
+RUN find /var/www/html/storage/ -type d -exec chmod 775 {} \;
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
