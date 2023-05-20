@@ -25,6 +25,9 @@ RUN composer install --optimize-autoloader --no-dev
 
 # Set the correct file permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod 775 /var/www/html/storage
+RUN chmod 775 /var/www/html/storage/logs
+RUN find /var/www/html/storage/ -type d -exec chmod 775 {} \;
 RUN chmod -R 777 storage
 
 # Generate the Laravel application key
