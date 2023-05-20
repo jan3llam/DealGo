@@ -1,11 +1,16 @@
 # Base image
-FROM php:7.4-apache
+FROM php:8.0
 
 # Install system dependencies
+#RUN apt-get update && apt-get install -y \
+#    libzip-dev \
+#    unzip \
+#    && docker-php-ext-install zip pdo pdo_mysql
+
 RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    unzip \
-    && docker-php-ext-install zip pdo pdo_mysql
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath
 
 # Set working directory
 WORKDIR /var/www/html
@@ -13,9 +18,6 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . /var/www/html
 
-RUN chmod 775 /var/www/html/storage
-RUN chmod 775 /var/www/html/storage/logs
-RUN find /var/www/html/storage/ -type d -exec chmod 775 {} \;
 RUN chmod -R 777 storage
 
 # Install Composer
@@ -23,6 +25,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install application dependencies
 RUN composer install --no-interaction --optimize-autoloader
+
+# Run migrations in the database
+RUN php artisan migrate --force
 
 # Set up Apache configuration
 RUN a2enmod rewrite
