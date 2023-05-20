@@ -1,39 +1,38 @@
-# Base image
-FROM php:7.4
+# Use the official PHP base image
+FROM php:8.0-apache
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    libonig-dev \
-    libxml2-dev \
-    libzip-dev \
-    unzip \
-    && docker-php-ext-install zip pdo pdo_mysql mbstring exif pcntl bcmath
-
-# Set working directory
+# Set the working directory in the container
 WORKDIR /var/www/html
 
-# Copy application files
-COPY . /var/www/html
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    git \
+    zip \
+    unzip
 
-RUN chmod -R 777 storage
+# Install PHP extensions required by Laravel
+RUN docker-php-ext-install pdo_mysql bcmath
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install application dependencies
-RUN composer install --no-interaction --optimize-autoloader
+# Copy the source code to the working directory
+COPY . /var/www/html
 
-# Run migrations in the database
+# Install project dependencies
+RUN composer install --optimize-autoloader --no-dev
+
+# Set the correct file permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 777 storage
+
+# Generate the Laravel application key
+RUN php artisan key:generate
 RUN php artisan migrate --force
 
-# Set up Apache configuration
-RUN a2enmod rewrite
-
-# Set environment variables
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-
-# Expose port
+# Expose the Apache web server port
 EXPOSE 80
 
-# Run the Apache server
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+# Start the Apache web server
+CMD ["apache2-foreground"]
