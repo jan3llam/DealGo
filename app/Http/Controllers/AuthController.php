@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Admin;
 use Validator;
 
 class AuthController extends Controller
@@ -20,7 +21,9 @@ class AuthController extends Controller
 
     public function login()
     {
-        return view('content.login');
+        $user = Admin::find(1); // Change this to retrieve the desired user record
+
+        return view('content.login', compact('user'));
     }
 
     public function submit(Request $request)
