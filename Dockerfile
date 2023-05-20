@@ -1,16 +1,13 @@
 # Base image
-FROM php:8.0
+FROM php:7.4
 
 # Install system dependencies
-#RUN apt-get update && apt-get install -y \
-#    libzip-dev \
-#    unzip \
-#    && docker-php-ext-install zip pdo pdo_mysql
-
 RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath
+    libzip-dev \
+    unzip \
+    && docker-php-ext-install zip pdo pdo_mysql mbstring exif pcntl bcmath
 
 # Set working directory
 WORKDIR /var/www/html
