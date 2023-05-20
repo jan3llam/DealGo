@@ -30,7 +30,7 @@ RUN chmod -R 777 storage
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install project dependencies
-RUN composer install --optimize-autoloader --no-dev --ignore-platform-req
+RUN composer install --optimize-autoloader --no-dev --ignore-platform-req=php
 
 # Generate the Laravel application key
 RUN php artisan key:generate
