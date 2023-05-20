@@ -21,11 +21,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        $user = User::where('email', 'admin@admin.com')
-        // ->orWhere('phone', $identifier)
-        ->first();
-
-        return view('content.login', compact('user'));
+        return view('content.login');
     }
 
     public function submit(Request $request)

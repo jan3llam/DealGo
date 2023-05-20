@@ -31,8 +31,7 @@
 
                     <h4 class="card-title mb-1">Welcome to {{env('APP_NAME')}} - {{env('APP_ENV')}}! 👋</h4>
                     <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
-                    <p>{{ $user->email }}</p>
-                    <p>{{ $user->password }}</p>
+
                     <form class="auth-login-form mt-2" action="{{route('admin.login')}}" method="POST">
                         @csrf
                         <div class="mb-1">
