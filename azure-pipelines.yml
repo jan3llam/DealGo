@@ -34,19 +34,9 @@ stages:
         - task: AzureRmWebAppDeployment@4 
           inputs:
             ConnectionType: 'AzureRM'
-            azureSubscription: '$(APP_SERVICE_CONNECTION)'
+            azureSubscription: '$(SERVICE_CONNECTION)'
             appType: 'webAppContainer'
             WebAppName: '$(APP_SERVICE_NAME)'
             DockerNamespace: '$(ACR_LOGIN_SERVER)'
             DockerRepository: '$(APP_SERVICE_NAME)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
-
-      # - job: Deploy
-      #   displayName: Deploy to Azure App Service
-      #   steps:
-      #   - task: AzureWebAppContainer@1
-      #     displayName: Deploy to Azure Web App
-      #     inputs:
-      #       azureSubscription: '$(APP_SERVICE_CONNECTION)'
-      #       appName: $(APP_SERVICE_NAME)
-      #       imageName: $(IMAGE_NAME):$(IMAGE_TAG)
