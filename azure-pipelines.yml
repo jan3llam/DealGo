@@ -34,7 +34,7 @@ stages:
         - task: AzureRmWebAppDeployment@4 
           inputs:
             ConnectionType: 'AzureRM'
-            azureSubscription: '$(SERVICE_CONNECTION)'
+            azureSubscription: '$(APP_SERVICE_CONNECTION)'
             appType: 'webAppContainer'
             WebAppName: '$(APP_SERVICE_NAME)'
             DockerNamespace: '$(ACR_LOGIN_SERVER)'
