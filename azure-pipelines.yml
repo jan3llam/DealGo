@@ -31,22 +31,12 @@ stages:
       - job: Deploy
         displayName: Deploy to Azure App Service
         steps:
-        - task: AzureRmWebAppDeployment@4
+        - task: AzureRmWebAppDeployment@4 
           inputs:
             ConnectionType: 'AzureRM'
-            azureSubscription: 'SC-RG-APP-DEV'
+            azureSubscription: '$(APP_SERVICE_CONNECTION)'
             appType: 'webAppContainer'
-            WebAppName: 'dealgo-backend-dev'
-            DockerNamespace: 'acrbackenddev'
-            DockerRepository: 'dealgo-backend'
+            WebAppName: '$(APP_SERVICE_NAME)'
+            DockerNamespace: '$(ACR_LOGIN_SERVER)'
+            DockerRepository: '$(IMAGE_NAME)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
-
-        # - task: AzureRmWebAppDeployment@4 
-        #   inputs:
-        #     ConnectionType: 'AzureRM'
-        #     azureSubscription: '$(APP_SERVICE_CONNECTION)'
-        #     appType: 'webAppContainer'
-        #     WebAppName: '$(APP_SERVICE_NAME)'
-        #     DockerNamespace: '$(ACR_LOGIN_SERVER)'
-        #     DockerRepository: '
-        #     DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
