@@ -36,7 +36,6 @@ stages:
             ConnectionType: 'AzureRM'
             azureSubscription: '$(APP_SERVICE_CONNECTION)'
             appType: 'webAppContainer'
-            RuntimeStack: 'PHP|7.4'
             WebAppName: '$(APP_SERVICE_NAME)'
             DockerNamespace: '$(ACR_LOGIN_SERVER)'
             DockerRepository: '$(IMAGE_NAME)'
