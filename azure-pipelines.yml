@@ -40,3 +40,4 @@ stages:
             DockerNamespace: '$(ACR_LOGIN_SERVER)'
             DockerRepository: '$(IMAGE_NAME)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
+            RuntimeStack: 'PHP|7.3'
