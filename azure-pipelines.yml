@@ -38,6 +38,6 @@ stages:
             appType: 'webAppContainer'
             WebAppName: '$(APP_SERVICE_NAME)'
             DockerNamespace: '$(ACR_LOGIN_SERVER)'
-            DockerRepository: '$(IMAGE_NAME)'
+            DockerRepository: '$(APP_SERVICE_NAME):$(IMAGE_TAG)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
             RuntimeStack: 'PHP|5.6'
