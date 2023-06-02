@@ -17,7 +17,7 @@ stages:
           - task: Docker@2
             displayName: Build and Push Docker image
             inputs:
-              containerRegistry: '$(ACR_NAME)'
+              containerRegistry: 'acrbackenddev'
               repository: '$(REPO_NAME)'
               command: 'buildAndPush'
               Dockerfile: '$(DOCKERFILE_PATH)'
