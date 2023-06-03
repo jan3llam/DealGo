@@ -24,6 +24,7 @@ stages:
               tags: '$(IMAGE_TAG)'
             condition: succeeded()
 
+# Deploy the Docker container to the Web App Service
   - stage: Deploy
     displayName: Deploy to Azure App Service
     dependsOn: Build
