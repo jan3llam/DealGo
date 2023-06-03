@@ -48,3 +48,4 @@ stages:
             DockerNamespace: '$(ACR_LOGIN_SERVER)'
             DockerRepository: '$(APP_SERVICE_NAME):$(IMAGE_TAG)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
+            
