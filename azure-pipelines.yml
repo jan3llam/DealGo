@@ -18,7 +18,7 @@ stages:
             displayName: Build and Push Docker image
             inputs:
               containerRegistry: 'acrbackenddev-1274'
-              repository: '$(REPO_NAME)'
+              repository: 'dealgo-backend-dev'
               command: 'buildAndPush'
               Dockerfile: '$(DOCKERFILE_PATH)'
               tags: '$(IMAGE_TAG)'
