@@ -21,7 +21,7 @@ stages:
               repository: '$(REPO_NAME)'
               command: 'buildAndPush'
               Dockerfile: '$(DOCKERFILE_PATH)'
-              # tags: '$(IMAGE_TAG)'
+              tags: '$(IMAGE_TAG)'
             condition: succeeded()
 
   - stage: Deploy
