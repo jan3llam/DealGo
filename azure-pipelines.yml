@@ -46,6 +46,6 @@ stages:
             appType: 'webAppContainer'
             WebAppName: '$(APP_SERVICE_NAME)'
             DockerNamespace: '$(ACR_LOGIN_SERVER)'
-            DockerRepository: '$(APP_SERVICE_NAME):$(IMAGE_TAG)'
+            DockerRepository: '$(APP_SERVICE_NAME)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
             
