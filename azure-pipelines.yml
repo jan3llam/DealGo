@@ -21,7 +21,7 @@ stages:
               repository: '$(REPO_NAME)'
               command: 'buildAndPush'
               Dockerfile: '$(DOCKERFILE_PATH)'
-              tags: '$(IMAGE_TAG)'
+              # tags: '$(IMAGE_TAG)'
             condition: succeeded()
 
   - stage: Deploy
@@ -31,14 +31,6 @@ stages:
       - job: Deploy
         displayName: Deploy to Azure App Service
         steps:
-        # - task: AzureWebApp@1
-        #   displayName: 'Deploy to Azure App Service'
-        #   inputs:
-        #     azureSubscription: '$(APP_SERVICE_CONNECTION)'
-        #     appName: '$(APP_SERVICE_NAME)'
-        #     package: '$(REPO_NAME):$(IMAGE_TAG)'
-        #     deploymentMethod: 'containerImage'
-        #     enableCustomDeployment: true
         - task: AzureRmWebAppDeployment@4 
           inputs:
             ConnectionType: 'AzureRM'
