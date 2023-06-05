@@ -40,7 +40,7 @@ RUN composer install --optimize-autoloader --no-dev --ignore-platform-req=php
 
 # Generate the Laravel application key
 RUN php artisan key:generate
-RUN php artisan migrate --force
+#RUN php artisan migrate --force
 
 # Set up Apache configuration
 RUN a2enmod rewrite
