@@ -20,6 +20,12 @@ RUN docker-php-ext-install pdo_mysql bcmath zip pdo pdo_mysql
 COPY . /var/www/html
 
 # Set the correct file permissions
+
+RUN chown -R www-data:www-data /var/www/html/public /var/www/html/public/images
+RUN chmod 775 /var/www/html/public
+RUN chmod 775 /var/www/html/public/images
+RUN find /var/www/html/public/ -type d -exec chmod 775 {} \;
+
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod 775 /var/www/html/storage
 RUN chmod 775 /var/www/html/storage/logs
