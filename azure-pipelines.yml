@@ -17,7 +17,7 @@ stages:
           - task: Docker@2
             displayName: Build and Push Docker image
             inputs:
-              containerRegistry: 'acrbackenddev-1274'
+              containerRegistry: 'SC-RG-APP-DEV-FREE'
               repository: 'dealgo-backend-dev'
               command: 'buildAndPush'
               Dockerfile: '$(DOCKERFILE_PATH)'
