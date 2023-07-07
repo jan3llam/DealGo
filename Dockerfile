@@ -1,5 +1,5 @@
 # Use the official PHP base image
-FROM php:7.4-apache
+FROM php:8.2-apache
 
 # Set the working directory in the container
 WORKDIR /var/www/html
@@ -36,7 +36,8 @@ RUN chmod -R 777 storage
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install project dependencies
-RUN composer install --optimize-autoloader --no-dev --ignore-platform-req=php
+RUN composer install 
+#RUN composer install --optimize-autoloader --no-dev --ignore-platform-req=php
 
 # Generate the Laravel application key
 RUN php artisan key:generate
