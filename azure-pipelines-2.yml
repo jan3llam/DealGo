@@ -1,0 +1,44 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+- group: prod-dealgo-backend  # Reference the variable group
+
+stages:
+  - stage: Build
+    displayName: Build and Push Docker Image
+    jobs:
+      - job: Build
+        displayName: Build and Push Docker Image
+        steps:
+          - task: Docker@2
+            displayName: Build and Push Docker image
+            inputs:
+              containerRegistry: 'acrdealgoprod'
+              repository: 'dealgo-backend-prod'
+              command: 'buildAndPush'
+              Dockerfile: '$(DOCKERFILE_PATH)'
+              tags: '$(IMAGE_TAG)'
+            condition: succeeded()
+
+# Deploy the Docker container to the Web App Service
+  - stage: Deploy
+    displayName: Deploy to Azure App Service
+    dependsOn: Build
+    jobs:
+      - job: Deploy
+        displayName: Deploy to Azure App Service
+        steps:
+        - task: AzureRmWebAppDeployment@4 
+          inputs:
+            ConnectionType: 'AzureRM'
+            azureSubscription: 'SC-RG-APP-PROD'
+            appType: 'webAppContainer'
+            WebAppName: 'dealgo-backend-prod'
+            DockerNamespace: '$(ACR_LOGIN_SERVER)'
+            DockerRepository: '$(APP_SERVICE_NAME)'
+            DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
+            
