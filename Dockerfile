@@ -19,6 +19,8 @@ RUN docker-php-ext-install pdo_mysql bcmath zip pdo pdo_mysql
 # Copy the source code to the working directory
 COPY . /var/www/html
 
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Set the correct file permissions
 
 RUN chown -R www-data:www-data /var/www/html/public /var/www/html/public/images
