@@ -54,7 +54,7 @@ class CargoController extends Controller
             'LoadingPorts.*.sea_draft' => ['nullable'],
             'LoadingPorts.*.air_draft' => ['nullable'],
             'LoadingPorts.*.beam_restriction' => ['nullable'],
-            'LoadingPorts.*.loading_conditions' => ['nullable', 'between:1,2'],
+            'LoadingPorts.*.loading_conditions' => ['nullable', 'between:1,3'],
             'LoadingPorts.*.mtone_value' => ['nullable'],
             'LoadingPorts.*.SSHINC' => ['nullable'],
             'LoadingPorts.*.SSHEX' => ['nullable'],
