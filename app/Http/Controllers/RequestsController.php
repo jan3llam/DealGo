@@ -131,6 +131,69 @@ class RequestsController extends Controller
     {
         $params = $request->all();
         $validator = Validator::make($params, [
+            'name' => 'required|string',
+            'contract' => 'required|string',
+            'goods' => 'required_if:contract,1,3',
+            'description' => 'required|string',
+            'date_from' => 'required|string',
+            'date_to' => 'required|string',
+            'port_from' => 'required',
+            'port_to' => 'required',
+            'owner' => 'nullable',
+            'tenant' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->error('missingParameters', $validator->failed());
+        }
+
+        $item = new ShippingRequest;
+
+        $item->name = $params['name'];
+        $item->tenant_id = $params['tenant'];
+        $item->owner_id = $params['owner'] === 'null' ? null : $params['owner'];
+        $item->port_from = $params['port_from'];
+        $item->port_to = $params['port_to'];
+        $item->date_from = Carbon::parse($params['date_from'])->toDateString();
+        $item->date_to = Carbon::parse($params['date_to'])->toDateString();
+        $item->description = $params['description'];
+        $item->contract = $params['contract'];
+
+        $files = $request->file('files', []);
+        $filesArr = [];
+        if ($files) {
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+                $fileName = Str::random(18) . '.' . $extension;
+                Storage::disk('public_images')->putFileAs('', $file, $fileName);
+                $filesArr[] = $fileName;
+            }
+        }
+
+        $item->files = json_encode($filesArr);
+
+        $item->save();
+
+        $goods = $request->input('goods', []);
+        foreach ($goods as $index => $good) {
+            $item->goods_types()->attach($good['gtype'], ['weight' => $good['weight']]);
+        }
+
+        if ($request->contract != 1) {
+
+            $routes = $request->input('routes', []);
+            foreach ($routes as $index => $route) {
+                $item->routes()->attach($route, ['order' => $index]);
+            }
+        }
+
+        return response()->success();
+    }
+
+    public function addOld(Request $request)
+    {
+        $params = $request->all();
+        $validator = Validator::make($params, [
             'contract' => 'required|string',
             'routes' => 'required_if:contract,2,3,4',
             'goods' => 'required_if:contract,1,3',
@@ -190,6 +253,69 @@ class RequestsController extends Controller
 
         return response()->success();
     }
+    // public function add(Request $request)
+    // {
+    //     $params = $request->all();
+    //     $validator = Validator::make($params, [
+    //         'contract' => 'required|string',
+    //         'routes' => 'required_if:contract,2,3,4',
+    //         'goods' => 'required_if:contract,1,3',
+    //         'description' => 'required|string',
+    //         'date_from' => 'required|string',
+    //         'date_to' => 'required|string',
+    //         'port_from' => 'required',
+    //         'port_to' => 'required',
+    //         'owner' => 'nullable',
+    //         'tenant' => 'required|numeric',
+    //         'name' => 'required|string',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->error('missingParameters', $validator->failed());
+    //     }
+
+    //     $item = new ShippingRequest;
+
+    //     $item->name = $params['name'];
+    //     $item->tenant_id = $params['tenant'];
+    //     $item->owner_id = $params['owner'] === 'null' ? null : $params['owner'];
+    //     $item->port_from = $params['port_from'];
+    //     $item->port_to = $params['port_to'];
+    //     $item->date_from = Carbon::parse($params['date_from'])->toDateString();
+    //     $item->date_to = Carbon::parse($params['date_to'])->toDateString();
+    //     $item->description = $params['description'];
+    //     $item->contract = $params['contract'];
+
+    //     $files = $request->file('files', []);
+    //     $filesArr = [];
+    //     if ($files) {
+    //         foreach ($files as $file) {
+    //             $extension = $file->getClientOriginalExtension();
+    //             $fileName = Str::random(18) . '.' . $extension;
+    //             Storage::disk('public_images')->putFileAs('', $file, $fileName);
+    //             $filesArr[] = $fileName;
+    //         }
+    //     }
+
+    //     $item->files = json_encode($filesArr);
+
+    //     $item->save();
+
+    //     $goods = $request->input('goods', []);
+    //     foreach ($goods as $index => $good) {
+    //         $item->goods_types()->attach($good['gtype'], ['weight' => $good['weight']]);
+    //     }
+
+    //     if ($request->contract != 1) {
+
+    //         $routes = $request->input('routes', []);
+    //         foreach ($routes as $index => $route) {
+    //             $item->routes()->attach($route, ['order' => $index]);
+    //         }
+    //     }
+
+    //     return response()->success();
+    // }
 
     public function update(Request $request)
     {

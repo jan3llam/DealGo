@@ -73,6 +73,8 @@ class OffersController extends Controller
         if ($date_to) {
             $to = Carbon::parse(date('Y-m-d', strtotime($date_to)))->toDateString();
             $query->where('date_to', '<=', $to);
+        } else {
+            $query->where('date_to', '>=', $now);
         }
 
         if ($owner) {

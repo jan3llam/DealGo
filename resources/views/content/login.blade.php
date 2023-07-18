@@ -29,7 +29,7 @@
                         <h2 class="brand-text text-primary ms-1"></h2>
                     </a>
 
-                    <h4 class="card-title mb-1">Welcome to {{env('APP_NAME')}} - {{env('APP_ENV')}}! 👋</h4>
+                    <h4 class="card-title mb-1">Welcome to {{env('APP_NAME')}}! 👋</h4>
                     <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
 
                     <form class="auth-login-form mt-2" action="{{route('admin.login')}}" method="POST">
@@ -41,6 +41,7 @@
                                    placeholder="john@example.com" aria-describedby="login-email"/>
                             @if ($errors->has('email'))
                                 <div class="invalid-feedback">{{$errors->first('email') }}</div>
+
                             @endif
                         </div>
                         <div class="mb-1">

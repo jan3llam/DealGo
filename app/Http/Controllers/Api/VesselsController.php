@@ -205,12 +205,13 @@ class VesselsController extends Controller
             'type' => 'required|numeric',
             'country' => 'required|numeric',
             'imo' => 'required|string|unique:vessels,imo',
-            'mmsi' => 'required|string|unique:vessels,imo',
+            'mmsi' => 'required|string|unique:vessels,mmsi',
             'capacity' => 'required',
             'build' => 'required',
             'image' => 'required',
+            'additional_info' => ['nullable', 'string'],
+            'main_type' => ['nullable', 'numeric'],
         ]);
-
         if ($validator->fails()) {
             if (isset($validator->failed()['imo']['Unique']) || isset($validator->failed()['mmsi']['Unique'])) {
                 return response()->error('alreadyExistVessel');
@@ -232,6 +233,12 @@ class VesselsController extends Controller
         $item->build_year = $params['build'];
         $item->status = $request->input('status', 1);
         $item->files = json_encode($request->input('files', []));
+        if(isset($params['additional_info'])){
+            $item->additional_info = $params['additional_info'];
+        }
+        if(isset($params['main_type'])){
+            $item->main_type = $params['main_type'];
+        }
 
         $item->save();
 
@@ -256,6 +263,8 @@ class VesselsController extends Controller
             'capacity' => 'required',
             'build' => 'required',
             'status' => 'required',
+            'additional_info' => ['nullable', 'string'],
+            'main_type' => ['nullable', 'numeric'],
         ]);
 
         if ($validator->fails()) {
@@ -278,6 +287,13 @@ class VesselsController extends Controller
         $item->build_year = $params['build'];
         $item->status = $params['status'];
         $item->files = json_encode($request->input('files', []));
+
+        if(isset($params['additional_info'])){
+            $item->additional_info = $params['additional_info'];
+        }
+        if(isset($params['main_type'])){
+            $item->main_type = $params['main_type'];
+        }
 
         $item->save();
 

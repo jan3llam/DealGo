@@ -212,6 +212,8 @@ class VesselsController extends Controller
             'capacity' => 'required',
             'build' => 'required',
             'image' => 'required|file',
+            'additional_info' => ['nullable', 'string'],
+            'main_type' => ['nullable', 'numeric'],
         ]);
 
         if ($validator->fails()) {
@@ -240,6 +242,12 @@ class VesselsController extends Controller
         $item->capacity = $params['capacity'];
         $item->build_year = $params['build'];
         $item->status = 1;
+        if(isset($params['additional_info'])){
+            $item->additional_info = $params['additional_info'];
+        }
+        if(isset($params['main_type'])){
+            $item->main_type = $params['main_type'];
+        }
 
         $files = $request->file('files', []);
         $filesArr = [];
@@ -275,6 +283,8 @@ class VesselsController extends Controller
             'mmsi' => 'required|string',
             'capacity' => 'required',
             'build' => 'required',
+            'additional_info' => ['nullable', 'string'],
+            'main_type' => ['nullable', 'numeric'],
         ]);
 
         if ($validator->fails()) {
@@ -302,6 +312,13 @@ class VesselsController extends Controller
         $item->build_year = $params['build'];
 
         $item->status = 1;
+
+        if(isset($params['additional_info'])){
+            $item->additional_info = $params['additional_info'];
+        }
+        if(isset($params['main_type'])){
+            $item->main_type = $params['main_type'];
+        }
 
         $files = $request->file('files', []);
         $filesArr = [];

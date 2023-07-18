@@ -12,6 +12,38 @@ class Request extends Model
 
 
     protected $with = ['port_from', 'port_to', 'routes'];
+    protected $fillable = [
+        'name',
+        'port_from',
+        'port_to',
+        'routes',
+        'tenant_id',
+        'owner_id',
+        'contract',
+        'date_from',
+        'date_to',
+        'description',
+        'files',
+        'approved',
+        'matrix',
+        'vessel_category',
+        'vessel_category_json',
+        'prompt',
+        'spot',
+        'dead_spot',
+        'sole_part',
+        'address_commission',
+        'broker_commission',
+        'part_type',
+        'min_weight',
+        'max_weight',
+        'min_cbm',
+        'max_cbm',
+        'min_cbft',
+        'max_cbft',
+        'min_sqm',
+        'max_sqm',
+    ];
 
     public function owner()
     {
@@ -57,4 +89,15 @@ class Request extends Model
     {
         return json_decode($value);
     }
+
+    public function portRequest()
+    {
+        return $this->hasMany(PortRequest::class);
+    }
+
+    public function loadRequest()
+    {
+        return $this->hasMany(LoadRequest::class);
+    }
+
 }
