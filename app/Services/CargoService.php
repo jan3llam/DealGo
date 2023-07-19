@@ -33,10 +33,10 @@ class CargoService
 
         $request['files'] = json_encode($filesArr);
         $ship = ShippingRequest::create(Arr::except($request, [
-            'loadingPort'
+            'LoadingPorts'
         ]));
 
-        foreach($request['loadingPort'] as $port){
+        foreach($request['LoadingPorts'] as $port){
             $portLoad = $ship->portRequest()->create($port);
             foreach($port['LoadRequests'] as $load){
                 $load = $ship->loadRequest()->create($load);
