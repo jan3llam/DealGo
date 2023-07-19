@@ -19,7 +19,7 @@ class CargoService
         DB::beginTransaction();
         $request['date_from'] = Carbon::parse($request['date_from'])->toDateString();
         $request['date_to'] = Carbon::parse($request['date_to'])->toDateString();
-        $request['tenant_id'] = $request['tenant'];
+        $request['tenant_id'] = auth()->user()->id;
 
         $filesArr = [];
         if ($files) {
@@ -33,10 +33,10 @@ class CargoService
 
         $request['files'] = json_encode($filesArr);
         $ship = ShippingRequest::create(Arr::except($request, [
-            'LoadingPorts'
+            'loadingPort'
         ]));
 
-        foreach($request['LoadingPorts'] as $port){
+        foreach($request['loadingPort'] as $port){
             $portLoad = $ship->portRequest()->create($port);
             foreach($port['LoadRequests'] as $load){
                 $load = $ship->loadRequest()->create($load);
