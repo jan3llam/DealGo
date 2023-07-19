@@ -17,6 +17,24 @@ class CargoController extends Controller
         $this->cargoService = $cargoService;
     }
 
+    public function list()
+    {
+        $data = $this->cargoService->listCargo();
+        return response()->success($data);
+    }
+
+    public function show($cargo_id)
+    {
+        $data = $this->cargoService->showCargo($cargo_id);
+        return response()->success($data);
+    }
+
+    public function delete($cargo_id)
+    {
+        $data = $this->cargoService->delete($cargo_id);
+        return response()->success();
+    }
+
     public function add(Request $request)
     {
         $params = $request->all();
@@ -79,4 +97,5 @@ class CargoController extends Controller
         $data = $this->cargoService->addCargo($params,$files);
         return response()->success();
     }
+
 }

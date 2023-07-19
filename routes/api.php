@@ -216,10 +216,9 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
 
     Route::group(['prefix' => 'cargo'], function () {
         Route::get('/list', [CargoController::class, 'list']);
-        Route::get('/get/{id}', [CargoController::class, 'get']);
+        Route::get('/get/{id}', [CargoController::class, 'show']);
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/add', [CargoController::class, 'add']);
-            Route::post('/suggest', [CargoController::class, 'suggest']);
             Route::delete('/{id}', [CargoController::class, 'delete']);
         });
     });

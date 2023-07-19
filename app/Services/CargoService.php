@@ -13,8 +13,40 @@ use Illuminate\Support\Str;
 
 class CargoService
 {
+    public function listCargo()
+    {
+        $ships = ShippingRequest::select(
+            'id',
+            'name',
+            'port_from',
+            'port_to',
+            'date_from',
+            'date_to',
+            'contract'
+        )->get();
+        return $ships;
+    }
 
-    public function addCargo(array $request,$files)
+    public function showCargo($cargo_id)
+    {
+        $ship = ShippingRequest::find($cargo_id);
+        return $ship;
+    }
+
+    public function delete($id)
+    {
+        $item = ShippingRequest::withTrashed()->where('id', $id)->first();
+
+        if ($item) {
+            if ($item->responses()->count() > 0) {
+                return response()->error('cannotDelete');
+            }
+            $item->delete();
+        }
+
+    }
+
+    public function addCargo(array $request, $files)
     {
         DB::beginTransaction();
         $request['date_from'] = Carbon::parse($request['date_from'])->toDateString();
@@ -36,9 +68,9 @@ class CargoService
             'LoadingPorts'
         ]));
 
-        foreach($request['LoadingPorts'] as $port){
+        foreach ($request['LoadingPorts'] as $port) {
             $portLoad = $ship->portRequest()->create($port);
-            foreach($port['LoadRequests'] as $load){
+            foreach ($port['LoadRequests'] as $load) {
                 $load = $ship->loadRequest()->create($load);
             }
         }
