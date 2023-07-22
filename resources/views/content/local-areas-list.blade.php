@@ -191,8 +191,10 @@
     {{-- Page js files --}}
 
    
+<script>
+    
     $('#globalarea').select2({});
-
+</script>
     
     <script src="{{ asset(mix('js/scripts/pages/local-areas-list.js')) }}"></script>
 @endsection
