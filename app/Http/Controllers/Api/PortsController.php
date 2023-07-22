@@ -17,6 +17,7 @@ class PortsController extends Controller
         $query = Port::withoutTrashed()->where('status', 1);
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
+        $flter_by_local_area = $request->input('localarea', 0);
         $search_val = $request->input('keyword', '');
         $search_clm = ['city.name_ar', 'city.name_en', 'city.name_fr', 'city.country.name_ar', 'city.country.name_en', 'city.country.name_fr', 'name'];
         $order_field = 'name';
@@ -42,6 +43,11 @@ class PortsController extends Controller
 
                 }
             });
+        }
+
+
+        if($flter_by_local_area){
+            $query->Where('local_area_id', $flter_by_local_area );
         }
 
         $total = $query->limit($page_size)->count();

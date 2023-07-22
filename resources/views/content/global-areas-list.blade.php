@@ -6,7 +6,7 @@
      
 @endphp
 
-@section('title', __('locale.Ports'))
+@section('title', __('locale.GlobalAreas'))
 
 @section('vendor-style')
     {{-- Page Css files --}}
@@ -29,7 +29,7 @@
 @endsection
 @section('content')
     <!-- users list start -->
-    <section class="ports-list">
+    <section class="globalareas-list">
         <!-- list and filter start -->
         <div class="card">
             <div class="card-body border-bottom">
@@ -37,36 +37,30 @@
                 <input type="hidden" id="status_filter" value="1">
             </div>
             <div class="card-datatable table-responsive pt-0">
-                <table class="ports-list-table table">
+                <table class="globalareas-list-table table">
                     <thead class="table-light">
                     <tr>
                         <th></th>
                         <th></th>
                         <th>#</th>
                         <th>{{__('locale.Name')}}</th>
-                        <th>{{__('locale.Country')}}</th>
-                        <th>{{__('locale.LocalArea')}}</th>
                         <th>{{__('locale.UNLocode')}}</th>
-                        <th>{{__('locale.Latitude')}}</th>
-                        <th>{{__('locale.Longitude')}}</th>
                         <th>{{__('locale.Status')}}</th>
                         <th>{{__('locale.Actions')}}</th>
                     </tr>
                     </thead>
                 </table>
             </div>
-            <!-- Modal to add new user starts-->
-            <div class="modal modal-slide-in new-port-modal fade" data-bs-keyboard="false" data-bs-backdrop="static"
+            <!-- Modal to add new area-->
+            <div class="modal modal-slide-in new-global-area-modal fade" data-bs-keyboard="false" data-bs-backdrop="static"
                  id="modals-slide-in">
                 <div class="modal-dialog">
-                    <form class="add-new-port modal-content pt-0">
+                    <form class="add-global-area-form modal-content pt-0">
                         <input type="hidden" value="1" id="form_status">
                         <input type="hidden" value="" id="object_id">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Port')}}</h5>
-                            <input type="hidden" id="edit___label" value="{{__('locale.Edit')}} {{__('locale.Port')}}"> 
-
+                            <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.GlobalArea')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -93,42 +87,9 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="country">{{__('locale.Country')}}</label>
-                                <select type="text" class="form-control dt-full-name select2" id="country"
-                                        name="country">
-                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{$country->id}}">{{$country->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-1">
-                                <label class="form-label" for="localarea">{{__('locale.LocalArea')}}</label>
-                                <select type="text" class="form-control dt-full-name select2" id="localarea"
-                                        name="localarea">
-                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
-                                    @foreach($localAreas as $localArea)
-                                        <option value="{{$localArea->id}}">{{$localArea->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-1" style="display: none">
-                                <input type="hidden" value="" id="city_id">
-                                <label class="form-label" for="city">{{__('locale.City')}}</label>
-                                <select type="text" class="form-control dt-full-name select2" id="city"
-                                        name="city">
-                                    <option value="" disabled selected>{{__('locale.KindlyChoose')}}</option>
-                                </select>
-                            </div>
-                            <div class="mb-1">
-                                <input type="text" class="form-control" name="longitude" id="longitude">
-                                <input type="text" class="form-control" name="latitude" id="latitude">
-                                <label class="form-label" for="map">{{__('locale.LocationOnMap')}}</label>
-                                <input type="text" class="form-control dt-full-name" id="google-link"
-                                       placeholder="{{__('locale.GoogleLink')}}" name="google-link"/>
-                                <div id="map" style="min-height: 350px"></div>
-                            </div>
+                           
+                           
+                            
                             <div class="mb-1">
                                 <label class="form-label" for="unlocode">{{__('locale.UNLocode')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="unlocode"
@@ -149,14 +110,14 @@
                     </form>
                 </div>
             </div>
+            <!-- Modal to view area-->
 
-            <div class="modal modal-slide-in view-port-modal fade">
+            <div class="modal modal-slide-in view-global-area-modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
-                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Port')}}</h5>
-                       
+                            <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.GlobalArea')}}</h5>
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
@@ -165,18 +126,9 @@
                                         <span class="fw-bolder me-25">{{__('locale.Name')}}:</span>
                                         <span id="view-name"></span>
                                     </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.Country')}}:</span>
-                                        <span id="view-country"></span>
-                                    </li>
-                                    <li class="mb-75" style="display: none;">
-                                        <span class="fw-bolder me-25">{{__('locale.City')}}:</span>
-                                        <span id="view-city"></span>
-                                    </li>
-                                    <li class="mb-75">
-                                        <span class="fw-bolder me-25">{{__('locale.LocationOnMap')}}:</span>
-                                        <div id="view-map" style="min-height: 350px"></div>
-                                    </li>
+                                  
+                                    
+                                     
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.UNLocode')}}:</span>
                                         <span id="view-unlocode"></span>
@@ -225,44 +177,7 @@
 @section('page-script')
     {{-- Page js files --}}
 
-    <script>
-
-        $('#localarea').select2({});
-
-
-
-        $('#country').on("change.select2", function () {
-            var $element = $(this);
-            var target = $element.parents('form').find('select#city');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: '/api/admin/cities/list/' + $element.find("option:selected").val(),
-                type: 'GET',
-                cache: false,
-                contentType: 'application/json',
-                dataType: "json",
-                success: function (result) {
-                    var dbSelect = target;
-                    dbSelect.empty();
-                    for (var i = 0; i < result.data.length; i++) {
-                        dbSelect.append($('<option/>', {
-                            value: result.data[i].id,
-                            text: result.data[i].name
-                        }));
-                    }
-                    if ($('#city_id').val()) {
-                        target.val($('#city_id').val());
-                        target.trigger('change');
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
-            });
-        });
-    </script>
+   
     <script>
 
         var latElement = $('#latitude').val() ? $('#latitude').val() : '24.7241504';
@@ -319,5 +234,5 @@
     <script
         src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&callback=initMap&libraries=&v=weekly"
         async></script>
-    <script src="{{ asset(mix('js/scripts/pages/ports-list.js')) }}"></script>
+    <script src="{{ asset(mix('js/scripts/pages/global-areas-list.js')) }}"></script>
 @endsection

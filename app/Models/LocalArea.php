@@ -7,34 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 
-class Port extends Model
+class LocalArea extends Model
 {
     use HasFactory, SoftDeletes, HasTranslations;
 
     public $translatable = ['name'];
-    protected $with = ['city.country'];
+    protected $table = 'local_areas';
+    protected $with = ['globalarea'];
     protected $appends = ['name_translation'];
 
-    public function city()
-    {
-        return $this->belongsTo(City::class);
+    public function globalarea()
+    {    
+        return $this->belongsTo(GlobalArea::class,'global_area_id','id');
     }
-    public function localarea()
+
+    public function ports()
     {
-        return $this->belongsTo(LocalArea::class,'local_area_id','id');
+       
+        return $this->hasMany(Port::class,'local_area_id','id');
     }
+
     public function getNameTranslationAttribute()
     {
         return $this->getTranslation('name', app()->getLocale());
     }
 
-    public function requests()
-    {
-        return $this->hasMany(Request::class, 'port_from', 'id');
-    }
-
-    public function offers()
-    {
-        return $this->hasMany(Offer::class, 'port_from', 'id');
-    }
+    
 }

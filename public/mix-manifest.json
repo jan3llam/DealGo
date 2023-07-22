@@ -123,6 +123,8 @@
     "/js/scripts/pages/offices-list.js": "/js/scripts/pages/offices-list.js?id=e9f970356b1a0ddf7f14",
     "/js/scripts/pages/owners-list.js": "/js/scripts/pages/owners-list.js?id=cae9be8c04a8a1ed0183",
     "/js/scripts/pages/ports-list.js": "/js/scripts/pages/ports-list.js?id=5caf7e68b4bc87ad23ef",
+    "/js/scripts/pages/local-areas-list.js": "/js/scripts/pages/local-areas-list.js?id=5caf7e68b4bc87ad23eh",
+    "/js/scripts/pages/global-areas-list.js": "/js/scripts/pages/global-areas-list.js?id=5caf7e68b4bc87ad23eg",
     "/js/scripts/pages/posts-list.js": "/js/scripts/pages/posts-list.js?id=828f0e8a06aaa81cf12a",
     "/js/scripts/pages/requests-list.js": "/js/scripts/pages/requests-list.js?id=559ba93de048331eb356",
     "/js/scripts/pages/requests-responses-list.js": "/js/scripts/pages/requests-responses-list.js?id=2f5e614e061af9ecf7e3",

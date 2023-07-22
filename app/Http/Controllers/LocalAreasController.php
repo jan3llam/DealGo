@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Country;
 use App\Models\Language;
-use App\Models\Port;
 use App\Models\LocalArea;
+use App\Models\GlobalArea;
 use Illuminate\Http\Request;
 use Validator;
 
-class PortsController extends Controller
+class LocalAreasController extends Controller
 {
     public function __construct()
     {
@@ -22,26 +21,24 @@ class PortsController extends Controller
     public function list()
     {
         $breadcrumbs = [
-            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.Ports')]
+            ['link' => "admin/home", 'name' => __('locale.Home')], ['name' => __('locale.LocalArea')]
         ];
+        $localAreas = GlobalArea::withoutTrashed()->get();
 
-        $countries = Country::all();
-        $languages = Language::withoutTrashed()->get();
-        $localAreas = LocalArea::withoutTrashed()->get();
+         $languages = Language::withoutTrashed()->get();
 
-        return view('content.ports-list', ['breadcrumbs' => $breadcrumbs, 'countries' => $countries, 'languages' => $languages, 'localAreas' => $localAreas]);
+        return view('content.local-areas-list', ['breadcrumbs' => $breadcrumbs, 'languages' => $languages, 'localAreas' => $localAreas]);
     }
 
     public function list_api(Request $request)
     {
 
         $data = [];
-        $search_clm = ['id', 'city.name_ar', 'city.name_en', 'city.name_fr', 'city.country.name_ar', 'city.country.name_en', 'city.country.name_fr', 'name'];
+        $search_clm = ['id', 'name','global_area_id'];
         $order_field = 'created_at';
         $order_sort = 'desc';
-
         $params = $request->all();
-        $query = Port::query();
+        $query = LocalArea::query();
 
         $search_val = isset($params['search']) ? $params['search'] : null;
         $sort_field = isset($params['order']) ? $params['order'] : null;
@@ -52,6 +49,8 @@ class PortsController extends Controller
         if ($search_val) {
             $query->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
+                    return $item;
+
                     $item = explode('.', $item);
                     if (sizeof($item) == 3) {
                         $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
@@ -72,7 +71,7 @@ class PortsController extends Controller
         }
 
         if ($sort_field) {
-            $order_field = str_replace('_translation', '', $sort_field);
+            $order_field = $sort_field;
             $order_sort = $params['direction'];
         }
 
@@ -99,9 +98,9 @@ class PortsController extends Controller
         $total = $query->limit($per_page)->count();
 
         $data['data'] = $query->skip($page)
-        ->with('localarea')->with('city.country')->take($per_page)->orderBy($order_field, $order_sort)->get();
+            ->with('globalarea')->take($per_page)->orderBy($order_field, $order_sort)->get();
 
-
+          
         $data['meta']['draw'] = $request->input('draw');
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $total;
@@ -109,7 +108,7 @@ class PortsController extends Controller
 
         return response()->success($data);
     }
-
+ 
 
     public function add(Request $request)
     {
@@ -118,9 +117,6 @@ class PortsController extends Controller
         
         $validator = Validator::make($params, [
             'name' => 'required|array',
-            'city' => 'required|string',
-             'latitude' => 'required|string',
-            'longitude' => 'required|string',
             'unlocode' => 'required|string',
         ]);
 
@@ -128,14 +124,12 @@ class PortsController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $item = new Port;
+        $item = new LocalArea;
 
         $item->name = $params['name'];
-        $item->city_id = $params['city'];
-        $item->local_area_id = $params['localarea'];
-        $item->latitude = $params['latitude'];
-        $item->longitude = $params['longitude'];
-        $item->unlocode = $params['unlocode'];
+         $item->global_area_id = $params['globalarea'];
+        
+         $item->unlocode = $params['unlocode'];
 
         $item->status = 1;
 
@@ -151,9 +145,6 @@ class PortsController extends Controller
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => 'required|array',
-            'city' => 'required|string',
-            'latitude' => 'required|string',
-            'longitude' => 'required|string',
             'unlocode' => 'required|string',
         ]);
 
@@ -161,13 +152,10 @@ class PortsController extends Controller
             return response()->error('missingParameters');
         }
 
-        $item = Port::withTrashed()->where('id', $id)->first();
+        $item = LocalArea::withTrashed()->where('id', $id)->first();
 
         $item->name = $params['name'];
-        $item->city_id = $params['city'];
-        $item->local_area_id = $params['localarea'];
-        $item->latitude = $params['latitude'];
-        $item->longitude = $params['longitude'];
+        $item->global_area_id = $params['globalarea'];
         $item->unlocode = $params['unlocode'];
 
         $item->save();
@@ -178,7 +166,7 @@ class PortsController extends Controller
     public function bulk_delete(Request $request)
     {
         foreach ($request->input('ids', []) as $id) {
-            $item = Port::withTrashed()->where('id', $id)->first();
+            $item = LocalArea::withTrashed()->where('id', $id)->first();
             if ($item) {
                 $item->delete();
             }
@@ -189,7 +177,7 @@ class PortsController extends Controller
     public function delete($id)
     {
 
-        $item = Port::withTrashed()->where('id', $id)->first();
+        $item = LocalArea::withTrashed()->where('id', $id)->first();
 
         if ($item) {
             $item->status = 0;
@@ -202,7 +190,7 @@ class PortsController extends Controller
 
     public function status($id)
     {
-        $item = Port::withTrashed()->where('id', $id)->first();
+        $item = LocalArea::withTrashed()->where('id', $id)->first();
         if ($item) {
 
             if ($item->status === 0 && $item->deleted_at !== null) {

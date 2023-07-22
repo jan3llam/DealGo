@@ -20,6 +20,8 @@ use App\Http\Controllers\OffersController;
 use App\Http\Controllers\OffersResponsesController;
 use App\Http\Controllers\OfficesController;
 use App\Http\Controllers\OwnersController;
+use App\Http\Controllers\LocalAreasController;
+use App\Http\Controllers\GlobalAreasController;
 use App\Http\Controllers\PortsController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\RequestsController;
@@ -64,6 +66,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('requests', [RequestsController::class, 'list'])->name('requests');
         Route::get('offers', [OffersController::class, 'list'])->name('offers');
         Route::get('ports', [PortsController::class, 'list'])->name('ports');
+        Route::get('local_areas', [LocalAreasController::class, 'list'])->name('local_areas');
+        Route::get('global_areas', [GlobalAreasController::class, 'list'])->name('global_areas');
         Route::get('roles', [RolesController::class, 'list'])->name('roles');
         Route::post('roles/add', [RolesController::class, 'add'])->name('roles.add');
         Route::post('roles/update', [RolesController::class, 'update'])->name('roles.update');

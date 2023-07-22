@@ -5,7 +5,6 @@ use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\Api\ArticlesController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\CargoController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\CitiesController;
@@ -20,6 +19,8 @@ use App\Http\Controllers\Api\OffersController;
 use App\Http\Controllers\Api\OffersResponsesController;
 use App\Http\Controllers\Api\PaymentsController;
 use App\Http\Controllers\Api\PortsController;
+use App\Http\Controllers\Api\LocalAreasController;
+use App\Http\Controllers\Api\GlobalAreasController;
 use App\Http\Controllers\Api\PostsController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RequestsController;
@@ -45,6 +46,8 @@ use App\Http\Controllers\OffersResponsesController as OffersResponsesAPI;
 use App\Http\Controllers\OfficesController as OfficesAPI;
 use App\Http\Controllers\OwnersController as OwnersAPI;
 use App\Http\Controllers\PortsController as PortsAPI;
+use App\Http\Controllers\LocalAreasController as LocalAreasAPI;
+use App\Http\Controllers\GlobalAreasController as GlobalAreasAPI;
 use App\Http\Controllers\PostsController as PostsAPI;
 use App\Http\Controllers\RequestsController as RequestsAPI;
 use App\Http\Controllers\RequestsResponsesController as RequestsResponsesAPI;
@@ -115,6 +118,13 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/list_parent', [GoodsTypesController::class, 'list_parent']);
     });
 
+    Route::group(['prefix' => 'local_areas'], function () {
+        Route::get('/list', [LocalAreasController::class, 'list']);
+    });
+
+ Route::group(['prefix' => 'global_areas'], function () {
+        Route::get('/list', [GlobalAreasController::class, 'list']);
+    });
     Route::group(['prefix' => 'ports'], function () {
         Route::get('/list', [PortsController::class, 'list']);
         Route::get('/list_map', [PortsController::class, 'list_map']);
@@ -203,7 +213,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::post('/approve/{id}', [OffersResponsesController::class, 'approve']);
         Route::delete('/{id}', [OffersResponsesController::class, 'delete']);
     });
-    //old apis
+
     Route::group(['prefix' => 'requests'], function () {
         Route::get('/list', [RequestsController::class, 'list']);
         Route::get('/get/{id}', [RequestsController::class, 'get']);
@@ -211,15 +221,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
             Route::post('/add', [RequestsController::class, 'add']);
             Route::post('/suggest', [RequestsController::class, 'suggest']);
             Route::delete('/{id}', [RequestsController::class, 'delete']);
-        });
-    });
-
-    Route::group(['prefix' => 'cargo'], function () {
-        Route::get('/list', [CargoController::class, 'list']);
-        Route::get('/get/{id}', [CargoController::class, 'show']);
-        Route::group(['middleware' => 'auth:api'], function () {
-            Route::post('/add', [CargoController::class, 'add']);
-            Route::delete('/{id}', [CargoController::class, 'delete']);
         });
     });
 
@@ -314,6 +315,24 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
         Route::delete('/{id}', [OwnersAPI::class, 'delete']);
     });
 
+    Route::group(['prefix' => 'local_areas'], function () {
+        Route::get('/list', [LocalAreasAPI::class, 'list_api']);
+        Route::post('/add', [LocalAreasAPI::class, 'add']);
+        Route::post('/update', [LocalAreasAPI::class, 'update']);
+        Route::put('/status/{id}', [LocalAreasAPI::class, 'status']);
+        Route::delete('/bulk', [LocalAreasAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [LocalAreasAPI::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'global_areas'], function () {
+        Route::get('/list', [GlobalAreasAPI::class, 'list_api']);
+        Route::post('/add', [GlobalAreasAPI::class, 'add']);
+        Route::post('/update', [GlobalAreasAPI::class, 'update']);
+        Route::put('/status/{id}', [GlobalAreasAPI::class, 'status']);
+        Route::delete('/bulk', [GlobalAreasAPI::class, 'bulk_delete']);
+        Route::delete('/{id}', [GlobalAreasAPI::class, 'delete']);
+    });
+    
     Route::group(['prefix' => 'ports'], function () {
         Route::get('/list', [PortsAPI::class, 'list_api']);
         Route::post('/add', [PortsAPI::class, 'add']);

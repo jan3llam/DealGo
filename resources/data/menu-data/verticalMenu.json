@@ -187,6 +187,24 @@
             ]
         },
         {
+            "url": "/admin/global_areas",
+            "name": "GlobalAreas",
+            "icon": "map",
+            "slug": "admin.globalareas",
+            "permissions": [
+                35
+            ]
+        },
+        {
+            "url": "/admin/local_areas",
+            "name": "LocalAreas",
+            "icon": "map-pin",
+            "slug": "admin.localareas",
+            "permissions": [
+                35
+            ]
+        },
+        {
             "url": "#",
             "name": "Help",
             "icon": "life-buoy",

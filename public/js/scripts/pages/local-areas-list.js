@@ -1,10 +1,10 @@
 $(function () {
     ;('use strict')
 
-    var dtTable = $('.ports-list-table'),
-        newSidebar = $('.new-port-modal'),
-        viewSidebar = $('.view-port-modal'),
-        newForm = $('.add-new-port'),
+    var dtTable = $('.localareas-list-table'),
+        newSidebar = $('.new-local-area-modal'),
+        viewSidebar = $('.view-local-area-modal'),
+        newForm = $('.add-local-area-form'),
         statusObj = {
             1: {title: LANG.Active, class: 'badge-light-success status-switcher'},
             0: {title: LANG.Inactive, class: 'badge-light-secondary status-switcher'}
@@ -20,11 +20,11 @@ $(function () {
             ajax: function (data, callback, settings) {
                 // make a regular ajax request using data.start and data.length
                 $.ajax({
-                    url: assetPath + 'api/admin/ports/list',
+                    url: assetPath + 'api/admin/local_areas/list',
                     data: {
                         length: data.length,
                         lang: $('html').attr('lang'),
-                        start: data.start,
+                        // start: data.start,
                         draw: data.draw,
                         search: data.search.value,
                         status: $('#status_filter').val(),
@@ -64,11 +64,8 @@ $(function () {
                 {data: 'id'},
                 {data: 'id'},
                 {data: 'name_translation'},
-                {data: 'city.country.name'},
-                {data: 'localarea.name_translation'},
                 {data: 'unlocode'},
-                {data: 'latitude'},
-                {data: 'longitude'},
+                {data: 'globalarea.name_translation'},
                 {data: 'status'},
                 {data: ''}
             ],
@@ -104,7 +101,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 8,
+                    targets: 6,
                     render: function (data, type, full, meta) {
                         var $status = full['status']
                         return (
@@ -279,18 +276,6 @@ $(function () {
         newForm.validate({
             errorClass: 'error',
             rules: {
-                'city': {
-                    required: true
-                },
-               'localarea': {
-                    required: true
-                }, 
-                'longitude': {
-                    required: true
-                },
-                'latitude': {
-                    required: true
-                },
                 'unlocode': {
                     required: true
                 },
@@ -303,8 +288,7 @@ $(function () {
             });
         });
 
-        $('#country,#city').select2({dropdownParent: newSidebar});
-
+ 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
             var type = parseInt($('#form_status').val()) === 1 ? 'add' : 'update';
@@ -318,7 +302,7 @@ $(function () {
                 });
                 $.ajax({
                     type: 'POST',
-                    url: assetPath + 'api/admin/ports/' + type,
+                    url: assetPath + 'api/admin/local_areas/' + type,
                     dataType: 'json',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -375,7 +359,7 @@ $(function () {
                 if (result.value) {
                     $.ajax({
                         type: 'DELETE',
-                        url: assetPath + 'api/admin/ports/bulk',
+                        url: assetPath + 'api/admin/local_areas/bulk',
                         data: {ids: ids},
                         dataType: 'json',
                         headers: {
@@ -432,7 +416,7 @@ $(function () {
             if (result.value) {
                 $.ajax({
                     type: 'DELETE',
-                    url: assetPath + 'api/admin/ports/' + element.data('id'),
+                    url: assetPath + 'api/admin/local_areas/' + element.data('id'),
                     dataType: 'json',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -476,7 +460,7 @@ $(function () {
             if (result.value) {
                 $.ajax({
                     type: 'PUT',
-                    url: assetPath + 'api/admin/ports/status/' + element.data('id'),
+                    url: assetPath + 'api/admin/local_areas/status/' + element.data('id'),
                     dataType: 'json',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -515,40 +499,29 @@ $(function () {
         let data = dtTable.api().row(element.parents('tr')).data();
          viewSidebar.modal('show');
         $('#view-name').html(data.name_translation);
-        $('#view-country').html(data.city.country.name);
-        $('#view-city').html(data.city.name);
         $('#view-unlocode').html(data.unlocode);
-        var latlng = new google.maps.LatLng(data.latitude, data.longitude);
-        markerView.setMap(mapView);
-        markerView.setPosition(latlng);
-        mapView.setCenter(latlng);
-    })
+        $('#view-globalarea').html(data.globalarea.name_translation);
+ })
 
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
-        $('#longitude').val(data.longitude);
-        $('#latitude').val(data.latitude);
         $('#unlocode').val(data.unlocode);
-        $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id).trigger('change.select2');
+       // $('#city_id').val(data.city.id);
+       $('#globalarea').val(data.global_area_id).trigger('change.select2');
+
         $('#object_id').val(data.id);
-        newForm.find('#modal-label').html($('#edit___label').val());
-        var latlng = new google.maps.LatLng(data.latitude, data.longitude);
-        marker.setMap(map);
-        marker.setPosition(latlng);
-        map.setCenter(latlng);
         for (const [key, value] of Object.entries(data.name)) {
             $('[name="name[' + key + ']"]').val(data.name[key]);
         }
     });
 
-    $(document).on('click', '.add-port', function () {
+    $(document).on('click', '.add-local-area', function () {
         $('#form_status').val(1);
         $('#object_id').val('');
-        newForm.find('#city_id,input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select,#longitude,#latitude').each(function () {
+        newForm.find('input[type=text],input[type=date],input[type=email],input[type=number],input[type=password],input[type=tel],textarea,select').each(function () {
             $(this).val('');
         })
     });
