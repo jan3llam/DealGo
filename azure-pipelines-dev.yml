@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-- group: dev-dealgo-backend  # Reference the variable group
+- group: dev-dealgo-backend_new  # Reference the variable group
 
 stages:
   - stage: Build
@@ -14,12 +14,12 @@ stages:
       - job: Build
         displayName: Build and Push Docker Image
         steps:
-          - task: AzureKeyVault@2
-            inputs:
-              azureSubscription: 'spn-devops-dev-connection'
-              KeyVaultName: 'kv-dealgo-dev'
-              SecretsFilter: '*'
-              RunAsPreJob: true
+          # - task: AzureKeyVault@2
+          #   inputs:
+          #     azureSubscription: 'spn-devops-dev-connection'
+          #     KeyVaultName: 'kv-dealgo-dev'
+          #     SecretsFilter: '*'
+          #     RunAsPreJob: true
           # - task: CmdLine@2
           #   displayName: Setting environement variables
           #   env: 
@@ -30,8 +30,8 @@ stages:
               containerRegistry: 'acrdealgodev'
               repository: 'dealgo-backend-dev'
               command: 'buildAndPush'
-              Dockerfile: '$(DOCKERFILE_PATH)'
-              tags: '$(IMAGE_TAG)'
+              Dockerfile: './Dockerfile'
+              tags: '$(Build.BuildNumber).$(Build.BuildId)'
             condition: succeeded()
 
 # Deploy the Docker container to the Web App Service
@@ -48,8 +48,8 @@ stages:
             azureSubscription: 'SC-RG-APP-DEV-FREE'
             appType: 'webAppContainer'
             WebAppName: 'dealgo-backend-dev'
-            DockerNamespace: '$(ACR_LOGIN_SERVER)'
-            DockerRepository: '$(APP_SERVICE_NAME)'
+            DockerNamespace: '$(ACR-LOGIN-SERVER)'
+            DockerRepository: '$(APP-SERVICE-NAME)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
-            AppSettings: '-DB_PASSWORD "Peppa@123*#"'
+            AppSettings: '-DB_PASSWORD $(DB-PASSWORD)'
             
