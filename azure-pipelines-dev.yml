@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-- group: dev-dealgo-backend_new  # Reference the variable group
+- group: kv-dealgo-dev-group  # Reference the variable group
 
 stages:
   - stage: Build
