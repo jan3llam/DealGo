@@ -16,7 +16,7 @@ stages:
         steps:
           - task: AzureKeyVault@2
             inputs:
-              azureSubscription: 'SC-RG-APP-DEV-FREE'
+              azureSubscription: 'spn-devops-dev-connection'
               KeyVaultName: 'kv-dealgo-dev'
               SecretsFilter: '*'
               RunAsPreJob: true
