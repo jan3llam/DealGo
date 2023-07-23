@@ -51,5 +51,5 @@ stages:
             DockerNamespace: '$(ACR_LOGIN_SERVER)'
             DockerRepository: '$(APP_SERVICE_NAME)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
-            DB_PASSWORD: '"Peppa@123*#"'
+            AppSettings: '-DB_PASSWORD "Peppa@123*#"'
             
