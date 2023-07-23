@@ -20,10 +20,10 @@ stages:
               KeyVaultName: 'kv-dealgo-dev'
               SecretsFilter: '*'
               RunAsPreJob: true
-          - task: CmdLine@2
-            displayName: Setting environement variables
-            env: 
-              DB-PASSWORD: $(DB-PASSWORD)
+          # - task: CmdLine@2
+          #   displayName: Setting environement variables
+          #   env: 
+          #     DB-PASSWORD: $(DB-PASSWORD)
           - task: Docker@2
             displayName: Build and Push Docker image
             inputs:
@@ -51,4 +51,5 @@ stages:
             DockerNamespace: '$(ACR_LOGIN_SERVER)'
             DockerRepository: '$(APP_SERVICE_NAME)'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
+            DB_PASSWORD: '"Peppa@123*#"'
             
