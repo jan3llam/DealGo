@@ -39,7 +39,7 @@ stages:
             appType: 'webAppContainer'
             WebAppName: 'dealgo-backend-dev'
             DockerNamespace: '$(ACR-LOGIN-SERVER)'
-            DockerRepository: '$(APP-SERVICE-NAME)'
+            DockerRepository: 'dealgo-backend-dev'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
             AppSettings: '-DB_PASSWORD $(DB-PASSWORD) -APP_KEY $(APP-KEY) -MAIL_PASSWORD $(MAIL-PASSWORD) -JWT_SECRET $(JWT-SECRET)'
             
