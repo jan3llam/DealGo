@@ -44,6 +44,7 @@ class Request extends Model
         'min_sqm',
         'max_sqm',
     ];
+    protected $dates = ['date_from', 'date_to'];
 
     public function owner()
     {
@@ -99,5 +100,4 @@ class Request extends Model
     {
         return $this->hasMany(LoadRequest::class);
     }
-
 }

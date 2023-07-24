@@ -102,10 +102,10 @@ class RequestsController extends Controller
                 $q->where('id', auth('api')->user()->userable->id);
             });
         }
-//        else {
-//        $query->where('date_to', '>=', $now);
-//                ->where('date_from', '<=', $now);
-//        }
+        //        else {
+        //        $query->where('date_to', '>=', $now);
+        //                ->where('date_from', '<=', $now);
+        //        }
 
         $total = $query->count();
 

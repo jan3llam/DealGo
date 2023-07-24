@@ -154,4 +154,36 @@ class CargoService
         }
         DB::commit();
     }
+
+    public function updateCargo(array $request, $files ,$id)
+    {
+        DB::beginTransaction();
+        $request['date_from'] = Carbon::parse($request['date_from'])->toDateString();
+        $request['date_to'] = Carbon::parse($request['date_to'])->toDateString();
+        $request['tenant_id'] = auth()->user()->id;
+
+        $filesArr = [];
+        if ($files) {
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+                $fileName = Str::random(18) . '.' . $extension;
+                Storage::disk('public_images')->putFileAs('', $file, $fileName);
+                $filesArr[] = $fileName;
+            }
+        }
+
+        $request['files'] = json_encode($filesArr);
+        $ship = ShippingRequest::findOrFail($id);
+        $ship = $ship->update(Arr::except($request, [
+            'LoadingPorts'
+        ]));
+
+        foreach ($request['LoadingPorts'] as $port) {
+            $portLoad = $ship->portRequest()->create($port);
+            foreach ($port['LoadRequests'] as $load) {
+                $load = $ship->loadRequest()->create($load);
+            }
+        }
+        DB::commit();
+    }
 }
