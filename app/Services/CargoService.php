@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 
 class CargoService
 {
-    public function listCargo($params, $search_clm, $order_field, $order_sort)
+    public function listCargo($params, $search_clm, $order_field, $order_sort,$draw)
     {
         $ships = ShippingRequest::select(
             'id',
@@ -27,88 +27,9 @@ class CargoService
         return $ships;
     }
 
-    public function list_api($params, $search_clm, $order_field, $order_sort,$draw)
-    {
-        $query = ShippingRequest::query();
-
-        $search_val = isset($params['search']) ? $params['search'] : null;
-        $sort_field = isset($params['order']) ? $params['order'] : null;
-        $page = isset($params['start']) ? $params['start'] : 0;
-        $filter_status = isset($params['status']) ? $params['status'] : 1;
-        $per_page = isset($params['length']) ? $params['length'] : 10;
-
-        if ($search_val) {
-            $query->where(function ($q) use ($search_clm, $search_val) {
-                foreach ($search_clm as $item) {
-                    $item = explode('.', $item);
-                    if (sizeof($item) == 3) {
-                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
-                            $qu->whereHas($item[1], function ($que) use ($item, $search_val) {
-                                $que->where($item[2], 'like', '%' . $search_val . '%');
-                            });
-                        })->get();
-                    } elseif (sizeof($item) == 2) {
-                        $q->orWhereHas($item[0], function ($qu) use ($item, $search_val) {
-                            $qu->where($item[1], 'like', '%' . $search_val . '%');
-                        })->get();
-                    } elseif (sizeof($item) == 1) {
-                        $q->orWhere($item[0], 'like', '%' . $search_val . '%');
-                    }
-                }
-            });
-        }
-
-        if ($sort_field) {
-            $order_field = $sort_field;
-            $order_sort = $params['direction'];
-        }
-
-        if ($filter_status) {
-            switch ($filter_status) {
-                case 1: {
-                        $query->withoutTrashed();
-                        break;
-                    }
-                case 2: {
-                        $query->onlyTrashed();
-                        break;
-                    }
-            }
-        }
-
-        $total = $query->limit($per_page)->count();
-
-        $data['data'] = $query->skip($page)
-            ->take($per_page)->orderBy($order_field, $order_sort)
-            ->with(
-                [
-                    'tenant' => function ($q) {
-                        $q->withTrashed()->with('user');
-                    },
-                    'port_from' => function ($q) {
-                        $q->withTrashed();
-                    },
-                    'port_to' => function ($q) {
-                        $q->withTrashed();
-                    },
-                    'owner' => function ($q) {
-                        $q->withTrashed()->with('user');
-                    },
-                    'goods_types', 'routes'
-                ]
-            )->withCount('responses')->get();
-
-        $data['meta']['draw'] = $draw;
-        $data['meta']['total'] = $total;
-        $data['meta']['count'] = $total;
-        $data['data'] = $data['data']->toArray();
-
-        return response()->success($data);
-    }
-
     public function showCargo($cargo_id)
     {
-        $ship = ShippingRequest::find($cargo_id);
+        $ship = ShippingRequest::with(['portRequest','loadRequest'])->find($cargo_id);
         return $ship;
     }
 
@@ -174,16 +95,17 @@ class CargoService
 
         $request['files'] = json_encode($filesArr);
         $ship = ShippingRequest::findOrFail($id);
-        $ship = $ship->update(Arr::except($request, [
-            'LoadingPorts'
-        ]));
-
+        $ship->portRequest->each->delete();
+        $ship->loadRequest->each->delete();
         foreach ($request['LoadingPorts'] as $port) {
             $portLoad = $ship->portRequest()->create($port);
             foreach ($port['LoadRequests'] as $load) {
                 $load = $ship->loadRequest()->create($load);
             }
         }
+        $ship = $ship->update(Arr::except($request, [
+            'LoadingPorts'
+        ]));
         DB::commit();
     }
 }

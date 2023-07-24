@@ -32,7 +32,7 @@ class CargoController extends Controller
         $order_sort = 'desc';
 
         $params = $request->all();
-        $data = $this->cargoService->list_api(
+        $data = $this->cargoService->listCargo(
             params: $params,
             search_clm: $search_clm,
             order_field: $order_field,
@@ -150,21 +150,21 @@ class CargoController extends Controller
         return response()->success();
     }
 
-    public function add(Request $request, $id)
+    public function add(Request $request)
     {
         $params = $request->all();
         $validator = Validator::make($params, [
-            'name' => ['nullable', 'string'],
-            'date_from' => ['nullable', 'string'],
-            'date_to' => ['nullable', 'string'],
+            'name' => ['required', 'string'],
+            'date_from' => ['required', 'string'],
+            'date_to' => ['required', 'string'],
             'prompt' => ['nullable'],
             'spot' => ['nullable'],
             'dead_spot' => ['nullable'],
-            'vessel_category' => ['nullable', 'between:1,6'],
+            'vessel_category' => ['required', 'between:1,6'],
             'vessel_category_json' => ['nullable', 'string'],
-            'sole_part' => ['nullable', 'between:1,2'],
+            'sole_part' => ['required', 'between:1,2'],
             'part_type' => ['nullable', 'string'],
-            'contract' => ['nullable'],
+            'contract' => ['required'],
             'min_weight' => ['nullable', 'numeric'],
             'max_weight' => ['nullable', 'numeric'],
             'min_cbm' => ['nullable', 'numeric'],
@@ -173,28 +173,28 @@ class CargoController extends Controller
             'max_cbft' => ['nullable', 'numeric'],
             'min_sqm' => ['nullable', 'numeric'],
             'max_sqm' => ['nullable', 'numeric'],
-            // 'tenant' => ['nullable', 'numeric'],
-            'port_from' => ['nullable', 'numeric'],
-            'port_to' => ['nullable', 'numeric'],
+            // 'tenant' => ['required', 'numeric'],
+            'port_from' => ['required', 'numeric'],
+            'port_to' => ['required', 'numeric'],
             'address_commission' => ['nullable', 'string'],
             'broker_commission' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'LoadingPorts.*.confirme_type' => ['nullable', 'between:1,2'],
             'LoadingPorts.*.sea_river' => ['nullable', 'between:1,2'],
-            'LoadingPorts.*.port_type' => ['nullable', 'between:1,2'],
+            'LoadingPorts.*.port_type' => ['required', 'between:1,2'],
             'LoadingPorts.*.NAABSA' => ['nullable'],
-            'LoadingPorts.*.geo_id' => ['nullable', 'exists:local_areas,id'],
+            'LoadingPorts.*.geo_id' => ['required', 'exists:local_areas,id'],
             'LoadingPorts.*.sea_draft' => ['nullable'],
             'LoadingPorts.*.air_draft' => ['nullable'],
             'LoadingPorts.*.beam_restriction' => ['nullable'],
-            'LoadingPorts.*.port_id' => ['nullable', 'exists:ports,id'],
+            'LoadingPorts.*.port_id' => ['required', 'exists:ports,id'],
             'LoadingPorts.*.loading_conditions' => ['nullable', 'between:1,3'],
-            'LoadingPorts.*.mtone_value' => ['nullable_if:loading_conditions,1'],
+            'LoadingPorts.*.mtone_value' => ['required_if:loading_conditions,1'],
             'LoadingPorts.*.SSHINC' => ['nullable'],
             'LoadingPorts.*.SSHEX' => ['nullable'],
             'LoadingPorts.*.FHINC' => ['nullable'],
             'LoadingPorts.*.FHEX' => ['nullable'],
-            'LoadingPorts.*.LoadRequests.*.goods_id' => ['nullable', 'exists:goods_types,id'],
+            'LoadingPorts.*.LoadRequests.*.goods_id' => ['required', 'exists:goods_types,id'],
             'LoadingPorts.*.LoadRequests.*.stowage_factor' => ['nullable'],
             'LoadingPorts.*.LoadRequests.*.cbm_cbft' => ['nullable', 'between:1,2'],
             'LoadingPorts.*.LoadRequests.*.min_cbm_cbft' => ['nullable'],
@@ -205,19 +205,19 @@ class CargoController extends Controller
             'LoadingPorts.*.LoadRequests.*.max_sqm' => ['nullable'],
         ]);
 
+
         if ($validator->fails()) {
             return response()->error('missingParameters', $validator->failed());
         }
         $files = $request->file('files',  []);
-        $data = $this->cargoService->updateCargo(
+        $data = $this->cargoService->addCargo(
             request: $params,
             files: $files,
-            id: $id
         );
         return response()->success();
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $params = $request->all();
         $validator = Validator::make($params, [
@@ -276,7 +276,11 @@ class CargoController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
         $files = $request->file('files',  []);
-        $data = $this->cargoService->addCargo($params, $files);
+        $data = $this->cargoService->updateCargo(
+            request: $params,
+            files: $files,
+            id: $id
+        );
         return response()->success();
     }
 }
