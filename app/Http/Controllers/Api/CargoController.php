@@ -17,9 +17,20 @@ class CargoController extends Controller
         $this->cargoService = $cargoService;
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $data = $this->cargoService->listCargo();
+        $data = [];
+        $search_clm = ['port_from.name', 'port_to.name', 'port_from.city.name_ar', 'port_from.city.name_en', 'port_to.city.name_ar', 'port_to.city.name_en', 'tenant.user.contact_name'];
+        $order_field = 'created_at';
+        $order_sort = 'desc';
+
+        $params = $request->all();
+        $data = $this->cargoService->listCargo(
+            params: $params,
+            search_clm: $search_clm,
+            order_field: $order_field,
+            order_sort: $order_sort,
+        );
         return response()->success($data);
     }
 
