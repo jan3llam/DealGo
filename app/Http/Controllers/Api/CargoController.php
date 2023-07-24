@@ -68,7 +68,7 @@ class CargoController extends Controller
             'LoadingPorts.*.sea_river' => ['nullable', 'between:1,2'],
             'LoadingPorts.*.port_type' => ['required', 'between:1,2'],
             'LoadingPorts.*.NAABSA' => ['nullable'],
-            'LoadingPorts.*.geo_id' => ['required','exists:geo_areas,id'],
+            'LoadingPorts.*.geo_id' => ['required','exists:local_areas,id'],
             'LoadingPorts.*.sea_draft' => ['nullable'],
             'LoadingPorts.*.air_draft' => ['nullable'],
             'LoadingPorts.*.beam_restriction' => ['nullable'],

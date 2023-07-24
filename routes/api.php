@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\Api\ArticlesController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CargoController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\CitiesController;
@@ -221,6 +222,15 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
             Route::post('/add', [RequestsController::class, 'add']);
             Route::post('/suggest', [RequestsController::class, 'suggest']);
             Route::delete('/{id}', [RequestsController::class, 'delete']);
+        });
+    });
+
+    Route::group(['prefix' => 'cargo'], function () {
+        Route::get('/list', [CargoController::class, 'list']);
+        Route::get('/get/{id}', [CargoController::class, 'show']);
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('/add', [CargoController::class, 'add']);
+            Route::delete('/{id}', [CargoController::class, 'delete']);
         });
     });
 
