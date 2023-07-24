@@ -252,7 +252,7 @@ $(function () {
                 },
                 {
                     text: LANG.AddNew,
-                    className: 'add-port btn btn-primary',
+                    className: 'add-local-area btn btn-primary',
                     attr: {
                         'data-bs-toggle': 'modal',
                         'data-bs-target': '#modals-slide-in',
