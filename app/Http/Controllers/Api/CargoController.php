@@ -25,11 +25,12 @@ class CargoController extends Controller
         $order_sort = 'desc';
 
         $params = $request->all();
-        $data = $this->cargoService->listCargo(
+        $data = $this->cargoService->list_api(
             params: $params,
             search_clm: $search_clm,
             order_field: $order_field,
             order_sort: $order_sort,
+            draw:$request->input('draw'),
         );
         return response()->success($data);
     }

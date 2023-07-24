@@ -27,7 +27,7 @@ class CargoService
         return $ships;
     }
 
-    public function list_api($params, $search_clm, $order_field, $order_sort)
+    public function list_api($params, $search_clm, $order_field, $order_sort,$draw)
     {
         $query = ShippingRequest::query();
 
@@ -98,7 +98,7 @@ class CargoService
                 ]
             )->withCount('responses')->get();
 
-        $data['meta']['draw'] = $request->input('draw');
+        $data['meta']['draw'] = $draw;
         $data['meta']['total'] = $total;
         $data['meta']['count'] = $total;
         $data['data'] = $data['data']->toArray();
