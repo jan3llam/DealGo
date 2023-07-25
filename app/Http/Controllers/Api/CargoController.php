@@ -196,11 +196,12 @@ class CargoController extends Controller
         if ($validator->fails()) {
             return response()->error('missingParameters', $validator->failed());
         }
+
         DB::beginTransaction();
         try {
             $params['date_from'] = Carbon::parse($params['date_from'])->toDateString();
             $params['date_to'] = Carbon::parse($params['date_to'])->toDateString();
-            $params['tenant_id'] = auth()->user()->id;
+            $params['tenant_id'] = $user->id;
             $files = $request->file('files', []);
 
             $filesArr = [];
