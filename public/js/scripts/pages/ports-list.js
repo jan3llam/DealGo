@@ -303,7 +303,7 @@ $(function () {
             });
         });
 
-        $('#country,#city').select2({dropdownParent: newSidebar});
+        $('#country,#city,#localarea').select2({dropdownParent: newSidebar});
 
         newForm.on('submit', function (e) {
             var isValid = newForm.valid()
