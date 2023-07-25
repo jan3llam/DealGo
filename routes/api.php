@@ -76,7 +76,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
-
+    Route::post('/testAdding',[CargoController::class, 'add']);
     Route::group(['prefix' => 'authentication'], function () {
         Route::post('/signIn', [AuthController::class, 'signIn']);
         Route::post('/signUp', [AuthController::class, 'signUp']);
@@ -343,7 +343,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
         Route::delete('/bulk', [GlobalAreasAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [GlobalAreasAPI::class, 'delete']);
     });
-    
+
     Route::group(['prefix' => 'ports'], function () {
         Route::get('/list', [PortsAPI::class, 'list_api']);
         Route::post('/add', [PortsAPI::class, 'add']);
