@@ -2,8 +2,8 @@
 @php
     $css_path = app()->getLocale()==='ar' ? 'css-rtl' : 'css';
 
- 
-     
+
+
 @endphp
 
 @section('title', __('locale.LocalAreas'))
@@ -88,7 +88,7 @@
                               @endforeach
                           </div>
                       </div>
-                     
+
                       <div class="mb-1">
                         <label class="form-label" for="globalarea">{{__('locale.GlobalArea')}}</label>
                         <select type="text" class="form-control dt-full-name select2" id="globalarea"
@@ -99,7 +99,7 @@
                             @endforeach
                         </select>
                     </div>
-                      
+
                       <div class="mb-1">
                           <label class="form-label" for="unlocode">{{__('locale.UNLocode')}}</label>
                           <input type="text" class="form-control dt-full-name" id="unlocode"
@@ -136,12 +136,12 @@
                                   <span class="fw-bolder me-25">{{__('locale.Name')}}:</span>
                                   <span id="view-name"></span>
                               </li>
-                            
+
                               <li class="mb-75">
                                 <span class="fw-bolder me-25">{{__('locale.GlobalArea')}}:</span>
                                 <span id="view-globalarea"></span>
                             </li>
-                               
+
                               <li class="mb-75">
                                   <span class="fw-bolder me-25">{{__('locale.UNLocode')}}:</span>
                                   <span id="view-unlocode"></span>
@@ -190,11 +190,8 @@
 @section('page-script')
     {{-- Page js files --}}
 
-   
-<script>
-    
-    $('#globalarea').select2({});
-</script>
-    
+
+
+
     <script src="{{ asset(mix('js/scripts/pages/local-areas-list.js')) }}"></script>
 @endsection
