@@ -134,71 +134,70 @@ class CargoController extends Controller
 
     public function add(Request $request)
     {
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+        $params = $request->all();
+        $validator = Validator::make($params, [
+            'name' => 'required|string',
+            'date_from' => 'required|string',
+            'date_to' => 'required|string',
+            'prompt' => 'nullable',
+            'spot' => 'nullable',
+            'dead_spot' => 'nullable',
+            'vessel_category' => 'required|between:1,6',
+            'vessel_category_json' => 'nullable|string',
+            'sole_part' => 'required|between:1,2',
+            'part_type' => 'nullable|string',
+            'contract' => 'required',
+            'min_weight' => 'nullable|numeric',
+            'max_weight' => 'nullable|numeric',
+            'min_cbm' => 'nullable|numeric',
+            'max_cbm' => 'nullable|numeric',
+            'min_cbft' => 'nullable|numeric',
+            'max_cbft' => 'nullable|numeric',
+            'min_sqm' => 'nullable|numeric',
+            'max_sqm' => 'nullable|numeric',
+            'port_from' => 'required|numeric',
+            'port_to' => 'required|numeric',
+            'address_commission' => 'nullable|string',
+            'broker_commission' => 'nullable|string',
+            'description' => 'nullable|string',
+            'LoadingPorts.*.confirme_type' => 'nullable|between:1,2',
+            'LoadingPorts.*.sea_river' => 'nullable|between:1,2',
+            'LoadingPorts.*.port_type' => 'required|between:1,2',
+            'LoadingPorts.*.NAABSA' => 'nullable',
+            'LoadingPorts.*.geo_id' => 'nullable|exists:local_areas,id',
+            'LoadingPorts.*.sea_draft' => 'nullable',
+            'LoadingPorts.*.air_draft' => 'nullable',
+            'LoadingPorts.*.beam_restriction' => 'nullable',
+            'LoadingPorts.*.port_id' => 'required',
+            'exists:ports,id',
+            'LoadingPorts.*.loading_conditions' => 'nullable|between:1,3',
+            'LoadingPorts.*.mtone_value' => 'required_if:loading_conditions,1',
+            'LoadingPorts.*.SSHINC' => 'nullable',
+            'LoadingPorts.*.SSHEX' => 'nullable',
+            'LoadingPorts.*.FHINC' => 'nullable',
+            'LoadingPorts.*.FHEX' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.goods_id' => 'required|exists:goods_types,id',
+            'LoadingPorts.*.LoadRequests.*.stowage_factor' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.cbm_cbft' => 'nullable|between:1,2',
+            'LoadingPorts.*.LoadRequests.*.min_cbm_cbft' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.max_cbm_cbft' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.min_weight' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.max_weight' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.min_sqm' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.max_sqm' => 'nullable',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->error('missingParameters', $validator->failed());
+        }
+        DB::beginTransaction();
         try {
-            $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
-
-            if (!$user) {
-                return response()->error('notAuthorized');
-            }
-            $params = $request->all();
-            $validator = Validator::make($params, [
-                'name' => 'required|string',
-                'date_from' => 'required|string',
-                'date_to' => 'required|string',
-                'prompt' => 'nullable',
-                'spot' => 'nullable',
-                'dead_spot' => 'nullable',
-                'vessel_category' => 'required|between:1,6',
-                'vessel_category_json' => 'nullable|string',
-                'sole_part' => 'required|between:1,2',
-                'part_type' => 'nullable|string',
-                'contract' => 'required',
-                'min_weight' => 'nullable|numeric',
-                'max_weight' => 'nullable|numeric',
-                'min_cbm' => 'nullable|numeric',
-                'max_cbm' => 'nullable|numeric',
-                'min_cbft' => 'nullable|numeric',
-                'max_cbft' => 'nullable|numeric',
-                'min_sqm' => 'nullable|numeric',
-                'max_sqm' => 'nullable|numeric',
-                'port_from' => 'required|numeric',
-                'port_to' => 'required|numeric',
-                'address_commission' => 'nullable|string',
-                'broker_commission' => 'nullable|string',
-                'description' => 'nullable|string',
-                'LoadingPorts.*.confirme_type' => 'nullable|between:1,2',
-                'LoadingPorts.*.sea_river' => 'nullable|between:1,2',
-                'LoadingPorts.*.port_type' => 'required|between:1,2',
-                'LoadingPorts.*.NAABSA' => 'nullable',
-                'LoadingPorts.*.geo_id' => 'nullable|exists:local_areas,id',
-                'LoadingPorts.*.sea_draft' => 'nullable',
-                'LoadingPorts.*.air_draft' => 'nullable',
-                'LoadingPorts.*.beam_restriction' => 'nullable',
-                'LoadingPorts.*.port_id' => 'required',
-                'exists:ports,id',
-                'LoadingPorts.*.loading_conditions' => 'nullable|between:1,3',
-                'LoadingPorts.*.mtone_value' => 'required_if:loading_conditions,1',
-                'LoadingPorts.*.SSHINC' => 'nullable',
-                'LoadingPorts.*.SSHEX' => 'nullable',
-                'LoadingPorts.*.FHINC' => 'nullable',
-                'LoadingPorts.*.FHEX' => 'nullable',
-                'LoadingPorts.*.LoadRequests.*.goods_id' => 'required|exists:goods_types,id',
-                'LoadingPorts.*.LoadRequests.*.stowage_factor' => 'nullable',
-                'LoadingPorts.*.LoadRequests.*.cbm_cbft' => 'nullable|between:1,2',
-                'LoadingPorts.*.LoadRequests.*.min_cbm_cbft' => 'nullable',
-                'LoadingPorts.*.LoadRequests.*.max_cbm_cbft' => 'nullable',
-                'LoadingPorts.*.LoadRequests.*.min_weight' => 'nullable',
-                'LoadingPorts.*.LoadRequests.*.max_weight' => 'nullable',
-                'LoadingPorts.*.LoadRequests.*.min_sqm' => 'nullable',
-                'LoadingPorts.*.LoadRequests.*.max_sqm' => 'nullable',
-            ]);
-
-
-            if ($validator->fails()) {
-                return response()->error('missingParameters', $validator->failed());
-            }
-
-            DB::beginTransaction();
             $params['date_from'] = Carbon::parse($params['date_from'])->toDateString();
             $params['date_to'] = Carbon::parse($params['date_to'])->toDateString();
             $params['tenant_id'] = auth()->user()->id;
@@ -220,7 +219,7 @@ class CargoController extends Controller
             ]));
 
             foreach ($params['LoadingPorts'] as $port) {
-                $portLoad = $ship->portRequest()->create($port);
+                $ship->portRequest()->create($port);
                 foreach ($port['LoadRequests'] as $load) {
                     $load = $ship->loadRequest()->create($load);
                 }
@@ -234,8 +233,9 @@ class CargoController extends Controller
             // );
 
             return response()->success();
-        }catch (\Exception $e) {
-            return response()->json(array("code"=>$e->getCode(),"message"=>$e->getMessage(),"data"=>null), 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
         }
 
     }
