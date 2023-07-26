@@ -134,6 +134,7 @@ class CargoController extends Controller
 
     public function add(Request $request)
     {
+
         $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
         if (!$user) {
@@ -308,4 +309,15 @@ class CargoController extends Controller
         );
         return response()->success();
     }
+
+    // public function getByOwnerId(Request $request){
+    //     dd($request->all());
+    //     //$shipping_requests = ShippingRequest::where('owner_id',$id)->get();
+
+    //     if(!$shipping_requests){
+    //         return response()->noContent();
+    //     }
+    //     return response()->json(array("code" => 1, "message" => "success", "data" => $shipping_requests), 200);
+    // }
+
 }

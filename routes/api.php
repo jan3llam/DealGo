@@ -76,6 +76,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
+    // Route::get('/getOwnRequests', [CargoController::class, 'getByOwnerId']);
+    Route::post('/testAdding', [CargoController::class, 'add']);
     Route::group(['prefix' => 'authentication'], function () {
         Route::post('/signIn', [AuthController::class, 'signIn']);
         Route::post('/signUp', [AuthController::class, 'signUp']);
@@ -227,6 +229,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
     Route::group(['prefix' => 'cargo'], function () {
         Route::get('/list', [CargoController::class, 'list']);
         Route::get('/get/{id}', [CargoController::class, 'show']);
+        //Route::get('/getOwnRequests/{id}', [CargoController::class, 'getByOwnerId']);
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/add', [CargoController::class, 'add']);
             Route::put('/update/{id}', [CargoController::class, 'update']);
