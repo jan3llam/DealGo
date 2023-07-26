@@ -227,11 +227,7 @@ class CargoController extends Controller
             }
 
             DB::commit();
-            // $files = $request->file('files', []);
-            // $this->cargoService->addCargo(
-            //     $params,
-            //     $files,
-            // );
+
 
             return response()->success();
         } catch (\Exception $e) {
@@ -243,6 +239,11 @@ class CargoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
         $params = $request->all();
         $validator = Validator::make($params, [
             'name' => ['required', 'string'],
