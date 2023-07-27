@@ -64,6 +64,7 @@ class CargoController extends Controller
         $date_to = $request->input('date_to', null);
         $is_mine = $request->input('is_mine', 0);
 
+
         if ($search_val) {
             $builder->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
@@ -101,6 +102,10 @@ class CargoController extends Controller
             $to = Carbon::parse(date('Y-m-d', strtotime($date_to)))->toDateString();
             $query->whereDate('date_to', '<=', $to);
         });
+
+        if(!$date_from && !$date_to){
+            $builder->whereDate('date_to','>=',$now);
+        }
 
         $builder->when($tenant, function ($query) use ($tenant) {
             $query->whereHas('tenant', function ($q) use ($tenant) {
