@@ -308,7 +308,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'user_type' => auth('api')->user()->userable_type,
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
         ]);
     }
 
@@ -378,5 +378,16 @@ class AuthController extends Controller
     public function refresh()
     {
         return $this->respondWithToken(auth('api')->refresh(), null, true);
+    }
+
+    public function getExpiryAt(){
+
+        if(!auth('api')->check()){
+            return response()->error('notAuthorized');
+        }
+        $expiry = auth('api')->payload()->get('exp');
+
+        return response()->success(\Carbon\Carbon::parse($expiry)->toDateTimeString());
+
     }
 }

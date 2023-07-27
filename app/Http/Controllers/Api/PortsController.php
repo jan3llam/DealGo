@@ -71,7 +71,6 @@ class PortsController extends Controller
         $date_from = $request->input('date_from');
         $date_to = $request->input('date_to');
         $goods_types = $request->input('goods_types', []);
-//        return response()->success($goods_types);
         $search_clm = ['city.name', 'city.country.name', 'name', 'offers.vessel.name'];
 
         $user = null;

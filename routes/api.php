@@ -86,6 +86,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
         Route::post('/refreshToken', [AuthController::class, 'refresh']);
         Route::post('/checkField', [UsersAPI::class, 'check_field']);
+        Route::get('/getExpiryAt', [AuthController::class, 'getExpiryAt']);
         Route::group(['middleware' => ['auth:api']], function () {
             Route::post('/signOut', [AuthController::class, 'signOut']);
         });
