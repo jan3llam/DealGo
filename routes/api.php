@@ -76,7 +76,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
-    // Route::get('/getOwnRequests', [CargoController::class, 'getByOwnerId']);
+    Route::get('/getOwnRequests/{id}', [CargoController::class, 'getByOwnerId']);
     Route::post('/testAdding', [CargoController::class, 'add']);
     Route::group(['prefix' => 'authentication'], function () {
         Route::post('/signIn', [AuthController::class, 'signIn']);

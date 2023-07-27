@@ -30,11 +30,11 @@ class CargoController extends Controller
 
     public function list(Request $request)
     {
-        $user_id = null;
 
-        if (auth('api')->check()) {
-            $user_id = auth('api')->user()->id;
+        if (!auth('api')->check()) {
+            return response()->error('notAuthorized');
         }
+        $user_id = auth('api')->user()->id;
 
         $data = [];
         $search_clm = ['port_from.name', 'port_to.name', 'port_from.city.name_ar', 'port_from.city.name_en', 'port_to.city.name_ar', 'port_to.city.name_en', 'tenant.user.contact_name'];
@@ -53,6 +53,7 @@ class CargoController extends Controller
                 }
             ]);
 
+
         $search_val = $request->input('keyword', null);
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
@@ -62,6 +63,7 @@ class CargoController extends Controller
         $date_from = $request->input('date_from', null);
         $date_to = $request->input('date_to', null);
         $is_mine = $request->input('is_mine', 0);
+
         if ($search_val) {
             $builder->where(function ($q) use ($search_clm, $search_val) {
                 foreach ($search_clm as $item) {
@@ -85,9 +87,12 @@ class CargoController extends Controller
         $builder->when($port_from, function ($query) use ($port_from) {
             $query->where('port_from', $port_from);
         });
+
         $builder->when($port_to, function ($query) use ($port_to) {
             $query->where('port_to', $port_to);
         });
+
+
         $builder->when($date_from, function ($query) use ($date_from) {
             $from = Carbon::parse(date('Y-m-d', strtotime($date_from)))->toDateString();
             $query->where('date_from', '>=', $from);
@@ -96,12 +101,14 @@ class CargoController extends Controller
             $to = Carbon::parse(date('Y-m-d', strtotime($date_to)))->toDateString();
             $query->whereDate('date_to', '<=', $to);
         });
+
         $builder->when($tenant, function ($query) use ($tenant) {
             $query->whereHas('tenant', function ($q) use ($tenant) {
                 $q->where('id', $tenant);
             });
         });
-        $builder->when($is_mine && auth('api')->check(), function ($query) use ($user_id) {
+
+        $builder->when($is_mine, function ($query) use ($user_id) {
             $query->whereHas('tenant', function ($q) use ($user_id) {
                 $q->where('id', auth('api')->user()->userable->id);
             });
@@ -202,7 +209,7 @@ class CargoController extends Controller
         try {
             $params['date_from'] = Carbon::parse($params['date_from'])->toDateString();
             $params['date_to'] = Carbon::parse($params['date_to'])->toDateString();
-            $params['tenant_id'] = $user->id;
+            $params['tenant_id'] = $user->userable->id;
             $files = $request->file('files', []);
 
             $filesArr = [];
@@ -229,7 +236,6 @@ class CargoController extends Controller
 
             DB::commit();
 
-
             return response()->success();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -247,77 +253,84 @@ class CargoController extends Controller
         }
         $params = $request->all();
         $validator = Validator::make($params, [
-            'name' => ['required', 'string'],
-            'date_from' => ['required', 'string'],
-            'date_to' => ['required', 'string'],
-            'prompt' => ['nullable'],
-            'spot' => ['nullable'],
-            'dead_spot' => ['nullable'],
-            'vessel_category' => ['required', 'between:1,6'],
-            'vessel_category_json' => ['nullable', 'string'],
-            'sole_part' => ['required', 'between:1,2'],
-            'part_type' => ['nullable', 'string'],
-            'contract' => ['required'],
-            'min_weight' => ['nullable', 'numeric'],
-            'max_weight' => ['nullable', 'numeric'],
-            'min_cbm' => ['nullable', 'numeric'],
-            'max_cbm' => ['nullable', 'numeric'],
-            'min_cbft' => ['nullable', 'numeric'],
-            'max_cbft' => ['nullable', 'numeric'],
-            'min_sqm' => ['nullable', 'numeric'],
-            'max_sqm' => ['nullable', 'numeric'],
-            // 'tenant' => ['required', 'numeric'],
-            'port_from' => ['required', 'numeric'],
-            'port_to' => ['required', 'numeric'],
-            'address_commission' => ['nullable', 'string'],
-            'broker_commission' => ['nullable', 'string'],
-            'description' => ['nullable', 'string'],
-            'LoadingPorts.*.confirme_type' => ['nullable', 'between:1,2'],
-            'LoadingPorts.*.sea_river' => ['nullable', 'between:1,2'],
-            'LoadingPorts.*.port_type' => ['required', 'between:1,2'],
-            'LoadingPorts.*.NAABSA' => ['nullable'],
-            'LoadingPorts.*.geo_id' => ['nullable', 'exists:local_areas,id'],
-            'LoadingPorts.*.sea_draft' => ['nullable'],
-            'LoadingPorts.*.air_draft' => ['nullable'],
-            'LoadingPorts.*.beam_restriction' => ['nullable'],
-            'LoadingPorts.*.port_id' => ['required', 'exists:ports,id'],
-            'LoadingPorts.*.loading_conditions' => ['nullable', 'between:1,3'],
-            'LoadingPorts.*.mtone_value' => ['required_if:loading_conditions,1'],
-            'LoadingPorts.*.SSHINC' => ['nullable'],
-            'LoadingPorts.*.SSHEX' => ['nullable'],
-            'LoadingPorts.*.FHINC' => ['nullable'],
-            'LoadingPorts.*.FHEX' => ['nullable'],
-            'LoadingPorts.*.LoadRequests.*.goods_id' => ['required', 'exists:goods_types,id'],
-            'LoadingPorts.*.LoadRequests.*.stowage_factor' => ['nullable'],
-            'LoadingPorts.*.LoadRequests.*.cbm_cbft' => ['nullable', 'between:1,2'],
-            'LoadingPorts.*.LoadRequests.*.min_cbm_cbft' => ['nullable'],
-            'LoadingPorts.*.LoadRequests.*.max_cbm_cbft' => ['nullable'],
-            'LoadingPorts.*.LoadRequests.*.min_weight' => ['nullable'],
-            'LoadingPorts.*.LoadRequests.*.max_weight' => ['nullable'],
-            'LoadingPorts.*.LoadRequests.*.min_sqm' => ['nullable'],
-            'LoadingPorts.*.LoadRequests.*.max_sqm' => ['nullable'],
+            'name' => 'required|string',
+            'date_from' => 'required|string',
+            'date_to' => 'required|string',
+            'prompt' => 'nullable',
+            'spot' => 'nullable',
+            'dead_spot' => 'nullable',
+            'vessel_category' => 'required|between:1,6',
+            'vessel_category_json' => 'nullable|string',
+            'sole_part' => 'required|between:1,2',
+            'part_type' => 'nullable|string',
+            'contract' => 'required',
+            'min_weight' => 'nullable|numeric',
+            'max_weight' => 'nullable|numeric',
+            'min_cbm' => 'nullable|numeric',
+            'max_cbm' => 'nullable|numeric',
+            'min_cbft' => 'nullable|numeric',
+            'max_cbft' => 'nullable|numeric',
+            'min_sqm' => 'nullable|numeric',
+            'max_sqm' => 'nullable|numeric',
+            'port_from' => 'required|numeric',
+            'port_to' => 'required|numeric',
+            'address_commission' => 'nullable|string',
+            'broker_commission' => 'nullable|string',
+            'description' => 'nullable|string',
+            'LoadingPorts.*.confirme_type' => 'nullable|between:1,2',
+            'LoadingPorts.*.sea_river' => 'nullable|between:1,2',
+            'LoadingPorts.*.port_type' => 'required|between:1,2',
+            'LoadingPorts.*.NAABSA' => 'nullable',
+            'LoadingPorts.*.geo_id' => 'nullable|exists:local_areas,id',
+            'LoadingPorts.*.sea_draft' => 'nullable',
+            'LoadingPorts.*.air_draft' => 'nullable',
+            'LoadingPorts.*.beam_restriction' => 'nullable',
+            'LoadingPorts.*.port_id' => 'required',
+            'exists:ports,id',
+            'LoadingPorts.*.loading_conditions' => 'nullable|between:1,3',
+            'LoadingPorts.*.mtone_value' => 'required_if:loading_conditions,1',
+            'LoadingPorts.*.SSHINC' => 'nullable',
+            'LoadingPorts.*.SSHEX' => 'nullable',
+            'LoadingPorts.*.FHINC' => 'nullable',
+            'LoadingPorts.*.FHEX' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.goods_id' => 'required|exists:goods_types,id',
+            'LoadingPorts.*.LoadRequests.*.stowage_factor' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.cbm_cbft' => 'nullable|between:1,2',
+            'LoadingPorts.*.LoadRequests.*.min_cbm_cbft' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.max_cbm_cbft' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.min_weight' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.max_weight' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.min_sqm' => 'nullable',
+            'LoadingPorts.*.LoadRequests.*.max_sqm' => 'nullable',
         ]);
 
         if ($validator->fails()) {
             return response()->error('missingParameters', $validator->failed());
         }
         $files = $request->file('files', []);
-        $this->cargoService->updateCargo(
-            $params,
-            $files,
-            $id
-        );
+        try{
+            $this->cargoService->updateCargo(
+                $params,
+                $files,
+                $id
+            );
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
+        }
         return response()->success();
     }
 
-    // public function getByOwnerId(Request $request){
-    //     dd($request->all());
-    //     //$shipping_requests = ShippingRequest::where('owner_id',$id)->get();
+    public function getByOwnerId(Request $request,$id){
 
-    //     if(!$shipping_requests){
-    //         return response()->noContent();
-    //     }
-    //     return response()->json(array("code" => 1, "message" => "success", "data" => $shipping_requests), 200);
-    // }
+        $shipping_requests = ShippingRequest::where('tenant_id',$id)->paginate(10);
+
+        if(count($shipping_requests) == 0){
+            return response()->noContent();
+        }
+
+        return response()->json(array("code" => 1, "message" => "success", "data" => $shipping_requests), 200);
+    }
 
 }

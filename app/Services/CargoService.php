@@ -88,7 +88,7 @@ class CargoService
         try{
             $request['date_from'] = Carbon::parse($request['date_from'])->toDateString();
             $request['date_to'] = Carbon::parse($request['date_to'])->toDateString();
-            $request['tenant_id'] = auth('api')->user()->id;
+            $request['tenant_id'] = auth('api')->user()->userable->id;
 
             $filesArr = [];
             if ($files) {
