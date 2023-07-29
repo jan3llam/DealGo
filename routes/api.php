@@ -31,6 +31,7 @@ use App\Http\Controllers\Api\StatesController;
 use App\Http\Controllers\Api\TicketsController;
 use App\Http\Controllers\Api\VesselsController;
 use App\Http\Controllers\Api\VesselsTypesController;
+use App\Http\Controllers\Api\VoyageController;
 use App\Http\Controllers\ArticlesController as ArticlesAPI;
 use App\Http\Controllers\CategoriesController as CategoriesAPI;
 use App\Http\Controllers\CitiesController as CitiesAPI;
@@ -110,7 +111,9 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
     Route::group(['prefix' => 'chat'], function () {
         Route::get('/users', [ChatController::class, 'getAll']);
     });
-
+    Route::group(['prefix' => 'voyage'], function () {
+        Route::get('/get_distance', [VoyageController::class, 'get_distance']);
+    });
     Route::group(['prefix' => 'vesselsTypes'], function () {
         Route::get('/list', [VesselsTypesController::class, 'list']);
     });
@@ -124,7 +127,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/list', [LocalAreasController::class, 'list']);
     });
 
- Route::group(['prefix' => 'global_areas'], function () {
+    Route::group(['prefix' => 'global_areas'], function () {
         Route::get('/list', [GlobalAreasController::class, 'list']);
     });
     Route::group(['prefix' => 'ports'], function () {
@@ -277,7 +280,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
     Route::group(['prefix' => 'cities'], function () {
         Route::get('/list/{id?}', [CitiesAPI::class, 'getCities']);
     });
-
+    Route::group(['prefix' => 'voyage'], function () {
+        Route::get('/get_distance', [VoyageController::class, 'get_distance']);
+    });
 
     Route::group(['prefix' => 'states'], function () {
         Route::get('/list/{id}', [StatesAPI::class, 'getStates']);

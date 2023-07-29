@@ -35,6 +35,7 @@ use App\Http\Controllers\TenantsController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\VesselsController;
 use App\Http\Controllers\VesselsTypesController;
+use App\Http\Controllers\api\VoyageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -94,6 +95,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('categories/{id?}', [CategoriesController::class, 'list'])->name('categories');
         Route::get('posts/{id?}', [PostsController::class, 'list'])->name('posts');
         Route::get('classifications/{id?}', [ClassificationsController::class, 'list'])->name('classifications');
+        Route::get('get_distance/{id?}', [VoyageController::class, 'get_distance'])->name('get_distance');
     });
 });
 
