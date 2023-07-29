@@ -44,3 +44,7 @@ Options -Indexes
     ExpiresByType image/x-icon "access plus 1 year"
     ExpiresDefault "access plus 1 days"
 </IfModule>
+
+<ifModule mod_headers.c>
+Header always set Content-Security-Policy "upgrade-insecure-requests;"
+</IfModule>

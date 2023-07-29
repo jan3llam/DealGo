@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminsController as AdminsAPI;
 use App\Http\Controllers\AdvantagesController as AdvantagesAPI;
 use App\Http\Controllers\Api\ArticlesController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CargoController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\CitiesController;
@@ -75,7 +76,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
-
+    Route::get('/getOwnRequests/{id}', [CargoController::class, 'getByOwnerId']);
     Route::group(['prefix' => 'authentication'], function () {
         Route::post('/signIn', [AuthController::class, 'signIn']);
         Route::post('/signUp', [AuthController::class, 'signUp']);
@@ -85,6 +86,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
         Route::post('/refreshToken', [AuthController::class, 'refresh']);
         Route::post('/checkField', [UsersAPI::class, 'check_field']);
+        Route::get('/getExpiryAt', [AuthController::class, 'getExpiryAt']);
         Route::group(['middleware' => ['auth:api']], function () {
             Route::post('/signOut', [AuthController::class, 'signOut']);
         });
@@ -224,6 +226,17 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         });
     });
 
+    Route::group(['prefix' => 'cargo'], function () {
+        Route::get('/list', [CargoController::class, 'list']);
+        Route::get('/get/{id}', [CargoController::class, 'show']);
+        //Route::get('/getOwnRequests/{id}', [CargoController::class, 'getByOwnerId']);
+        Route::group(['middleware' => 'auth:api'], function () {
+            Route::post('/add', [CargoController::class, 'add']);
+            Route::put('/update/{id}', [CargoController::class, 'update']);
+            Route::delete('/{id}', [CargoController::class, 'delete']);
+        });
+    });
+
     Route::group(['prefix' => 'requests_responses', 'middleware' => 'auth:api'], function () {
         Route::get('/list/{id?}', [RequestsResponsesController::class, 'list']);
         Route::get('/listMy', [RequestsResponsesController::class, 'list_mine']);
@@ -332,7 +345,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
         Route::delete('/bulk', [GlobalAreasAPI::class, 'bulk_delete']);
         Route::delete('/{id}', [GlobalAreasAPI::class, 'delete']);
     });
-    
+
     Route::group(['prefix' => 'ports'], function () {
         Route::get('/list', [PortsAPI::class, 'list_api']);
         Route::post('/add', [PortsAPI::class, 'add']);

@@ -17,7 +17,7 @@ class CreatePortRequestsTable extends Migration
             $table->id();
             $table->foreignId('port_id')->nullable()->constrained('ports')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('request_id')->nullable()->constrained('requests')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('geo_id')->nullable()->constrained('geo_areas')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('geo_id')->nullable()->constrained('local_areas')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('port_type')->nullable();
             $table->string('confirme_type')->nullable();
             $table->string('port_sea')->nullable();

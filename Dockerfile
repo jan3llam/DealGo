@@ -47,7 +47,7 @@ RUN php artisan key:generate
 #RUN php artisan migrate --force
 
 # Set up Apache configuration
-RUN a2enmod rewrite
+RUN a2enmod rewrite headers
 
 # Set environment variables
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
