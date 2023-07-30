@@ -79,5 +79,36 @@ class VoyageController extends Controller
             return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
         }
     }
+
+    public function update(Request $request){
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'details' => 'json|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->error('missingParameters', $validator->failed());
+        }
+        DB::beginTransaction();
+        try {
+            $voyage = VoyageCalculation::findOrFail($request->id);
+            $voyage->update([
+                'name' => $request->name,
+                'details' => $request->details
+            ]);
+
+            DB::commit();
+
+            return response()->success();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
+        }
+    }
 }
 

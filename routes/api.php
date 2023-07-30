@@ -285,6 +285,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
         Route::get('/get/{id}', [VoyageController::class, 'get']);
         Route::get('/list', [VoyageController::class, 'getAll']);
         Route::post('/', [VoyageController::class, 'store']);
+        Route::put('/', [VoyageController::class, 'update']);
     });
 
     Route::group(['prefix' => 'states'], function () {
