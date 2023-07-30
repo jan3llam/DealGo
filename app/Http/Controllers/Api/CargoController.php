@@ -47,7 +47,9 @@ class CargoController extends Controller
                 $q->whereHas('user');
             })
             ->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types','portRequest'=> function ($query) {
-                $query->with('loadRequest');
+                $query->with(['port','loadRequest'=> function ($q) {
+                    $q->with('goods');
+                }]);
             }])
             ->withCount([
                 'responses' => function (Builder $q) {
@@ -123,7 +125,6 @@ class CargoController extends Controller
 
 
         $total = $builder->count();
-
 
         $data['data'] = $builder->skip(($page_number - 1) * $page_size)
             ->take($page_size)->orderBy($order_field, $order_sort)->get();

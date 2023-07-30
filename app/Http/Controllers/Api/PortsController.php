@@ -102,7 +102,9 @@ class PortsController extends Controller
                 $qu->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString());
             })->with(['requests' => function ($q) {
                 $q->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString())->with(['port_to', 'tenant.user', 'routes', 'goods_types','portRequest'=> function ($query) {
-                    $query->with('loadRequest');
+                    $query->with(['port','loadRequest'=> function ($q) {
+                        $q->with('goods');
+                    }]);
                 }]);
             }]);
             if ($date_from) {
@@ -124,7 +126,9 @@ class PortsController extends Controller
                 });
             })->with(['requests' => function ($q) {
                 $q->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString())->with(['port_to', 'tenant.user', 'routes', 'goods_types','portRequest'=> function ($query) {
-                    $query->with('loadRequest');
+                    $query->with(['port','loadRequest'=> function ($q) {
+                        $q->with('goods');
+                    }]);
                 }]);
             }, 'offers' => function ($q) {
                 $q->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString())->with(['vessel.type.goods_types', 'vessel.owner.user']);

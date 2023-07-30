@@ -23,4 +23,9 @@ class LoadRequest extends Model
         'max_sqm',
     ];
 
+    public function goods()
+    {
+        return $this->hasOne(gType::class,'id','goods_id');
+    }
+
 }
