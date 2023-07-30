@@ -33,7 +33,7 @@ class VoyageController extends Controller
 
     public function getById(int $id){
 
-        $data = VoyageCalculation::findOrFail($id)->where(['deleted_at'=>null,'user_id'=>auth('api')->user()->id])->get();
+        $data = VoyageCalculation::findOrFail($id)->where(['id'=>$id,'deleted_at'=>null,'user_id'=>auth('api')->user()->id])->get();
 
         return response()->success($data);
     }
@@ -44,8 +44,18 @@ class VoyageController extends Controller
         $page_number = $request->input('page_number', 1);
 
 
-        $data = VoyageCalculation::where('deleted_at',null)->whereHas('user')->where('user_id',auth('api')->user()->id)->skip(($page_number - 1) * $page_size)
+        $voyages = VoyageCalculation::where('deleted_at',null)->whereHas('user')->where('user_id',auth('api')->user()->id);
+
+        $total = $voyages->count();
+
+        $data['data']= $voyages->skip(($page_number - 1) * $page_size)
         ->take($page_size)->orderBy('created_at', 'desc')->get();
+
+        $data['meta']['total'] = $total;
+        $data['meta']['count'] = $data['data']->count();
+        $data['meta']['page_number'] = $page_number;
+
+
 
         return response()->success($data);
     }
