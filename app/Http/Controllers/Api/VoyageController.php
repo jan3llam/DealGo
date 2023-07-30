@@ -32,7 +32,8 @@ class VoyageController extends Controller
     }
 
     public function getById(int $id){
-        $data = VoyageCalculation::findOrFail($id);
+
+        $data = VoyageCalculation::findOrFail($id)->where(['deleted_at'=>null,'user_id'=>auth('api')->user()->id])->get();
 
         return response()->success($data);
     }
@@ -41,11 +42,10 @@ class VoyageController extends Controller
 
         $page_size = $request->input('page_size', 10);
         $page_number = $request->input('page_number', 1);
-        $order_field = 'created_at';
-        $order_sort = 'desc';
 
-        $data = VoyageCalculation::all()->skip(($page_number - 1) * $page_size)
-        ->take($page_size)->orderBy($order_field, $order_sort)->get();
+
+        $data = VoyageCalculation::where('deleted_at',null)->whereHas('user')->where('user_id',auth('api')->user()->id)->skip(($page_number - 1) * $page_size)
+        ->take($page_size)->orderBy('created_at', 'desc')->get();
 
         return response()->success($data);
     }
@@ -70,7 +70,8 @@ class VoyageController extends Controller
 
             $voyage = VoyageCalculation::create([
                 'name' => $request->name,
-                'details' => $request->details
+                'details' => $request->details,
+                'user_id' => $user->id
             ]);
 
             DB::commit();
@@ -101,7 +102,8 @@ class VoyageController extends Controller
             $voyage = VoyageCalculation::findOrFail($request->id);
             $voyage->update([
                 'name' => $request->name,
-                'details' => $request->details
+                'details' => $request->details,
+                'user_id' => $user->id
             ]);
 
             $voyage->save();
@@ -113,6 +115,16 @@ class VoyageController extends Controller
             DB::rollBack();
             return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
         }
+    }
+
+
+    public function delete(int $id){
+
+        $voyage = VoyageCalculation::where('id',$id)->first();
+        $voyage->deleted_at = Carbon::now();
+        $voyage->save();
+
+        return response()->success();
     }
 }
 

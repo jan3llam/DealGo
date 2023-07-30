@@ -113,10 +113,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
     });
     Route::group(['prefix' => 'voyage'], function () {
         Route::get('/get_distance', [VoyageController::class, 'get_distance']);
-        Route::get('/get/{id}', [VoyageController::class, 'get']);
+        Route::get('/get/{id}', [VoyageController::class, 'getById']);
         Route::get('/list', [VoyageController::class, 'getAll']);
         Route::post('/', [VoyageController::class, 'store']);
         Route::put('/', [VoyageController::class, 'update']);
+        Route::delete('/{id}', [VoyageController::class, 'delete']);
     });
     Route::group(['prefix' => 'vesselsTypes'], function () {
         Route::get('/list', [VesselsTypesController::class, 'list']);
