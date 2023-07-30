@@ -335,7 +335,16 @@ class CargoController extends Controller
 
     public function getByOwnerId(Request $request,$id){
 
-        $shipping_requests = ShippingRequest::where('tenant_id',$id)->paginate(10);
+        $shipping_requests = ShippingRequest::where('tenant_id',$id)->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types','portRequest'=> function ($query) {
+            $query->with(['port','loadRequest'=> function ($q) {
+                $q->with('goods');
+            }]);
+        }])
+        ->withCount([
+            'responses' => function (Builder $q) {
+                $q->whereHas('vessels')->whereHas('request_goods_types');
+            }
+        ])->paginate(10);
 
         if(count($shipping_requests) == 0){
             return response()->noContent();

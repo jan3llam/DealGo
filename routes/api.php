@@ -232,7 +232,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
     Route::group(['prefix' => 'cargo'], function () {
         Route::get('/list', [CargoController::class, 'list']);
         Route::get('/get/{id}', [CargoController::class, 'show']);
-        //Route::get('/getOwnRequests/{id}', [CargoController::class, 'getByOwnerId']);
+        Route::get('/getOwnRequests/{id}', [CargoController::class, 'getByOwnerId']);
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/add', [CargoController::class, 'add']);
             Route::put('/update/{id}', [CargoController::class, 'update']);
@@ -283,7 +283,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
     Route::group(['prefix' => 'voyage'], function () {
         Route::get('/get_distance', [VoyageController::class, 'get_distance']);
         Route::get('/get/{id}', [VoyageController::class, 'get']);
-        Route::get('/get', [VoyageController::class, 'getAll']);
+        Route::get('/list', [VoyageController::class, 'getAll']);
         Route::post('/', [VoyageController::class, 'store']);
     });
 
