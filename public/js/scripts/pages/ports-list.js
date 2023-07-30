@@ -104,7 +104,7 @@ $(function () {
                     }
                 },
                 {
-                    targets: 8,
+                    targets: 9,
                     render: function (data, type, full, meta) {
                         var $status = full['status']
                         return (
@@ -284,7 +284,7 @@ $(function () {
                 },
                'localarea': {
                     required: true
-                }, 
+                },
                 'longitude': {
                     required: true
                 },

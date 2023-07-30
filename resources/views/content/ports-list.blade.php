@@ -3,7 +3,7 @@
     $css_path = app()->getLocale()==='ar' ? 'css-rtl' : 'css';
 
 
-     
+
 @endphp
 
 @section('title', __('locale.Ports'))
@@ -65,7 +65,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
                             <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.Port')}}</h5>
-                            <input type="hidden" id="edit___label" value="{{__('locale.Edit')}} {{__('locale.Port')}}"> 
+                            <input type="hidden" id="edit___label" value="{{__('locale.Edit')}} {{__('locale.Port')}}">
 
                         </div>
                         <div class="modal-body flex-grow-1">
@@ -156,7 +156,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
                             <h5 class="modal-title" id="modal-label">{{__('locale.View')}} {{__('locale.Port')}}</h5>
-                       
+
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="info-container">
@@ -226,8 +226,6 @@
     {{-- Page js files --}}
 
     <script>
-
-        $('#localarea').select2({});
 
 
 
