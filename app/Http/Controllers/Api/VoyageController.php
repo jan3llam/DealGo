@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Tenant;
 use App\Models\User;
 use App\Models\VoyageCalculation;
 use Carbon\Carbon;
@@ -55,9 +56,10 @@ class VoyageController extends Controller
         if (!$user) {
             return response()->error('notAuthorized');
         }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'details' => 'json|string',
+            'details' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -88,7 +90,7 @@ class VoyageController extends Controller
         }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'details' => 'json|string',
+            'details' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -101,6 +103,8 @@ class VoyageController extends Controller
                 'name' => $request->name,
                 'details' => $request->details
             ]);
+
+            $voyage->save();
 
             DB::commit();
 

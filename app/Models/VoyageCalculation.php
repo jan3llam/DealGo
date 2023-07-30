@@ -17,6 +17,9 @@ class VoyageCalculation extends Model
         'details'
     ];
 
+    protected $casts = [
+        'details' => 'json',
+    ];
 
     protected $dates = [
         'created_at',
