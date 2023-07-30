@@ -81,7 +81,7 @@ class VoyageController extends Controller
             $voyage = VoyageCalculation::create([
                 'name' => $request->name,
                 'details' => $request->details,
-                'user_id' => $user->id
+                'user_id' => $request->user_id
             ]);
 
             DB::commit();
