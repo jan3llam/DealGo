@@ -33,4 +33,9 @@ class PortRequest extends Model
     {
         return $this->hasMany(LoadRequest::class);
     }
+
+    public function port()
+    {
+        return $this->belongsTo(Port::class, 'port_id');
+    }
 }

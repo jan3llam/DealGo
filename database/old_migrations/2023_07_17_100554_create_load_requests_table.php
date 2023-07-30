@@ -15,7 +15,7 @@ class CreateLoadRequestsTable extends Migration
     {
         Schema::create('load_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('port_id')->nullable()->constrained('ports')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('port_request_id')->nullable()->constrained('port_requests')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('request_id')->nullable()->constrained('requests')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('goods_id')->nullable()->constrained('goods_types')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('stowage_factor')->nullable();

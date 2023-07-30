@@ -29,9 +29,10 @@ class CargoService
 
     public function showCargo($cargo_id)
     {
-        $ship = ShippingRequest::find($cargo_id)->with(['portRequest'=> function ($query) {
+        $ship = ShippingRequest::with(['portRequest'=> function ($query) {
             $query->with('loadRequest');
-        }]);
+        }])->find($cargo_id);
+
         return $ship;
     }
 
