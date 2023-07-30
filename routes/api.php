@@ -282,6 +282,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.translate'], function 
     });
     Route::group(['prefix' => 'voyage'], function () {
         Route::get('/get_distance', [VoyageController::class, 'get_distance']);
+        Route::get('/get/{id}', [VoyageController::class, 'get']);
+        Route::get('/get', [VoyageController::class, 'getAll']);
+        Route::post('/', [VoyageController::class, 'store']);
     });
 
     Route::group(['prefix' => 'states'], function () {

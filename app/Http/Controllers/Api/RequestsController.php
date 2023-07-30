@@ -32,7 +32,9 @@ class RequestsController extends Controller
             ->whereHas('tenant', function ($q) {
                 $q->whereHas('user');
             })
-            ->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types','loadRequest'])
+            ->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types','portRequest'=> function ($query) {
+                $query->with('loadRequest');
+            }])
             ->withCount(['responses' => function (Builder $q) {
                 $q->whereHas('vessels')->whereHas('request_goods_types');
             }]);
@@ -135,7 +137,9 @@ class RequestsController extends Controller
             ->whereHas('port_to')->whereHas('port_from')
             ->whereHas('tenant', function ($q) {
                 $q->whereHas('user');
-            })->with(['tenant.user', 'port_from', 'port_to', 'request_goods_types.good_type', 'routes','loadRequest','portRequest'])
+            })->with(['tenant.user', 'port_from', 'port_to', 'request_goods_types.good_type', 'routes','portRequest'=> function ($query) {
+                $query->with('loadRequest');
+            }])
             ->withCount(['responses' => function (Builder $q) {
                 $q->whereHas('vessels')->whereHas('request_goods_types')->where('status', 0);
             }])

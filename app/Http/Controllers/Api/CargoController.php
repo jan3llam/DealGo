@@ -46,7 +46,9 @@ class CargoController extends Controller
             ->whereHas('tenant', function ($q) {
                 $q->whereHas('user');
             })
-            ->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types','loadRequest','portRequest'])
+            ->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types','portRequest'=> function ($query) {
+                $query->with('loadRequest');
+            }])
             ->withCount([
                 'responses' => function (Builder $q) {
                     $q->whereHas('vessels')->whereHas('request_goods_types');
@@ -148,7 +150,6 @@ class CargoController extends Controller
 
     public function add(Request $request)
     {
-
         $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
         if (!$user) {
@@ -230,14 +231,16 @@ class CargoController extends Controller
             }
 
             $params['files'] = json_encode($filesArr);
-            $ship = ShippingRequest::create(Arr::except($params, [
+            $ship_request = ShippingRequest::create(Arr::except($params, [
                 'LoadingPorts'
             ]));
 
             foreach ($params['LoadingPorts'] as $port) {
-                $ship->portRequest()->create($port);
+                $port_request = $ship_request->portRequest()->create($port);
                 foreach ($port['LoadRequests'] as $load) {
-                    $load = $ship->loadRequest()->create($load);
+                    $load = $port_request->loadRequest()->create($load);
+                    $load->request_id = $port_request->request_id;
+                    $load->save();
                 }
             }
 

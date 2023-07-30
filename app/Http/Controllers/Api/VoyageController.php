@@ -27,5 +27,17 @@ class VoyageController extends Controller
         $data['distance'] = 677;
         return response()->success($data);
     }
+
+    public function getById(int $id){
+
+    }
+
+    public function getAll(){
+
+    }
+
+    public function store(Request $request){
+
+    }
 }
 

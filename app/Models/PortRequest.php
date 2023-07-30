@@ -29,5 +29,8 @@ class PortRequest extends Model
         'FHEX',
     ];
 
-
+    public function loadRequest()
+    {
+        return $this->hasMany(LoadRequest::class);
+    }
 }

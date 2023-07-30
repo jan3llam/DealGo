@@ -37,4 +37,10 @@ class Port extends Model
     {
         return $this->hasMany(Offer::class, 'port_from', 'id');
     }
+
+    public function portRequest()
+    {
+        return $this->hasMany(PortRequest::class);
+    }
+
 }

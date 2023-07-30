@@ -29,7 +29,9 @@ class CargoService
 
     public function showCargo($cargo_id)
     {
-        $ship = ShippingRequest::with(['portRequest', 'loadRequest'])->find($cargo_id);
+        $ship = ShippingRequest::find($cargo_id)->with(['portRequest'=> function ($query) {
+            $query->with('loadRequest');
+        }]);
         return $ship;
     }
 
@@ -105,9 +107,11 @@ class CargoService
             $ship->portRequest->each->delete();
             $ship->loadRequest->each->delete();
             foreach ($request['LoadingPorts'] as $port) {
-                $portLoad = $ship->portRequest()->create($port);
+                $port_request = $ship->portRequest()->create($port);
                 foreach ($port['LoadRequests'] as $load) {
-                    $load = $ship->loadRequest()->create($load);
+                    $load = $port_request->loadRequest()->create($load);
+                    $load->request_id = $port_request->request_id;
+                    $load->save();
                 }
             }
             $ship = $ship->update(Arr::except($request, [
