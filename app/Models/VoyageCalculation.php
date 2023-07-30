@@ -14,7 +14,8 @@ class VoyageCalculation extends Model
 
     protected $fillable = [
         'name',
-        'details'
+        'details',
+        'user_id'
     ];
 
     protected $casts = [

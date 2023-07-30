@@ -93,7 +93,7 @@ class VoyageController extends Controller
         }
     }
 
-    public function update(Request $request){
+    public function update(Request $request,$id){
         $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
         if (!$user) {
@@ -109,7 +109,8 @@ class VoyageController extends Controller
         }
         DB::beginTransaction();
         try {
-            $voyage = VoyageCalculation::findOrFail($request->id);
+            $voyage = VoyageCalculation::findOrFail($id);
+
             $voyage->update([
                 'name' => $request->name,
                 'details' => $request->details,

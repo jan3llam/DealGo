@@ -116,7 +116,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/get/{id}', [VoyageController::class, 'getById']);
         Route::get('/list', [VoyageController::class, 'getAll']);
         Route::post('/', [VoyageController::class, 'store']);
-        Route::put('/', [VoyageController::class, 'update']);
+        Route::put('/{id}', [VoyageController::class, 'update']);
         Route::delete('/{id}', [VoyageController::class, 'delete']);
     });
     Route::group(['prefix' => 'vesselsTypes'], function () {
