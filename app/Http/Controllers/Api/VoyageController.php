@@ -68,7 +68,7 @@ class VoyageController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:voyage_calculations',
             'details' => 'required',
         ]);
 
