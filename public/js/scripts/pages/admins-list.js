@@ -570,6 +570,7 @@ $(function () {
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
+        newForm.find('#modal-label').html($('#edit___label').val());
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
         $('#name').val(data.name);
@@ -587,7 +588,8 @@ $(function () {
         });
         $('#email').val(data.email);
         $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id).trigger('change.select2');
+        $('#province_id').val(data.city.state.id);
+        $('#country').val(data.city.state.country.id).trigger('change.select2');
         $('#role').val(data.roles[0].id).trigger('change.select2');
         $('#address').val(data.address);
         $('#object_id').val(data.id);
@@ -602,7 +604,7 @@ $(function () {
         $('#view-id').html(data.dealgo_id);
         $('#view-email').html(data.email);
         $('#view-phone').html(data.phone);
-        $('#view-country').html(data.city.country.name);
+        $('#view-country').html(data.city.state.country.name);
         $('#view-city').html(data.city.name);
         $('#view-address').html(data.address);
         var filesHtml = '';

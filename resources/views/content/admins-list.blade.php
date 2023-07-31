@@ -63,6 +63,8 @@
                         <div class="modal-header mb-1">
                             <h5 class="modal-title"
                                 id="modal-label">{{__('locale.Add')}} {{__('locale.Administrator')}}</h5>
+                            <input type="hidden" id="edit___label" value="{{__('locale.Edit')}} {{__('locale.Administrator')}}">
+
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">
@@ -286,6 +288,10 @@
                             target.val(target.find('option:contains(' + $('#province_id').val() + ')').val());
                         }
                         target.trigger('change');
+                        if ($('#province_id').val()!=0) {
+                            dbSelect.val($('#province_id').val()).trigger('change.select2');
+                            $('#province_id').val(0);
+                        }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         alert(thrownError);

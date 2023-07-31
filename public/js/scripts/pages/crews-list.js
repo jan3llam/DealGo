@@ -600,6 +600,7 @@ $(function () {
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
+        newForm.find('#modal-label').html($('#edit___label').val());
         newSidebar.modal('show');
         $('#form_status').val(2);
         $('#first_name').val(data.first_name);
@@ -614,7 +615,8 @@ $(function () {
         $('#email').val(data.email);
         $('#phone').val(data.phone);
         $('#city_id').val(data.city.id);
-        $('#country').val(data.city.country.id).trigger('change.select2');
+        $('#province_id').val(data.city.state.id);
+        $('#country').val(data.city.state.country.id).trigger('change.select2');
         $('#vessel').val(data.vessel_id).trigger('change.select2');
         $('#address').val(data.address);
         $('#type').val(data.type);

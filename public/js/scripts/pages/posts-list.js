@@ -502,6 +502,7 @@ $(function () {
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
+        newForm.find('#modal-label').html($('#edit___label').val());
         $('#modals-slide-in').modal('show')
         $('#form_status').val(2);
         $('#classification').val(data.classification_id).trigger('change.select2');

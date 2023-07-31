@@ -740,8 +740,8 @@ $(function () {
         $('#view-date-from').html(data.date_from);
         $('#view-date-to').html(data.date_to);
         $('#view-description').html(data.description);
-        $('#view-origin').html(data.port_from.name_translation);
-        $('#view-destination').html(data.port_to.name_translation);
+        $('#view-origin').html(data.offer.port_from.name_translation);
+        $('#view-destination').html(data.offer.port_to.name_translation);
         if (parseInt(data.contract) === 1) {
             $('#view-routes-container').hide();
         } else {
