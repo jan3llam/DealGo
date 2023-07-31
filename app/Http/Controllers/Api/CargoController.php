@@ -333,6 +333,26 @@ class CargoController extends Controller
         return response()->success();
     }
 
+    public function updateDate(Request $request, $id)
+    {
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+
+        try{
+            $cargo = ShippingRequest::findOrFail($id);
+            $cargo->date_to = Carbon::parse($request['date_to'])->toDateString();
+            $cargo->save();
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
+        }
+        return response()->success();
+    }
+
     public function getByOwnerId(Request $request,$id){
 
         $shipping_requests = ShippingRequest::where('tenant_id',$id)->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types','portRequest'=> function ($query) {

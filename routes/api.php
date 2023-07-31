@@ -240,7 +240,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         Route::get('/getOwnRequests/{id}', [CargoController::class, 'getByOwnerId']);
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/add', [CargoController::class, 'add']);
-            Route::put('/update/{id}', [CargoController::class, 'update']);
+            //Route::put('/update/{id}', [CargoController::class, 'update']);
+            Route::put('/update/{id}', [CargoController::class, 'updateDate']);
             Route::delete('/{id}', [CargoController::class, 'delete']);
         });
     });
