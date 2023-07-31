@@ -3,7 +3,7 @@
     $css_path = app()->getLocale()==='ar' ? 'css-rtl' : 'css';
 
 
-     
+
 @endphp
 
 @section('title', __('locale.GlobalAreas'))
@@ -61,6 +61,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
                             <h5 class="modal-title" id="modal-label">{{__('locale.Add')}} {{__('locale.GlobalArea')}}</h5>
+                            <input type="hidden" id="edit___label" value="{{__('locale.Edit')}} {{__('locale.GlobalArea')}}">
+
                         </div>
                         <div class="modal-body flex-grow-1">
                             <ul class="nav nav-tabs wrap-border" role="tablist">
@@ -87,9 +89,9 @@
                                     @endforeach
                                 </div>
                             </div>
-                           
-                           
-                            
+
+
+
                             <div class="mb-1">
                                 <label class="form-label" for="unlocode">{{__('locale.UNLocode')}}</label>
                                 <input type="text" class="form-control dt-full-name" id="unlocode"
@@ -126,9 +128,9 @@
                                         <span class="fw-bolder me-25">{{__('locale.Name')}}:</span>
                                         <span id="view-name"></span>
                                     </li>
-                                  
-                                    
-                                     
+
+
+
                                     <li class="mb-75">
                                         <span class="fw-bolder me-25">{{__('locale.UNLocode')}}:</span>
                                         <span id="view-unlocode"></span>
@@ -177,7 +179,7 @@
 @section('page-script')
     {{-- Page js files --}}
 
-   
+
     <script>
 
         var latElement = $('#latitude').val() ? $('#latitude').val() : '24.7241504';

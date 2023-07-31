@@ -72,6 +72,7 @@
                         <div class="modal-header mb-1">
                             <h5 class="modal-title"
                                 id="modal-label">{{__('locale.Add')}} {{__('locale.Requests Responses')}}</h5>
+                            <input type="hidden" id="edit___label" value="{{__('locale.Edit')}} {{__('locale.Requests Responses')}}">
                         </div>
                         <div class="modal-body flex-grow-1">
                             <div class="mb-1">

@@ -632,6 +632,7 @@ $(function () {
     $(document).on('click', '.item-update', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
+        newForm.find('#modal-label').html($('#edit___label').val());
         newSidebar.modal('show');
         $('#object_id').val(data.id);
         data = data.user;
