@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Port;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Models\VoyageCalculation;
@@ -17,9 +18,7 @@ class VoyageController extends Controller
 
         $def_port_from = "Bleckede";
         $def_port_to = "Goa";
-        echo "<pre>";
         require_once "ports.php";
-
 
         $params = $request->all();
         $validator = Validator::make($params, [
@@ -31,14 +30,18 @@ class VoyageController extends Controller
             return response()->error('missingParameters', $validator->failed());
         }
 
-        $portFrom = array_key_exists($params['port_from'],$ports) ? $ports[$params['port_from']] : $def_port_from;
-        $portTo = array_key_exists($params['port_to'],$ports) ? $ports[$params['port_to']] : $def_port_to;
-
+        $fromPort = Port::withTrashed()->where('id', $params['port_from'])->first();
+        $toPort = Port::withTrashed()->where('id', $params['port_to'])->first();
+        $fromPortKey = ucfirst(strtolower($fromPort->name_translation));
+        $toPortKey = ucfirst(strtolower($toPort->name_translation));
+        // Next 2 line of code are for demo of NEA
+        $portFrom = array_key_exists($fromPortKey, $ports) ? $ports[$fromPortKey] : $def_port_from;
+        $portTo = array_key_exists($toPortKey, $ports) ? $ports[$toPortKey] : $def_port_to;
 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.netpas.net/nea/v7/json/get_distance/?pincode=DEMO&access_code=aldrobi.molham%40gmail.com&piracy_code=001&ports='.$portFrom.'&ports='.$portTo.'&canal_pass_code=011&use_local_eca=false',
+            CURLOPT_URL => 'https://api.netpas.net/nea/v7/json/get_distance/?pincode=DEMO&access_code=aldrobi.molham%40gmail.com&piracy_code=001&ports=' . $portFrom . '&ports=' . $portTo . '&canal_pass_code=011&use_local_eca=false',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -49,9 +52,9 @@ class VoyageController extends Controller
         ));
 
         $response = curl_exec($curl);
-        $response_array=json_decode($response, true);
+        $response_array = json_decode($response, true);
         curl_close($curl);
-         $data['distance'] = $response_array['total_distance'];
+        $data['distance'] = $response_array['total_distance'];
         return response()->success($data);
     }
 
