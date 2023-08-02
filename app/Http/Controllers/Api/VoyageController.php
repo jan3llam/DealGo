@@ -29,19 +29,30 @@ class VoyageController extends Controller
         if ($validator->fails()) {
             return response()->error('missingParameters', $validator->failed());
         }
-
         $fromPort = Port::withTrashed()->where('id', $params['port_from'])->first();
         $toPort = Port::withTrashed()->where('id', $params['port_to'])->first();
-        $fromPortKey = ucfirst(strtolower($fromPort->name_translation));
-        $toPortKey = ucfirst(strtolower($toPort->name_translation));
+        // $fromPortKey = ucfirst(strtolower($fromPort->name_translation));
+        // $toPortKey = ucfirst(strtolower($toPort->name_translation));
+
+        // coordinates of from port
+
+        $fromPortKey_lat = ($fromPort->latitude < 0) ? ($fromPort->latitude * -1) . "S" : ($fromPort->latitude) . "N";
+        $fromPortKey_long = ($fromPort->longitude < 0) ? ($fromPort->longitude * -1) . "W" : ($fromPort->longitude) . "E";
+        $fromPortKey_coords = $fromPortKey_lat . "%20" . $fromPortKey_long;
+
+        // coordinates of to port
+        $toPortKey_lat = ($toPort->latitude < 0) ? ($toPort->latitude * -1) . "S" : ($toPort->latitude) . "N";
+        $toPortKey_long = ($toPort->longitude < 0) ? ($toPort->longitude * -1) . "W" : ($toPort->longitude) . "E";
+        $toPortKey_coords = $toPortKey_lat . "%20" . $toPortKey_long;
+
         // Next 2 line of code are for demo of NEA
-        $portFrom = array_key_exists($fromPortKey, $ports) ? $ports[$fromPortKey] : $def_port_from;
-        $portTo = array_key_exists($toPortKey, $ports) ? $ports[$toPortKey] : $def_port_to;
+        // $portFrom = array_key_exists($fromPortKey, $ports) ? $ports[$fromPortKey] : $def_port_from;
+        // $portTo = array_key_exists($toPortKey, $ports) ? $ports[$toPortKey] : $def_port_to;
 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.netpas.net/nea/v7/json/get_distance/?pincode=DEMO&access_code=aldrobi.molham%40gmail.com&piracy_code=001&ports=' . $portFrom . '&ports=' . $portTo . '&canal_pass_code=011&use_local_eca=false',
+            CURLOPT_URL => 'https://api.netpas.net/nea/v7/json/get_distance/?pincode=DEMO&access_code=aldrobi.molham%40gmail.com&piracy_code=001&ports=' . $fromPortKey_coords . '&ports=' . $toPortKey_coords . '&canal_pass_code=011&use_local_eca=false',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -53,8 +64,11 @@ class VoyageController extends Controller
 
         $response = curl_exec($curl);
         $response_array = json_decode($response, true);
+
         curl_close($curl);
+
         $data['distance'] = $response_array['total_distance'];
+        $data['message'] = $response_array['message'];
         return response()->success($data);
     }
 
