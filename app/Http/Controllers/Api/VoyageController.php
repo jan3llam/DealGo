@@ -68,12 +68,12 @@ class VoyageController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|unique:voyage_calculations',
+            'name' => 'required|string',
             'details' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return response()->error('missingParameters', $validator->failed());
+            return response()->error('missingParameters', $validator->errors());
         }
         DB::beginTransaction();
         try {
@@ -89,6 +89,9 @@ class VoyageController extends Controller
             return response()->success();
         } catch (\Exception $e) {
             DB::rollBack();
+            if($e->getCode() == 23000){
+                return response()->json(array("code" => $e->getCode(), "message" => "name already taken", "data" => null), 200);
+            }
             return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
         }
     }
