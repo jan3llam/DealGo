@@ -148,12 +148,12 @@ class VoyageController extends Controller
             return response()->error('notAuthorized');
         }
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => ['required','string',Rule::unique('voyage_calculations', 'name')->where('user_id', $user->id)->ignore($id)],
             'details' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return response()->error('missingParameters', $validator->failed());
+            return response()->error('missingParameters', $validator->errors());
         }
         DB::beginTransaction();
         try {
