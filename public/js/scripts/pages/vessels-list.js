@@ -565,6 +565,25 @@ $(function () {
         $('#object_id').val(data.id);
     });
 
+
+    function appendElement(element, key, level) {
+        var str = '<span class="fw-bolder me-25">' + key + ':</span>';
+        if (typeof element === 'object' && element != null )
+        {
+            str+="<br>";
+            for (var key1 in element) {
+                str += appendElement(element[key1], key1, level++)+" ";
+            }
+        }
+    else
+        {
+            str += '<span id="view-' + key + '">' + element + '</span>';
+
+        }
+        return str;
+    }
+
+
     $(document).on('click', '.item-view', function () {
         var element = $(this);
         let data = dtTable.api().row(element.parents('tr')).data();
@@ -586,6 +605,24 @@ $(function () {
         })
         $('#view-files').html(filesHtml);
         $('#view-image').html('<a target="_blank" href="' + assetPath + 'images/' + data.image + '">' + feather.icons['external-link'].toSvg({class: 'font-small-4 me-50'}) + '</a>');
+
+        //additionalinfo
+        if (data.additional_info) {
+            var element = document.getElementById("additionalinfo");
+
+            const additional_info = $(".additionalinfo");
+            additional_info.show();
+            let additional_json = JSON.parse(data.additional_info);
+             for (var key in additional_json) {
+                if (additional_json.hasOwnProperty(key)) {
+                    const info = document.createElement("li");
+                    info.classList.add("mb-75");
+                    info.innerHTML = appendElement(additional_json[key],key, 0);
+                    element.appendChild(info);
+                }
+            }
+        }
+
     });
 
     $(document).on('click', '.add-vessel', function () {

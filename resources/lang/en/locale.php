@@ -205,4 +205,5 @@ return [
     "Voyage" => "Voyage",
     "Yes" => "Yes",
     "Zipcode" => "Zip code",
+    "VesselShortDescription" => "Vessel Short Description",
 ];

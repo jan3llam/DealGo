@@ -153,7 +153,7 @@
             </div>
 
             <div class="modal modal-slide-in view-vessel-modal fade">
-                <div class="modal-dialog">
+                <div class="modal-dialog w-50">
                     <div class="modal-content pt-0">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
@@ -210,7 +210,17 @@
                                         <span class="fw-bolder me-25">{{__('locale.Attachments')}}:</span>
                                         <span id="view-files"></span>
                                     </li>
+                                    <div id="additionalinfo" class="mb-75 border-top pt-1 additionalinfo">
 
+                                        <li class="mb-75">
+                                            <span class="fw-bolder me-25 h5">{{__('locale.VesselShortDescription')}}</span>
+                                        </li>
+
+
+
+
+
+                                    </div>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-2">
                                     <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
