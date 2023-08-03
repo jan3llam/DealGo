@@ -9,6 +9,7 @@ use App\Models\VoyageCalculation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Validator;
 
 class VoyageController extends Controller
@@ -111,7 +112,7 @@ class VoyageController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => ['required','string',Rule::unique('voyage_calculations', 'name')->where('user_id', $user->id)],
             'details' => 'required',
         ]);
 
@@ -171,6 +172,9 @@ class VoyageController extends Controller
             return response()->success();
         } catch (\Exception $e) {
             DB::rollBack();
+            if($e->getCode() == 23000){
+                return response()->json(array("code" => $e->getCode(), "message" => "name already taken", "data" => null), 200);
+            }
             return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
         }
     }
