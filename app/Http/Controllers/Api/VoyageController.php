@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Owner;
 use App\Models\Port;
 use App\Models\Tenant;
 use App\Models\User;
@@ -142,7 +143,7 @@ class VoyageController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+        $user = User::whereHasMorph('userable', [Tenant::class,Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
         if (!$user) {
             return response()->error('notAuthorized');
