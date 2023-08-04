@@ -106,7 +106,7 @@ class VoyageController extends Controller
 
     public function store(Request $request)
     {
-        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+        $user = User::whereHasMorph('userable', [Tenant::class,Owner::class]])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
         if (!$user) {
             return response()->error('notAuthorized');
