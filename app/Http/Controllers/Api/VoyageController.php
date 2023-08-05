@@ -33,8 +33,8 @@ class VoyageController extends Controller
         }
         $fromPort = Port::withTrashed()->where('id', $params['port_from'])->first();
         $toPort = Port::withTrashed()->where('id', $params['port_to'])->first();
-        $fromPortKey = ucfirst(strtolower($fromPort->name_translation));
-        $toPortKey = ucfirst(strtolower($toPort->name_translation));
+        $fromPortKey = ucwords(strtolower($fromPort->name_translation));
+        $toPortKey = ucwords(strtolower($toPort->name_translation));
 
         // coordinates of from port
 
@@ -49,7 +49,9 @@ class VoyageController extends Controller
 
         // Next 2 line of code are for demo of NEA
         $portFrom = array_key_exists($fromPortKey, $ports) ? $ports[$fromPortKey] : $def_port_from;
+        $portFrom = str_replace(' ','%20',$portFrom) ;
         $portTo = array_key_exists($toPortKey, $ports) ? $ports[$toPortKey] : $def_port_to;
+        $portTo = str_replace(' ','%20',$portTo) ;
 
         $curl = curl_init();
 

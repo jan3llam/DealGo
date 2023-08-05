@@ -194,7 +194,6 @@ class VesselsController extends Controller
     public function add(Request $request)
     {
         $user = User::whereHasMorph('userable', [Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
-
         if (!$user) {
             return response()->error('notAuthorized');
         }
