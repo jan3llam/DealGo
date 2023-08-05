@@ -118,7 +118,7 @@ class VoyageController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->error('missingParameters', $validator->errors());
+            return response()->json(array("code" => "-1", "message" => $validator->errors()->first(), "data" => null), 200);
         }
         DB::beginTransaction();
         try {
@@ -154,7 +154,7 @@ class VoyageController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->error('missingParameters', $validator->errors());
+            return response()->json(array("code" => "-1", "message" => $validator->errors()->first(), "data" => null), 200);
         }
         DB::beginTransaction();
         try {
