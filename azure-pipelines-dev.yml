@@ -41,5 +41,5 @@ stages:
             DockerNamespace: '$(ACR-LOGIN-SERVER)'
             DockerRepository: 'dealgo-backend-dev'
             DockerImageTag: '$(Build.BuildNumber).$(Build.BuildId)'
-            AppSettings: '-DB_PASSWORD $(DB-PASSWORD) -APP_KEY $(APP-KEY) -MAIL_PASSWORD $(MAIL-PASSWORD) -JWT_SECRET $(JWT-SECRET)'
+            AppSettings: '-DB_PASSWORD $(DB-PASSWORD) -APP_KEY $(APP-KEY) -MAIL_PASSWORD $(MAIL-PASSWORD) -JWT_SECRET $(JWT-SECRET) -DB_HOST $(DB-HOST) -DB_DATABASE $(DB-DATABASE) -DB_USERNAME $(DB_USERNAME)'
             
