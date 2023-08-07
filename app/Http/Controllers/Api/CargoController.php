@@ -352,7 +352,8 @@ class CargoController extends Controller
         try{
             $cargo = ShippingRequest::findOrFail($id);
             if($cargo->status_id == 1){
-                return response()->error('Deactivate then edit..');
+                return response()->json(array("code" => "-1", "message" => "You can't update when the status is active.", "data" => null), 200);
+
             }
             $cargo->date_to = Carbon::parse($request['date_to'])->toDateString();
             $cargo->save();
