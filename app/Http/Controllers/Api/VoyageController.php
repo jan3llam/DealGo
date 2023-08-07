@@ -49,9 +49,9 @@ class VoyageController extends Controller
 
         // Next 2 line of code are for demo of NEA
         $portFrom = array_key_exists($fromPortKey, $ports) ? $ports[$fromPortKey] : $def_port_from;
-        $portFrom = str_replace(' ','%20',$portFrom) ;
+        $portFrom = str_replace(' ', '%20', $portFrom);
         $portTo = array_key_exists($toPortKey, $ports) ? $ports[$toPortKey] : $def_port_to;
-        $portTo = str_replace(' ','%20',$portTo) ;
+        $portTo = str_replace(' ', '%20', $portTo);
 
         $curl = curl_init();
 
@@ -64,7 +64,8 @@ class VoyageController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
-        ));
+        )
+        );
 
         $response = curl_exec($curl);
         $response_array = json_decode($response, true);
@@ -108,14 +109,14 @@ class VoyageController extends Controller
 
     public function store(Request $request)
     {
-        $user = User::whereHasMorph('userable', [Tenant::class,Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+        $user = User::whereHasMorph('userable', [Tenant::class, Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
         if (!$user) {
             return response()->error('notAuthorized');
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required','string',Rule::unique('voyage_calculations', 'name')->where('user_id', $user->id)],
+            'name' => ['required', 'string', Rule::unique('voyage_calculations', 'name')->where('user_id', $user->id)],
             'details' => 'required',
         ]);
 
@@ -136,7 +137,7 @@ class VoyageController extends Controller
             return response()->success();
         } catch (\Exception $e) {
             DB::rollBack();
-            if($e->getCode() == 23000){
+            if ($e->getCode() == 23000) {
                 return response()->json(array("code" => $e->getCode(), "message" => "name already taken", "data" => null), 200);
             }
             return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
@@ -145,13 +146,13 @@ class VoyageController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::whereHasMorph('userable', [Tenant::class,Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+        $user = User::whereHasMorph('userable', [Tenant::class, Owner::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
 
         if (!$user) {
             return response()->error('notAuthorized');
         }
         $validator = Validator::make($request->all(), [
-            'name' => ['required','string',Rule::unique('voyage_calculations', 'name')->where('user_id', $user->id)->ignore($id)],
+            'name' => ['required', 'string', Rule::unique('voyage_calculations', 'name')->where('user_id', $user->id)->ignore($id)],
             'details' => 'required',
         ]);
 
@@ -175,7 +176,7 @@ class VoyageController extends Controller
             return response()->success();
         } catch (\Exception $e) {
             DB::rollBack();
-            if($e->getCode() == 23000){
+            if ($e->getCode() == 23000) {
                 return response()->json(array("code" => $e->getCode(), "message" => "name already taken", "data" => null), 200);
             }
             return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
@@ -193,4 +194,3 @@ class VoyageController extends Controller
         return response()->success();
     }
 }
-

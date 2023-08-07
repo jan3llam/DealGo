@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\RequestsController;
 use App\Http\Controllers\Api\RequestsResponsesController;
 use App\Http\Controllers\Api\ShipmentsController;
 use App\Http\Controllers\Api\StatesController;
+use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\TicketsController;
 use App\Http\Controllers\Api\VesselsController;
 use App\Http\Controllers\Api\VesselsTypesController;
@@ -234,12 +235,18 @@ Route::group(['prefix' => 'user', 'middleware' => ['api.logger']], function () {
         });
     });
 
+    Route::group(['prefix' => 'status'], function () {
+        Route::get('/list', [StatusController::class, 'list']);
+    });
+
     Route::group(['prefix' => 'cargo'], function () {
         Route::get('/list', [CargoController::class, 'list']);
         Route::get('/get/{id}', [CargoController::class, 'show']);
         Route::get('/getOwnRequests/{id}', [CargoController::class, 'getByOwnerId']);
         Route::group(['middleware' => 'auth:api'], function () {
             Route::post('/add', [CargoController::class, 'add']);
+            Route::post('/deactivate/{id}', [CargoController::class, 'deactivate']);
+            Route::post('/changeStatus/{id}', [CargoController::class, 'changeStatus']);
             //Route::put('/update/{id}', [CargoController::class, 'update']);
             Route::put('/update/{id}', [CargoController::class, 'updateDate']);
             Route::delete('/{id}', [CargoController::class, 'delete']);

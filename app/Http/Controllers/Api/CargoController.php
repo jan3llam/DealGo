@@ -46,7 +46,7 @@ class CargoController extends Controller
             ->whereHas('tenant', function ($q) {
                 $q->whereHas('user');
             })
-            ->with(['port_to', 'port_from', 'tenant.user', 'routes', 'goods_types','portRequest'=> function ($query) {
+            ->with(['port_to', 'port_from', 'tenant.user', 'routes','status', 'goods_types','portRequest'=> function ($query) {
                 $query->with(['port','loadRequest'=> function ($q) {
                     $q->with('goods');
                 }]);
@@ -67,6 +67,11 @@ class CargoController extends Controller
         $date_from = $request->input('date_from', null);
         $date_to = $request->input('date_to', null);
         $is_mine = $request->input('is_mine', 0);
+        $status_filter = $request->status_id;
+
+        if($status_filter){
+            $builder->whereIn('status_id',$status_filter);
+        }
 
 
         if ($search_val) {
@@ -158,17 +163,18 @@ class CargoController extends Controller
         }
         $params = $request->all();
         $validator = Validator::make($params, [
-            'name' => 'required|string',
-            'date_from' => 'required|string',
-            'date_to' => 'required|string',
+            'name' => 'required_if:status_id,!=,3|string',
+            'date_from' => 'required_if:status_id,!=,3|string',
+            'date_to' => 'required_if:status_id,!=,3|string',
+            'status_id' =>'required',
             'prompt' => 'nullable',
             'spot' => 'nullable',
             'dead_spot' => 'nullable',
-            'vessel_category' => 'required|between:1,6',
+            'vessel_category' => 'required_if:status_id,!=,3|between:1,6',
             'vessel_category_json' => 'nullable|string',
-            'sole_part' => 'required|between:1,2',
+            'sole_part' => 'required_if:status_id,!=,3|between:1,2',
             'part_type' => 'nullable|string',
-            'contract' => 'required',
+            'contract' => 'required_if:status_id,!=,3',
             'min_weight' => 'nullable|numeric',
             'max_weight' => 'nullable|numeric',
             'min_cbm' => 'nullable|numeric',
@@ -177,28 +183,27 @@ class CargoController extends Controller
             'max_cbft' => 'nullable|numeric',
             'min_sqm' => 'nullable|numeric',
             'max_sqm' => 'nullable|numeric',
-            'port_from' => 'required|numeric',
-            'port_to' => 'required|numeric',
+            'port_from' => 'required_if:status_id,!=,3|numeric',
+            'port_to' => 'required_if:status_id,!=,3|numeric',
             'address_commission' => 'nullable|string',
             'broker_commission' => 'nullable|string',
             'description' => 'nullable|string',
             'LoadingPorts.*.confirme_type' => 'nullable|between:1,2',
             'LoadingPorts.*.sea_river' => 'nullable|between:1,2',
-            'LoadingPorts.*.port_type' => 'required|between:1,2',
+            'LoadingPorts.*.port_type' => 'required_if:status_id,!=,3|between:1,2',
             'LoadingPorts.*.NAABSA' => 'nullable',
             'LoadingPorts.*.geo_id' => 'nullable|exists:local_areas,id',
             'LoadingPorts.*.sea_draft' => 'nullable',
             'LoadingPorts.*.air_draft' => 'nullable',
             'LoadingPorts.*.beam_restriction' => 'nullable',
-            'LoadingPorts.*.port_id' => 'required',
-            'exists:ports,id',
+            'LoadingPorts.*.port_id' => 'required_if:status_id,!=,3','exists:ports,id',
             'LoadingPorts.*.loading_conditions' => 'nullable|between:1,3',
-            'LoadingPorts.*.mtone_value' => 'required_if:loading_conditions,1',
+            'LoadingPorts.*.mtone_value' => 'required_if:loading_conditions,1||required_if:status_id,!=,3',
             'LoadingPorts.*.SSHINC' => 'nullable',
             'LoadingPorts.*.SSHEX' => 'nullable',
             'LoadingPorts.*.FHINC' => 'nullable',
             'LoadingPorts.*.FHEX' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.goods_id' => 'required|exists:goods_types,id',
+            'LoadingPorts.*.LoadRequests.*.goods_id' => 'required_if:status_id,!=,3|exists:goods_types,id',
             'LoadingPorts.*.LoadRequests.*.stowage_factor' => 'nullable',
             'LoadingPorts.*.LoadRequests.*.cbm_cbft' => 'nullable|between:1,2',
             'LoadingPorts.*.LoadRequests.*.min_cbm_cbft' => 'nullable',
@@ -255,6 +260,7 @@ class CargoController extends Controller
 
     }
 
+
     public function update(Request $request, $id)
     {
         $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
@@ -262,19 +268,21 @@ class CargoController extends Controller
         if (!$user) {
             return response()->error('notAuthorized');
         }
+
         $params = $request->all();
         $validator = Validator::make($params, [
-            'name' => 'required|string',
-            'date_from' => 'required|string',
-            'date_to' => 'required|string',
+            'name' => 'required_if:status_id,!=,3|string',
+            'date_from' => 'required_if:status_id,!=,3|string',
+            'date_to' => 'required_if:status_id,!=,3|string',
+            'status_id' =>'required',
             'prompt' => 'nullable',
             'spot' => 'nullable',
             'dead_spot' => 'nullable',
-            'vessel_category' => 'required|between:1,6',
+            'vessel_category' => 'required_if:status_id,!=,3|between:1,6',
             'vessel_category_json' => 'nullable|string',
-            'sole_part' => 'required|between:1,2',
+            'sole_part' => 'required_if:status_id,!=,3|between:1,2',
             'part_type' => 'nullable|string',
-            'contract' => 'required',
+            'contract' => 'required_if:status_id,!=,3',
             'min_weight' => 'nullable|numeric',
             'max_weight' => 'nullable|numeric',
             'min_cbm' => 'nullable|numeric',
@@ -283,8 +291,8 @@ class CargoController extends Controller
             'max_cbft' => 'nullable|numeric',
             'min_sqm' => 'nullable|numeric',
             'max_sqm' => 'nullable|numeric',
-            'port_from' => 'required|numeric',
-            'port_to' => 'required|numeric',
+            'port_from' => 'required_if:status_id,!=,3|numeric',
+            'port_to' => 'required_if:status_id,!=,3|numeric',
             'address_commission' => 'nullable|string',
             'broker_commission' => 'nullable|string',
             'description' => 'nullable|string',
@@ -296,15 +304,15 @@ class CargoController extends Controller
             'LoadingPorts.*.sea_draft' => 'nullable',
             'LoadingPorts.*.air_draft' => 'nullable',
             'LoadingPorts.*.beam_restriction' => 'nullable',
-            'LoadingPorts.*.port_id' => 'required',
+            'LoadingPorts.*.port_id' => 'required_if:status_id,!=,3',
             'exists:ports,id',
             'LoadingPorts.*.loading_conditions' => 'nullable|between:1,3',
-            'LoadingPorts.*.mtone_value' => 'required_if:loading_conditions,1',
+            'LoadingPorts.*.mtone_value' => 'required_if:loading_conditions,1|required_if:status_id,!=,3',
             'LoadingPorts.*.SSHINC' => 'nullable',
             'LoadingPorts.*.SSHEX' => 'nullable',
             'LoadingPorts.*.FHINC' => 'nullable',
             'LoadingPorts.*.FHEX' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.goods_id' => 'required|exists:goods_types,id',
+            'LoadingPorts.*.LoadRequests.*.goods_id' => 'required_if:status_id,!=,3|exists:goods_types,id',
             'LoadingPorts.*.LoadRequests.*.stowage_factor' => 'nullable',
             'LoadingPorts.*.LoadRequests.*.cbm_cbft' => 'nullable|between:1,2',
             'LoadingPorts.*.LoadRequests.*.min_cbm_cbft' => 'nullable',
@@ -343,6 +351,9 @@ class CargoController extends Controller
 
         try{
             $cargo = ShippingRequest::findOrFail($id);
+            if($cargo->status_id == 1){
+                return response()->error('Deactivate then edit..');
+            }
             $cargo->date_to = Carbon::parse($request['date_to'])->toDateString();
             $cargo->save();
         }
@@ -350,6 +361,36 @@ class CargoController extends Controller
             DB::rollBack();
             return response()->json(array("code" => $e->getCode(), "message" => $e->getMessage(), "data" => null), 200);
         }
+        return response()->success();
+    }
+
+    public function deactivate($id){
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+        $cargo = ShippingRequest::findOrFail($id);
+
+        $cargo->status_id = 2 ;
+
+        $cargo->save();
+
+        return response()->success();
+    }
+
+    public function changeStatus(Request $request, $id){
+        $user = User::whereHasMorph('userable', [Tenant::class])->where('status', 1)->where('id', auth('api')->user()->id)->first();
+
+        if (!$user) {
+            return response()->error('notAuthorized');
+        }
+        $cargo = ShippingRequest::findOrFail($id);
+
+        $cargo->status_id = $request->status_id ;
+
+        $cargo->save();
+
         return response()->success();
     }
 

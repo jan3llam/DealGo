@@ -43,6 +43,7 @@ class Request extends Model
         'max_cbft',
         'min_sqm',
         'max_sqm',
+        'status_id'
     ];
     protected $dates = ['date_from', 'date_to'];
 
@@ -99,5 +100,9 @@ class Request extends Model
     public function loadRequest()
     {
         return $this->hasMany(LoadRequest::class);
+    }
+
+    public function status(){
+        return $this->hasOne(Status::class,'id','status_id');
     }
 }
