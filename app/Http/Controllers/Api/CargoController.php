@@ -211,15 +211,15 @@ class CargoController extends Controller
             'LoadingPorts.*.SSHEX' => 'nullable',
             'LoadingPorts.*.FHINC' => 'nullable',
             'LoadingPorts.*.FHEX' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.goods_id' => 'required_if:status_id,!=,3|exists:goods_types,id',
-            'LoadingPorts.*.LoadRequests.*.stowage_factor' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.cbm_cbft' => 'nullable|between:1,2',
-            'LoadingPorts.*.LoadRequests.*.min_cbm_cbft' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.max_cbm_cbft' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.min_weight' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.max_weight' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.min_sqm' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.max_sqm' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.goods_id' => 'required_if:status_id,!=,3|exists:goods_types,id',
+            'LoadingPorts.*.loadRequests.*.stowage_factor' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.cbm_cbft' => 'nullable|between:1,2',
+            'LoadingPorts.*.loadRequests.*.min_cbm_cbft' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.max_cbm_cbft' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.min_weight' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.max_weight' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.min_sqm' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.max_sqm' => 'nullable',
         ]);
 
 
@@ -251,7 +251,7 @@ class CargoController extends Controller
 
             foreach ($params['LoadingPorts'] as $port) {
                 $port_request = $ship_request->portRequest()->create($port);
-                foreach ($port['LoadRequests'] as $load) {
+                foreach ($port['loadRequests'] as $load) {
                     $load = $port_request->loadRequest()->create($load);
                     $load->request_id = $port_request->request_id;
                     $load->save();
@@ -320,15 +320,15 @@ class CargoController extends Controller
             'LoadingPorts.*.SSHEX' => 'nullable',
             'LoadingPorts.*.FHINC' => 'nullable',
             'LoadingPorts.*.FHEX' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.goods_id' => 'required_if:status_id,!=,3|exists:goods_types,id',
-            'LoadingPorts.*.LoadRequests.*.stowage_factor' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.cbm_cbft' => 'nullable|between:1,2',
-            'LoadingPorts.*.LoadRequests.*.min_cbm_cbft' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.max_cbm_cbft' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.min_weight' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.max_weight' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.min_sqm' => 'nullable',
-            'LoadingPorts.*.LoadRequests.*.max_sqm' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.goods_id' => 'required_if:status_id,!=,3|exists:goods_types,id',
+            'LoadingPorts.*.loadRequests.*.stowage_factor' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.cbm_cbft' => 'nullable|between:1,2',
+            'LoadingPorts.*.loadRequests.*.min_cbm_cbft' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.max_cbm_cbft' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.min_weight' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.max_weight' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.min_sqm' => 'nullable',
+            'LoadingPorts.*.loadRequests.*.max_sqm' => 'nullable',
         ]);
 
         if ($validator->fails()) {
