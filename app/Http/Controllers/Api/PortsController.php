@@ -122,7 +122,7 @@ class PortsController extends Controller
                 $q->orWhereHas('requests', function ($qu) {
                     $qu->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString())->where('status_id',1);
                 })->orWhereHas('offers', function ($qu) {
-                    $qu->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString())->where('status_id',1);
+                    $qu->where('approved', 0)->where('date_to', '>=', Carbon::now()->toDateString());
                 });
             })->with(['requests' => function ($q) {
                 $q->where('approved', 0)->where('status_id',1)->where('date_to', '>=', Carbon::now()->toDateString())->with(['port_to', 'tenant.user', 'routes','status', 'goods_types','portRequest'=> function ($query) {
