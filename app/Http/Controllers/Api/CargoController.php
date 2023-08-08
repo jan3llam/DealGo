@@ -142,15 +142,23 @@ class CargoController extends Controller
 
         return response()->success($data);
     }
-    public function show($cargo_id)
+    public function show($id)
     {
-        $data = $this->cargoService->showCargo($cargo_id);
+        $data = $this->cargoService->showCargo($id);
         return response()->success($data);
     }
 
-    public function delete($cargo_id)
+    public function delete($id)
     {
-        $data = $this->cargoService->delete($cargo_id);
+        $item = ShippingRequest::findOrFail($id);
+
+        if($item->status_id == 3){
+            $item->delete();
+        }
+        else{
+            return response()->json(array("code" => "-1", "message" => "You can only delete a template.", "data" => null), 200);
+        }
+
         return response()->success();
     }
 

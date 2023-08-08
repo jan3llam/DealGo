@@ -10,7 +10,6 @@ class Request extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     protected $with = ['port_from', 'port_to', 'routes'];
     protected $fillable = [
         'name',
@@ -45,7 +44,7 @@ class Request extends Model
         'max_sqm',
         'status_id'
     ];
-    protected $dates = ['date_from', 'date_to'];
+    protected $dates = ['date_from', 'date_to','deleted_at'];
 
     public function owner()
     {
